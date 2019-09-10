@@ -1,4 +1,4 @@
-# Code style: 👇
+# Code style: 📃
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions
 
 # Branch rules: 🌿
@@ -13,6 +13,6 @@ There are two main branches - **master** and **dev**.
   
 After sprint, before showcasing the demo, dev branch should be merged to master! (But **do not** delete dev branch!!!)
   
-# PR and Commit Rules:
+# PR and Commit Rules: 👇 
 Commit as frequently as possible. Avoid huge commits, with many code changes. Commit summary or description should include what was changed/added in the code.  
 PR can be merged only after **at least two** teammates approved it.

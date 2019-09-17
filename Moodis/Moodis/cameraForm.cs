@@ -34,7 +34,7 @@ namespace moodie
                 cmbCamResoliution.Items.Add(temp);
             }
 
-            cmbCamResoliution.SelectedIndex = 0;
+            cmbCamResoliution.SelectedIndex = cmbCamResoliution.Items.Count-1;
         }
 
         private void ButtonStartClick(object sender, EventArgs e)
@@ -60,8 +60,8 @@ namespace moodie
         private void ButtonPicture(object sender, EventArgs e)
         {
             saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
-            saveFileDialog1.FileName = "Image.jpeg";
-
+            var fileName = DateTime.Now.ToString().Replace("-","").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
+            saveFileDialog1.FileName = fileName;
             try
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -90,6 +90,11 @@ namespace moodie
             {
                 cam.VideoResolution = cam.VideoCapabilities[cmbCamResoliution.SelectedIndex];
             }
+        }
+
+        private void CameraForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            cam.Stop();
         }
     }
 }

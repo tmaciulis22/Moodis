@@ -1,0 +1,26 @@
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\bin\Debug\Moodie.exe.config
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\bin\Debug\Moodie.exe
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\bin\Debug\Moodie.pdb
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\bin\Debug\AForge.Video.DirectShow.dll
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\bin\Debug\AForge.Video.dll
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\Moodis.csprojAssemblyReference.cache
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\moodie.cameraForm.resources
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\Moodie.Properties.Resources.resources
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\Moodis.csproj.GenerateResource.cache
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\Moodis.csproj.CoreCompileInputs.cache
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\Moodis.csproj.CopyComplete
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\Moodie.exe
+C:\Users\aurux\Desktop\New folder (3)\Moodis\Moodis\Moodis\obj\Debug\Moodie.pdb
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\bin\Debug\Moodie.exe.config
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\bin\Debug\Moodie.exe
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\bin\Debug\Moodie.pdb
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\bin\Debug\AForge.Video.DirectShow.dll
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\bin\Debug\AForge.Video.dll
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\Moodis.csprojAssemblyReference.cache
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\Moodie.Properties.Resources.resources
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\Moodis.csproj.GenerateResource.cache
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\Moodis.csproj.CoreCompileInputs.cache
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\Moodis.csproj.CopyComplete
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\Moodie.exe
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\Moodie.pdb
+C:\Users\aurux\Desktop\C#\MoodisRepo\Moodis\Moodis\Moodis\obj\Debug\moodis.CameraForm.resources

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace moodie
+namespace moodis
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace moodie
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new cameraForm());
+            Application.Run(new CameraForm());
         }
     }
 }

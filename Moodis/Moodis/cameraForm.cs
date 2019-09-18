@@ -4,11 +4,11 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace moodie
+namespace moodis
 {
-    public partial class cameraForm : Form
+    public partial class CameraForm : Form
     {
-        public cameraForm()
+        public CameraForm()
         {
             InitializeComponent();
         }
@@ -28,7 +28,7 @@ namespace moodie
 
             cam = new VideoCaptureDevice(webcam[cmbOutputDevices.SelectedIndex].MonikerString);
 
-            foreach (VideoCapabilities option in cam.VideoCapabilities)
+            foreach (var option in cam.VideoCapabilities)
             {
                 string temp = option.FrameSize.Width.ToString() + " * " + option.FrameSize.Height.ToString();
                 cmbCamResoliution.Items.Add(temp);
@@ -67,7 +67,6 @@ namespace moodie
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     picBox.Image.Save(saveFileDialog1.FileName);
-
                 }
             }
 
@@ -85,7 +84,6 @@ namespace moodie
                 cam.VideoResolution = cam.VideoCapabilities[cmbCamResoliution.SelectedIndex];
                 cam.Start();
             }
-            
             else
             {
                 cam.VideoResolution = cam.VideoCapabilities[cmbCamResoliution.SelectedIndex];

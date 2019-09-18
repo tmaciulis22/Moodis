@@ -1,6 +1,6 @@
-﻿namespace moodie
+﻿namespace moodis
 {
-    partial class cameraForm
+    partial class CameraForm
     {
         /// <summary>
         /// Required designer variable.

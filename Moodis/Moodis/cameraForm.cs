@@ -69,7 +69,6 @@ namespace moodis
                     picBox.Image.Save(saveFileDialog1.FileName);
                 }
             }
-
             catch
             {
                 MessageBox.Show(WarningMsg);

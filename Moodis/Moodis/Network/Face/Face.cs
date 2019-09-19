@@ -17,7 +17,7 @@ namespace Moodis.Network.Face
         private const string UriBase =
             "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
         private const string RequestParameters = "returnFaceId=true&returnFaceLandmarks=false" +
-                "&returnFaceAttributes=age,gender,emotion";
+                "&returnFaceAttributes=age,gender,Emotion";
 
         private static Face instance = null;
         public static Face Instance

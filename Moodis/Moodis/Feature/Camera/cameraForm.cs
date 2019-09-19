@@ -63,7 +63,6 @@ namespace moodis
             saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
             saveFileDialog1.FileName = fileName;
-            MessageBox.Show(fileName);
             MenuForm.currentImage.imagePath = fileName;
             try
             {

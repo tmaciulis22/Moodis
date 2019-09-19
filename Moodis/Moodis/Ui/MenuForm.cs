@@ -19,7 +19,7 @@ namespace Moodis.Ui
         public static ImageInfo currentImage = new ImageInfo();
         public static Boolean running = false;
         private Bitmap userImage;
-        private Face face;
+
         public MenuForm()
         {
             InitializeComponent();
@@ -37,29 +37,27 @@ namespace Moodis.Ui
         }
         public async void update()
         {
-            lblAnger.Text = "loading";
-            lblContempt.Text = "loading";
-            lblDisgust.Text = "loading";
-            lblFear.Text = "loading";
-            lblHappiness.Text = "loading";
-            lblNeutral.Text = "loading";
-            lblSadness.Text = "loading";
-            lblSurprise.Text = "loading";
+            var emotionLabels = new List<Label> { lblAnger, lblContempt, lblDisgust, lblFear, lblHappiness, lblNeutral, lblSadness, lblSurprise };
+            foreach (var label in emotionLabels)
+            {
+                label.Text = "loading";
+            }
             ShowImage(currentImage.imagePath);
-            face = Face.Instance;
+
+            Face face = Face.Instance;
             string imageFilePath = Console.ReadLine();
             string jsonAsString = await face.SendImageForAnalysis(currentImage.imagePath);
             currentImage.setImageInfo(jsonAsString);
-            ICollection valueColl = currentImage.Emotions.Values;
-            lblAnger.Text = "anger: " + (string)currentImage.Emotions["anger"];
-            lblContempt.Text = "contempt: " + (string)currentImage.Emotions["contempt"];
-            lblDisgust.Text = "disgust: " + (string)currentImage.Emotions["disgust"];
-            lblFear.Text = "fear: " + (string)currentImage.Emotions["fear"];
-            lblHappiness.Text = "happiness: " + (string)currentImage.Emotions["happiness"];
-            lblNeutral.Text = "neutral: " + (string)currentImage.Emotions["neutral"];
-            lblSadness.Text = "sadness: " + (string)currentImage.Emotions["sadness"];
-            lblSurprise.Text = "surprise: " + (string)currentImage.Emotions["surprise"];
-             
+
+            ICollection keyColl = currentImage.Emotions.Keys;
+            string[] emotionNames = new string[emotionLabels.Count];
+            keyColl.CopyTo(emotionNames, 0);
+            int counter = 0;
+            foreach (var label in emotionLabels)
+            {
+                label.Text = emotionNames[counter] + ": " + (string)currentImage.Emotions[emotionNames[counter]];
+                counter++;
+            }
         }
     }
 }

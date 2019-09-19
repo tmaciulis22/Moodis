@@ -12,11 +12,6 @@ namespace Moodis.Ui
 {
     public class ImageInfo
     {
-       /* public struct Emotion
-        {
-            public string name { get; set; }
-            public int confidence;
-        };*/
         public string imagePath { get; set; }
         public Hashtable Emotions = new Hashtable();
         private string id;
@@ -30,7 +25,7 @@ namespace Moodis.Ui
         {
             jsonInfo = jsonInfo.Replace("["," ").Replace("]","");
             dynamic data = JObject.Parse(jsonInfo);
-            Console.WriteLine(data);
+
             this.id = data.faceId;
             this.age = data.faceAttributes.age;
             this.gender = data.faceAttributes.gender;
@@ -47,47 +42,6 @@ namespace Moodis.Ui
             Emotions.Add("neutral", (string)data.faceAttributes.emotion.neutral);
             Emotions.Add("sadness", (string)data.faceAttributes.emotion.sadness);
             Emotions.Add("surprise", (string)data.faceAttributes.emotion.surprise);
-            /*
-            Emotion anger = new Emotion();
-            anger.name = "anger";
-            anger.confidence = data.faceAttributes.emotion.anger;
-            Emotions.Add(anger.name, anger);
-
-            Emotion contempt = new Emotion();
-            contempt.name = "contempt";
-            contempt.confidence = data.faceAttributes.emotion.contempt;
-            Emotions.Add(contempt.name, contempt);
-
-            Emotion disgust = new Emotion();
-            disgust.name = "disgust";
-            disgust.confidence = data.faceAttributes.emotion.disgust;
-            Emotions.Add(disgust.name, disgust);
-
-            Emotion fear = new Emotion();
-            fear.name = "fear";
-            fear.confidence = data.faceAttributes.emotion.fear;
-            Emotions.Add(fear.name, fear);
-
-            Emotion happiness = new Emotion();
-            happiness.name = "happiness";
-            happiness.confidence = data.faceAttributes.emotion.happiness;
-            Emotions.Add(happiness.name, happiness);
-
-            Emotion neutral = new Emotion();
-            neutral.name = "neutral";
-            neutral.confidence = data.faceAttributes.emotion.neutral;
-            Emotions.Add(neutral.name, neutral);
-
-            Emotion sadness = new Emotion();
-            sadness.name = "sadness";
-            sadness.confidence = data.faceAttributes.emotion.sadness;
-            Emotions.Add(sadness.name, sadness);
-
-            Emotion surprise = new Emotion();
-            surprise.name = "surprise";
-            surprise.confidence = data.faceAttributes.emotion.surprise;
-            Emotions.Add(surprise.name, surprise);
-            */
         }
     }
 }

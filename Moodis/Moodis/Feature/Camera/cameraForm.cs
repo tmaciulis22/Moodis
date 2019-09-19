@@ -3,6 +3,7 @@ using AForge.Video.DirectShow;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Moodis.Ui;
 
 namespace moodis
 {
@@ -16,7 +17,7 @@ namespace moodis
         private FilterInfoCollection webcam;
         private VideoCaptureDevice cam;
         private const string WarningMessage = "You must first turn on the camera!";
-
+        private MenuForm menuWindow;
         private void CameraFormLoad(object sender, EventArgs e)
         {
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -60,8 +61,10 @@ namespace moodis
         private void ButtonPicture(object sender, EventArgs e)
         {
             saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
-            var fileName = DateTime.Now.ToString().Replace("-","").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
+            var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
             saveFileDialog1.FileName = fileName;
+            MessageBox.Show(fileName);
+            MenuForm.currentImage.imagePath = fileName;
             try
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -72,7 +75,16 @@ namespace moodis
             catch
             {
                 MessageBox.Show(WarningMessage);
-            }            
+            }
+            if (!MenuForm.running)
+            {
+                menuWindow = new MenuForm();
+                menuWindow.Show();
+            }
+            else 
+            {
+                menuWindow.update();
+            }
         }
 
         private void ComboBoxResoliution(object sender, EventArgs e)

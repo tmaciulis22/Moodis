@@ -63,7 +63,7 @@ namespace moodis
             saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
             saveFileDialog1.FileName = fileName;
-            MenuMethods.currentImage.imagePath = fileName;
+            MenuMethods.currentImage.ImagePath = fileName;
             try
             {
                     picBox.Image.Save(saveFileDialog1.FileName);
@@ -79,7 +79,7 @@ namespace moodis
             }
             else 
             {
-                menuWindow.updateLabels();
+                menuWindow.UpdateLabels();
             }
         }
 

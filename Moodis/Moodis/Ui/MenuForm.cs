@@ -23,11 +23,11 @@ namespace Moodis.Ui
         {
             InitializeComponent();
             running = true;
-            updateLabels();
+            UpdateLabels();
         }
-        public async void updateLabels()
+        public async void UpdateLabels()
         {
-            imgTakenPicture.Image = MenuMethods.ShowImage(MenuMethods.currentImage.imagePath);
+            imgTakenPicture.Image = MenuMethods.ShowImage(MenuMethods.currentImage.ImagePath);
             var emotionLabels = new List<Label> { lblAnger, lblContempt, lblDisgust, lblFear, lblHappiness, lblNeutral, lblSadness, lblSurprise };
             foreach (var label in emotionLabels)
             {

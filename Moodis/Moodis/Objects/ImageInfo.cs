@@ -12,26 +12,24 @@ namespace Moodis.Ui
 {
     public class ImageInfo
     {
-        public string imagePath { get; set; }
+        public string ImagePath { get; set; }
         public Hashtable Emotions = new Hashtable();
         private string id;
         private string age;
         private string gender;
         public ImageInfo()
         {
-
         }
-        public void setImageInfo(String jsonInfo)
+        public void SetImageInfo(String jsonInfo)
         {
             dynamic data = JObject.Parse(jsonInfo);
-
             this.id = data.faceId;
             this.age = data.faceAttributes.age;
             this.gender = data.faceAttributes.gender;
             Emotions.Clear();
-            addEmotions(data);
+            AddEmotions(data);
         }
-        private void addEmotions(dynamic data)
+        private void AddEmotions(dynamic data)
         {
             Emotions.Add("anger",(string) data.faceAttributes.emotion.anger);
             Emotions.Add("contempt", (string)data.faceAttributes.emotion.contempt);

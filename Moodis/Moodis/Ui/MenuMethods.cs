@@ -14,7 +14,7 @@ namespace Moodis.Ui
     {
         public static ImageInfo currentImage = new ImageInfo();
         private static Bitmap userImage;
-        private static  string jsonAsString;
+        private static string jsonAsString;
 
         public static Bitmap ShowImage(String fileToDisplay)
         {
@@ -25,18 +25,13 @@ namespace Moodis.Ui
             userImage = new Bitmap(fileToDisplay);
             return userImage;
         }
-        public static async         Task
-        GetFaceEmotionsAsync()
+        public static async Task GetFaceEmotionsAsync()
         {
             Face face = Face.Instance;
-            string imageFilePath = Console.ReadLine();
-            jsonAsString = await face.SendImageForAnalysis(currentImage.imagePath);
-            Console.WriteLine("**********************");
-            Console.WriteLine(jsonAsString);
-            Console.WriteLine("**********************");
+            jsonAsString = await face.SendImageForAnalysis(currentImage.ImagePath);
             if (ValidateJson())
             {
-                currentImage.setImageInfo(jsonAsString);
+                currentImage.SetImageInfo(jsonAsString);
             }
         }
         public static bool ValidateJson()

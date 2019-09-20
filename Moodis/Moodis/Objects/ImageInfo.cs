@@ -23,7 +23,6 @@ namespace Moodis.Ui
         }
         public void setImageInfo(String jsonInfo)
         {
-            jsonInfo = jsonInfo.Replace("["," ").Replace("]","");
             dynamic data = JObject.Parse(jsonInfo);
 
             this.id = data.faceId;

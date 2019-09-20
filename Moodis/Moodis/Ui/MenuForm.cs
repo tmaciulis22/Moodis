@@ -16,47 +16,40 @@ namespace Moodis.Ui
 {
     public partial class MenuForm : Form
     {
-        public static ImageInfo currentImage = new ImageInfo();
         public static Boolean running = false;
-        private Bitmap userImage;
+        private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
 
         public MenuForm()
         {
             InitializeComponent();
             running = true;
-            update();
+            updateLabels();
         }
-        private void ShowImage(String fileToDisplay)
+        public async void updateLabels()
         {
-            if (userImage != null)
-            {
-                userImage.Dispose();
-            }
-            userImage = new Bitmap(fileToDisplay);
-            imgTakenPicture.Image = userImage;
-        }
-        public async void update()
-        {
+            imgTakenPicture.Image = MenuMethods.ShowImage(MenuMethods.currentImage.imagePath);
             var emotionLabels = new List<Label> { lblAnger, lblContempt, lblDisgust, lblFear, lblHappiness, lblNeutral, lblSadness, lblSurprise };
             foreach (var label in emotionLabels)
             {
                 label.Text = "loading";
             }
-            ShowImage(currentImage.imagePath);
-
-            Face face = Face.Instance;
-            string imageFilePath = Console.ReadLine();
-            string jsonAsString = await face.SendImageForAnalysis(currentImage.imagePath);
-            currentImage.setImageInfo(jsonAsString);
-
-            ICollection keyColl = currentImage.Emotions.Keys;
-            string[] emotionNames = new string[emotionLabels.Count];
-            keyColl.CopyTo(emotionNames, 0);
-            int counter = 0;
-            foreach (var label in emotionLabels)
+            await MenuMethods.GetFaceEmotionsAsync();
+            if (MenuMethods.ValidateJson())
             {
-                label.Text = emotionNames[counter] + ": " + (string)currentImage.Emotions[emotionNames[counter]];
-                counter++;
+                ICollection keyColl = MenuMethods.currentImage.Emotions.Keys;
+                string[] emotionNames = new string[emotionLabels.Count];
+                keyColl.CopyTo(emotionNames, 0);
+
+                int counter = 0;
+                foreach (var label in emotionLabels)
+                {
+                    label.Text = emotionNames[counter] + ": " + (string) MenuMethods.currentImage.Emotions[emotionNames[counter]];
+                    counter++;
+                }
+            }
+            else
+            {
+                MessageBox.Show(WarningFaceDetection);
             }
         }
     }

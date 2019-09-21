@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Moodie.Network.Face
+namespace Moodis.Network.Face
 {
     public sealed class Face
     {
@@ -17,7 +17,7 @@ namespace Moodie.Network.Face
         private const string UriBase =
             "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
         private const string RequestParameters = "returnFaceId=true&returnFaceLandmarks=false" +
-                "&returnFaceAttributes=age,gender,emotion";
+                "&returnFaceAttributes=age,gender,Emotion";
 
         private static Face instance = null;
         public static Face Instance
@@ -35,7 +35,6 @@ namespace Moodie.Network.Face
         public async Task<string> SendImageForAnalysis(string imageFilePath)
         {
             HttpClient client = new HttpClient();
-
             client.DefaultRequestHeaders.Add(
                 "Ocp-Apim-Subscription-Key", SubscriptionKey);
 
@@ -44,13 +43,13 @@ namespace Moodie.Network.Face
             HttpResponseMessage response;
 
             byte[] byteData = GetImageAsByteArray(imageFilePath);
-
             using (var content = new ByteArrayContent(byteData))
             {
                 content.Headers.ContentType =
                     new MediaTypeHeaderValue("application/octet-stream");
-
                 response = await client.PostAsync(uri, content);
+
+                string contentString = await response.Content.ReadAsStringAsync();
 
                 return await response.Content.ReadAsStringAsync();
             }
@@ -66,4 +65,4 @@ namespace Moodie.Network.Face
             }
         }
     }
-}  
+}

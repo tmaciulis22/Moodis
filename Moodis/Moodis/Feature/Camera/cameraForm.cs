@@ -3,6 +3,7 @@ using AForge.Video.DirectShow;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Moodis.Ui;
 
 namespace moodis
 {
@@ -16,10 +17,19 @@ namespace moodis
         private FilterInfoCollection webcam;
         private VideoCaptureDevice cam;
         private const string WarningMessage = "You must first turn on the camera!";
-
+        private const string NoDeviceMessage = "Your device does not have a camera.";
+        private MenuForm menuWindow;
         private void CameraFormLoad(object sender, EventArgs e)
         {
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+            if(webcam.Count == 0)
+            {
+                MessageBox.Show(NoDeviceMessage);
+                this.Close();
+                return;
+            }
+
             foreach(FilterInfo VideoCaptureDevice in webcam)
             {
                 cmbOutputDevices.Items.Add(VideoCaptureDevice.Name);
@@ -60,19 +70,26 @@ namespace moodis
         private void ButtonPicture(object sender, EventArgs e)
         {
             saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
-            var fileName = DateTime.Now.ToString().Replace("-","").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
+            var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
             saveFileDialog1.FileName = fileName;
+            MenuViewModel.currentImage.ImagePath = fileName;
             try
             {
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
                     picBox.Image.Save(saveFileDialog1.FileName);
-                }
+                    if (menuWindow == null)
+                    {
+                        menuWindow = new MenuForm();
+                        menuWindow.Show();
+                    }
+                    else
+                    {
+                        menuWindow.UpdateLabels();
+                    }
             }
             catch
             {
                 MessageBox.Show(WarningMessage);
-            }            
+            }
         }
 
         private void ComboBoxResoliution(object sender, EventArgs e)
@@ -91,7 +108,14 @@ namespace moodis
 
         private void CameraForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            cam.Stop();
+            try
+            {
+                cam.Stop();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

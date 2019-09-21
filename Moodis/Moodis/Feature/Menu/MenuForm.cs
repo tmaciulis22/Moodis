@@ -22,7 +22,7 @@ namespace Moodis.Ui
         public MenuForm()
         {
             InitializeComponent();
-            menuViewModel = MenuViewModel.Instance;
+            menuViewModel = new MenuViewModel();
             UpdateLabels();
         }
 

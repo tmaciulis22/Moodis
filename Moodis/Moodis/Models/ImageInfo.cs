@@ -22,7 +22,6 @@ namespace Moodis.Ui
         private string id;
         private string age;
         private string gender;
-        public ImageInfo() { }
 
         public void SetImageInfo(String jsonInfo)
         {

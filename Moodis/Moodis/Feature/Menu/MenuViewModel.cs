@@ -10,22 +10,35 @@ using System.Windows.Forms;
 
 namespace Moodis.Ui
 {
-    class MenuMethods
+    class MenuViewModel
     {
+        private MenuViewModel() { }
+
         public static ImageInfo currentImage = new ImageInfo();
         private static Bitmap userImage;
         private static string jsonAsString;
 
-        public static Bitmap ShowImage(String fileToDisplay)
+        private static MenuViewModel instance = null;
+        public static MenuViewModel Instance
         {
-            if (userImage != null)
+            get
             {
-                userImage.Dispose();
+                if (instance == null)
+                {
+                    instance = new MenuViewModel();
+                }
+                return instance;
             }
+        }
+
+        public Bitmap ShowImage(String fileToDisplay)
+        {
+            userImage?.Dispose();
             userImage = new Bitmap(fileToDisplay);
             return userImage;
         }
-        public static async Task GetFaceEmotionsAsync()
+
+        public async Task GetFaceEmotionsAsync()
         {
             Face face = Face.Instance;
             jsonAsString = await face.SendImageForAnalysis(currentImage.ImagePath);
@@ -34,7 +47,8 @@ namespace Moodis.Ui
                 currentImage.SetImageInfo(jsonAsString);
             }
         }
-        public static bool ValidateJson()
+
+        public bool ValidateJson()
         {
             jsonAsString = jsonAsString.Replace("[", " ").Replace("]", "").Replace(" ", "");
             if (string.IsNullOrEmpty(jsonAsString))

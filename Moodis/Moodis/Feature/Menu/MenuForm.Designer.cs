@@ -148,7 +148,6 @@
             this.Controls.Add(this.imgTakenPicture);
             this.Name = "MenuForm";
             this.Text = "Menu";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuFormCloseEvent);
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

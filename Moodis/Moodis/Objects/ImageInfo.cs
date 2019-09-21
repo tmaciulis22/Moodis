@@ -12,33 +12,37 @@ namespace Moodis.Ui
 {
     public class ImageInfo
     {
+        public struct Emotions
+        {
+            public string name;
+            public double confidence;
+        }
         public string ImagePath { get; set; }
-        public Hashtable Emotions = new Hashtable();
+        public Emotions[] emotions;
         private string id;
         private string age;
         private string gender;
-        public ImageInfo()
-        {
-        }
+        public ImageInfo() { }
+
         public void SetImageInfo(String jsonInfo)
         {
             dynamic data = JObject.Parse(jsonInfo);
             this.id = data.faceId;
             this.age = data.faceAttributes.age;
             this.gender = data.faceAttributes.gender;
-            Emotions.Clear();
             AddEmotions(data);
         }
+
         private void AddEmotions(dynamic data)
         {
-            Emotions.Add("anger",(string) data.faceAttributes.emotion.anger);
-            Emotions.Add("contempt", (string)data.faceAttributes.emotion.contempt);
-            Emotions.Add("disgust", (string)data.faceAttributes.emotion.disgust);
-            Emotions.Add("fear", (string)data.faceAttributes.emotion.fear);
-            Emotions.Add("happiness", (string)data.faceAttributes.emotion.happiness);
-            Emotions.Add("neutral", (string)data.faceAttributes.emotion.neutral);
-            Emotions.Add("sadness", (string)data.faceAttributes.emotion.sadness);
-            Emotions.Add("surprise", (string)data.faceAttributes.emotion.surprise);
+            emotions = new Emotions[8];
+            int counter = 0;
+            foreach(dynamic emotion in data.faceAttributes.emotion)
+            {
+                emotions[counter].name = (string) emotion.Name;
+                emotions[counter].confidence = (double) emotion.Value;
+                counter++;
+            }
         }
     }
 }

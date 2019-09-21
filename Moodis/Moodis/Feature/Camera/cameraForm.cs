@@ -63,23 +63,23 @@ namespace moodis
             saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
             saveFileDialog1.FileName = fileName;
-            MenuMethods.currentImage.ImagePath = fileName;
+            MenuViewModel.currentImage.ImagePath = fileName;
             try
             {
                     picBox.Image.Save(saveFileDialog1.FileName);
+                    if (menuWindow == null)
+                    {
+                        menuWindow = new MenuForm();
+                        menuWindow.Show();
+                    }
+                    else
+                    {
+                        menuWindow.UpdateLabels();
+                    }
             }
             catch
             {
                 MessageBox.Show(WarningMessage);
-            }
-            if (!MenuForm.running)
-            {
-                menuWindow = new MenuForm();
-                menuWindow.Show();
-            }
-            else 
-            {
-                menuWindow.UpdateLabels();
             }
         }
 

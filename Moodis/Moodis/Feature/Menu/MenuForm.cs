@@ -16,34 +16,32 @@ namespace Moodis.Ui
 {
     public partial class MenuForm : Form
     {
-        public static Boolean running = false;
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
-
+        private readonly MenuViewModel menuViewModel;
+        private const string formatDouble = "N3";
         public MenuForm()
         {
             InitializeComponent();
-            running = true;
+            menuViewModel = MenuViewModel.Instance;
             UpdateLabels();
         }
+
         public async void UpdateLabels()
         {
-            imgTakenPicture.Image = MenuMethods.ShowImage(MenuMethods.currentImage.ImagePath);
+            imgTakenPicture.Image = menuViewModel.ShowImage(MenuViewModel.currentImage.ImagePath);
             var emotionLabels = new List<Label> { lblAnger, lblContempt, lblDisgust, lblFear, lblHappiness, lblNeutral, lblSadness, lblSurprise };
             foreach (var label in emotionLabels)
             {
                 label.Text = "loading";
             }
-            await MenuMethods.GetFaceEmotionsAsync();
-            if (MenuMethods.ValidateJson())
+            await menuViewModel.GetFaceEmotionsAsync();
+            if (menuViewModel.ValidateJson())
             {
-                ICollection keyColl = MenuMethods.currentImage.Emotions.Keys;
-                string[] emotionNames = new string[emotionLabels.Count];
-                keyColl.CopyTo(emotionNames, 0);
-
                 int counter = 0;
                 foreach (var label in emotionLabels)
                 {
-                    label.Text = emotionNames[counter] + ": " + (string) MenuMethods.currentImage.Emotions[emotionNames[counter]];
+                    label.Text = MenuViewModel.currentImage.emotions[counter].name + " : " 
+                        + MenuViewModel.currentImage.emotions[counter].confidence.ToString(formatDouble);
                     counter++;
                 }
             }
@@ -51,11 +49,6 @@ namespace Moodis.Ui
             {
                 MessageBox.Show(WarningFaceDetection);
             }
-        }
-
-        private void MenuFormCloseEvent(object sender, FormClosedEventArgs e)
-        {
-            running = false;
         }
     }
 }

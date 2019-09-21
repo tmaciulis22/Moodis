@@ -135,7 +135,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(637, 450);
             this.Controls.Add(this.lblSurprise);
             this.Controls.Add(this.lblSadness);
             this.Controls.Add(this.lblNeutral);
@@ -148,6 +148,7 @@
             this.Controls.Add(this.imgTakenPicture);
             this.Name = "MenuForm";
             this.Text = "Menu";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuFormCloseEvent);
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

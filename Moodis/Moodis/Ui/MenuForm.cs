@@ -52,5 +52,10 @@ namespace Moodis.Ui
                 MessageBox.Show(WarningFaceDetection);
             }
         }
+
+        private void MenuFormCloseEvent(object sender, FormClosedEventArgs e)
+        {
+            running = false;
+        }
     }
 }

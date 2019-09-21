@@ -17,10 +17,19 @@ namespace moodis
         private FilterInfoCollection webcam;
         private VideoCaptureDevice cam;
         private const string WarningMessage = "You must first turn on the camera!";
+        private const string NoDeviceMessage = "Your device does not have a camera.";
         private MenuForm menuWindow;
         private void CameraFormLoad(object sender, EventArgs e)
         {
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+            if(webcam.Count == 0)
+            {
+                MessageBox.Show(NoDeviceMessage);
+                this.Close();
+                return;
+            }
+
             foreach(FilterInfo VideoCaptureDevice in webcam)
             {
                 cmbOutputDevices.Items.Add(VideoCaptureDevice.Name);
@@ -99,7 +108,14 @@ namespace moodis
 
         private void CameraForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            cam.Stop();
+            try
+            {
+                cam.Stop();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }

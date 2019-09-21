@@ -12,13 +12,13 @@ namespace Moodis.Ui
 {
     public class ImageInfo
     {
-        public struct Emotions
+        public struct Emotion
         {
             public string name;
             public double confidence;
         }
         public string ImagePath { get; set; }
-        public Emotions[] emotions;
+        public Emotion[] emotions;
         private string id;
         private string age;
         private string gender;
@@ -35,7 +35,7 @@ namespace Moodis.Ui
 
         private void AddEmotions(dynamic data)
         {
-            emotions = new Emotions[8];
+            emotions = new Emotion[8];
             int counter = 0;
             foreach(dynamic emotion in data.faceAttributes.emotion)
             {

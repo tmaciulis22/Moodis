@@ -230,3 +230,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/csharp,windows
+/Moodis/.vs/Moodis/v16/Server/sqlite3
+/Moodis/Moodis/bin/Debug
+/Moodis/Moodis/obj/Debug
+
+.vs/

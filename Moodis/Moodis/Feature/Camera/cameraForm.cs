@@ -15,7 +15,7 @@ namespace moodis
 
         private FilterInfoCollection webcam;
         private VideoCaptureDevice cam;
-        private const string WarningMsg = "You must first turn on the camera!";
+        private const string WarningMessage = "You must first turn on the camera!";
 
         private void CameraFormLoad(object sender, EventArgs e)
         {
@@ -71,7 +71,7 @@ namespace moodis
             }
             catch
             {
-                MessageBox.Show(WarningMsg);
+                MessageBox.Show(WarningMessage);
             }            
         }
 

@@ -79,6 +79,7 @@
     <Compile Include="Feature\Camera\cameraForm.Designer.cs">
       <DependentUpon>cameraForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs" />
     <Compile Include="Network\Face\Face.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,6 +136,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Feature\Login\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

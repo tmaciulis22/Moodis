@@ -13,9 +13,9 @@ namespace Moodis.Network.Face
     {
         private Face(){}
 
-        private const string SubscriptionKey = "e285e7e510e0493bbaa7ffe5ffc2db77";
+        private const string SubscriptionKey = "8d0853136f974ea5a73fb4faae69f570";
         private const string UriBase =
-            "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+            "https://aurimas.cognitiveservices.azure.com/face/v1.0/detect";
         private const string RequestParameters = "returnFaceId=true&returnFaceLandmarks=false" +
                 "&returnFaceAttributes=age,gender,Emotion";
 

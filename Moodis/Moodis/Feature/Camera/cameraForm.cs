@@ -45,6 +45,8 @@ namespace moodis
             }
 
             cmbCamResoliution.SelectedIndex = cmbCamResoliution.Items.Count-1;
+            cam.NewFrame += new NewFrameEventHandler(cam_newFrame);
+            cam.Start();
         }
 
         private void ButtonStartClick(object sender, EventArgs e)

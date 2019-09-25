@@ -78,7 +78,7 @@ namespace moodis
             try
             {
                     picBox.Image.Save(saveFileDialog1.FileName);
-                    if (menuWindow == null)
+                    if (menuWindow == null || menuWindow.running == false)
                     {
                         menuWindow = new MenuForm();
                         menuWindow.Show();

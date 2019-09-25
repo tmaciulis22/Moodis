@@ -16,6 +16,7 @@ namespace Moodis.Ui
 {
     public partial class MenuForm : Form
     {
+        public bool running = false;
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         private readonly MenuViewModel menuViewModel;
         private const string formatDouble = "N3";
@@ -23,6 +24,7 @@ namespace Moodis.Ui
         {
             InitializeComponent();
             menuViewModel = new MenuViewModel();
+            running = true;
             UpdateLabels();
         }
 
@@ -49,6 +51,11 @@ namespace Moodis.Ui
             {
                 MessageBox.Show(WarningFaceDetection);
             }
+        }
+
+        private void MenuFormClose(object sender, FormClosedEventArgs e)
+        {
+            running = false;
         }
     }
 }

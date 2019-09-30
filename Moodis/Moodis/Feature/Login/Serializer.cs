@@ -21,8 +21,9 @@ namespace Moodis.Feature.Login
                     return true;
                 }
             }
-            catch (IOException)
+            catch (IOException ex)
             {
+                Console.WriteLine(ex.ToString());
                 return false;
             }
         }
@@ -39,8 +40,9 @@ namespace Moodis.Feature.Login
                     result = (T)bin.Deserialize(stream);
                 }
             }
-            catch (IOException)
+            catch (IOException ex)
             {
+                Console.WriteLine(ex.ToString());
             }
 
             return result;

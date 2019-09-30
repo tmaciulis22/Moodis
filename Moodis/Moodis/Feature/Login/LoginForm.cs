@@ -15,6 +15,14 @@ namespace Moodis.Feature.Login
     public partial class LoginForm : Form
     {
 
+        public const String usernameEmpty = "Username field is empty!";
+        public const String passwordEmpty = "Password field is empty!";
+        public const String userNotFound = "User not found!";
+        public const String passwordsNotSame = "Passwords must be the same!";
+        public const String created = " was created!";
+        public const String exists = " alreadyExists!";
+        public const String strongerPassword = "Password must be stronger!";
+
         private readonly LoginViewModel loginViewModel;
         public LoginForm()
         {
@@ -26,22 +34,22 @@ namespace Moodis.Feature.Login
         {
             if (string.IsNullOrWhiteSpace(usernameField.Text))
             {
-                errorLabel.Text = "Username field is empty!";
+                errorLabel.Text = usernameEmpty;
             }else if (string.IsNullOrWhiteSpace(passwordField.Text))
             {
-                errorLabel.Text = "Password field is empty!";
+                errorLabel.Text = passwordEmpty;
             }
             else
             {
                 if (loginViewModel.Authenticate(usernameField.Text, passwordField.Text) != null)
                 {
-                    CameraForm cameraWindow = new CameraForm();
+                    var cameraWindow = new CameraForm();
                     cameraWindow.Show();
                     this.Hide();
                 }
                 else
                 {
-                    errorLabel.Text = "User not found!";
+                    errorLabel.Text = userNotFound;
                 }
                 
             }
@@ -52,11 +60,11 @@ namespace Moodis.Feature.Login
             errorRegisterLabel.ForeColor = Color.Red;
             if (string.IsNullOrWhiteSpace(usernameRegisterField.Text))
             {
-                errorRegisterLabel.Text = "Username field is empty!";
+                errorRegisterLabel.Text = usernameEmpty;
             }
             else if (string.IsNullOrWhiteSpace(passwordRegisterField.Text))
             {
-                errorRegisterLabel.Text = "Password field is empty!";
+                errorRegisterLabel.Text = passwordEmpty;
             }
             else
             {
@@ -65,25 +73,25 @@ namespace Moodis.Feature.Login
                 {
                     if (passwordRegisterField.Text != passwordRepRegisterField.Text)
                     {
-                        errorRegisterLabel.Text = "Passwords must be the same!";
+                        errorRegisterLabel.Text = passwordsNotSame;
                     }
                     else
                     {
                         if (loginViewModel.AddUser(usernameRegisterField.Text,passwordRegisterField.Text))
                         {
                             errorRegisterLabel.ForeColor = Color.Green;
-                            errorRegisterLabel.Text = usernameRegisterField.Text + " was created!";
+                            errorRegisterLabel.Text = usernameRegisterField.Text + created;
                         }
                         else
                         {
-                            errorRegisterLabel.Text = usernameRegisterField.Text + " already exists!";
+                            errorRegisterLabel.Text = usernameRegisterField.Text + exists;
                         }
 
                     } 
                 }
                 else
                 {
-                    errorRegisterLabel.Text = "Password must be stronger!";
+                    errorRegisterLabel.Text = strongerPassword;
                 }
 
             }

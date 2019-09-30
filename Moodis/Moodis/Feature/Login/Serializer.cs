@@ -10,7 +10,7 @@ namespace Moodis.Feature.Login
 {
     public static class Serializer
     {
-        public static void Save(string filePath, object objToSerialize)
+        public static bool Save(string filePath, object objToSerialize)
         {
             try
             {
@@ -18,30 +18,32 @@ namespace Moodis.Feature.Login
                 {
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(stream, objToSerialize);
+                    return true;
                 }
             }
             catch (IOException)
             {
+                return false;
             }
         }
 
         public static T Load<T>(string filePath) where T : new()
         {
-            T rez = new T();
+            T result = new T();
 
             try
             {
                 using (Stream stream = File.Open(filePath, FileMode.Open))
                 {
                     BinaryFormatter bin = new BinaryFormatter();
-                    rez = (T)bin.Deserialize(stream);
+                    result = (T)bin.Deserialize(stream);
                 }
             }
             catch (IOException)
             {
             }
 
-            return rez;
+            return result;
         }
     }
 

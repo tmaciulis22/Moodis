@@ -20,9 +20,9 @@ namespace Moodis.Feature.Login
                 userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
             }
 
-            if (userList.Exists(x => x.getUsername() == username && x.getPassword() == CalculateMD5Hash(password)))
+            if (userList.Exists(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password)))
             {
-                return userList.Find(x => x.getUsername() == username && x.getPassword() == CalculateMD5Hash(password));
+                return userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
             }
             else
             {
@@ -39,31 +39,18 @@ namespace Moodis.Feature.Login
                 userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
             }
 
-            if (userList.Exists(x => x.getUsername() == username))
+            if (userList.Exists(x => x.username == username))
             {
                 return false;
             }
             else
             {
-                User user = new User(username, CalculateMD5Hash(password));
+                User user = new User(username, Crypto.CalculateMD5Hash(password));
                 userList.Add(user);
-                Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
-                return true;
+
+                return Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
             }
         }
 
-        private string CalculateMD5Hash(string input)
-        {
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hash = md5.ComputeHash(inputBytes);
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                sb.Append(hash[i].ToString("X2"));
-            }
-            return sb.ToString();
-        }
     }
 }

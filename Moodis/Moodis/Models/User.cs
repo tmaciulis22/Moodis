@@ -9,8 +9,8 @@ namespace Moodis.Feature.Login
     [Serializable]
     class User
     {
-        private String username;
-        private String password;
+        public String username { get; set; }
+        public String password { get; set; }
 
         public User(String username, String password)
         {
@@ -18,14 +18,5 @@ namespace Moodis.Feature.Login
             this.password = password;
         }
 
-        public String getUsername()
-        {
-            return this.username;
-        }
-
-        public String getPassword()
-        {
-            return this.password;
-        }
     }
 }

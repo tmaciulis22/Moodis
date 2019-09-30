@@ -79,6 +79,7 @@
     <Compile Include="Feature\Camera\cameraForm.Designer.cs">
       <DependentUpon>cameraForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\Login\Crypto.cs" />
     <Compile Include="Feature\Login\Serializer.cs" />
     <Compile Include="Feature\Login\LoginViewModel.cs" />
     <Compile Include="Feature\Login\LoginForm.cs">

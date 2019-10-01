@@ -96,5 +96,10 @@ namespace Moodis.Feature.Login
 
             }
         }
+
+        private void LoginClose(object sender, FormClosedEventArgs e)
+        {
+            Program.close();
+        }
     }
 }

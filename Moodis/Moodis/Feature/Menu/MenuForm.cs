@@ -45,7 +45,7 @@ namespace Moodis.Ui
             {
                 Console.WriteLine(e);
                 MessageBox.Show(WarningInRequest);
-                Program.close();
+                Application.Exit();
             }
             if (menuViewModel.ValidateJson())
             {

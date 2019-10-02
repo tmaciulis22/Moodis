@@ -19,9 +19,5 @@ namespace moodis
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginForm());
         }
-        public static void close()
-        {
-            Application.Exit();
-        }
     }
 }

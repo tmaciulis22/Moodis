@@ -28,6 +28,7 @@ namespace Moodis.Ui
         {
             Face face = Face.Instance;
             jsonAsString = await face.SendImageForAnalysis(currentImage.ImagePath);
+            Console.WriteLine(jsonAsString);
             if (ValidateJson())
             {
                 currentImage.SetImageInfo(jsonAsString);

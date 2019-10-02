@@ -17,6 +17,7 @@ namespace Moodis.Ui
     public partial class MenuForm : Form
     {
         public bool running = false;
+        private const string WarningInRequest = "Azure api request failed. Is your internet turned on ?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         private readonly MenuViewModel menuViewModel;
         private const string formatDouble = "N3";
@@ -36,7 +37,16 @@ namespace Moodis.Ui
             {
                 label.Text = "loading";
             }
-            await menuViewModel.GetFaceEmotionsAsync();
+            try
+            {
+                await menuViewModel.GetFaceEmotionsAsync();
+            }
+            catch (System.Net.Http.HttpRequestException e)
+            {
+                Console.WriteLine(e);
+                MessageBox.Show(WarningInRequest);
+                Application.Exit();
+            }
             if (menuViewModel.ValidateJson())
             {
                 int counter = 0;

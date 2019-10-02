@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using moodis;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -35,7 +36,14 @@ namespace Moodis.Ui
 
         public bool ValidateJson()
         {
-            jsonAsString = jsonAsString.Replace("[", " ").Replace("]", "").Replace(" ", "");
+            try
+            {
+                jsonAsString = jsonAsString.Replace("[", " ").Replace("]", "").Replace(" ", "");
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine(e);
+            }
             if (string.IsNullOrEmpty(jsonAsString))
             {
                 return false;

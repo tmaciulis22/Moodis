@@ -50,7 +50,6 @@ namespace Moodis.Network.Face
                 response = await client.PostAsync(uri, content);
 
                 string contentString = await response.Content.ReadAsStringAsync();
-
                 return await response.Content.ReadAsStringAsync();
             }
         }

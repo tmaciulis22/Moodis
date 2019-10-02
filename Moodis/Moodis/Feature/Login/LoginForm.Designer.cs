@@ -50,9 +50,10 @@
             // 
             this.signInLabel.AutoSize = true;
             this.signInLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.signInLabel.Location = new System.Drawing.Point(121, 45);
+            this.signInLabel.Location = new System.Drawing.Point(91, 37);
+            this.signInLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.signInLabel.Name = "signInLabel";
-            this.signInLabel.Size = new System.Drawing.Size(133, 42);
+            this.signInLabel.Size = new System.Drawing.Size(109, 36);
             this.signInLabel.TabIndex = 0;
             this.signInLabel.Text = "Sign In";
             // 
@@ -60,49 +61,55 @@
             // 
             this.errorLabel.AutoSize = true;
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(153, 102);
+            this.errorLabel.Location = new System.Drawing.Point(115, 83);
+            this.errorLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(0, 17);
+            this.errorLabel.Size = new System.Drawing.Size(0, 13);
             this.errorLabel.TabIndex = 1;
             // 
             // usernameField
             // 
-            this.usernameField.Location = new System.Drawing.Point(156, 131);
+            this.usernameField.Location = new System.Drawing.Point(117, 106);
+            this.usernameField.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.usernameField.Name = "usernameField";
-            this.usernameField.Size = new System.Drawing.Size(150, 22);
+            this.usernameField.Size = new System.Drawing.Size(114, 20);
             this.usernameField.TabIndex = 2;
             // 
             // passwordField
             // 
-            this.passwordField.Location = new System.Drawing.Point(156, 178);
+            this.passwordField.Location = new System.Drawing.Point(117, 145);
+            this.passwordField.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.passwordField.Name = "passwordField";
             this.passwordField.PasswordChar = '*';
-            this.passwordField.Size = new System.Drawing.Size(150, 22);
+            this.passwordField.Size = new System.Drawing.Size(114, 20);
             this.passwordField.TabIndex = 3;
             // 
             // usernameLabel
             // 
             this.usernameLabel.AutoSize = true;
-            this.usernameLabel.Location = new System.Drawing.Point(64, 136);
+            this.usernameLabel.Location = new System.Drawing.Point(48, 110);
+            this.usernameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.usernameLabel.Name = "usernameLabel";
-            this.usernameLabel.Size = new System.Drawing.Size(77, 17);
+            this.usernameLabel.Size = new System.Drawing.Size(58, 13);
             this.usernameLabel.TabIndex = 4;
             this.usernameLabel.Text = "Username:";
             // 
             // passwordLabel
             // 
             this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(64, 181);
+            this.passwordLabel.Location = new System.Drawing.Point(48, 147);
+            this.passwordLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(73, 17);
+            this.passwordLabel.Size = new System.Drawing.Size(56, 13);
             this.passwordLabel.TabIndex = 5;
             this.passwordLabel.Text = "Password:";
             // 
             // loginButton
             // 
-            this.loginButton.Location = new System.Drawing.Point(156, 232);
+            this.loginButton.Location = new System.Drawing.Point(117, 188);
+            this.loginButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(100, 30);
+            this.loginButton.Size = new System.Drawing.Size(75, 24);
             this.loginButton.TabIndex = 6;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
@@ -112,40 +119,45 @@
             // 
             this.registerLabel.AutoSize = true;
             this.registerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.registerLabel.Location = new System.Drawing.Point(495, 45);
+            this.registerLabel.Location = new System.Drawing.Point(371, 37);
+            this.registerLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.registerLabel.Name = "registerLabel";
-            this.registerLabel.Size = new System.Drawing.Size(157, 42);
+            this.registerLabel.Size = new System.Drawing.Size(126, 36);
             this.registerLabel.TabIndex = 7;
             this.registerLabel.Text = "Register";
             // 
             // usernameRegisterField
             // 
-            this.usernameRegisterField.Location = new System.Drawing.Point(502, 131);
+            this.usernameRegisterField.Location = new System.Drawing.Point(376, 106);
+            this.usernameRegisterField.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.usernameRegisterField.Name = "usernameRegisterField";
-            this.usernameRegisterField.Size = new System.Drawing.Size(150, 22);
+            this.usernameRegisterField.Size = new System.Drawing.Size(114, 20);
             this.usernameRegisterField.TabIndex = 8;
             // 
             // passwordRegisterField
             // 
-            this.passwordRegisterField.Location = new System.Drawing.Point(502, 173);
+            this.passwordRegisterField.Location = new System.Drawing.Point(376, 141);
+            this.passwordRegisterField.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.passwordRegisterField.Name = "passwordRegisterField";
             this.passwordRegisterField.PasswordChar = '*';
-            this.passwordRegisterField.Size = new System.Drawing.Size(150, 22);
+            this.passwordRegisterField.Size = new System.Drawing.Size(114, 20);
             this.passwordRegisterField.TabIndex = 9;
             // 
             // passwordRepRegisterField
             // 
-            this.passwordRepRegisterField.Location = new System.Drawing.Point(502, 217);
+            this.passwordRepRegisterField.Location = new System.Drawing.Point(376, 176);
+            this.passwordRepRegisterField.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.passwordRepRegisterField.Name = "passwordRepRegisterField";
             this.passwordRepRegisterField.PasswordChar = '*';
-            this.passwordRepRegisterField.Size = new System.Drawing.Size(150, 22);
+            this.passwordRepRegisterField.Size = new System.Drawing.Size(114, 20);
             this.passwordRepRegisterField.TabIndex = 10;
             // 
             // registerButton
             // 
-            this.registerButton.Location = new System.Drawing.Point(502, 265);
+            this.registerButton.Location = new System.Drawing.Point(376, 215);
+            this.registerButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.registerButton.Name = "registerButton";
-            this.registerButton.Size = new System.Drawing.Size(100, 30);
+            this.registerButton.Size = new System.Drawing.Size(75, 24);
             this.registerButton.TabIndex = 11;
             this.registerButton.Text = "Register";
             this.registerButton.UseVisualStyleBackColor = true;
@@ -154,27 +166,30 @@
             // usernameRegisterLabel
             // 
             this.usernameRegisterLabel.AutoSize = true;
-            this.usernameRegisterLabel.Location = new System.Drawing.Point(419, 134);
+            this.usernameRegisterLabel.Location = new System.Drawing.Point(314, 109);
+            this.usernameRegisterLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.usernameRegisterLabel.Name = "usernameRegisterLabel";
-            this.usernameRegisterLabel.Size = new System.Drawing.Size(77, 17);
+            this.usernameRegisterLabel.Size = new System.Drawing.Size(58, 13);
             this.usernameRegisterLabel.TabIndex = 12;
             this.usernameRegisterLabel.Text = "Username:";
             // 
             // passwordRegisterLabel
             // 
             this.passwordRegisterLabel.AutoSize = true;
-            this.passwordRegisterLabel.Location = new System.Drawing.Point(423, 176);
+            this.passwordRegisterLabel.Location = new System.Drawing.Point(317, 143);
+            this.passwordRegisterLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.passwordRegisterLabel.Name = "passwordRegisterLabel";
-            this.passwordRegisterLabel.Size = new System.Drawing.Size(73, 17);
+            this.passwordRegisterLabel.Size = new System.Drawing.Size(56, 13);
             this.passwordRegisterLabel.TabIndex = 13;
             this.passwordRegisterLabel.Text = "Password:";
             // 
             // passwordRepRegisterLabel
             // 
             this.passwordRepRegisterLabel.AutoSize = true;
-            this.passwordRepRegisterLabel.Location = new System.Drawing.Point(436, 220);
+            this.passwordRepRegisterLabel.Location = new System.Drawing.Point(327, 179);
+            this.passwordRepRegisterLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.passwordRepRegisterLabel.Name = "passwordRepRegisterLabel";
-            this.passwordRepRegisterLabel.Size = new System.Drawing.Size(60, 17);
+            this.passwordRepRegisterLabel.Size = new System.Drawing.Size(45, 13);
             this.passwordRepRegisterLabel.TabIndex = 14;
             this.passwordRepRegisterLabel.Text = "Confirm:";
             // 
@@ -182,16 +197,17 @@
             // 
             this.errorRegisterLabel.AutoSize = true;
             this.errorRegisterLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorRegisterLabel.Location = new System.Drawing.Point(499, 102);
+            this.errorRegisterLabel.Location = new System.Drawing.Point(374, 83);
+            this.errorRegisterLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.errorRegisterLabel.Name = "errorRegisterLabel";
-            this.errorRegisterLabel.Size = new System.Drawing.Size(0, 17);
+            this.errorRegisterLabel.Size = new System.Drawing.Size(0, 13);
             this.errorRegisterLabel.TabIndex = 15;
             // 
             // LoginForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(600, 366);
             this.Controls.Add(this.errorRegisterLabel);
             this.Controls.Add(this.passwordRepRegisterLabel);
             this.Controls.Add(this.passwordRegisterLabel);
@@ -208,8 +224,10 @@
             this.Controls.Add(this.usernameField);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.signInLabel);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "LoginForm";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginClose);
             this.ResumeLayout(false);
             this.PerformLayout();
 

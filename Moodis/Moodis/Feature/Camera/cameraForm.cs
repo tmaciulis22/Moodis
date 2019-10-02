@@ -113,6 +113,7 @@ namespace moodis
             try
             {
                 cam.Stop();
+                Application.Exit();
             }
             catch (Exception ex)
             {

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using moodis;
+using Moodis.Feature.Statistics;
 using Moodis.Network.Face;
 
 namespace Moodis.Ui
@@ -57,6 +58,13 @@ namespace Moodis.Ui
         private void MenuFormClose(object sender, FormClosedEventArgs e)
         {
             running = false;
+        }
+
+        private void BtnCalendar_Click(object sender, EventArgs e)
+        {
+            CalendarForm calendarForm = new CalendarForm(new CalendarViewModel(), this);
+            this.Hide();
+            calendarForm.Show();
         }
     }
 }

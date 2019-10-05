@@ -21,7 +21,7 @@ namespace Moodis.Ui
         }
         public string ImagePath { get; set; }
         public Emotion[] emotions;
-        private DateTime imageDate;
+        private DateTime imageDate { get; set; }
         private string id;
         private string age;
         private string gender;

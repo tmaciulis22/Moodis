@@ -38,6 +38,7 @@
             this.lblNeutral = new System.Windows.Forms.Label();
             this.lblSadness = new System.Windows.Forms.Label();
             this.lblSurprise = new System.Windows.Forms.Label();
+            this.btnCalendar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,11 +132,22 @@
             this.lblSurprise.TabIndex = 9;
             this.lblSurprise.Text = "loading.";
             // 
+            // btnCalendar
+            // 
+            this.btnCalendar.Location = new System.Drawing.Point(366, 28);
+            this.btnCalendar.Name = "btnCalendar";
+            this.btnCalendar.Size = new System.Drawing.Size(153, 41);
+            this.btnCalendar.TabIndex = 10;
+            this.btnCalendar.Text = "Go to Calendar";
+            this.btnCalendar.UseVisualStyleBackColor = true;
+            this.btnCalendar.Click += new System.EventHandler(this.BtnCalendar_Click);
+            // 
             // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 450);
+            this.ClientSize = new System.Drawing.Size(531, 442);
+            this.Controls.Add(this.btnCalendar);
             this.Controls.Add(this.lblSurprise);
             this.Controls.Add(this.lblSadness);
             this.Controls.Add(this.lblNeutral);
@@ -167,5 +179,6 @@
         private System.Windows.Forms.Label lblNeutral;
         private System.Windows.Forms.Label lblSadness;
         private System.Windows.Forms.Label lblSurprise;
+        private System.Windows.Forms.Button btnCalendar;
     }
 }

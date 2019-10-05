@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
 
+using Moodis.Feature.Statistics;
+
 namespace moodis
 {
     static class Program
@@ -17,7 +19,7 @@ namespace moodis
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new CalendarForm(new CalendarViewModel()));
         }
     }
 }

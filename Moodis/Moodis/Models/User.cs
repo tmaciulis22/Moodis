@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Moodis.Ui;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Moodis.Feature.Login
 {
@@ -11,11 +9,16 @@ namespace Moodis.Feature.Login
     {
         public String username { get; set; }
         public String password { get; set; }
+        public List<ImageInfo> imageStats = new List<ImageInfo>();
 
         public User(String username, String password)
         {
             this.username = username;
             this.password = password;
+        }
+        public void addImage(ImageInfo image)
+        {
+            imageStats.Add(image);
         }
 
     }

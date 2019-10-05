@@ -10,10 +10,10 @@ namespace Moodis.Feature.Login
 {
     class LoginViewModel
     {
-
+        List<User> userList;
         public User Authenticate(String username, String password)
         {
-            List<User> userList = new List<User>();
+            userList = new List<User>();
 
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
             {
@@ -32,7 +32,7 @@ namespace Moodis.Feature.Login
 
         public bool AddUser(String username, String password)
         {
-            List<User> userList = new List<User>();
+            userList = new List<User>();
 
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
             {

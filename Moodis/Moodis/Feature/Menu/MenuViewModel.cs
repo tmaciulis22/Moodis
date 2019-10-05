@@ -45,5 +45,10 @@ namespace Moodis.Ui
                 return true;
             }
         }
+
+        public void UserAddImage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

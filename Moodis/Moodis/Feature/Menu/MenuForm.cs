@@ -46,6 +46,7 @@ namespace Moodis.Ui
                         + MenuViewModel.currentImage.emotions[counter].confidence.ToString(formatDouble);
                     counter++;
                 }
+                menuViewModel.UserAddImage();
             }
             else
             {

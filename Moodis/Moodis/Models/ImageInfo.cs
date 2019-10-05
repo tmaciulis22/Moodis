@@ -17,6 +17,7 @@ namespace Moodis.Ui
             public string name;
             public double confidence;
         }
+
         public string ImagePath { get; set; }
         public Emotion[] emotions;
         private string id;

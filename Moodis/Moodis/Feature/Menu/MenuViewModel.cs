@@ -8,6 +8,7 @@ using System.Text;
 using moodis;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Moodis.Extensions;
 
 namespace Moodis.Ui
 {
@@ -15,9 +16,8 @@ namespace Moodis.Ui
     {
         public static ImageInfo currentImage = new ImageInfo();
         private static Bitmap userImage;
-        private static string jsonAsString;
 
-        public Bitmap ShowImage(String fileToDisplay)
+        public Bitmap ShowImage(string fileToDisplay)
         {
             userImage?.Dispose();
             userImage = new Bitmap(fileToDisplay);
@@ -27,30 +27,11 @@ namespace Moodis.Ui
         public async Task GetFaceEmotionsAsync()
         {
             Face face = Face.Instance;
-            jsonAsString = await face.SendImageForAnalysis(currentImage.ImagePath);
-            if (ValidateJson())
+            var json = await face.SendImageForAnalysis(currentImage.ImagePath);
+            var jsonAsString = json.ValidateJson();
+            if (jsonAsString != null)
             {
                 currentImage.SetImageInfo(jsonAsString);
-            }
-        }
-
-        public bool ValidateJson()
-        {
-            try
-            {
-                jsonAsString = jsonAsString.Replace("[", " ").Replace("]", "").Replace(" ", "");
-            }
-            catch (NullReferenceException e)
-            {
-                Console.WriteLine(e);
-            }
-            if (string.IsNullOrEmpty(jsonAsString))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
             }
         }
     }

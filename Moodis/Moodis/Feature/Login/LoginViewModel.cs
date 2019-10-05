@@ -11,7 +11,7 @@ namespace Moodis.Feature.Login
     class LoginViewModel
     {
 
-        public User Authenticate(String username, String password)
+        public User Authenticate(string username, string password)
         {
             List<User> userList = new List<User>();
 
@@ -30,7 +30,7 @@ namespace Moodis.Feature.Login
             }
         }
 
-        public bool AddUser(String username, String password)
+        public bool AddUser(string username, string password)
         {
             List<User> userList = new List<User>();
 

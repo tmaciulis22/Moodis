@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Moodis.Network.Face
@@ -34,7 +30,7 @@ namespace Moodis.Network.Face
 
         public async Task<string> SendImageForAnalysis(string imageFilePath)
         {
-            HttpClient client = new HttpClient();
+            var client = new HttpClient();
             client.DefaultRequestHeaders.Add(
                 "Ocp-Apim-Subscription-Key", SubscriptionKey);
 
@@ -49,7 +45,6 @@ namespace Moodis.Network.Face
                     new MediaTypeHeaderValue("application/octet-stream");
                 response = await client.PostAsync(uri, content);
 
-                string contentString = await response.Content.ReadAsStringAsync();
                 return await response.Content.ReadAsStringAsync();
             }
         }

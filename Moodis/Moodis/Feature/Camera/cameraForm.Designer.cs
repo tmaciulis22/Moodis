@@ -33,7 +33,7 @@
             this.buttonStop = new System.Windows.Forms.Button();
             this.picBox = new System.Windows.Forms.PictureBox();
             this.cmbOutputDevices = new System.Windows.Forms.ComboBox();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.labelOutputDevice = new System.Windows.Forms.Label();
             this.cmbCamResoliution = new System.Windows.Forms.ComboBox();
             this.labelResoliution = new System.Windows.Forms.Label();
@@ -146,7 +146,7 @@
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.PictureBox picBox;
         private System.Windows.Forms.ComboBox cmbOutputDevices;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.Label labelOutputDevice;
         private System.Windows.Forms.ComboBox cmbCamResoliution;
         private System.Windows.Forms.Label labelResoliution;

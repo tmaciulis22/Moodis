@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Moodis.Feature.Login;
 
 namespace Moodis.Ui
 {
@@ -48,7 +49,8 @@ namespace Moodis.Ui
 
         public void UserAddImage()
         {
-            throw new NotImplementedException();
+           LoginViewModel.currentUser.addImage(currentImage);
+            Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", LoginViewModel.userList);
         }
     }
 }

@@ -19,7 +19,8 @@ namespace moodis
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CalendarForm(new CalendarViewModel()));
+            //Application.Run(new CalendarForm(new CalendarViewModel()));
+            Application.Run(new LoginForm());
         }
     }
 }

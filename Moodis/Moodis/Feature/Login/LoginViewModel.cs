@@ -10,7 +10,9 @@ namespace Moodis.Feature.Login
 {
     class LoginViewModel
     {
-        List<User> userList;
+        public static List<User> userList;
+        public static User currentUser;
+
         public User Authenticate(String username, String password)
         {
             userList = new List<User>();
@@ -22,6 +24,7 @@ namespace Moodis.Feature.Login
 
             if (userList.Exists(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password)))
             {
+                currentUser = userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
                 return userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
             }
             else
@@ -47,7 +50,6 @@ namespace Moodis.Feature.Login
             {
                 User user = new User(username, Crypto.CalculateMD5Hash(password));
                 userList.Add(user);
-
                 return Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
             }
         }

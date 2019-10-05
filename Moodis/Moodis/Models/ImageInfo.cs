@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 
 namespace Moodis.Ui
 {
+    [Serializable]
     public class ImageInfo
     {
+        [Serializable]
         public struct Emotion
         {
             public string name;

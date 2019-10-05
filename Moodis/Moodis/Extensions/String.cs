@@ -8,7 +8,7 @@ namespace Moodis.Extensions
 {
     public static class String
     {
-        public static string ValidateJson(this string json)
+        public static string FromJsonToString(this string json)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace Moodis.Extensions
 
             if (string.IsNullOrEmpty(json))
             {
-                return null;
+                return "";
             }
             else
             {

@@ -73,7 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\String.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
     <Compile Include="Feature\Camera\cameraForm.cs">
       <SubType>Form</SubType>
     </Compile>

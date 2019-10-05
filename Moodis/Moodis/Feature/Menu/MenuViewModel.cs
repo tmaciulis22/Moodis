@@ -12,10 +12,15 @@ using Moodis.Extensions;
 
 namespace Moodis.Ui
 {
-    class MenuViewModel
+    public class MenuViewModel
     {
-        public static ImageInfo currentImage = new ImageInfo();
-        private static Bitmap userImage;
+        public ImageInfo currentImage;
+        private Bitmap userImage;
+
+        public MenuViewModel()
+        {
+            currentImage = new ImageInfo();
+        }
 
         public Bitmap ShowImage(string fileToDisplay)
         {

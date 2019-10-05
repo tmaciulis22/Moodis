@@ -19,24 +19,27 @@ namespace Moodis.Ui
         public bool running = false;
         private const string WarningInRequest = "Azure api request failed. Is your internet turned on ?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
-        private readonly MenuViewModel menuViewModel;
-        private const string formatDouble = "N3";
-        public MenuForm()
+        private MenuViewModel menuViewModel;
+        private const string FormatDouble = "N3";
+
+        public MenuForm(MenuViewModel viewModel)
         {
             InitializeComponent();
-            menuViewModel = new MenuViewModel();
+            menuViewModel = viewModel;
             running = true;
             UpdateLabels();
         }
 
         public async void UpdateLabels()
         {
-            imgTakenPicture.Image = menuViewModel.ShowImage(MenuViewModel.currentImage.ImagePath);
+            imgTakenPicture.Image = menuViewModel.ShowImage(menuViewModel.currentImage.ImagePath);
             var emotionLabels = new List<Label> { lblAnger, lblContempt, lblDisgust, lblFear, lblHappiness, lblNeutral, lblSadness, lblSurprise };
+
             foreach (var label in emotionLabels)
             {
                 label.Text = "loading";
             }
+
             try
             {
                 await menuViewModel.GetFaceEmotionsAsync();
@@ -47,13 +50,14 @@ namespace Moodis.Ui
                 MessageBox.Show(WarningInRequest);
                 Application.Exit();
             }
-            if (menuViewModel.ValidateJson())
+
+            if (menuViewModel.currentImage.emotions.Length != 0)
             {
                 int counter = 0;
                 foreach (var label in emotionLabels)
                 {
-                    label.Text = MenuViewModel.currentImage.emotions[counter].name + " : " 
-                        + MenuViewModel.currentImage.emotions[counter].confidence.ToString(formatDouble);
+                    label.Text = menuViewModel.currentImage.emotions[counter].name + " : " 
+                        + menuViewModel.currentImage.emotions[counter].confidence.ToString(FormatDouble);
                     counter++;
                 }
             }

@@ -24,12 +24,12 @@ namespace Moodis.Ui
         private string age;
         private string gender;
 
-        public void SetImageInfo(String jsonInfo)
+        public void SetImageInfo(string jsonInfo)
         {
             dynamic data = JObject.Parse(jsonInfo);
-            this.id = data.faceId;
-            this.age = data.faceAttributes.age;
-            this.gender = data.faceAttributes.gender;
+            id = data.faceId;
+            age = data.faceAttributes.age;
+            gender = data.faceAttributes.gender;
             AddEmotions(data);
         }
 

@@ -19,6 +19,7 @@ namespace moodis
         private const string WarningMessage = "You must first turn on the camera!";
         private const string NoDeviceMessage = "Your device does not have a camera.";
         private MenuForm menuWindow;
+        private MenuViewModel menuViewModel;
         private void CameraFormLoad(object sender, EventArgs e)
         {
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -71,16 +72,18 @@ namespace moodis
 
         private void ButtonPicture(object sender, EventArgs e)
         {
-            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
+            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
-            saveFileDialog1.FileName = fileName;
-            MenuViewModel.currentImage.ImagePath = fileName;
+            saveFileDialog.FileName = fileName;
+
+            menuViewModel = new MenuViewModel();
+            menuViewModel.currentImage.ImagePath = fileName;
             try
             {
-                    picBox.Image.Save(saveFileDialog1.FileName);
+                    picBox.Image.Save(saveFileDialog.FileName);
                     if (menuWindow == null || menuWindow.running == false)
                     {
-                        menuWindow = new MenuForm();
+                        menuWindow = new MenuForm(menuViewModel);
                         menuWindow.Show();
                     }
                     else

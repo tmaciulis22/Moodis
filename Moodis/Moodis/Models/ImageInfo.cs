@@ -22,7 +22,7 @@ namespace Moodis.Ui
 
         public string ImagePath { get; set; }
         public Emotion[] emotions;
-        private DateTime imageDate { get; set; }
+        public DateTime imageDate { get; set; }
         private string id;
         private string age;
         private string gender;
@@ -47,6 +47,10 @@ namespace Moodis.Ui
                 emotions[counter].confidence = (double) emotion.Value;
                 counter++;
             }
+        }
+        public override string ToString()
+        {
+            return imageDate.ToString("yyyy/MM/dd HH:mm");
         }
     }
 }

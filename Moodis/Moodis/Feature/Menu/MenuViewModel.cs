@@ -7,11 +7,10 @@ using Moodis.Extensions;
 
 namespace Moodis.Ui
 {
-    class MenuViewModel
+    public class MenuViewModel
     {
-        public ImageInfo currentImage = new ImageInfo();
+        public ImageInfo currentImage;
         private Bitmap userImage;
-        private string jsonAsString;
 
         public MenuViewModel()
         {

@@ -146,6 +146,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(531, 442);
             this.Controls.Add(this.btnCalendar);
             this.Controls.Add(this.lblSurprise);
@@ -158,9 +159,10 @@
             this.Controls.Add(this.lblAnger);
             this.Controls.Add(this.lblCurrentPicture);
             this.Controls.Add(this.imgTakenPicture);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MenuForm";
             this.Text = "Menu";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MenuFormClose);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MenuFormClose);
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

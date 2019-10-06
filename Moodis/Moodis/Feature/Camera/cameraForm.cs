@@ -132,7 +132,6 @@ namespace moodis
                 {
                     highestResoliution = height * width;
                     index = cmbCamResoliution.Items.Count-1;
-                    Console.WriteLine(index);
                 }              
             }
             cmbCamResoliution.SelectedIndex = index;

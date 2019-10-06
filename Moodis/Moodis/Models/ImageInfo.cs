@@ -28,12 +28,7 @@ namespace Moodis.Ui
 
         public void SetImageInfo(IList<DetectedFace> faceList)
         {
-            //faceList.ForEach(face => {
-            //    id = face.FaceId.ToString();
-            //    age = face.FaceAttributes.Age;
-            //    gender = face.FaceAttributes.Gender;
-            //    AddEmotions(face.FaceAttributes.Emotion);
-            //});
+            //TODO change to faceList.ForEach(face => action), when implementing identity feature
             id = faceList[0].FaceId.ToString();
             age = faceList[0].FaceAttributes.Age;
             gender = faceList[0].FaceAttributes.Gender;

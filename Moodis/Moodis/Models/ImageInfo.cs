@@ -38,22 +38,13 @@ namespace Moodis.Ui
         private void AddEmotions(Microsoft.Azure.CognitiveServices.Vision.Face.Models.Emotion detectedEmotions)
         {
             emotions = new Emotion[8];
-            emotions[0].name = "Anger";
-            emotions[0].confidence = detectedEmotions.Anger;
-            emotions[1].name = "Contempt";
-            emotions[1].confidence = detectedEmotions.Contempt;
-            emotions[2].name = "Disgust";
-            emotions[2].confidence = detectedEmotions.Disgust;
-            emotions[3].name = "Fear";
-            emotions[3].confidence = detectedEmotions.Fear;
-            emotions[4].name = "Happiness";
-            emotions[4].confidence = detectedEmotions.Happiness;
-            emotions[5].name = "Neutral";
-            emotions[5].confidence = detectedEmotions.Neutral;
-            emotions[6].name = "Sadness";
-            emotions[6].confidence = detectedEmotions.Sadness;
-            emotions[7].name = "Neutral";
-            emotions[7].confidence = detectedEmotions.Surprise;
+
+            var properties = detectedEmotions.GetType().GetProperties().ToList();
+            properties.ForEach(property => {
+                var index = properties.IndexOf(property);
+                emotions[index].name = property.Name;
+                emotions[index].confidence = (double) property.GetValue(detectedEmotions, null);
+            });
         }
     }
 }

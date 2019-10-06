@@ -19,6 +19,7 @@ namespace Moodis.Ui
             public string name;
             public double confidence;
         }
+
         public string ImagePath { get; set; }
         public Emotion[] emotions;
         private DateTime imageDate { get; set; }
@@ -26,7 +27,7 @@ namespace Moodis.Ui
         private string age;
         private string gender;
 
-        public void SetImageInfo(String jsonInfo)
+        public void SetImageInfo(string jsonInfo)
         {
             dynamic data = JObject.Parse(jsonInfo);
             imageDate = DateTime.Now;

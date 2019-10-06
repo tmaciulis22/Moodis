@@ -13,7 +13,7 @@ namespace Moodis.Feature.Login
         public static List<User> userList;
         public static User currentUser;
 
-        public User Authenticate(String username, String password)
+        public User Authenticate(string username, string password)
         {
             userList = new List<User>();
 
@@ -33,7 +33,7 @@ namespace Moodis.Feature.Login
             }
         }
 
-        public bool AddUser(String username, String password)
+        public bool AddUser(string username, string password)
         {
             userList = new List<User>();
 

@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -9,11 +13,13 @@ namespace Moodis.Network.Face
     {
         private Face(){}
 
-        private const string SubscriptionKey = "8d0853136f974ea5a73fb4faae69f570";
-        private const string UriBase =
-            "https://aurimas.cognitiveservices.azure.com/face/v1.0/detect";
-        private const string RequestParameters = "returnFaceId=true&returnFaceLandmarks=false" +
-                "&returnFaceAttributes=age,gender,Emotion";
+        private static string SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
+        private static string ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
+
+        private static readonly IFaceClient faceClient = new FaceClient(
+            new ApiKeyServiceClientCredentials(SUBSCRIPTION_KEY),
+            new System.Net.Http.DelegatingHandler[] { }
+        );
 
         private static Face instance = null;
         public static Face Instance
@@ -22,40 +28,41 @@ namespace Moodis.Network.Face
             {
                 if (instance == null)
                 {
-                    instance = new Face();
+                    if (Uri.IsWellFormedUriString(ENDPOINT, UriKind.Absolute))
+                    {
+                        faceClient.Endpoint = ENDPOINT;
+                        instance = new Face();
+                    }
                 }
                 return instance;
             }
         }
 
-        public async Task<string> SendImageForAnalysis(string imageFilePath)
+        public async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add(
-                "Ocp-Apim-Subscription-Key", SubscriptionKey);
-
-            var uri = UriBase + "?" + RequestParameters;
-
-            HttpResponseMessage response;
-
-            byte[] byteData = GetImageAsByteArray(imageFilePath);
-            using (var content = new ByteArrayContent(byteData))
+            IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
-                content.Headers.ContentType =
-                    new MediaTypeHeaderValue("application/octet-stream");
-                response = await client.PostAsync(uri, content);
+                FaceAttributeType.Gender,
+                FaceAttributeType.Age,
+                FaceAttributeType.Emotion
+            };
 
-                return await response.Content.ReadAsStringAsync();
+            try
+            {
+                using (Stream imageFileStream = File.OpenRead(imageFilePath))
+                {
+                    return await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
+                }
             }
-        }
-
-        private byte[] GetImageAsByteArray(string imageFilePath)
-        {
-            using (FileStream fileStream =
-                new FileStream(imageFilePath, FileMode.Open, FileAccess.Read))
+            catch (APIErrorException apiException)
             {
-                var binaryReader = new BinaryReader(fileStream);
-                return binaryReader.ReadBytes((int)fileStream.Length);
+                Console.WriteLine(apiException.StackTrace);
+                return new List<DetectedFace>();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.StackTrace);
+                return new List<DetectedFace>();
             }
         }
     }

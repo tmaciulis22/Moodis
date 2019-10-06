@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Extensions;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -21,28 +23,28 @@ namespace Moodis.Ui
         public string ImagePath { get; set; }
         public Emotion[] emotions;
         private string id;
-        private string age;
-        private string gender;
+        private double? age;
+        private Gender? gender;
 
-        public void SetImageInfo(string jsonInfo)
+        public void SetImageInfo(IList<DetectedFace> faceList)
         {
-            dynamic data = JObject.Parse(jsonInfo);
-            id = data.faceId;
-            age = data.faceAttributes.age;
-            gender = data.faceAttributes.gender;
-            AddEmotions(data);
+            //TODO change to faceList.ForEach(face => action), when implementing identity feature
+            id = faceList[0].FaceId.ToString();
+            age = faceList[0].FaceAttributes.Age;
+            gender = faceList[0].FaceAttributes.Gender;
+            AddEmotions(faceList[0].FaceAttributes.Emotion);
         }
 
-        private void AddEmotions(dynamic data)
+        private void AddEmotions(Microsoft.Azure.CognitiveServices.Vision.Face.Models.Emotion detectedEmotions)
         {
             emotions = new Emotion[8];
-            int counter = 0;
-            foreach(dynamic emotion in data.faceAttributes.emotion)
-            {
-                emotions[counter].name = (string) emotion.Name;
-                emotions[counter].confidence = (double) emotion.Value;
-                counter++;
-            }
+
+            var properties = detectedEmotions.GetType().GetProperties().ToList();
+            properties.ForEach(property => {
+                var index = properties.IndexOf(property);
+                emotions[index].name = property.Name;
+                emotions[index].confidence = (double) property.GetValue(detectedEmotions, null);
+            });
         }
     }
 }

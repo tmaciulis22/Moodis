@@ -69,20 +69,21 @@ namespace moodis
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
             saveFileDialog.FileName = fileName;
 
-            menuViewModel = new MenuViewModel();
-            menuViewModel.currentImage.ImagePath = fileName;
             try
             {
-                    picBox.Image.Save(saveFileDialog.FileName);
-                    if (menuWindow == null || menuWindow.running == false)
-                    {
-                        menuWindow = new MenuForm(menuViewModel);
-                        menuWindow.Show();
-                    }
-                    else
-                    {
-                        menuWindow.UpdateLabels();
-                    }
+                picBox.Image.Save(saveFileDialog.FileName);
+                if (menuWindow == null || menuWindow.running == false)
+                {
+                    menuViewModel = new MenuViewModel();
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow = new MenuForm(menuViewModel);
+                    menuWindow.Show();
+                }
+                else
+                {
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow.UpdateLabels();
+                }
             }
             catch
             {
@@ -131,7 +132,6 @@ namespace moodis
                 {
                     highestResoliution = height * width;
                     index = cmbCamResoliution.Items.Count-1;
-                    Console.WriteLine(index);
                 }              
             }
             cmbCamResoliution.SelectedIndex = index;

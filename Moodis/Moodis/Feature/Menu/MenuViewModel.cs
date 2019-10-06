@@ -1,13 +1,6 @@
 ﻿using Moodis.Network.Face;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using moodis;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Moodis.Extensions;
 
 namespace Moodis.Ui
@@ -31,13 +24,11 @@ namespace Moodis.Ui
 
         public async Task GetFaceEmotionsAsync()
         {
-            Face face = Face.Instance;
-            var json = await face.SendImageForAnalysis(currentImage.ImagePath);
-            var jsonAsString = json.FromJsonToString();
+            var faceList = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath);
 
-            if (!string.IsNullOrEmpty(jsonAsString))
+            if (!faceList.IsNullOrEmpty())
             {
-                currentImage.SetImageInfo(jsonAsString);
+                currentImage.SetImageInfo(faceList);
             }
         }
     }

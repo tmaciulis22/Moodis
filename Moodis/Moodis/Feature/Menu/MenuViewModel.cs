@@ -1,23 +1,24 @@
 ﻿using Moodis.Network.Face;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Moodis.Feature.Login;
+using Moodis.Extensions;
 
 namespace Moodis.Ui
 {
     class MenuViewModel
     {
-        public static ImageInfo currentImage = new ImageInfo();
-        private static Bitmap userImage;
-        private static string jsonAsString;
+        public ImageInfo currentImage = new ImageInfo();
+        private Bitmap userImage;
+        private string jsonAsString;
 
-        public Bitmap ShowImage(String fileToDisplay)
+        public MenuViewModel()
+        {
+            currentImage = new ImageInfo();
+        }
+
+        public Bitmap ShowImage(string fileToDisplay)
         {
             userImage?.Dispose();
             userImage = new Bitmap(fileToDisplay);
@@ -27,23 +28,12 @@ namespace Moodis.Ui
         public async Task GetFaceEmotionsAsync()
         {
             Face face = Face.Instance;
-            jsonAsString = await face.SendImageForAnalysis(currentImage.ImagePath);
-            if (ValidateJson())
+            var json = await face.SendImageForAnalysis(currentImage.ImagePath);
+            var jsonAsString = json.FromJsonToString();
+
+            if (!string.IsNullOrEmpty(jsonAsString))
             {
                 currentImage.SetImageInfo(jsonAsString);
-            }
-        }
-
-        public bool ValidateJson()
-        {
-            jsonAsString = jsonAsString.Replace("[", " ").Replace("]", "").Replace(" ", "");
-            if (string.IsNullOrEmpty(jsonAsString))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
             }
         }
 

@@ -4,7 +4,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Moodis.Ui;
-using System.Linq;
 
 namespace moodis
 {
@@ -19,7 +18,7 @@ namespace moodis
         private VideoCaptureDevice cam;
         private const string WarningMessage = "You must first turn on the camera!";
         private const string NoDeviceMessage = "Your device does not have a camera.";
-        private MenuForm MenuWindow;
+        private MenuForm menuWindow;
         private MenuViewModel menuViewModel;
         private void CameraFormLoad(object sender, EventArgs e)
         {
@@ -80,18 +79,18 @@ namespace moodis
             try
             {
                 picBox.Image.Save(saveFileDialog.FileName);
-                if (MenuWindow == null)
+                if (menuWindow == null)
                 {
                     menuViewModel = new MenuViewModel();
                     menuViewModel.currentImage.ImagePath = fileName;
-                    MenuWindow = new MenuForm(menuViewModel);
-                    MenuWindow.Show();
+                    menuWindow = new MenuForm(menuViewModel);
+                    menuWindow.Show();
                 }
                 else
                 {
                     menuViewModel.currentImage.ImagePath = fileName;
-                    MenuWindow.UpdateLabels();
-                    MenuWindow.Show();
+                    menuWindow.UpdateLabels();
+                    menuWindow.Show();
                 }
             }
             catch

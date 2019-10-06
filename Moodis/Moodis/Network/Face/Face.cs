@@ -30,7 +30,7 @@ namespace Moodis.Network.Face
                 {
                     if (Uri.IsWellFormedUriString(ENDPOINT, UriKind.Absolute))
                     {
-                        faceClient.Endpoint = ENDPOINT + "/detect";
+                        faceClient.Endpoint = ENDPOINT;
                         instance = new Face();
                     }
                 }
@@ -51,7 +51,6 @@ namespace Moodis.Network.Face
             {
                 using (Stream imageFileStream = File.OpenRead(imageFilePath))
                 {
-                    imageFileStream.Position = 0;
                     return await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
                 }
             }

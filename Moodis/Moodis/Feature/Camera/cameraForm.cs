@@ -78,19 +78,20 @@ namespace moodis
 
             try
             {
-                    picBox.Image.Save(saveFileDialog.FileName);
-                    if (menuWindow == null || menuWindow.running == false)
-                    {
-                        menuViewModel = new MenuViewModel();
-                        menuViewModel.currentImage.ImagePath = fileName;
-                        menuWindow = new MenuForm(menuViewModel);
-                        menuWindow.Show();
-                    }
-                    else
-                    {
-                        menuViewModel.currentImage.ImagePath = fileName;
-                        menuWindow.UpdateLabels();
-                    }
+                
+                picBox.Image.Save(saveFileDialog.FileName);
+                if (menuWindow == null || menuWindow.running == false)
+                {
+                    menuViewModel = new MenuViewModel();
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow = new MenuForm(menuViewModel);
+                    menuWindow.Show();
+                }
+                else
+                {
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow.UpdateLabels();
+                }
             }
             catch
             {

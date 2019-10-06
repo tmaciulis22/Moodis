@@ -123,5 +123,10 @@ namespace moodis
                 Console.WriteLine(ex.ToString());
             }
         }
+
+        private void int indexOfHighestResoliution(var cam)
+        {
+            return 0;
+        }
     }
 }

@@ -10,7 +10,6 @@ namespace Moodis.Feature.Login
 {
     class LoginViewModel
     {
-
         public User Authenticate(string username, string password)
         {
             List<User> userList = new List<User>();

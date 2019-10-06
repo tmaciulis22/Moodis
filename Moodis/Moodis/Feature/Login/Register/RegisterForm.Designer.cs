@@ -32,9 +32,9 @@
             this.labelUsername = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBoxUsername = new System.Windows.Forms.TextBox();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.textBoxPasswordRepeat = new System.Windows.Forms.TextBox();
             this.labelNotification = new System.Windows.Forms.Label();
             this.buttonRegister = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -77,31 +77,33 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Repeat password";
             // 
-            // textBox1
+            // textBoxUsername
             // 
-            this.textBox1.Location = new System.Drawing.Point(96, 137);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(171, 20);
-            this.textBox1.TabIndex = 4;
+            this.textBoxUsername.Location = new System.Drawing.Point(96, 137);
+            this.textBoxUsername.Name = "textBoxUsername";
+            this.textBoxUsername.Size = new System.Drawing.Size(171, 20);
+            this.textBoxUsername.TabIndex = 4;
             // 
-            // textBox2
+            // textBoxPassword
             // 
-            this.textBox2.Location = new System.Drawing.Point(96, 176);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(171, 20);
-            this.textBox2.TabIndex = 5;
+            this.textBoxPassword.Location = new System.Drawing.Point(96, 176);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.PasswordChar = '*';
+            this.textBoxPassword.Size = new System.Drawing.Size(171, 20);
+            this.textBoxPassword.TabIndex = 5;
             // 
-            // textBox3
+            // textBoxPasswordRepeat
             // 
-            this.textBox3.Location = new System.Drawing.Point(96, 216);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(171, 20);
-            this.textBox3.TabIndex = 6;
+            this.textBoxPasswordRepeat.Location = new System.Drawing.Point(96, 216);
+            this.textBoxPasswordRepeat.Name = "textBoxPasswordRepeat";
+            this.textBoxPasswordRepeat.PasswordChar = '*';
+            this.textBoxPasswordRepeat.Size = new System.Drawing.Size(171, 20);
+            this.textBoxPasswordRepeat.TabIndex = 6;
             // 
             // labelNotification
             // 
             this.labelNotification.AutoSize = true;
-            this.labelNotification.Location = new System.Drawing.Point(31, 262);
+            this.labelNotification.Location = new System.Drawing.Point(90, 259);
             this.labelNotification.Name = "labelNotification";
             this.labelNotification.Size = new System.Drawing.Size(0, 13);
             this.labelNotification.TabIndex = 7;
@@ -114,6 +116,7 @@
             this.buttonRegister.TabIndex = 8;
             this.buttonRegister.Text = "Register!";
             this.buttonRegister.UseVisualStyleBackColor = true;
+            this.buttonRegister.Click += new System.EventHandler(this.ButtonRegister_Click);
             // 
             // RegisterForm
             // 
@@ -122,16 +125,15 @@
             this.ClientSize = new System.Drawing.Size(298, 450);
             this.Controls.Add(this.buttonRegister);
             this.Controls.Add(this.labelNotification);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxPasswordRepeat);
+            this.Controls.Add(this.textBoxPassword);
+            this.Controls.Add(this.textBoxUsername);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUsername);
             this.Controls.Add(this.labelRegister);
             this.Name = "RegisterForm";
             this.Text = "Moodis: Register";
-            this.Load += new System.EventHandler(this.RegisterForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,9 +145,9 @@
         private System.Windows.Forms.Label labelUsername;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBoxUsername;
+        private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.TextBox textBoxPasswordRepeat;
         private System.Windows.Forms.Label labelNotification;
         private System.Windows.Forms.Button buttonRegister;
     }

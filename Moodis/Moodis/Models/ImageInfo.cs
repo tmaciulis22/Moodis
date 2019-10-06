@@ -35,6 +35,7 @@ namespace Moodis.Ui
             id = faceList[0].FaceId.ToString();
             age = faceList[0].FaceAttributes.Age;
             gender = faceList[0].FaceAttributes.Gender;
+            imageDate = DateTime.Now;
             AddEmotions(faceList[0].FaceAttributes.Emotion);
         }
 

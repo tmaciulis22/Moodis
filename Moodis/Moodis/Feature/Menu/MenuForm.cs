@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Moodis.Feature.Login;
 using Moodis.Feature.Statistics;
 
 namespace Moodis.Ui
@@ -50,6 +51,7 @@ namespace Moodis.Ui
                     counter++;
                 }
                 menuViewModel.UserAddImage();
+                Console.WriteLine(LoginViewModel.currentUser.imageStats);
             }
             else
             {

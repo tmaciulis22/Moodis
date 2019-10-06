@@ -30,7 +30,6 @@
         {
             this.lblDataNumber = new System.Windows.Forms.Label();
             this.listOfData = new System.Windows.Forms.ListBox();
-            this.customCalendar = new Moodis.Feature.Statistics.CustomMonthCalendar();
             this.lblAnger = new System.Windows.Forms.Label();
             this.lblContempt = new System.Windows.Forms.Label();
             this.lblDisgust = new System.Windows.Forms.Label();
@@ -42,6 +41,7 @@
             this.lblInfoText = new System.Windows.Forms.Label();
             this.lblDay = new System.Windows.Forms.Label();
             this.lblMonthly = new System.Windows.Forms.Label();
+            this.customCalendar = new Moodis.Feature.Statistics.CustomMonthCalendar();
             this.SuspendLayout();
             // 
             // lblDataNumber
@@ -65,17 +65,6 @@
             this.listOfData.Size = new System.Drawing.Size(286, 184);
             this.listOfData.TabIndex = 2;
             this.listOfData.SelectedIndexChanged += new System.EventHandler(this.SelectItem);
-            // 
-            // customCalendar
-            // 
-            this.customCalendar.Font = new System.Drawing.Font("Microsoft Tai Le", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customCalendar.Location = new System.Drawing.Point(310, -7);
-            this.customCalendar.Name = "customCalendar";
-            this.customCalendar.ShowToday = false;
-            this.customCalendar.TabIndex = 0;
-            this.customCalendar.TitleBackColor = System.Drawing.SystemColors.Highlight;
-            this.customCalendar.TrailingForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.customCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.SelectDate);
             // 
             // lblAnger
             // 
@@ -121,7 +110,7 @@
             // 
             this.lblHappiness.AutoSize = true;
             this.lblHappiness.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHappiness.Location = new System.Drawing.Point(101, 40);
+            this.lblHappiness.Location = new System.Drawing.Point(118, 40);
             this.lblHappiness.Name = "lblHappiness";
             this.lblHappiness.Size = new System.Drawing.Size(49, 14);
             this.lblHappiness.TabIndex = 7;
@@ -131,7 +120,7 @@
             // 
             this.lblNeutral.AutoSize = true;
             this.lblNeutral.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNeutral.Location = new System.Drawing.Point(101, 65);
+            this.lblNeutral.Location = new System.Drawing.Point(118, 65);
             this.lblNeutral.Name = "lblNeutral";
             this.lblNeutral.Size = new System.Drawing.Size(49, 14);
             this.lblNeutral.TabIndex = 8;
@@ -141,7 +130,7 @@
             // 
             this.lblSadness.AutoSize = true;
             this.lblSadness.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSadness.Location = new System.Drawing.Point(101, 88);
+            this.lblSadness.Location = new System.Drawing.Point(118, 88);
             this.lblSadness.Name = "lblSadness";
             this.lblSadness.Size = new System.Drawing.Size(49, 14);
             this.lblSadness.TabIndex = 9;
@@ -151,7 +140,7 @@
             // 
             this.lblSurprise.AutoSize = true;
             this.lblSurprise.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSurprise.Location = new System.Drawing.Point(101, 112);
+            this.lblSurprise.Location = new System.Drawing.Point(118, 112);
             this.lblSurprise.Name = "lblSurprise";
             this.lblSurprise.Size = new System.Drawing.Size(49, 14);
             this.lblSurprise.TabIndex = 10;
@@ -186,6 +175,17 @@
             this.lblMonthly.Size = new System.Drawing.Size(43, 16);
             this.lblMonthly.TabIndex = 13;
             this.lblMonthly.Text = "label1";
+            // 
+            // customCalendar
+            // 
+            this.customCalendar.Font = new System.Drawing.Font("Microsoft Tai Le", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customCalendar.Location = new System.Drawing.Point(310, -7);
+            this.customCalendar.Name = "customCalendar";
+            this.customCalendar.ShowToday = false;
+            this.customCalendar.TabIndex = 0;
+            this.customCalendar.TitleBackColor = System.Drawing.SystemColors.Highlight;
+            this.customCalendar.TrailingForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.customCalendar.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.SelectDate);
             // 
             // CalendarForm
             // 

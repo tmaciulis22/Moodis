@@ -1,8 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Collections.Generic;
 using Moodis.Ui;
-using System.Linq;
-using System;
+using Moodis.Feature.Login;
 
 namespace Moodis.Feature.Statistics
 {
@@ -11,8 +10,6 @@ namespace Moodis.Feature.Statistics
         private CalendarViewModel calendarViewModel;
         private Form parentForm;
         private const string FormatDouble = "N3";
-        private List<ImageInfo> monthlyList = new List<ImageInfo>();
-        private List<ImageInfo> dailyList = new List<ImageInfo>();
 
         public CalendarForm(CalendarViewModel viewModel, Form form)
         {
@@ -36,51 +33,31 @@ namespace Moodis.Feature.Statistics
         private void updateView()
         {
             listOfData.Items.Clear();
+            calendarViewModel.updateViewModel();
+
             int counter = 0, counterM = 0, counterD = 0;
-            foreach (ImageInfo data in Login.LoginViewModel.currentUser.imageStats)
+            foreach (ImageInfo data in LoginViewModel.currentUser.imageStats)
             {
                 if (data.imageDate.Date == customCalendar.SelectionRange.Start.Date)
                 {
-                    listOfData.Items.Add(Login.LoginViewModel.currentUser.imageStats[counter]);
+                    listOfData.Items.Add(LoginViewModel.currentUser.imageStats[counter]);
                     counter++;
                 }
                 if(data.imageDate.Month == customCalendar.SelectionRange.Start.Month)
                 {
-                    monthlyList.Add(Login.LoginViewModel.currentUser.imageStats[counterM]);
+                    calendarViewModel.monthlyList.Add(LoginViewModel.currentUser.imageStats[counterM]);
                     counterM++;
                 }
                 if (data.imageDate.Day == customCalendar.SelectionRange.Start.Day)
                 {
-                    dailyList.Add(Login.LoginViewModel.currentUser.imageStats[counterD]);
+                    calendarViewModel.dailyList.Add(LoginViewModel.currentUser.imageStats[counterD]);
                     counterD++;
                 }
             }
+
             lblDataNumber.Text = "Available picture data: " + listOfData.Items.Count;
-
-            int size = dailyList[0].emotions.Length - 1;
-            List<double> confidenceList = new List<double>(new double[size+1]);
-            foreach (ImageInfo imageInfo in dailyList)
-            {
-
-                for (int i = 0; i < size; i++)
-                {
-                    confidenceList[i] = confidenceList[i] + imageInfo.emotions[i].confidence;
-                }
-            }
-            int index = confidenceList.IndexOf(confidenceList.Max());
-            lblDay.Text = "Daily highest emotion: " + dailyList[0].emotions[index].name + " avg: " + (confidenceList[index] / dailyList.Count).ToString(FormatDouble);
-
-            confidenceList = new List<double>(new double[size + 1]);
-            foreach (ImageInfo imageInfo in monthlyList)
-            {
-
-                for (int i = 0; i < size; i++)
-                {
-                    confidenceList[i] = confidenceList[i] + imageInfo.emotions[i].confidence;
-                }
-            }
-            index = confidenceList.IndexOf(confidenceList.Max());
-            lblMonthly.Text = "Monthly highest emotion: " + monthlyList[0].emotions[index].name + " avg: " + (confidenceList[index] / monthlyList.Count).ToString(FormatDouble);
+            lblDay.Text = "Daily highest emotion: " + calendarViewModel.getAverageEmotionStats(calendarViewModel.dailyList);
+            lblMonthly.Text = "Monthly highest emotion: " + calendarViewModel.getAverageEmotionStats(calendarViewModel.monthlyList);
         }
 
         private void SelectItem(object sender, System.EventArgs e)

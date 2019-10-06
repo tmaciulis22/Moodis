@@ -60,7 +60,6 @@ namespace Moodis.Ui
         private void BtnCalendar_Click(object sender, EventArgs e)
         {
             Hide();
-            Console.WriteLine(this);
             CalendarForm calendarForm = new CalendarForm(new CalendarViewModel(), this);
             calendarForm.Show();
         }

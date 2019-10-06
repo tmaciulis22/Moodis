@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Moodis.Ui;
 using Moodis.Feature.Login;
+using System.Linq;
 
 namespace Moodis.Feature.Statistics
 {
@@ -43,7 +44,7 @@ namespace Moodis.Feature.Statistics
                     listOfData.Items.Add(LoginViewModel.currentUser.imageStats[counter]);
                     counter++;
                 }
-                if(data.imageDate.Month == customCalendar.SelectionRange.Start.Month)
+                if (data.imageDate.Month == customCalendar.SelectionRange.Start.Month)
                 {
                     calendarViewModel.monthlyList.Add(LoginViewModel.currentUser.imageStats[counterM]);
                     counterM++;

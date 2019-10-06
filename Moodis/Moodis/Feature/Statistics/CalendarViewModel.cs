@@ -20,21 +20,21 @@ namespace Moodis.Feature.Statistics
         public string getAverageEmotionStats(List<ImageInfo> dailyList)
         {
             int size;
-            try
-            {
-                size = dailyList[0].emotions.Length - 1;
-            }
-            catch (ArgumentOutOfRangeException)
+            if (dailyList.Count.Equals(0))
             {
                 return ErrorWhenNoEmotionsFound;
             }
+            size = dailyList[0].emotions.Length - 1;
             List<double> confidenceList = new List<double>(new double[size + 1]);
+            
             foreach (ImageInfo imageInfo in dailyList)
             {
-
-                for (int i = 0; i < size; i++)
+                var query = imageInfo.emotions.Select(x => x.confidence);
+                int i = 0;
+                foreach (var confidence in query)
                 {
-                    confidenceList[i] = confidenceList[i] + imageInfo.emotions[i].confidence;
+                    confidenceList[i] = confidenceList[i] + confidence;
+                    i++;
                 }
             }
             int index = confidenceList.IndexOf(confidenceList.Max());

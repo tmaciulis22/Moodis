@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\IListExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Feature\Camera\cameraForm.cs">
       <SubType>Form</SubType>
     </Compile>

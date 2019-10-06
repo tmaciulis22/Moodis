@@ -31,7 +31,7 @@ namespace Moodis.Feature.Login
             {
                 labelNotification.Text = usernameEmpty;
             }
-            else if(string.IsNullOrEmpty(textBoxPassword.Text))
+            else if(string.IsNullOrWhiteSpace(textBoxPassword.Text))
             {
                 labelNotification.Text = passwordEmpty;
             }

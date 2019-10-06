@@ -28,6 +28,7 @@ namespace Moodis.Feature.Login
         {
             InitializeComponent();
             loginViewModel = new LoginViewModel();
+            //loginViewModel.AddUser("admin", "admin");
         }
 
         private void LoginButton_Click(object sender, EventArgs e)

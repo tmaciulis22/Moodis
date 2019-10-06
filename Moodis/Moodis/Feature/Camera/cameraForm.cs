@@ -27,7 +27,7 @@ namespace moodis
             if(webcam.Count == 0)
             {
                 MessageBox.Show(NoDeviceMessage);
-                this.Close();
+                Application.Exit();
                 return;
             }
 

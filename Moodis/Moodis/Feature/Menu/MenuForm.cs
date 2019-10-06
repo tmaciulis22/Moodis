@@ -42,7 +42,7 @@ namespace Moodis.Ui
 
             if (menuViewModel.currentImage.emotions != null)
             {
-                int counter = 0;
+                var counter = 0;
                 foreach (var label in emotionLabels)
                 {
                     label.Text = menuViewModel.currentImage.emotions[counter].name + " : " 
@@ -60,7 +60,7 @@ namespace Moodis.Ui
         private void BtnCalendar_Click(object sender, EventArgs e)
         {
             Hide();
-            CalendarForm calendarForm = new CalendarForm(new CalendarViewModel(), this);
+            var calendarForm = new CalendarForm(new CalendarViewModel(), this);
             calendarForm.Show();
         }
 

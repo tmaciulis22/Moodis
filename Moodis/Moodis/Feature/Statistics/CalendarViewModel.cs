@@ -30,7 +30,7 @@ namespace Moodis.Feature.Statistics
             foreach (ImageInfo imageInfo in dailyList)
             {
                 var query = imageInfo.emotions.Select(x => x.confidence);
-                int i = 0;
+                var i = 0;
                 foreach (var confidence in query)
                 {
                     confidenceList[i] = confidenceList[i] + confidence;

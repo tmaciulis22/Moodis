@@ -69,7 +69,7 @@ namespace Moodis.Feature.Statistics
         {
             ImageInfo img = listOfData.SelectedItem as ImageInfo;
             var emotionLabels = new List<Label> { lblAnger, lblContempt, lblDisgust, lblFear, lblHappiness, lblNeutral, lblSadness, lblSurprise };
-            int counter = 0;
+            var counter = 0;
             foreach (var label in emotionLabels)
             {
                label.Text = img.emotions[counter].name + " : "

@@ -55,5 +55,12 @@ namespace Moodis.Feature.Login
             var registerWindow = new RegisterForm();
             registerWindow.Show();
         }
+
+        private void LabelSignIn_Click(object sender, EventArgs e)
+        {
+            CameraForm cameraForm = new CameraForm();
+            cameraForm.Show();
+            this.Hide();
+        }
     }
 }

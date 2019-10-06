@@ -48,6 +48,7 @@
             this.labelSignIn.Size = new System.Drawing.Size(232, 73);
             this.labelSignIn.TabIndex = 0;
             this.labelSignIn.Text = "Sign In";
+            this.labelSignIn.Click += new System.EventHandler(this.LabelSignIn_Click);
             // 
             // labelUsername
             // 
@@ -78,6 +79,7 @@
             // 
             this.textBoxPassword.Location = new System.Drawing.Point(127, 222);
             this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.PasswordChar = '*';
             this.textBoxPassword.Size = new System.Drawing.Size(172, 20);
             this.textBoxPassword.TabIndex = 4;
             // 

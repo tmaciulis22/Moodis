@@ -1,4 +1,5 @@
 ﻿using moodis;
+using Moodis.Feature.Login.Register;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,6 +48,12 @@ namespace Moodis.Feature.Login
                     labelNotification.Text = userNotFound;
                 }
             }
+        }
+
+        private void ButtonRegister_Click(object sender, EventArgs e)
+        {
+            var registerWindow = new RegisterForm();
+            registerWindow.Show();
         }
     }
 }

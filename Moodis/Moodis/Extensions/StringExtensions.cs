@@ -2,7 +2,7 @@
 
 namespace Moodis.Extensions
 {
-    public static class StringExtension
+    public static class StringExtensions
     {
         public static string FromJsonToString(this string json)
         {

@@ -76,18 +76,19 @@ namespace moodis
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
             saveFileDialog.FileName = fileName;
 
-            menuViewModel = new MenuViewModel();
-            menuViewModel.currentImage.ImagePath = fileName;
             try
             {
                     picBox.Image.Save(saveFileDialog.FileName);
                     if (menuWindow == null || menuWindow.running == false)
                     {
+                        menuViewModel = new MenuViewModel();
+                        menuViewModel.currentImage.ImagePath = fileName;
                         menuWindow = new MenuForm(menuViewModel);
                         menuWindow.Show();
                     }
                     else
                     {
+                        menuViewModel.currentImage.ImagePath = fileName;
                         menuWindow.UpdateLabels();
                     }
             }

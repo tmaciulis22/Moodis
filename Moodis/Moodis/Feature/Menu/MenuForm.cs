@@ -51,7 +51,7 @@ namespace Moodis.Ui
                 Application.Exit();
             }
 
-            if (menuViewModel.currentImage.emotions.Length != 0)
+            if (menuViewModel.currentImage.emotions != null)
             {
                 int counter = 0;
                 foreach (var label in emotionLabels)

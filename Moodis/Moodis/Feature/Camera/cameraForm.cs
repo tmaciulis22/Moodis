@@ -27,7 +27,7 @@ namespace moodis
             if(webcam.Count == 0)
             {
                 MessageBox.Show(NoDeviceMessage);
-                this.Close();
+                Application.Exit();
                 return;
             }
 
@@ -38,14 +38,7 @@ namespace moodis
             cmbOutputDevices.SelectedIndex = 0;
 
             cam = new VideoCaptureDevice(webcam[cmbOutputDevices.SelectedIndex].MonikerString);
-
-            foreach (var option in cam.VideoCapabilities)
-            {
-                string temp = option.FrameSize.Width.ToString() + " * " + option.FrameSize.Height.ToString();
-                cmbCamResoliution.Items.Add(temp);
-            }
-
-            cmbCamResoliution.SelectedIndex = cmbCamResoliution.Items.Count-1;
+            setHighestResoliution(cam);
             cam.NewFrame += new NewFrameEventHandler(cam_newFrame);
             cam.Start();
         }
@@ -124,6 +117,25 @@ namespace moodis
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        private void setHighestResoliution(VideoCaptureDevice cam)
+        {
+            int index = -1;
+            int highestResoliution = 0;
+            foreach (var option in cam.VideoCapabilities)
+            {
+                int height = option.FrameSize.Height;
+                int width = option.FrameSize.Width;
+                string temp = width.ToString() + "*" + height.ToString();
+                cmbCamResoliution.Items.Add(temp);
+                if (height * width > highestResoliution)
+                {
+                    highestResoliution = height * width;
+                    index = cmbCamResoliution.Items.Count-1;
+                }              
+            }
+            cmbCamResoliution.SelectedIndex = index;
         }
     }
 }

@@ -26,13 +26,11 @@ namespace Moodis.Ui
 
         public async Task GetFaceEmotionsAsync()
         {
-            Face face = Face.Instance;
-            var json = await face.SendImageForAnalysis(currentImage.ImagePath);
-            var jsonAsString = json.FromJsonToString();
+            var faceList = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath);
 
-            if (!string.IsNullOrEmpty(jsonAsString))
+            if (!faceList.IsNullOrEmpty())
             {
-                currentImage.SetImageInfo(jsonAsString);
+                currentImage.SetImageInfo(faceList);
             }
         }
 

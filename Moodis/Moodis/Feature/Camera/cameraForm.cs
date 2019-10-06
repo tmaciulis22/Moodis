@@ -78,7 +78,6 @@ namespace moodis
 
             try
             {
-                
                 picBox.Image.Save(saveFileDialog.FileName);
                 if (menuWindow == null || menuWindow.running == false)
                 {

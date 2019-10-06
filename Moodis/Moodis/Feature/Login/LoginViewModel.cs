@@ -21,16 +21,8 @@ namespace Moodis.Feature.Login
             {
                 userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
             }
-
-            if (userList.Exists(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password)))
-            {
-                currentUser = userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
-                return userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
-            }
-            else
-            {
-                return null;
-            }
+            currentUser = userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
+            return currentUser;
         }
 
         public bool AddUser(string username, string password)

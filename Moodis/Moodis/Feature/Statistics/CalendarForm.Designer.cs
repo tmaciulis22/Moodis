@@ -47,10 +47,10 @@
             // lblDataNumber
             // 
             this.lblDataNumber.AutoSize = true;
-            this.lblDataNumber.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDataNumber.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDataNumber.Location = new System.Drawing.Point(12, 230);
             this.lblDataNumber.Name = "lblDataNumber";
-            this.lblDataNumber.Size = new System.Drawing.Size(141, 17);
+            this.lblDataNumber.Size = new System.Drawing.Size(141, 16);
             this.lblDataNumber.TabIndex = 1;
             this.lblDataNumber.Text = "Available picture data: ";
             // 
@@ -160,7 +160,7 @@
             // 
             this.lblDay.AutoSize = true;
             this.lblDay.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDay.Location = new System.Drawing.Point(12, 205);
+            this.lblDay.Location = new System.Drawing.Point(12, 200);
             this.lblDay.Name = "lblDay";
             this.lblDay.Size = new System.Drawing.Size(43, 16);
             this.lblDay.TabIndex = 12;
@@ -170,7 +170,7 @@
             // 
             this.lblMonthly.AutoSize = true;
             this.lblMonthly.Font = new System.Drawing.Font("Microsoft Tai Le", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMonthly.Location = new System.Drawing.Point(12, 180);
+            this.lblMonthly.Location = new System.Drawing.Point(12, 172);
             this.lblMonthly.Name = "lblMonthly";
             this.lblMonthly.Size = new System.Drawing.Size(43, 16);
             this.lblMonthly.TabIndex = 13;

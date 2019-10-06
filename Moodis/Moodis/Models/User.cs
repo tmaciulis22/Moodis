@@ -7,11 +7,11 @@ namespace Moodis.Feature.Login
     [Serializable]
     class User
     {
-        public String username { get; set; }
-        public String password { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
         public List<ImageInfo> imageStats = new List<ImageInfo>();
 
-        public User(String username, String password)
+        public User(string username, string password)
         {
             this.username = username;
             this.password = password;

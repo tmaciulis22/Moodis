@@ -21,7 +21,7 @@ namespace Moodis.Feature.Login
             {
                 userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
             }
-            currentUser = userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
+            currentUser = userList.Find(user => user.username == username && user.password == Crypto.CalculateMD5Hash(password));
             return currentUser;
         }
 

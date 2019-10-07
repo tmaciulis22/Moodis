@@ -13,7 +13,7 @@ namespace Moodis.Feature.Login.Register
 {
     public partial class RegisterForm : Form
     {
-        LoginViewModel loginViewModel = new LoginViewModel();
+        SignInViewModel loginViewModel = new SignInViewModel();
         public const String passwordsNotSame = "Passwords must be the same!";
         public const String created = " was created!";
         public const String exists = " alreadyExists!";
@@ -23,7 +23,7 @@ namespace Moodis.Feature.Login.Register
         public RegisterForm()
         {
             InitializeComponent();
-            var loginViewModel = new LoginViewModel();
+            var loginViewModel = new SignInViewModel();
         }
 
         private void ButtonRegister_Click(object sender, EventArgs e)

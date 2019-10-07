@@ -96,12 +96,12 @@
     <Compile Include="Feature\Camera\cameraForm.Designer.cs">
       <DependentUpon>cameraForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Feature\Login\Crypto.cs" />
-    <Compile Include="Feature\Login\LoginForm.cs">
+    <Compile Include="Feature\Login\Encription\Crypto.cs" />
+    <Compile Include="Feature\Login\SignIn\SignInForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Feature\Login\LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <Compile Include="Feature\Login\SignIn\SignInForm.Designer.cs">
+      <DependentUpon>SignInForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Feature\Statistics\CalendarForm.cs">
       <SubType>Form</SubType>
@@ -113,14 +113,14 @@
     <Compile Include="Feature\Statistics\CustomMonthCalendar.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Feature\Login\LoginViewModel.cs" />
+    <Compile Include="Feature\Login\SignIn\SignInViewModel.cs" />
     <Compile Include="Feature\Login\Register\RegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Feature\Login\Register\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Feature\Login\Serializer.cs" />
+    <Compile Include="Feature\Login\Encription\Serializer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\Face\Face.cs" />
     <Compile Include="Program.cs" />
@@ -136,8 +136,8 @@
     <EmbeddedResource Include="Feature\Camera\cameraForm.resx">
       <DependentUpon>cameraForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Feature\Login\LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <EmbeddedResource Include="Feature\Login\SignIn\SignInForm.resx">
+      <DependentUpon>SignInForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Feature\Login\Register\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>

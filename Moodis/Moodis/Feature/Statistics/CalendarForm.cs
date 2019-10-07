@@ -37,21 +37,21 @@ namespace Moodis.Feature.Statistics
             calendarViewModel.updateViewModel();
 
             int counter = 0, counterM = 0, counterD = 0;
-            foreach (ImageInfo data in LoginViewModel.currentUser.imageStats)
+            foreach (ImageInfo data in SignInViewModel.currentUser.imageStats)
             {
                 if (data.imageDate.Date == customCalendar.SelectionRange.Start.Date)
                 {
-                    listOfData.Items.Add(LoginViewModel.currentUser.imageStats[counter]);
+                    listOfData.Items.Add(SignInViewModel.currentUser.imageStats[counter]);
                     counter++;
                 }
                 if (data.imageDate.Month == customCalendar.SelectionRange.Start.Month)
                 {
-                    calendarViewModel.monthlyList.Add(LoginViewModel.currentUser.imageStats[counterM]);
+                    calendarViewModel.monthlyList.Add(SignInViewModel.currentUser.imageStats[counterM]);
                     counterM++;
                 }
                 if (data.imageDate.Day == customCalendar.SelectionRange.Start.Day)
                 {
-                    calendarViewModel.dailyList.Add(LoginViewModel.currentUser.imageStats[counterD]);
+                    calendarViewModel.dailyList.Add(SignInViewModel.currentUser.imageStats[counterD]);
                     counterD++;
                 }
             }

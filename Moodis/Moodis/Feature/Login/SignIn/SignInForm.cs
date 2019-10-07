@@ -14,15 +14,14 @@ namespace Moodis.Feature.Login
 {
     public partial class LoginForm : Form
     {
-        SignInViewModel loginViewModel;
+        SignInViewModel signInViewModel;
         public const String usernameEmpty = "Username field is empty!";
         public const String passwordEmpty = "Password field is empty!";
         public const String userNotFound = "User not found!";
         public LoginForm()
         {
             InitializeComponent();
-            loginViewModel = new SignInViewModel();
-            loginViewModel.AddUser("admin", "admin");
+            signInViewModel = new SignInViewModel();
         }
 
         private void ButtonSignIn_Click(object sender, EventArgs e)
@@ -37,7 +36,7 @@ namespace Moodis.Feature.Login
             }
             else
             {
-                if(loginViewModel.Authenticate(textBoxUsername.Text,textBoxPassword.Text) != null)
+                if(signInViewModel.Authenticate(textBoxUsername.Text,textBoxPassword.Text) != null)
                 {
                     var cameraWindow = new CameraForm();
                     cameraWindow.Show();

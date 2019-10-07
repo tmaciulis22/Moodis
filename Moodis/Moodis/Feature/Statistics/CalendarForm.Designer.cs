@@ -208,7 +208,7 @@
             this.Controls.Add(this.customCalendar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CalendarForm";
-            this.Text = "Form1";
+            this.Text = "User calendar";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormClose);
             this.ResumeLayout(false);
             this.PerformLayout();

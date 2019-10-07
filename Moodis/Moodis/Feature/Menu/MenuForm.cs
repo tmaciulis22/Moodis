@@ -51,7 +51,7 @@ namespace Moodis.Ui
                     counter++;
                 }
                 menuViewModel.UserAddImage();
-                Console.WriteLine(LoginViewModel.currentUser.imageStats);
+                Console.WriteLine(SignInViewModel.currentUser.imageStats);
             }
             else
             {

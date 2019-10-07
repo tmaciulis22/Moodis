@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Moodis.Feature.Login
 {
-    class LoginViewModel
+    class SignInViewModel
     {
         public static List<User> userList;
         public static User currentUser;

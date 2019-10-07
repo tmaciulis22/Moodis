@@ -14,14 +14,14 @@ namespace Moodis.Feature.Login
 {
     public partial class LoginForm : Form
     {
-        LoginViewModel loginViewModel;
+        SignInViewModel loginViewModel;
         public const String usernameEmpty = "Username field is empty!";
         public const String passwordEmpty = "Password field is empty!";
         public const String userNotFound = "User not found!";
         public LoginForm()
         {
             InitializeComponent();
-            loginViewModel = new LoginViewModel();
+            loginViewModel = new SignInViewModel();
             loginViewModel.AddUser("admin", "admin");
         }
 

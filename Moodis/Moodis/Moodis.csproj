@@ -97,6 +97,7 @@
       <DependentUpon>cameraForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Feature\Login\Encription\Crypto.cs" />
+    <Compile Include="Feature\Login\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Login\SignIn\SignInForm.cs">
       <SubType>Form</SubType>
     </Compile>

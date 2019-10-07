@@ -10,28 +10,24 @@ namespace Moodis.Feature.Login
 {
     class LoginViewModel
     {
+        public static List<User> userList;
+        public static User currentUser;
+
         public User Authenticate(string username, string password)
         {
-            List<User> userList = new List<User>();
+            userList = new List<User>();
 
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
             {
                 userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
             }
-
-            if (userList.Exists(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password)))
-            {
-                return userList.Find(x => x.username == username && x.password == Crypto.CalculateMD5Hash(password));
-            }
-            else
-            {
-                return null;
-            }
+            currentUser = userList.Find(user => user.username == username && user.password == Crypto.CalculateMD5Hash(password));
+            return currentUser;
         }
 
         public bool AddUser(string username, string password)
         {
-            List<User> userList = new List<User>();
+            userList = new List<User>();
 
             if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
             {
@@ -46,7 +42,6 @@ namespace Moodis.Feature.Login
             {
                 User user = new User(username, Crypto.CalculateMD5Hash(password));
                 userList.Add(user);
-
                 return Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
             }
         }

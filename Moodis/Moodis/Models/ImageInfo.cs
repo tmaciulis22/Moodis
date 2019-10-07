@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 
 namespace Moodis.Ui
 {
+    [Serializable]
     public class ImageInfo
     {
+        [Serializable]
         public struct Emotion
         {
             public string name;
@@ -22,6 +24,7 @@ namespace Moodis.Ui
 
         public string ImagePath { get; set; }
         public Emotion[] emotions;
+        public DateTime imageDate { get; set; }
         private string id;
         private double? age;
         private Gender? gender;
@@ -32,6 +35,7 @@ namespace Moodis.Ui
             id = faceList[0].FaceId.ToString();
             age = faceList[0].FaceAttributes.Age;
             gender = faceList[0].FaceAttributes.Gender;
+            imageDate = DateTime.Now;
             AddEmotions(faceList[0].FaceAttributes.Emotion);
         }
 
@@ -45,6 +49,10 @@ namespace Moodis.Ui
                 emotions[index].name = property.Name;
                 emotions[index].confidence = (double) property.GetValue(detectedEmotions, null);
             });
+        }
+        public override string ToString()
+        {
+            return imageDate.ToString("yyyy/MM/dd HH:mm");
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Moodis.Network.Face;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
+using Moodis.Feature.Login;
 using Moodis.Extensions;
 
 namespace Moodis.Ui
@@ -30,6 +32,12 @@ namespace Moodis.Ui
             {
                 currentImage.SetImageInfo(faceList);
             }
+        }
+
+        public void UserAddImage()
+        {
+           LoginViewModel.currentUser.addImage(currentImage);
+            Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", LoginViewModel.userList);
         }
     }
 }

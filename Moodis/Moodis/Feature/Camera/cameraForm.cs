@@ -72,7 +72,7 @@ namespace moodis
             try
             {
                 picBox.Image.Save(saveFileDialog.FileName);
-                if (menuWindow == null || menuWindow.running == false)
+                if (menuWindow == null)
                 {
                     menuViewModel = new MenuViewModel();
                     menuViewModel.currentImage.ImagePath = fileName;
@@ -83,6 +83,7 @@ namespace moodis
                 {
                     menuViewModel.currentImage.ImagePath = fileName;
                     menuWindow.UpdateLabels();
+                    menuWindow.Show();
                 }
             }
             catch

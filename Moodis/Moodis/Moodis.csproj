@@ -103,6 +103,16 @@
     <Compile Include="Feature\Login\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\Statistics\CalendarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Feature\Statistics\CalendarForm.Designer.cs">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Feature\Statistics\CalendarViewModel.cs" />
+    <Compile Include="Feature\Statistics\CustomMonthCalendar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Feature\Login\LoginViewModel.cs" />
     <Compile Include="Feature\Login\Register\RegisterForm.cs">
       <SubType>Form</SubType>
@@ -131,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Feature\Login\Register\RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Feature\Statistics\CalendarForm.resx">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

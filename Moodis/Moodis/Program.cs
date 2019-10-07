@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
 
+using Moodis.Feature.Statistics;
+
 namespace moodis
 {
     static class Program

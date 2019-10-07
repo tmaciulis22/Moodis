@@ -64,6 +64,7 @@ namespace Moodis.Feature.Login.Register
                     labelNotification.Text = strongerPassword;
                 }
             }
+            Close();
         }
     }
 }

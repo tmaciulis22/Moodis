@@ -20,7 +20,7 @@ namespace moodis
         static void Main()
         {
 
-            if(checkForInternet())
+            if (checkForInternet())
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -28,12 +28,9 @@ namespace moodis
             }
             else
             {
-                //Application.Exit();
                 MessageBox.Show(WarningInRequest);
                 return;
             }
-            
-            
         }
 
         private static bool checkForInternet()

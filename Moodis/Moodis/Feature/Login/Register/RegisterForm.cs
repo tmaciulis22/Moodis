@@ -23,7 +23,6 @@ namespace Moodis.Feature.Login.Register
         public RegisterForm()
         {
             InitializeComponent();
-            var registerViewModel = new RegisterViewModel();
         }
 
         private void ButtonRegister_Click(object sender, EventArgs e)

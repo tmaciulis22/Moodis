@@ -96,7 +96,7 @@
     <Compile Include="Feature\Camera\cameraForm.Designer.cs">
       <DependentUpon>cameraForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Feature\Login\Encription\Crypto.cs" />
+    <Compile Include="Feature\Login\Encryption\Crypto.cs" />
     <Compile Include="Feature\Login\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Login\SignIn\SignInForm.cs">
       <SubType>Form</SubType>
@@ -121,7 +121,7 @@
     <Compile Include="Feature\Login\Register\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Feature\Login\Encription\Serializer.cs" />
+    <Compile Include="Feature\Login\Encryption\Serializer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\Face\Face.cs" />
     <Compile Include="Program.cs" />

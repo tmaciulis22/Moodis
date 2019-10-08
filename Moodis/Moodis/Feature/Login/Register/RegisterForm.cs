@@ -13,7 +13,7 @@ namespace Moodis.Feature.Login.Register
 {
     public partial class RegisterForm : Form
     {
-        RegisterViewModel loginViewModel = new RegisterViewModel();
+        RegisterViewModel registerViewModel = new RegisterViewModel();
         public const String passwordsNotSame = "Passwords must be the same!";
         public const String created = " was created!";
         public const String exists = " alreadyExists!";
@@ -48,7 +48,7 @@ namespace Moodis.Feature.Login.Register
                     }
                     else
                     {
-                        if (loginViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text))
+                        if (registerViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text))
                         {
                             labelNotification.ForeColor = Color.Green;
                             labelNotification.Text = textBoxUsername.Text + created;

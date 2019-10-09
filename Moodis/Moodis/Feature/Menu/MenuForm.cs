@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
 using Moodis.Feature.Statistics;
+using Music;
 
 namespace Moodis.Ui
 {
@@ -12,6 +13,7 @@ namespace Moodis.Ui
         private const string WarningInRequest = "Azure api request failed. Is your internet turned on ?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         public MenuViewModel menuViewModel;
+        private MusicPlayer player = new MusicPlayer();
         private const string FormatDouble = "N3";
 
         public MenuForm(MenuViewModel viewModel)
@@ -71,6 +73,14 @@ namespace Moodis.Ui
             {
                 e.Cancel = true;
                 Hide();
+            }
+        }
+
+        private void ButtonMusicController_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < menuViewModel.currentImage.emotions.Length; i++)
+            {
+                Console.WriteLine(i + " " + menuViewModel.currentImage.emotions[i].name + " " + menuViewModel.currentImage.emotions[i].confidence.ToString(FormatDouble));
             }
         }
     }

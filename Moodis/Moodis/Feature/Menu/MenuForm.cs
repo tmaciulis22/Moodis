@@ -67,7 +67,6 @@ namespace Moodis.Ui
             var calendarForm = new CalendarForm(new CalendarViewModel(), this);
             calendarForm.Show();
             player.StopMusic();
-
         }
         private void MenuFormClose(object sender, FormClosingEventArgs e)
         {
@@ -83,11 +82,11 @@ namespace Moodis.Ui
             double highestEmotion = 0;
             int counter = 0;
             int index = -1;
-            foreach (var label in menuViewModel.currentImage.emotions)
+            foreach (var emotion in menuViewModel.currentImage.emotions)
             {
-                if(label.confidence > highestEmotion)
+                if(emotion.confidence > highestEmotion)
                 {
-                    highestEmotion = label.confidence;
+                    highestEmotion = emotion.confidence;
                     index = counter;
                 }
                 counter++;

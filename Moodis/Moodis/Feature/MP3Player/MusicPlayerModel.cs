@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Moodis.Feature.MP3Player
 {
-    
     class MusicPlayerModel
     {
         private MusicPlayer player = new MusicPlayer();

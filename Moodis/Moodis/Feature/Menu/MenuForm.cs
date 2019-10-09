@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
+using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
 using Music;
 
@@ -13,7 +15,7 @@ namespace Moodis.Ui
         private const string WarningInRequest = "Azure api request failed. Is your internet turned on ?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         public MenuViewModel menuViewModel;
-        private MusicPlayer player = new MusicPlayer();
+        private MusicPlayerModel player = new MusicPlayerModel();
         private const string FormatDouble = "N3";
 
         public MenuForm(MenuViewModel viewModel)
@@ -59,29 +61,38 @@ namespace Moodis.Ui
                MessageBox.Show(WarningFaceDetection);
             }
         }
-
         private void BtnCalendar_Click(object sender, EventArgs e)
         {
             Hide();
             var calendarForm = new CalendarForm(new CalendarViewModel(), this);
             calendarForm.Show();
-        }
+            player.StopMusic();
 
+        }
         private void MenuFormClose(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 Hide();
+                player.StopMusic();
             }
         }
-
         private void ButtonMusicController_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < menuViewModel.currentImage.emotions.Length; i++)
+            double highestEmotion = 0;
+            int counter = 0;
+            int index = -1;
+            foreach (var label in menuViewModel.currentImage.emotions)
             {
-                Console.WriteLine(i + " " + menuViewModel.currentImage.emotions[i].name + " " + menuViewModel.currentImage.emotions[i].confidence.ToString(FormatDouble));
+                if(label.confidence > highestEmotion)
+                {
+                    highestEmotion = label.confidence;
+                    index = counter;
+                }
+                counter++;
             }
+            player.StartMusic(index);
         }
     }
 }

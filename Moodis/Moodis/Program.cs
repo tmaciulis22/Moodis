@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,8 +19,7 @@ namespace moodis
         [STAThread]
         static void Main()
         {
-
-            if (checkForInternet())
+            if (CheckForInternet())
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -32,7 +32,7 @@ namespace moodis
             }
         }
 
-        private static bool checkForInternet()
+        private static bool CheckForInternet()
         {
             try
             {

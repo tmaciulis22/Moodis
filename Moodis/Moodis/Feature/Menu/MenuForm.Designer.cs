@@ -149,7 +149,7 @@
             this.buttonMusicController.Name = "buttonMusicController";
             this.buttonMusicController.Size = new System.Drawing.Size(153, 39);
             this.buttonMusicController.TabIndex = 11;
-            this.buttonMusicController.Text = "Play/Stop suggested music";
+            this.buttonMusicController.Text = "Play suggested music";
             this.buttonMusicController.UseVisualStyleBackColor = true;
             this.buttonMusicController.Click += new System.EventHandler(this.ButtonMusicController_Click);
             // 

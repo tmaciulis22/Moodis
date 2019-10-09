@@ -19,14 +19,14 @@ namespace Music
             mciSendString(command, null, 0, 0);
         }
 
-        public void play()
+        public void Play()
         {
             string command = "play MediaFile";
             mciSendString(command, null, 0, 0);
         }
-        public void stop()
+        public void Stop()
         {
-            string command = "stop MediaFile";
+            string command = "close MediaFile";
             mciSendString(command, null, 0, 0);
         }
     }

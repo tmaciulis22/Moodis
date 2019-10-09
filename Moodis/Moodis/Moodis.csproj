@@ -104,6 +104,7 @@
     <Compile Include="Feature\Login\SignIn\SignInForm.Designer.cs">
       <DependentUpon>SignInForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\MP3Player\MusicPlayerModel.cs" />
     <Compile Include="Feature\MP3Player\MusicPlayer.cs" />
     <Compile Include="Feature\Statistics\CalendarForm.cs">
       <SubType>Form</SubType>

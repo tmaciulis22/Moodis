@@ -41,6 +41,7 @@
             this.btnCalendar = new System.Windows.Forms.Button();
             this.btnToCamera = new System.Windows.Forms.Button();
             this.buttonMusicController = new System.Windows.Forms.Button();
+            this.btnStopMusic = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -156,7 +157,7 @@
             // 
             // buttonMusicController
             // 
-            this.buttonMusicController.Location = new System.Drawing.Point(366, 88);
+            this.buttonMusicController.Location = new System.Drawing.Point(366, 83);
             this.buttonMusicController.Name = "buttonMusicController";
             this.buttonMusicController.Size = new System.Drawing.Size(153, 39);
             this.buttonMusicController.TabIndex = 11;
@@ -164,12 +165,23 @@
             this.buttonMusicController.UseVisualStyleBackColor = true;
             this.buttonMusicController.Click += new System.EventHandler(this.ButtonMusicController_Click);
             // 
+            // btnStopMusic
+            // 
+            this.btnStopMusic.Location = new System.Drawing.Point(366, 136);
+            this.btnStopMusic.Name = "btnStopMusic";
+            this.btnStopMusic.Size = new System.Drawing.Size(153, 39);
+            this.btnStopMusic.TabIndex = 13;
+            this.btnStopMusic.Text = "Stop Music";
+            this.btnStopMusic.UseVisualStyleBackColor = true;
+            this.btnStopMusic.Click += new System.EventHandler(this.BtnStopMusic_Click);
+            // 
             // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(531, 442);
+            this.Controls.Add(this.btnStopMusic);
             this.Controls.Add(this.btnToCamera);
             this.Controls.Add(this.buttonMusicController);
             this.Controls.Add(this.btnCalendar);
@@ -208,5 +220,6 @@
         private System.Windows.Forms.Button btnCalendar;
         private System.Windows.Forms.Button btnToCamera;
         private System.Windows.Forms.Button buttonMusicController;
+        private System.Windows.Forms.Button btnStopMusic;
     }
 }

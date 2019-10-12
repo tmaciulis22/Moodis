@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Moodis.Feature.Login;
 using Moodis.Extensions;
+using System.Linq;
 
 namespace Moodis.Ui
 {
@@ -38,6 +39,12 @@ namespace Moodis.Ui
         {
            SignInViewModel.currentUser.addImage(currentImage);
             Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", SignInViewModel.userList);
+        }
+
+        public int getHighestEmotionIndex()
+        {
+            var highestConfidence = currentImage.emotions.Max();
+            return currentImage.emotions.ToList().IndexOf(highestConfidence);
         }
     }
 }

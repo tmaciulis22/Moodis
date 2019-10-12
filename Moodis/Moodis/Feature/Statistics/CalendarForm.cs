@@ -27,6 +27,8 @@ namespace Moodis.Feature.Statistics
 
         private void FormClose(object sender, FormClosedEventArgs e)
         {
+            parentForm.StartPosition = FormStartPosition.Manual;
+            parentForm.Location = Location;
             parentForm.Show();
             Dispose();
         }

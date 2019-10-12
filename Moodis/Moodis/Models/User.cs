@@ -1,6 +1,9 @@
 ﻿using Moodis.Ui;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Moodis.Feature.Login
 {
@@ -9,12 +12,14 @@ namespace Moodis.Feature.Login
     {
         public string username { get; set; }
         public string password { get; set; }
+        public int userID { get; set; }
         public List<ImageInfo> imageStats = new List<ImageInfo>();
 
         public User(string username, string password)
         {
             this.username = username;
             this.password = password;
+            this.userID = getID();
         }
 
         public void addImage(ImageInfo image)
@@ -22,5 +27,16 @@ namespace Moodis.Feature.Login
             imageStats.Add(image);
         }
 
+        private int getID()
+        {
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
+            {
+                return Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin").Count;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }

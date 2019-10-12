@@ -57,9 +57,14 @@ namespace Moodis.Feature.Login
 
         private void LabelSignIn_Click(object sender, EventArgs e)
         {
-            CameraForm cameraForm = new CameraForm();
+            var cameraForm = new CameraForm();
+            cameraForm.StartPosition = FormStartPosition.Manual;
+            cameraForm.Location = Location;
+            var registerViewModel = new RegisterViewModel();
+            registerViewModel.AddUser("49874f70-b7e4-4d58-9ce4-67aa55dbd281", "34d75fd8 - 3f14 - 4e56 - a878 - e397447bd40b");
+            signInViewModel.Authenticate("49874f70-b7e4-4d58-9ce4-67aa55dbd281", "34d75fd8 - 3f14 - 4e56 - a878 - e397447bd40b");
             cameraForm.Show();
-            this.Hide();
+            Hide();
         }
     }
 }

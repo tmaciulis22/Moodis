@@ -36,7 +36,7 @@ namespace Moodis.Ui
 
         public void UserAddImage()
         {
-           SignInViewModel.currentUser.addImage(currentImage);
+            SignInViewModel.currentUser.addImage(currentImage);
             Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", SignInViewModel.userList);
         }
     }

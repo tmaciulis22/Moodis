@@ -16,12 +16,7 @@ namespace Moodis.Feature.Login
             this.username = username;
             this.password = password;
         }
-        /*public User(string username, string password, List<ImageInfo> imageInfos)
-        {
-            this.username = username;
-            this.password = password;
-            imageStats = imageInfos;
-        }*/
+
         public void addImage(ImageInfo image)
         {
             imageStats.Add(image);

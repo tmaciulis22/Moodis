@@ -39,6 +39,7 @@
             this.lblSadness = new System.Windows.Forms.Label();
             this.lblSurprise = new System.Windows.Forms.Label();
             this.btnCalendar = new System.Windows.Forms.Button();
+            this.btnToCamera = new System.Windows.Forms.Button();
             this.buttonMusicController = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).BeginInit();
             this.SuspendLayout();
@@ -143,6 +144,16 @@
             this.btnCalendar.UseVisualStyleBackColor = true;
             this.btnCalendar.Click += new System.EventHandler(this.BtnCalendar_Click);
             // 
+            // btnToCamera
+            // 
+            this.btnToCamera.Location = new System.Drawing.Point(366, 378);
+            this.btnToCamera.Name = "btnToCamera";
+            this.btnToCamera.Size = new System.Drawing.Size(153, 41);
+            this.btnToCamera.TabIndex = 12;
+            this.btnToCamera.Text = "Take another picture";
+            this.btnToCamera.UseVisualStyleBackColor = true;
+            this.btnToCamera.Click += new System.EventHandler(this.BtnToCamera_Click);
+            // 
             // buttonMusicController
             // 
             this.buttonMusicController.Location = new System.Drawing.Point(366, 88);
@@ -159,6 +170,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(531, 442);
+            this.Controls.Add(this.btnToCamera);
             this.Controls.Add(this.buttonMusicController);
             this.Controls.Add(this.btnCalendar);
             this.Controls.Add(this.lblSurprise);
@@ -194,6 +206,7 @@
         private System.Windows.Forms.Label lblSadness;
         private System.Windows.Forms.Label lblSurprise;
         private System.Windows.Forms.Button btnCalendar;
+        private System.Windows.Forms.Button btnToCamera;
         private System.Windows.Forms.Button buttonMusicController;
     }
 }

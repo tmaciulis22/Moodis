@@ -99,7 +99,7 @@ namespace Moodis.Network.Face
             );
         }
 
-        public async void AddFaceToPerson(string imageFilePath, string personGroupId, User user)
+        public async Task<bool> AddFaceToPerson(string imageFilePath, string personGroupId, User user)
         {
             try
             {
@@ -107,15 +107,18 @@ namespace Moodis.Network.Face
                 {
                     await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(
                             personGroupId, user.faceApiPerson.PersonId, imageFileStream);
+                    return true;
                 }
             }
             catch (APIErrorException apiException)
             {
                 Console.WriteLine(apiException.StackTrace);
+                return false;
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.StackTrace);
+                return false;
             }
         }
 

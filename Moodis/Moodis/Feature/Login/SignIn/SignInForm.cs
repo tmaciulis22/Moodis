@@ -40,7 +40,7 @@ namespace Moodis.Feature.Login
                 {
                     var cameraWindow = new CameraForm();
                     cameraWindow.Show();
-                    this.Hide();
+                    Hide();
                 }
                 else
                 {

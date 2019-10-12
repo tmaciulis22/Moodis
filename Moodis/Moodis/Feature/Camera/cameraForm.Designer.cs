@@ -33,14 +33,15 @@
             this.buttonStop = new System.Windows.Forms.Button();
             this.picBox = new System.Windows.Forms.PictureBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.labelOutputDevice = new System.Windows.Forms.Label();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.tipLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(32, 466);
-            this.buttonStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonStart.Location = new System.Drawing.Point(29, 488);
+            this.buttonStart.Margin = new System.Windows.Forms.Padding(4);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(100, 28);
             this.buttonStart.TabIndex = 0;
@@ -50,8 +51,8 @@
             // 
             // buttonTakePicture
             // 
-            this.buttonTakePicture.Location = new System.Drawing.Point(203, 466);
-            this.buttonTakePicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonTakePicture.Location = new System.Drawing.Point(203, 488);
+            this.buttonTakePicture.Margin = new System.Windows.Forms.Padding(4);
             this.buttonTakePicture.Name = "buttonTakePicture";
             this.buttonTakePicture.Size = new System.Drawing.Size(100, 28);
             this.buttonTakePicture.TabIndex = 1;
@@ -61,8 +62,8 @@
             // 
             // buttonStop
             // 
-            this.buttonStop.Location = new System.Drawing.Point(384, 466);
-            this.buttonStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonStop.Location = new System.Drawing.Point(381, 488);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(4);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(100, 28);
             this.buttonStop.TabIndex = 2;
@@ -72,36 +73,45 @@
             // 
             // picBox
             // 
-            this.picBox.Location = new System.Drawing.Point(32, 13);
-            this.picBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picBox.Location = new System.Drawing.Point(29, 76);
+            this.picBox.Margin = new System.Windows.Forms.Padding(4);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(452, 404);
             this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picBox.TabIndex = 3;
             this.picBox.TabStop = false;
             // 
-            // labelOutputDevice
+            // progressBar
             // 
-            this.labelOutputDevice.AutoSize = true;
-            this.labelOutputDevice.Location = new System.Drawing.Point(36, 428);
-            this.labelOutputDevice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelOutputDevice.Name = "labelOutputDevice";
-            this.labelOutputDevice.Size = new System.Drawing.Size(96, 17);
-            this.labelOutputDevice.TabIndex = 5;
-            this.labelOutputDevice.Text = "Output device";
+            this.progressBar.Location = new System.Drawing.Point(29, 46);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(452, 23);
+            this.progressBar.TabIndex = 4;
+            this.progressBar.Visible = false;
+            // 
+            // tipLabel
+            // 
+            this.tipLabel.AutoSize = true;
+            this.tipLabel.Location = new System.Drawing.Point(93, 9);
+            this.tipLabel.Name = "tipLabel";
+            this.tipLabel.Size = new System.Drawing.Size(331, 17);
+            this.tipLabel.TabIndex = 5;
+            this.tipLabel.Text = "Please take 3 pictures of your face for identification";
+            this.tipLabel.Visible = false;
             // 
             // CameraForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 510);
-            this.Controls.Add(this.labelOutputDevice);
+            this.ClientSize = new System.Drawing.Size(523, 532);
+            this.Controls.Add(this.tipLabel);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.picBox);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonTakePicture);
             this.Controls.Add(this.buttonStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CameraForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Moodis";
@@ -120,7 +130,8 @@
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.PictureBox picBox;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.Label labelOutputDevice;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label tipLabel;
     }
 }
 

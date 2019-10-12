@@ -1,6 +1,7 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
 using Moodis.Feature.Camera;
+using Moodis.Feature.Login.Register;
 using Moodis.Ui;
 using System;
 using System.Drawing;
@@ -12,16 +13,35 @@ namespace moodis
     {
         private FilterInfoCollection webcam;
         private VideoCaptureDevice cam;
+
         private const string WarningMessage = "You must first turn on the camera!";
         private const string NoDeviceMessage = "Your device does not have a camera.";
+        private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
+
         private MenuForm menuWindow;
+
         private MenuViewModel menuViewModel;
         private CameraViewModel cameraViewModel;
+        private RegisterViewModel registerViewModel;
+
+        private bool isRegistering = false;
 
         public CameraForm()
         {
             cameraViewModel = new CameraViewModel();
             InitializeComponent();
+        }
+
+        public CameraForm(bool isRegistering, RegisterViewModel registerViewModel)
+        {
+            this.isRegistering = isRegistering;
+            this.registerViewModel = registerViewModel;
+            cameraViewModel = new CameraViewModel();
+            
+            InitializeComponent();
+
+            tipLabel.Visible = true;
+            progressBar.Visible = true;
         }
 
         private void CameraFormLoad(object sender, EventArgs e)
@@ -61,7 +81,7 @@ namespace moodis
             }
         }
 
-        private void ButtonPicture(object sender, EventArgs e)
+        private async void ButtonPicture(object sender, EventArgs e)
         {
             saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
@@ -70,22 +90,42 @@ namespace moodis
             try
             {
                 picBox.Image.Save(saveFileDialog.FileName);
-                if (menuWindow == null)
+                if (isRegistering == false)
                 {
-                    menuViewModel = new MenuViewModel();
-                    menuViewModel.currentImage.ImagePath = fileName;
-                    menuWindow = new MenuForm(menuViewModel);
-                    menuWindow.Show();
+                    if (menuWindow == null)
+                    {
+                        menuViewModel = new MenuViewModel();
+                        menuViewModel.currentImage.ImagePath = fileName;
+                        menuWindow = new MenuForm(menuViewModel);
+                        menuWindow.Show();
+                    }
+                    else
+                    {
+                        menuViewModel.currentImage.ImagePath = fileName;
+                        menuWindow.UpdateLabels();
+                        menuWindow.Show();
+                    }
+                }
+                else if(registerViewModel.photosTaken < 3)
+                {
+                    var wasSuccessful = await registerViewModel.AddFaceToPerson(fileName);
+                    if (wasSuccessful == false)
+                    {
+                        MessageBox.Show(WarningFaceDetection);
+                    }
+                    else
+                    {
+                        progressBar.Value = 100 / registerViewModel.photosTaken;
+                    }
                 }
                 else
                 {
-                    menuViewModel.currentImage.ImagePath = fileName;
-                    menuWindow.UpdateLabels();
-                    menuWindow.Show();
+                    MessageBox.Show("Successful registration");
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 MessageBox.Show(WarningMessage);
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moodis.Network.Face;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,8 +11,10 @@ namespace Moodis.Feature.Login.Register
     public class RegisterViewModel
     {
         public static List<User> userList;
+        public User currentUser;
+        internal int photosTaken = 0;
 
-        public bool AddUser(string username, string password)
+        public async Task<bool> AddUser(string username, string password)
         {
             userList = new List<User>();
 
@@ -26,9 +29,33 @@ namespace Moodis.Feature.Login.Register
             }
             else
             {
-                User user = new User(username, Crypto.CalculateMD5Hash(password));
-                userList.Add(user);
+                currentUser = new User(username, Crypto.CalculateMD5Hash(password));
+                currentUser.personGroupId = userList.Count().ToString();
+                currentUser.faceApiPerson = await Face.Instance.CreateNewPerson(currentUser.personGroupId, username);
+
+                userList.Add(currentUser);
+
                 return Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
+            }
+        }
+
+        public async Task<bool> AddFaceToPerson(string imagePath)
+        {
+            var wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.personGroupId, currentUser);
+            if (wasSuccessful)
+            {
+                photosTaken++;
+
+                if (photosTaken == 3)
+                {
+                    await Face.Instance.TrainPersonGroup(currentUser.personGroupId);
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

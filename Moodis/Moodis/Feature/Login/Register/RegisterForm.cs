@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using moodis;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Moodis.Feature.Login.Register
@@ -25,7 +20,7 @@ namespace Moodis.Feature.Login.Register
             InitializeComponent();
         }
 
-        private void ButtonRegister_Click(object sender, EventArgs e)
+        private async void ButtonRegister_Click(object sender, EventArgs e)
         {
             labelNotification.ForeColor = Color.Red;
             if(string.IsNullOrWhiteSpace(textBoxUsername.Text))
@@ -47,7 +42,7 @@ namespace Moodis.Feature.Login.Register
                     }
                     else
                     {
-                        if (registerViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text))
+                        if (await registerViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text))
                         {
                             labelNotification.ForeColor = Color.Green;
                             labelNotification.Text = textBoxUsername.Text + created;
@@ -63,6 +58,8 @@ namespace Moodis.Feature.Login.Register
                     labelNotification.Text = strongerPassword;
                 }
             }
+
+            new CameraForm(true, registerViewModel).Show();
             Close();
         }
     }

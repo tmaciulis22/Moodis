@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Moodis.Feature.Login;
 using Moodis.Extensions;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using System.Collections.Generic;
 
 namespace Moodis.Ui
 {
@@ -26,11 +28,11 @@ namespace Moodis.Ui
 
         public async Task GetFaceEmotionsAsync()
         {
-            var faceList = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath);
+            var faceList = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath, "asd", "Asd");
 
-            if (!faceList.IsNullOrEmpty())
+            if (faceList != null)
             {
-                currentImage.SetImageInfo(faceList);
+                currentImage.SetImageInfo(new List<DetectedFace>());
             }
         }
 

@@ -96,7 +96,14 @@
     <Compile Include="Feature\Camera\cameraForm.Designer.cs">
       <DependentUpon>cameraForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\Camera\CameraViewModel.cs" />
     <Compile Include="Feature\Login\Encryption\Crypto.cs" />
+    <Compile Include="Feature\Login\Register\RegisterCameraForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Feature\Login\Register\RegisterCameraForm.Designer.cs">
+      <DependentUpon>RegisterCameraForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Feature\Login\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Login\SignIn\SignInForm.cs">
       <SubType>Form</SubType>
@@ -136,6 +143,9 @@
     </Compile>
     <EmbeddedResource Include="Feature\Camera\cameraForm.resx">
       <DependentUpon>cameraForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Feature\Login\Register\RegisterCameraForm.resx">
+      <DependentUpon>RegisterCameraForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Feature\Login\SignIn\SignInForm.resx">
       <DependentUpon>SignInForm.cs</DependentUpon>

@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Moodis.Feature.Login.Register
 {
-    class RegisterViewModel
+    public class RegisterViewModel
     {
         public static List<User> userList;
-        public static User currentUser;
 
         public bool AddUser(string username, string password)
         {

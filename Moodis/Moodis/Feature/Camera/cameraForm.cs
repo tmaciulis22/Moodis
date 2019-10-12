@@ -1,25 +1,29 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
+using Moodis.Feature.Camera;
+using Moodis.Ui;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Moodis.Ui;
 
 namespace moodis
 {
     public partial class CameraForm : Form
     {
-        public CameraForm()
-        {
-            InitializeComponent();
-        }
-
         private FilterInfoCollection webcam;
         private VideoCaptureDevice cam;
         private const string WarningMessage = "You must first turn on the camera!";
         private const string NoDeviceMessage = "Your device does not have a camera.";
         private MenuForm menuWindow;
         private MenuViewModel menuViewModel;
+        private CameraViewModel cameraViewModel;
+
+        public CameraForm()
+        {
+            cameraViewModel = new CameraViewModel();
+            InitializeComponent();
+        }
+
         private void CameraFormLoad(object sender, EventArgs e)
         {
             webcam = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -31,14 +35,8 @@ namespace moodis
                 return;
             }
 
-            foreach(FilterInfo VideoCaptureDevice in webcam)
-            {
-                cmbOutputDevices.Items.Add(VideoCaptureDevice.Name);
-            }
-            cmbOutputDevices.SelectedIndex = 0;
-
-            cam = new VideoCaptureDevice(webcam[cmbOutputDevices.SelectedIndex].MonikerString);
-            setHighestResoliution(cam);
+            cam = new VideoCaptureDevice(webcam[0].MonikerString);
+            cam.VideoResolution = cam.VideoCapabilities[cameraViewModel.getHighestResoliutionIndex(cam)];
             cam.NewFrame += new NewFrameEventHandler(cam_newFrame);
             cam.Start();
         }
@@ -92,20 +90,6 @@ namespace moodis
             }
         }
 
-        private void ComboBoxResoliution(object sender, EventArgs e)
-        {
-            if(cam.IsRunning)
-            {
-                cam.Stop();
-                cam.VideoResolution = cam.VideoCapabilities[cmbCamResoliution.SelectedIndex];
-                cam.Start();
-            }
-            else
-            {
-                cam.VideoResolution = cam.VideoCapabilities[cmbCamResoliution.SelectedIndex];
-            }
-        }
-
         private void CameraForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             try
@@ -117,25 +101,6 @@ namespace moodis
             {
                 Console.WriteLine(ex.ToString());
             }
-        }
-
-        private void setHighestResoliution(VideoCaptureDevice cam)
-        {
-            int index = -1;
-            int highestResoliution = 0;
-            foreach (var option in cam.VideoCapabilities)
-            {
-                int height = option.FrameSize.Height;
-                int width = option.FrameSize.Width;
-                string temp = width.ToString() + "*" + height.ToString();
-                cmbCamResoliution.Items.Add(temp);
-                if (height * width > highestResoliution)
-                {
-                    highestResoliution = height * width;
-                    index = cmbCamResoliution.Items.Count-1;
-                }              
-            }
-            cmbCamResoliution.SelectedIndex = index;
         }
     }
 }

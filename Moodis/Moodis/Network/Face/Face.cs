@@ -42,7 +42,7 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<DetectedFace?> DetectFaceEmotions(string imageFilePath, string personGroupId, string username)
+        public async Task<DetectedFace> DetectFaceEmotions(string imageFilePath, string personGroupId, string username)
         {
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
@@ -79,6 +79,7 @@ namespace Moodis.Network.Face
                 {
                     var candidateId = identifiedPerson.Candidates[0].PersonId;
                     var person = await faceClient.PersonGroupPerson.GetAsync(personGroupId, candidateId);
+
                     if (person.Name == username)
                     {
                         return detectedFaces.First(face => face.FaceId == identifiedPerson.FaceId);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
 using Moodis.Feature.MP3Player;
@@ -79,19 +80,7 @@ namespace Moodis.Ui
         }
         private void ButtonMusicController_Click(object sender, EventArgs e)
         {
-            double highestEmotion = 0;
-            int counter = 0;
-            int index = -1;
-            foreach (var emotion in menuViewModel.currentImage.emotions)
-            {
-                if(emotion.confidence > highestEmotion)
-                {
-                    highestEmotion = emotion.confidence;
-                    index = counter;
-                }
-                counter++;
-            }
-            player.StartMusic(index);
+            player.StartMusic(menuViewModel.getHighestEmotionIndex());
         }
     }
 }

@@ -104,6 +104,8 @@
     <Compile Include="Feature\Login\SignIn\SignInForm.Designer.cs">
       <DependentUpon>SignInForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\MP3Player\MusicPlayerModel.cs" />
+    <Compile Include="Feature\MP3Player\MusicPlayer.cs" />
     <Compile Include="Feature\Statistics\CalendarForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +191,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Feature\MP3Player\Music\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

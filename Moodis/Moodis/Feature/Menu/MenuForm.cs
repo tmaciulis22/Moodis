@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
+using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
+using Music;
 
 namespace Moodis.Ui
 {
@@ -13,6 +17,7 @@ namespace Moodis.Ui
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         public MenuViewModel menuViewModel;
         private Form parentForm;
+        private MusicPlayerModel player = new MusicPlayerModel();
         private const string FormatDouble = "N3";
 
         public MenuForm(MenuViewModel viewModel,Form parent)
@@ -59,7 +64,6 @@ namespace Moodis.Ui
                MessageBox.Show(WarningFaceDetection);
             }
         }
-
         private void BtnCalendar_Click(object sender, EventArgs e)
         {
             Hide();
@@ -67,8 +71,8 @@ namespace Moodis.Ui
             calendarForm.StartPosition = FormStartPosition.Manual;
             calendarForm.Location = Location;
             calendarForm.Show();
+            player.StopMusic();
         }
-
         private void MenuFormClose(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -85,6 +89,12 @@ namespace Moodis.Ui
             Hide();
             parentForm.Location = Location;
             parentForm.Show();
+                player.StopMusic();
+            }
+        }
+        private void ButtonMusicController_Click(object sender, EventArgs e)
+        {
+            player.StartMusic(menuViewModel.getHighestEmotionIndex());
         }
     }
 }

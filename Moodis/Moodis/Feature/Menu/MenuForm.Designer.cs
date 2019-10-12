@@ -40,6 +40,7 @@
             this.lblSurprise = new System.Windows.Forms.Label();
             this.btnCalendar = new System.Windows.Forms.Button();
             this.btnToCamera = new System.Windows.Forms.Button();
+            this.buttonMusicController = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,6 +154,16 @@
             this.btnToCamera.UseVisualStyleBackColor = true;
             this.btnToCamera.Click += new System.EventHandler(this.BtnToCamera_Click);
             // 
+            // buttonMusicController
+            // 
+            this.buttonMusicController.Location = new System.Drawing.Point(366, 88);
+            this.buttonMusicController.Name = "buttonMusicController";
+            this.buttonMusicController.Size = new System.Drawing.Size(153, 39);
+            this.buttonMusicController.TabIndex = 11;
+            this.buttonMusicController.Text = "Play suggested music";
+            this.buttonMusicController.UseVisualStyleBackColor = true;
+            this.buttonMusicController.Click += new System.EventHandler(this.ButtonMusicController_Click);
+            // 
             // MenuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,6 +171,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(531, 442);
             this.Controls.Add(this.btnToCamera);
+            this.Controls.Add(this.buttonMusicController);
             this.Controls.Add(this.btnCalendar);
             this.Controls.Add(this.lblSurprise);
             this.Controls.Add(this.lblSadness);
@@ -195,5 +207,6 @@
         private System.Windows.Forms.Label lblSurprise;
         private System.Windows.Forms.Button btnCalendar;
         private System.Windows.Forms.Button btnToCamera;
+        private System.Windows.Forms.Button buttonMusicController;
     }
 }

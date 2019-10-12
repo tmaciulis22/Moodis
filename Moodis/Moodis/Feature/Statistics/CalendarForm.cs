@@ -27,7 +27,6 @@ namespace Moodis.Feature.Statistics
 
         private void FormClose(object sender, FormClosedEventArgs e)
         {
-            parentForm.StartPosition = FormStartPosition.Manual;
             parentForm.Location = Location;
             parentForm.Show();
             Dispose();
@@ -78,6 +77,13 @@ namespace Moodis.Feature.Statistics
                     + img.emotions[counter].confidence.ToString(FormatDouble);
                counter++;
             }
+        }
+
+        private void BtnToParentForm_Click(object sender, System.EventArgs e)
+        {
+            parentForm.Location = Location;
+            parentForm.Show();
+            Dispose();
         }
     }
 }

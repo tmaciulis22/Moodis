@@ -79,5 +79,12 @@ namespace Moodis.Ui
             parentForm.Location = Location;
             parentForm.Show();
         }
+
+        private void BtnToCamera_Click(object sender, EventArgs e)
+        {
+            Hide();
+            parentForm.Location = Location;
+            parentForm.Show();
+        }
     }
 }

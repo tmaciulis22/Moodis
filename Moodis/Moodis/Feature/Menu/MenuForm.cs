@@ -79,6 +79,7 @@ namespace Moodis.Ui
             {
                 e.Cancel = true;
                 Hide();
+                player.StopMusic();
             }
             parentForm.Location = Location;
             parentForm.Show();
@@ -89,8 +90,6 @@ namespace Moodis.Ui
             Hide();
             parentForm.Location = Location;
             parentForm.Show();
-                player.StopMusic();
-            }
         }
         private void ButtonMusicController_Click(object sender, EventArgs e)
         {

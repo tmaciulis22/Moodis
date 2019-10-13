@@ -17,6 +17,7 @@ namespace moodis
         private const string WarningMessage = "You must first turn on the camera!";
         private const string NoDeviceMessage = "Your device does not have a camera.";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
+        private const string RegistrationSuccessful = "Registration was successful, now you may login!";
 
         private MenuForm menuWindow;
 
@@ -125,9 +126,9 @@ namespace moodis
                     {
                         if (await registerViewModel.AddFaceToPerson(fileName))
                         {
-                            progressBar.Value = 100 / registerViewModel.photosTaken;
-                            MessageBox.Show("Successful registration");
+                            progressBar.Value = 100 / (4 - registerViewModel.photosTaken);
                             Hide();
+                            MessageBox.Show(RegistrationSuccessful);
                         }
                         else
                         {

@@ -1,20 +1,21 @@
-﻿using Moodis.Network.Face;
+﻿using Moodis.Constants.Enums;
+using Moodis.Network.Face;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.Login.Register
 {
     public class RegisterViewModel
     {
+        private const int RequiredNumberOfPhotos = 3;
+
         public static List<User> userList;
         public User currentUser;
         internal int photosTaken = 0;
 
-        public async Task<bool> AddUser(string username, string password)
+        public async Task<Response> AddUser(string username, string password)
         {
             userList = new List<User>();
 
@@ -25,7 +26,7 @@ namespace Moodis.Feature.Login.Register
 
             if (userList.Exists(x => x.username == username))
             {
-                return false;
+                return Response.UserExists;
             }
             else
             {
@@ -40,16 +41,25 @@ namespace Moodis.Feature.Login.Register
                 }
                 else
                 {
-                    return false;
+                    return Response.ApiError;
                 }
 
                 userList.Add(currentUser);
 
-                return Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
+                var wasSuccessful = Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
+
+                if(wasSuccessful == true)
+                {
+                    return Response.OK;
+                } 
+                else
+                {
+                    return Response.SerializationError;
+                }
             }
         }
 
-        public async Task<bool> AddFaceToPerson(string imagePath)
+        public async Task<Response> AddFaceToPerson(string imagePath)
         {
             bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.personGroupId, currentUser);
 
@@ -57,16 +67,23 @@ namespace Moodis.Feature.Login.Register
             {
                 photosTaken++;
 
-                if (photosTaken == 3)
+                if (photosTaken == RequiredNumberOfPhotos)
                 {
-                    await Face.Instance.TrainPersonGroup(currentUser.personGroupId);
+                    try
+                    {
+                        await Face.Instance.TrainPersonGroup(currentUser.personGroupId);
+                    }
+                    catch
+                    {
+                        return Response.ApiTrainingError;
+                    }
                 }
 
-                return true;
+                return Response.OK;
             }
             else
             {
-                return false;
+                return Response.ApiError;
             }
         }
     }

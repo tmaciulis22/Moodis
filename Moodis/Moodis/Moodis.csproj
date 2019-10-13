@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Enums\Response.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="Feature\Camera\cameraForm.cs">
       <SubType>Form</SubType>

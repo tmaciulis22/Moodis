@@ -1,5 +1,6 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
+using Moodis.Constants.Enums;
 using Moodis.Feature.Camera;
 using Moodis.Feature.Login.Register;
 using Moodis.Ui;
@@ -17,7 +18,10 @@ namespace moodis
         private const string WarningMessage = "You must first turn on the camera!";
         private const string NoDeviceMessage = "Your device does not have a camera.";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
+        private const string ApiErrorMessage = "Something wrong happened, please try again later";
         private const string RegistrationSuccessful = "Registration was successful, now you may login!";
+        private const int ProgressBarValueFactor = 33;
+        private const int RequiredNumberOfPhotos = 3;
 
         private MenuForm menuWindow;
 
@@ -91,56 +95,53 @@ namespace moodis
             try
             {
                 picBox.Image.Save(saveFileDialog.FileName);
-                if (isRegistering == false)
+            }
+            catch
+            {
+                MessageBox.Show(WarningMessage);
+            }
+
+            if (isRegistering == false)
+            {
+                if (menuWindow == null)
                 {
-                    if (menuWindow == null)
-                    {
-                        menuViewModel = new MenuViewModel();
-                        menuViewModel.currentImage.ImagePath = fileName;
-                        menuWindow = new MenuForm(menuViewModel, this);
-                        menuWindow.StartPosition = FormStartPosition.Manual;
-                    }
-                    else
-                    {
-                        menuViewModel.currentImage.ImagePath = fileName;
-                        menuWindow.UpdateLabels();
-                    }
-                    menuWindow.Location = Location;
-                    menuWindow.Show();
-                    Hide();
+                    menuViewModel = new MenuViewModel();
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow = new MenuForm(menuViewModel, this);
+                    menuWindow.StartPosition = FormStartPosition.Manual;
                 }
                 else
                 {
-                    if (registerViewModel.photosTaken < 2)
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow.UpdateLabels();
+                }
+                menuWindow.Location = Location;
+                menuWindow.Show();
+                Hide();
+            }
+            else
+            {
+                var response = await registerViewModel.AddFaceToPerson(fileName);
+
+                if (response == Response.OK)
+                {
+                    progressBar.Value = ProgressBarValueFactor * registerViewModel.photosTaken;
+
+                    if (registerViewModel.photosTaken == RequiredNumberOfPhotos)
                     {
-                        if (await registerViewModel.AddFaceToPerson(fileName))
-                        {
-                            progressBar.Value = 100 / registerViewModel.photosTaken;
-                        }
-                        else
-                        {
-                            MessageBox.Show(WarningFaceDetection);
-                        }
-                    }
-                    else
-                    {
-                        if (await registerViewModel.AddFaceToPerson(fileName))
-                        {
-                            progressBar.Value = 100 / (4 - registerViewModel.photosTaken);
-                            Hide();
-                            MessageBox.Show(RegistrationSuccessful);
-                        }
-                        else
-                        {
-                            MessageBox.Show(WarningFaceDetection);
-                        }
+                        MessageBox.Show(RegistrationSuccessful);
+                        Hide();
                     }
                 }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                MessageBox.Show(WarningMessage);
+                else if(response == Response.ApiTrainingError)
+                {
+                    MessageBox.Show(ApiErrorMessage);
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show(WarningFaceDetection);
+                }
             }
         }
 

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using Moodis.Feature.Login;
 using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
-using Music;
 
 namespace Moodis.Ui
 {
     public partial class MenuForm : Form
     {
         public bool running = false;
-        private const string WarningInRequest = "Azure api request failed. Is your internet turned on ?";
+        private const string WarningInRequest = "Something wrong happened. Is your internet turned on?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         public MenuViewModel menuViewModel;
         private Form parentForm;

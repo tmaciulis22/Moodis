@@ -1,4 +1,5 @@
 ﻿using moodis;
+using Moodis.Constants.Enums;
 using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -9,12 +10,13 @@ namespace Moodis.Feature.Login.Register
     public partial class RegisterForm : Form
     {
         RegisterViewModel registerViewModel;
-        public const String passwordsNotSame = "Passwords must be the same!";
-        public const String created = " was created!";
-        public const String exists = " already exists!";
-        public const String strongerPassword = "Password must be stronger!";
-        public const String usernameEmpty = "Username field is empty!";
-        public const String passwordEmpty = "Password field is empty!";
+        public const string passwordsNotSame = "Passwords must be the same!";
+        public const string created = " was created!";
+        public const string exists = " already exists!";
+        public const string strongerPassword = "Password must be stronger!";
+        public const string usernameEmpty = "Username field is empty!";
+        public const string passwordEmpty = "Password field is empty!";
+        public const string GeneralErrorMessage = "Something wrong happened, please try again later";
 
         public RegisterForm()
         {
@@ -45,7 +47,9 @@ namespace Moodis.Feature.Login.Register
                     }
                     else
                     {
-                        if (await registerViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text))
+                        var response = await registerViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text);
+
+                        if (response == Response.OK)
                         {
                             labelNotification.ForeColor = Color.Green;
                             labelNotification.Text = textBoxUsername.Text + created;
@@ -53,9 +57,13 @@ namespace Moodis.Feature.Login.Register
                             new CameraForm(true, registerViewModel).Show();
                             Close();
                         }
-                        else
+                        else if(response == Response.UserExists)
                         {
                             labelNotification.Text = textBoxUsername.Text + exists;
+                        }
+                        else
+                        {
+                            labelNotification.Text = GeneralErrorMessage;
                         }
                     }
                 }

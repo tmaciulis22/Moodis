@@ -16,10 +16,18 @@ namespace Moodis.Ui
     public class ImageInfo
     {
         [Serializable]
-        public struct Emotion
+        public struct Emotion : IComparable
         {
             public string name;
             public double confidence;
+
+            public int CompareTo(object obj)
+            {
+                if (obj == null) return 1;
+
+                var otherEmotion = (Emotion)obj;
+                return confidence.CompareTo(otherEmotion.confidence);
+            }
         }
 
         public string ImagePath { get; set; }

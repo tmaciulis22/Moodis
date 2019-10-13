@@ -95,15 +95,14 @@ namespace moodis
                     if (menuWindow == null)
                     {
                         menuViewModel = new MenuViewModel();
-                        menuViewModel.currentImage.ImagePath = fileName;
-                        menuWindow = new MenuForm(menuViewModel);
-                        menuWindow.Show();
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow = new MenuForm(menuViewModel, this);
+                    menuWindow.StartPosition = FormStartPosition.Manual;
                     }
                     else
                     {
                         menuViewModel.currentImage.ImagePath = fileName;
                         menuWindow.UpdateLabels();
-                        menuWindow.Show();
                     }
                 }
                 else if(registerViewModel.photosTaken < 3)
@@ -119,8 +118,13 @@ namespace moodis
                 }
                 else
                 {
+                    menuViewModel.currentImage.ImagePath = fileName;
+                    menuWindow.UpdateLabels();
                     MessageBox.Show("Successful registration");
                 }
+                menuWindow.Location = Location;
+                menuWindow.Show();
+                Hide();
             }
             catch(Exception ex)
             {

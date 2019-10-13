@@ -41,6 +41,7 @@
             this.lblInfoText = new System.Windows.Forms.Label();
             this.lblDay = new System.Windows.Forms.Label();
             this.lblMonthly = new System.Windows.Forms.Label();
+            this.btnToParentForm = new System.Windows.Forms.Button();
             this.customCalendar = new Moodis.Feature.Statistics.CustomMonthCalendar();
             this.SuspendLayout();
             // 
@@ -176,10 +177,20 @@
             this.lblMonthly.TabIndex = 13;
             this.lblMonthly.Text = "label1";
             // 
+            // btnToParentForm
+            // 
+            this.btnToParentForm.Location = new System.Drawing.Point(723, 393);
+            this.btnToParentForm.Name = "btnToParentForm";
+            this.btnToParentForm.Size = new System.Drawing.Size(121, 43);
+            this.btnToParentForm.TabIndex = 15;
+            this.btnToParentForm.Text = "Back to menu";
+            this.btnToParentForm.UseVisualStyleBackColor = true;
+            this.btnToParentForm.Click += new System.EventHandler(this.BtnToParentForm_Click);
+            // 
             // customCalendar
             // 
             this.customCalendar.Font = new System.Drawing.Font("Microsoft Tai Le", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customCalendar.Location = new System.Drawing.Point(310, -7);
+            this.customCalendar.Location = new System.Drawing.Point(316, -26);
             this.customCalendar.Name = "customCalendar";
             this.customCalendar.ShowToday = false;
             this.customCalendar.TabIndex = 0;
@@ -192,6 +203,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(856, 448);
+            this.Controls.Add(this.btnToParentForm);
             this.Controls.Add(this.lblMonthly);
             this.Controls.Add(this.lblDay);
             this.Controls.Add(this.lblInfoText);
@@ -231,5 +243,6 @@
         private System.Windows.Forms.Label lblInfoText;
         private System.Windows.Forms.Label lblDay;
         private System.Windows.Forms.Label lblMonthly;
+        private System.Windows.Forms.Button btnToParentForm;
     }
 }

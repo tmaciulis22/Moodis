@@ -108,14 +108,13 @@ namespace moodis
                 }
                 else if(registerViewModel.photosTaken < 3)
                 {
-                    var wasSuccessful = await registerViewModel.AddFaceToPerson(fileName);
-                    if (wasSuccessful == false)
+                    if (await registerViewModel.AddFaceToPerson(fileName))
                     {
-                        MessageBox.Show(WarningFaceDetection);
+                        progressBar.Value = 100 / registerViewModel.photosTaken;
                     }
                     else
                     {
-                        progressBar.Value = 100 / registerViewModel.photosTaken;
+                        MessageBox.Show(WarningFaceDetection);
                     }
                 }
                 else

@@ -8,21 +8,24 @@ namespace Moodis.Feature.Login.Register
 {
     public partial class RegisterForm : Form
     {
-        RegisterViewModel registerViewModel = new RegisterViewModel();
+        RegisterViewModel registerViewModel;
         public const String passwordsNotSame = "Passwords must be the same!";
         public const String created = " was created!";
-        public const String exists = " alreadyExists!";
+        public const String exists = " already exists!";
         public const String strongerPassword = "Password must be stronger!";
         public const String usernameEmpty = "Username field is empty!";
         public const String passwordEmpty = "Password field is empty!";
+
         public RegisterForm()
         {
+            registerViewModel = new RegisterViewModel();
             InitializeComponent();
         }
 
         private async void ButtonRegister_Click(object sender, EventArgs e)
         {
             labelNotification.ForeColor = Color.Red;
+
             if(string.IsNullOrWhiteSpace(textBoxUsername.Text))
             {
                 labelNotification.Text = usernameEmpty;
@@ -46,6 +49,9 @@ namespace Moodis.Feature.Login.Register
                         {
                             labelNotification.ForeColor = Color.Green;
                             labelNotification.Text = textBoxUsername.Text + created;
+
+                            new CameraForm(true, registerViewModel).Show();
+                            Close();
                         }
                         else
                         {
@@ -58,9 +64,6 @@ namespace Moodis.Feature.Login.Register
                     labelNotification.Text = strongerPassword;
                 }
             }
-
-            new CameraForm(true, registerViewModel).Show();
-            Close();
         }
     }
 }

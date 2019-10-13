@@ -30,8 +30,18 @@ namespace Moodis.Feature.Login.Register
             else
             {
                 currentUser = new User(username, Crypto.CalculateMD5Hash(password));
-                currentUser.personGroupId = userList.Count().ToString();
-                currentUser.faceApiPerson = await Face.Instance.CreateNewPerson(currentUser.personGroupId, username);
+                currentUser.personGroupId = Guid.NewGuid().ToString();
+
+                var newFaceApiPerson = await Face.Instance.CreateNewPerson(currentUser.personGroupId, username);
+
+                if (newFaceApiPerson != null)
+                {
+                    currentUser.faceApiPerson = newFaceApiPerson;
+                }
+                else
+                {
+                    return false;
+                }
 
                 userList.Add(currentUser);
 
@@ -41,7 +51,8 @@ namespace Moodis.Feature.Login.Register
 
         public async Task<bool> AddFaceToPerson(string imagePath)
         {
-            var wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.personGroupId, currentUser);
+            bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.personGroupId, currentUser);
+
             if (wasSuccessful)
             {
                 photosTaken++;

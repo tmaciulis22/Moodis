@@ -1,13 +1,10 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
-using Moodis.Extensions;
 using Moodis.Feature.Login;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Moodis.Network.Face
@@ -19,6 +16,8 @@ namespace Moodis.Network.Face
         private static string SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
         private static string ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
         private int TRAIN_WAIT_TIME_DELAY = 1000;
+        private string API_ERROR = "API Error";
+        private string GENERAL_ERROR = "General Error";
 
         private static readonly IFaceClient faceClient = new FaceClient(
             new ApiKeyServiceClientCredentials(SUBSCRIPTION_KEY),
@@ -61,12 +60,12 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(apiException.StackTrace);
+                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
                 return null;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception.StackTrace);
+                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
                 return null;
             }
 
@@ -91,12 +90,26 @@ namespace Moodis.Network.Face
 
         public async Task<Person> CreateNewPerson(string personGroupId, string username)
         {
-            await faceClient.PersonGroup.CreateAsync(personGroupId, "My Friends");
+            try
+            {
+                await faceClient.PersonGroup.CreateAsync(personGroupId);
 
-            return await faceClient.PersonGroupPerson.CreateAsync(
-                personGroupId,
-                username
-            );
+                var person = await faceClient.PersonGroupPerson.CreateAsync(
+                    personGroupId,
+                    username
+                );
+                return person;
+            }
+            catch (APIErrorException apiException)
+            {
+                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                return null;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                return null;
+            }
         }
 
         public async Task<bool> AddFaceToPerson(string imageFilePath, string personGroupId, User user)
@@ -112,19 +125,27 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(apiException.StackTrace);
+                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
                 return false;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception.StackTrace);
+                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
                 return false;
             }
         }
 
         public async Task<bool> TrainPersonGroup(string personGroupId)
         {
-            await faceClient.PersonGroup.TrainAsync(personGroupId);
+            try
+            {
+                await faceClient.PersonGroup.TrainAsync(personGroupId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
 
             TrainingStatus trainingStatus = null;
             while (true)

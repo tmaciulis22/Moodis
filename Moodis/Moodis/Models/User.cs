@@ -8,7 +8,7 @@ using System.Text;
 namespace Moodis.Feature.Login
 {
     [Serializable]
-    class User
+    public class User
     {
         public string username { get; set; }
         public string password { get; set; }

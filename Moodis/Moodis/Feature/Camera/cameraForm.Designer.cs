@@ -35,6 +35,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.tipLabel = new System.Windows.Forms.Label();
+            this.labelSignIn = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,11 +100,26 @@
             this.tipLabel.Text = "Please take 3 pictures of your face for identification";
             this.tipLabel.Visible = false;
             // 
+            // labelSignIn
+            // 
+            this.labelSignIn.AutoSize = true;
+            this.labelSignIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSignIn.Location = new System.Drawing.Point(168, 7);
+            this.labelSignIn.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelSignIn.Name = "labelSignIn";
+            this.labelSignIn.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.labelSignIn.Size = new System.Drawing.Size(165, 62);
+            this.labelSignIn.TabIndex = 6;
+            this.labelSignIn.Text = "Sign In";
+            this.labelSignIn.UseCompatibleTextRendering = true;
+            this.labelSignIn.Visible = false;
+            // 
             // CameraForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 532);
+            this.Controls.Add(this.labelSignIn);
             this.Controls.Add(this.tipLabel);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.picBox);
@@ -132,6 +148,7 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label tipLabel;
+        private System.Windows.Forms.Label labelSignIn;
     }
 }
 

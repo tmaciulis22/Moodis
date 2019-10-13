@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Moodis.Feature.Login
 {
-    class SignInViewModel
+    public class SignInViewModel
     {
         public static List<User> userList;
         public static User currentUser;

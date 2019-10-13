@@ -70,5 +70,14 @@ namespace Moodis.Feature.Login
             cameraForm.Show();
             Hide();
         }
+
+        private void buttonSignInFace_Click(object sender, EventArgs e)
+        {
+            var cameraForm = new CameraForm(true, signInViewModel);
+            cameraForm.StartPosition = FormStartPosition.Manual;
+            cameraForm.Location = Location;
+            cameraForm.Show();
+            Hide();
+        }
     }
 }

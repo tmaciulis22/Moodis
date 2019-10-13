@@ -2,6 +2,7 @@
 using AForge.Video.DirectShow;
 using Moodis.Constants.Enums;
 using Moodis.Feature.Camera;
+using Moodis.Feature.Login;
 using Moodis.Feature.Login.Register;
 using Moodis.Ui;
 using System;
@@ -28,8 +29,10 @@ namespace moodis
         private MenuViewModel menuViewModel;
         private CameraViewModel cameraViewModel;
         private RegisterViewModel registerViewModel;
+        private SignInViewModel signInViewModel;
 
         private bool isRegistering = false;
+        private bool isSignIn = false;
 
         public CameraForm()
         {
@@ -47,6 +50,17 @@ namespace moodis
 
             tipLabel.Visible = true;
             progressBar.Visible = true;
+        }
+
+        public CameraForm(bool isSignIn, SignInViewModel signInViewModel)
+        {
+            this.isSignIn = isSignIn;
+            this.signInViewModel = signInViewModel;
+            cameraViewModel = new CameraViewModel();
+
+            InitializeComponent();
+
+            labelSignIn.Visible = true;
         }
 
         private void CameraFormLoad(object sender, EventArgs e)

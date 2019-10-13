@@ -93,13 +93,12 @@ namespace Moodis.Network.Face
         {
             try
             {
-                await faceClient.PersonGroup.CreateAsync(personGroupId);
+                await faceClient.PersonGroup.CreateAsync(personGroupId, username); //TODO Change username to group manager's(doctor's) group name of (users)patients
 
-                Person x = await faceClient.PersonGroupPerson.CreateAsync(
+                return await faceClient.PersonGroupPerson.CreateAsync(
                     personGroupId,
                     username
                 );
-                return x;
             }
             catch (APIErrorException apiException)
             {

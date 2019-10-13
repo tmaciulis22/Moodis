@@ -95,36 +95,46 @@ namespace moodis
                     if (menuWindow == null)
                     {
                         menuViewModel = new MenuViewModel();
-                    menuViewModel.currentImage.ImagePath = fileName;
-                    menuWindow = new MenuForm(menuViewModel, this);
-                    menuWindow.StartPosition = FormStartPosition.Manual;
+                        menuViewModel.currentImage.ImagePath = fileName;
+                        menuWindow = new MenuForm(menuViewModel, this);
+                        menuWindow.StartPosition = FormStartPosition.Manual;
                     }
                     else
                     {
                         menuViewModel.currentImage.ImagePath = fileName;
                         menuWindow.UpdateLabels();
                     }
-                }
-                else if(registerViewModel.photosTaken < 3)
-                {
-                    if (await registerViewModel.AddFaceToPerson(fileName))
-                    {
-                        progressBar.Value = 100 / registerViewModel.photosTaken;
-                    }
-                    else
-                    {
-                        MessageBox.Show(WarningFaceDetection);
-                    }
+                    menuWindow.Location = Location;
+                    menuWindow.Show();
+                    Hide();
                 }
                 else
                 {
-                    menuViewModel.currentImage.ImagePath = fileName;
-                    menuWindow.UpdateLabels();
-                    MessageBox.Show("Successful registration");
+                    if (registerViewModel.photosTaken < 2)
+                    {
+                        if (await registerViewModel.AddFaceToPerson(fileName))
+                        {
+                            progressBar.Value = 100 / registerViewModel.photosTaken;
+                        }
+                        else
+                        {
+                            MessageBox.Show(WarningFaceDetection);
+                        }
+                    }
+                    else
+                    {
+                        if (await registerViewModel.AddFaceToPerson(fileName))
+                        {
+                            progressBar.Value = 100 / registerViewModel.photosTaken;
+                            MessageBox.Show("Successful registration");
+                            Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show(WarningFaceDetection);
+                        }
+                    }
                 }
-                menuWindow.Location = Location;
-                menuWindow.Show();
-                Hide();
             }
             catch(Exception ex)
             {

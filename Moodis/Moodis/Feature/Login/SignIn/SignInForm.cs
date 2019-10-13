@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Moodis.Feature.Group;
 
 namespace Moodis.Feature.Login
 {
@@ -41,6 +42,8 @@ namespace Moodis.Feature.Login
                     var cameraWindow = new CameraForm();
                     cameraWindow.Show();
                     this.Hide();
+                    var groupForm = new GroupForm();
+                    groupForm.Show();
                 }
                 else
                 {

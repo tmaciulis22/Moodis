@@ -12,31 +12,19 @@ namespace Moodis.Feature.Login
     {
         public string username { get; set; }
         public string password { get; set; }
-        public int userID { get; set; }
+        public string groupName { get; set; }
         public List<ImageInfo> imageStats = new List<ImageInfo>();
 
         public User(string username, string password)
         {
             this.username = username;
             this.password = password;
-            this.userID = getID();
+            this.groupName = "";
         }
 
         public void addImage(ImageInfo image)
         {
             imageStats.Add(image);
-        }
-
-        private int getID()
-        {
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
-            {
-                return Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin").Count;
-            }
-            else
-            {
-                return 0;
-            }
         }
     }
 }

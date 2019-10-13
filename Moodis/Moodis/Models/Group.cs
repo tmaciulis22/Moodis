@@ -12,51 +12,30 @@ namespace Moodis.Feature.Group
     public class Group
     {
         public string name { get; set; }
-        public int managerID { get; set; }
-        public List<int> usersIds = new List<int>();
+        public string manager { get; set; }
+        public List<string> users = new List<string>();
 
-        public Group(string name, int managerID)
+        public Group(string name, string managerID)
         {
             this.name = name;
-            this.managerID = managerID;
+            this.manager = managerID;
         }
 
-        public void addUserToGroup(int userID)
+        public void addUserToGroup(string username)
         {
-            if (userID != this.managerID)
+            if (username != this.manager)
             {
-                usersIds.Add(userID);
+                users.Add(username);
             }
         }
 
-        public void removeUserFromGroup(int userID)
+        public void removeUserFromGroup(string username)
         {
-            if (usersIds.Contains(userID))
+            if (users.Contains(username))
             {
-                usersIds.Remove(userID);
+                users.Remove(username);
             }
         }
 
-        public List<User> getUsers()
-        {
-            List<User> users = new List<User>();
-            List<User> userList = new List<User>();
-
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
-            {
-                userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
-            }
-
-            if (userList.Count != 0) {
-                foreach (User user in userList)
-                {
-                    if (usersIds.Contains(user.userID))
-                    {
-                        users.Add(user);
-                    }
-                }
-            }
-            return users;
-        }
     }
 }

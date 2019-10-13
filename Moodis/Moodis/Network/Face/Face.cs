@@ -56,6 +56,7 @@ namespace Moodis.Network.Face
                 using (Stream imageFileStream = File.OpenRead(imageFilePath))
                 {
                     detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
+                    return detectedFaces[0];
                 }
             }
             catch (APIErrorException apiException)
@@ -69,23 +70,23 @@ namespace Moodis.Network.Face
                 return null;
             }
 
-            var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
-            var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, personGroupId);
+            //var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
+            //var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, personGroupId);
 
-            foreach (var identifiedPerson in identifiedPersons)
-            {
-                if (identifiedPerson.Candidates.Count != 0)
-                {
-                    var candidateId = identifiedPerson.Candidates[0].PersonId;
-                    var person = await faceClient.PersonGroupPerson.GetAsync(personGroupId, candidateId);
+            //foreach (var identifiedPerson in identifiedPersons)
+            //{
+            //    if (identifiedPerson.Candidates.Count != 0)
+            //    {
+            //        var candidateId = identifiedPerson.Candidates[0].PersonId;
+            //        var person = await faceClient.PersonGroupPerson.GetAsync(personGroupId, candidateId);
 
-                    if (person.Name == username)
-                    {
-                        return detectedFaces.First(face => face.FaceId == identifiedPerson.FaceId);
-                    }
-                }
-            }
-            return null;
+            //        if (person.Name == username)
+            //        {
+            //            return detectedFaces.First(face => face.FaceId == identifiedPerson.FaceId);
+            //        }
+            //    }
+            //}
+            //return null;
         }
 
         public async Task<Person> CreateNewPerson(string personGroupId, string username)
@@ -94,11 +95,11 @@ namespace Moodis.Network.Face
             {
                 await faceClient.PersonGroup.CreateAsync(personGroupId);
 
-                var person = await faceClient.PersonGroupPerson.CreateAsync(
+                Person x = await faceClient.PersonGroupPerson.CreateAsync(
                     personGroupId,
                     username
                 );
-                return person;
+                return x;
             }
             catch (APIErrorException apiException)
             {

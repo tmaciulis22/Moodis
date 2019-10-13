@@ -29,14 +29,13 @@ namespace Moodis.Ui
         private double? age;
         private Gender? gender;
 
-        public void SetImageInfo(IList<DetectedFace> faceList)
+        public void SetImageInfo(DetectedFace face)
         {
-            //TODO change to faceList.ForEach(face => action), when implementing identity feature
-            id = faceList[0].FaceId.ToString();
-            age = faceList[0].FaceAttributes.Age;
-            gender = faceList[0].FaceAttributes.Gender;
+            id = face.FaceId.ToString();
+            age = face.FaceAttributes.Age;
+            gender = face.FaceAttributes.Gender;
             imageDate = DateTime.Now;
-            AddEmotions(faceList[0].FaceAttributes.Emotion);
+            AddEmotions(face.FaceAttributes.Emotion);
         }
 
         private void AddEmotions(Microsoft.Azure.CognitiveServices.Vision.Face.Models.Emotion detectedEmotions)

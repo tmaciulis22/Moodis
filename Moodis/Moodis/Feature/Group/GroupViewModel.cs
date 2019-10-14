@@ -101,7 +101,6 @@ namespace Moodis.Feature.Group
                     return null;
                 }
 
-
                 if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
                 {
                     userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
@@ -112,7 +111,6 @@ namespace Moodis.Feature.Group
                     int userIndex = userList.FindIndex(user => user.username == SignInViewModel.currentUser.username);
                     userList[userIndex].groupName = groupName;
                     SignInViewModel.currentUser.groupName = groupName;
-
                     Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
                     return group;
                 }
@@ -157,7 +155,6 @@ namespace Moodis.Feature.Group
                     int userIndex = userList.FindIndex(user => user.username == SignInViewModel.currentUser.username);
                     userList[userIndex].groupName = "";
                     SignInViewModel.currentUser.groupName = "";
-
                     Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
                 }
                 group = null;
@@ -201,10 +198,7 @@ namespace Moodis.Feature.Group
                 Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
                 groupList.RemoveAt(groupIndex);
                 Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/groups.bin", groupList);
-
             }
-
-
         }
 
         public List<Group> getAllGroups()

@@ -47,7 +47,7 @@
             this.groupList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.groupList.ItemHeight = 20;
             this.groupList.Location = new System.Drawing.Point(9, 62);
-            this.groupList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupList.Margin = new System.Windows.Forms.Padding(2);
             this.groupList.Name = "groupList";
             this.groupList.Size = new System.Drawing.Size(114, 284);
             this.groupList.TabIndex = 0;
@@ -55,7 +55,7 @@
             // groupName
             // 
             this.groupName.Location = new System.Drawing.Point(131, 85);
-            this.groupName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupName.Margin = new System.Windows.Forms.Padding(2);
             this.groupName.Name = "groupName";
             this.groupName.Size = new System.Drawing.Size(169, 20);
             this.groupName.TabIndex = 1;
@@ -63,7 +63,7 @@
             // createGroup
             // 
             this.createGroup.Location = new System.Drawing.Point(131, 110);
-            this.createGroup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.createGroup.Margin = new System.Windows.Forms.Padding(2);
             this.createGroup.Name = "createGroup";
             this.createGroup.Size = new System.Drawing.Size(168, 21);
             this.createGroup.TabIndex = 2;
@@ -74,7 +74,7 @@
             // groupJoinButton
             // 
             this.groupJoinButton.Location = new System.Drawing.Point(131, 62);
-            this.groupJoinButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupJoinButton.Margin = new System.Windows.Forms.Padding(2);
             this.groupJoinButton.Name = "groupJoinButton";
             this.groupJoinButton.Size = new System.Drawing.Size(168, 19);
             this.groupJoinButton.TabIndex = 4;
@@ -88,7 +88,7 @@
             this.groupUsersList.FormattingEnabled = true;
             this.groupUsersList.ItemHeight = 20;
             this.groupUsersList.Location = new System.Drawing.Point(9, 62);
-            this.groupUsersList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupUsersList.Margin = new System.Windows.Forms.Padding(2);
             this.groupUsersList.Name = "groupUsersList";
             this.groupUsersList.Size = new System.Drawing.Size(114, 284);
             this.groupUsersList.TabIndex = 5;
@@ -96,7 +96,7 @@
             // leaveGroupButton
             // 
             this.leaveGroupButton.Location = new System.Drawing.Point(131, 62);
-            this.leaveGroupButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.leaveGroupButton.Margin = new System.Windows.Forms.Padding(2);
             this.leaveGroupButton.Name = "leaveGroupButton";
             this.leaveGroupButton.Size = new System.Drawing.Size(168, 19);
             this.leaveGroupButton.TabIndex = 6;
@@ -140,7 +140,7 @@
             // removeGroupButton
             // 
             this.removeGroupButton.Location = new System.Drawing.Point(131, 62);
-            this.removeGroupButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.removeGroupButton.Margin = new System.Windows.Forms.Padding(2);
             this.removeGroupButton.Name = "removeGroupButton";
             this.removeGroupButton.Size = new System.Drawing.Size(168, 21);
             this.removeGroupButton.TabIndex = 10;
@@ -150,8 +150,8 @@
             // 
             // seeCalendarButton
             // 
-            this.seeCalendarButton.Location = new System.Drawing.Point(131, 280);
-            this.seeCalendarButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.seeCalendarButton.Location = new System.Drawing.Point(135, 280);
+            this.seeCalendarButton.Margin = new System.Windows.Forms.Padding(2);
             this.seeCalendarButton.Name = "seeCalendarButton";
             this.seeCalendarButton.Size = new System.Drawing.Size(164, 31);
             this.seeCalendarButton.TabIndex = 11;
@@ -187,7 +187,7 @@
             this.Controls.Add(this.createGroup);
             this.Controls.Add(this.groupName);
             this.Controls.Add(this.groupList);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "GroupForm";
             this.Text = "Groups";
             this.ResumeLayout(false);

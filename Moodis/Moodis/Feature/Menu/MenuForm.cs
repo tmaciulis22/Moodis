@@ -49,8 +49,6 @@ namespace Moodis.Ui
             catch (ArgumentNullException e)
             {
                 Console.WriteLine(e);
-                MessageBox.Show(WarningInRequest);
-                Application.Exit();
             }
             if (menuViewModel.currentImage.emotions != null)
             {

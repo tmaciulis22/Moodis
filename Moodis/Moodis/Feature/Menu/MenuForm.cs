@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using Moodis.Feature.Login;
 using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
 using Moodis.Feature.Group;
+using Moodis.Feature.Login;
 
 namespace Moodis.Ui
 {
     public partial class MenuForm : Form
     {
         public bool running = false;
-        private const string WarningInRequest = "Azure api request failed. Is your internet turned on ?";
+        private const string WarningInRequest = "Something wrong happened. Is your internet turned on?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         private const string WarningPlayingMusic = "Because face was not detected, cannot play music based on it.";
         public MenuViewModel menuViewModel;
@@ -21,7 +19,7 @@ namespace Moodis.Ui
         private MusicPlayerModel player = new MusicPlayerModel();
         private const string FormatDouble = "N3";
 
-        public MenuForm(MenuViewModel viewModel,Form parent)
+        public MenuForm(MenuViewModel viewModel, Form parent)
         {
             InitializeComponent();
             menuViewModel = viewModel;

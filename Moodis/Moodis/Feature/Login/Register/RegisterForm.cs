@@ -1,33 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using moodis;
+using Moodis.Constants.Enums;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Moodis.Feature.Login.Register
 {
     public partial class RegisterForm : Form
     {
-        RegisterViewModel registerViewModel = new RegisterViewModel();
-        public const String passwordsNotSame = "Passwords must be the same!";
-        public const String created = " was created!";
-        public const String exists = " alreadyExists!";
-        public const String strongerPassword = "Password must be stronger!";
-        public const String usernameEmpty = "Username field is empty!";
-        public const String passwordEmpty = "Password field is empty!";
+        RegisterViewModel registerViewModel;
+        public const string passwordsNotSame = "Passwords must be the same!";
+        public const string created = " was created!";
+        public const string exists = " already exists!";
+        public const string strongerPassword = "Password must be stronger!";
+        public const string usernameEmpty = "Username field is empty!";
+        public const string passwordEmpty = "Password field is empty!";
+        public const string GeneralErrorMessage = "Something wrong happened, please try again later";
+
         public RegisterForm()
         {
+            registerViewModel = new RegisterViewModel();
             InitializeComponent();
         }
 
-        private void ButtonRegister_Click(object sender, EventArgs e)
+        private async void ButtonRegister_Click(object sender, EventArgs e)
         {
             labelNotification.ForeColor = Color.Red;
+
             if(string.IsNullOrWhiteSpace(textBoxUsername.Text))
             {
                 labelNotification.Text = usernameEmpty;
@@ -47,14 +47,23 @@ namespace Moodis.Feature.Login.Register
                     }
                     else
                     {
-                        if (registerViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text))
+                        var response = await registerViewModel.AddUser(textBoxUsername.Text, textBoxPassword.Text);
+
+                        if (response == Response.OK)
                         {
                             labelNotification.ForeColor = Color.Green;
                             labelNotification.Text = textBoxUsername.Text + created;
+
+                            new CameraForm(true, registerViewModel).Show();
+                            Close();
+                        }
+                        else if(response == Response.UserExists)
+                        {
+                            labelNotification.Text = textBoxUsername.Text + exists;
                         }
                         else
                         {
-                            labelNotification.Text = textBoxUsername.Text + exists;
+                            labelNotification.Text = GeneralErrorMessage;
                         }
                     }
                 }
@@ -63,7 +72,6 @@ namespace Moodis.Feature.Login.Register
                     labelNotification.Text = strongerPassword;
                 }
             }
-            Close();
         }
     }
 }

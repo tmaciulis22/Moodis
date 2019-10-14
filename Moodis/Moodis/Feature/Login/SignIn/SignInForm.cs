@@ -13,13 +13,15 @@ using Moodis.Feature.Group;
 
 namespace Moodis.Feature.Login
 {
-    public partial class LoginForm : Form
+    public partial class SignInForm : Form
     {
         SignInViewModel signInViewModel;
-        public const String usernameEmpty = "Username field is empty!";
-        public const String passwordEmpty = "Password field is empty!";
-        public const String userNotFound = "User not found!";
-        public LoginForm()
+
+        public const string usernameEmpty = "Username field is empty!";
+        public const string passwordEmpty = "Password field is empty!";
+        public const string userNotFound = "User not found!";
+
+        public SignInForm()
         {
             InitializeComponent();
             signInViewModel = new SignInViewModel();
@@ -37,13 +39,13 @@ namespace Moodis.Feature.Login
             }
             else
             {
-                if(signInViewModel.Authenticate(textBoxUsername.Text,textBoxPassword.Text) != null)
+                if(signInViewModel.Authenticate(textBoxUsername.Text,textBoxPassword.Text))
                 {
                     var cameraWindow = new CameraForm();
                     cameraWindow.StartPosition = FormStartPosition.Manual;
                     cameraWindow.Location = Location;
                     cameraWindow.Show();
-                    this.Hide();
+                    Hide();
                 }
                 else
                 {
@@ -58,14 +60,23 @@ namespace Moodis.Feature.Login
             registerWindow.Show();
         }
 
-        private void LabelSignIn_Click(object sender, EventArgs e)
+        private async void LabelSignIn_Click(object sender, EventArgs e)
         {
             var cameraForm = new CameraForm();
             cameraForm.StartPosition = FormStartPosition.Manual;
             cameraForm.Location = Location;
             var registerViewModel = new RegisterViewModel();
-            registerViewModel.AddUser("49874f70-b7e4-4d58-9ce4-67aa55dbd281", "34d75fd8 - 3f14 - 4e56 - a878 - e397447bd40b");
+            await registerViewModel.AddUser("49874f70-b7e4-4d58-9ce4-67aa55dbd281", "34d75fd8 - 3f14 - 4e56 - a878 - e397447bd40b");
             signInViewModel.Authenticate("49874f70-b7e4-4d58-9ce4-67aa55dbd281", "34d75fd8 - 3f14 - 4e56 - a878 - e397447bd40b");
+            cameraForm.Show();
+            Hide();
+        }
+
+        private void buttonSignInFace_Click(object sender, EventArgs e)
+        {
+            var cameraForm = new CameraForm(true, signInViewModel);
+            cameraForm.StartPosition = FormStartPosition.Manual;
+            cameraForm.Location = Location;
             cameraForm.Show();
             Hide();
         }

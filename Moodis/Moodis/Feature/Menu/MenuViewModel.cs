@@ -27,17 +27,17 @@ namespace Moodis.Ui
 
         public async Task GetFaceEmotionsAsync()
         {
-            var faceList = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath);
+            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
 
-            if (!faceList.IsNullOrEmpty())
+            if (face != null)
             {
-                currentImage.SetImageInfo(faceList);
+                currentImage.SetImageInfo(face);
             }
         }
 
         public void UserAddImage()
         {
-           SignInViewModel.currentUser.addImage(currentImage);
+            SignInViewModel.currentUser.addImage(currentImage);
             Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", SignInViewModel.userList);
         }
 

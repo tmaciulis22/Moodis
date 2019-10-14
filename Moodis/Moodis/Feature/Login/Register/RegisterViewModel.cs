@@ -1,18 +1,21 @@
-﻿using System;
+﻿using Moodis.Constants.Enums;
+using Moodis.Network.Face;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.Login.Register
 {
-    class RegisterViewModel
+    public class RegisterViewModel
     {
-        public static List<User> userList;
-        public static User currentUser;
+        private const int RequiredNumberOfPhotos = 3;
 
-        public bool AddUser(string username, string password)
+        public static List<User> userList;
+        public User currentUser;
+        internal int photosTaken = 0;
+
+        public async Task<Response> AddUser(string username, string password)
         {
             userList = new List<User>();
 
@@ -23,13 +26,64 @@ namespace Moodis.Feature.Login.Register
 
             if (userList.Exists(x => x.username == username))
             {
-                return false;
+                return Response.UserExists;
             }
             else
             {
-                User user = new User(username, Crypto.CalculateMD5Hash(password));
-                userList.Add(user);
-                return Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
+                currentUser = new User(username, Crypto.CalculateMD5Hash(password));
+                currentUser.personGroupId = Guid.NewGuid().ToString();
+
+                var newFaceApiPerson = await Face.Instance.CreateNewPerson(currentUser.personGroupId, username);
+
+                if (newFaceApiPerson != null)
+                {
+                    currentUser.faceApiPerson = newFaceApiPerson;
+                }
+                else
+                {
+                    return Response.ApiError;
+                }
+
+                userList.Add(currentUser);
+
+                var wasSuccessful = Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", userList);
+
+                if(wasSuccessful == true)
+                {
+                    return Response.OK;
+                } 
+                else
+                {
+                    return Response.SerializationError;
+                }
+            }
+        }
+
+        public async Task<Response> AddFaceToPerson(string imagePath)
+        {
+            bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.personGroupId, currentUser);
+
+            if (wasSuccessful)
+            {
+                photosTaken++;
+
+                if (photosTaken == RequiredNumberOfPhotos)
+                {
+                    try
+                    {
+                        await Face.Instance.TrainPersonGroup(currentUser.personGroupId);
+                    }
+                    catch
+                    {
+                        return Response.ApiTrainingError;
+                    }
+                }
+
+                return Response.OK;
+            }
+            else
+            {
+                return Response.ApiError;
             }
         }
     }

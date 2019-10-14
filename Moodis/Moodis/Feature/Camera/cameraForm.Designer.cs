@@ -36,6 +36,7 @@
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.tipLabel = new System.Windows.Forms.Label();
             this.labelSignIn = new System.Windows.Forms.Label();
+            this.buttonBack = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,11 +115,23 @@
             this.labelSignIn.UseCompatibleTextRendering = true;
             this.labelSignIn.Visible = false;
             // 
+            // buttonBack
+            // 
+            this.buttonBack.Location = new System.Drawing.Point(29, 9);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(100, 31);
+            this.buttonBack.TabIndex = 7;
+            this.buttonBack.Text = "Go Back";
+            this.buttonBack.UseVisualStyleBackColor = true;
+            this.buttonBack.Visible = false;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            // 
             // CameraForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 532);
+            this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.labelSignIn);
             this.Controls.Add(this.tipLabel);
             this.Controls.Add(this.progressBar);
@@ -149,6 +162,7 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label tipLabel;
         private System.Windows.Forms.Label labelSignIn;
+        private System.Windows.Forms.Button buttonBack;
     }
 }
 

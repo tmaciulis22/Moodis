@@ -121,7 +121,7 @@ namespace Moodis.Network.Face
 
                 if (identifiedPersons.IsNullOrEmpty())
                 {
-                    return null;
+                    continue;
                 }
 
                 foreach (var identifiedPerson in identifiedPersons)

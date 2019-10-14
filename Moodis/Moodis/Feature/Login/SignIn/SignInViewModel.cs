@@ -16,12 +16,8 @@ namespace Moodis.Feature.Login
 
         public bool Authenticate(string username, string password)
         {
-            userList = new List<User>();
+            fetchUserList();
 
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
-            {
-                userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
-            }
             currentUser = userList.Find(user => user.username == username && user.password == Crypto.CalculateMD5Hash(password));
 
             if (currentUser == null)
@@ -33,6 +29,8 @@ namespace Moodis.Feature.Login
 
         public async Task<Response> AuthenticateWithFace(string imagePath)
         {
+            fetchUserList();
+
             List<Person> identifiedPersons = null;
             try
             {
@@ -48,13 +46,23 @@ namespace Moodis.Feature.Login
                 return Response.UserNotFound;
             }
 
-            currentUser = userList.Find(user => user.username == identifiedPersons[0].Name); //TODO change this to multiple user recognition.
+            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name); //TODO change this to multiple user recognition.
 
             if (currentUser == null)
             {
                 return Response.UserNotFound;
             }
             return Response.OK;
+        }
+
+        private void fetchUserList()
+        {
+            userList = new List<User>();
+
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
+            {
+                userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
+            }
         }
     }
 }

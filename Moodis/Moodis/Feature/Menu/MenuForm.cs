@@ -16,7 +16,7 @@ namespace Moodis.Ui
         private MusicPlayerModel player = new MusicPlayerModel();
         private const string FormatDouble = "N3";
 
-        public MenuForm(MenuViewModel viewModel,Form parent)
+        public MenuForm(MenuViewModel viewModel, Form parent)
         {
             InitializeComponent();
             menuViewModel = viewModel;

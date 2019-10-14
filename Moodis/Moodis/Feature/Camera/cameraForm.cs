@@ -67,6 +67,7 @@ namespace moodis
             InitializeComponent();
 
             labelSignIn.Visible = true;
+            buttonBack.Visible = true;
         }
 
         private void CameraFormLoad(object sender, EventArgs e)
@@ -135,12 +136,21 @@ namespace moodis
             }
         }
 
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            new SignInForm().Show();
+            Close();
+        }
+
         private void CameraForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             try
             {
                 cam.Stop();
-                Application.Exit();
+                if(isSignIn != true && isRegistering != true)
+                {
+                    Application.Exit();
+                }
             }
             catch (Exception ex)
             {
@@ -165,6 +175,7 @@ namespace moodis
             else if (response == Response.ApiTrainingError)
             {
                 MessageBox.Show(ApiErrorMessage);
+                new SignInForm().Show();
                 Close();
             }
             else
@@ -180,10 +191,9 @@ namespace moodis
             if (response == Response.OK)
             {
                 MessageBox.Show(SignInSuccessful);
-                var cameraWindow = new CameraForm();
-                cameraWindow.StartPosition = FormStartPosition.Manual;
-                cameraWindow.Location = Location;
-                cameraWindow.Show();
+
+                TakePictureForStatistics(fileName);
+
                 Close();
             }
             else if (response == Response.UserNotFound)
@@ -202,7 +212,14 @@ namespace moodis
             {
                 menuViewModel = new MenuViewModel();
                 menuViewModel.currentImage.ImagePath = fileName;
-                menuWindow = new MenuForm(menuViewModel, this);
+                if (isSignIn)
+                {
+                    menuWindow = new MenuForm(menuViewModel, new CameraForm());
+                }
+                else
+                {
+                    menuWindow = new MenuForm(menuViewModel, this);
+                }
                 menuWindow.StartPosition = FormStartPosition.Manual;
             }
             else

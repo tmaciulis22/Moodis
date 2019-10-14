@@ -135,6 +135,7 @@
             this.Controls.Add(this.labelUsername);
             this.Controls.Add(this.labelSignIn);
             this.Name = "LoginForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Moodis: Sign In";
             this.ResumeLayout(false);
             this.PerformLayout();

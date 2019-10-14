@@ -76,15 +76,17 @@ namespace moodis
                 {
                     menuViewModel = new MenuViewModel();
                     menuViewModel.currentImage.ImagePath = fileName;
-                    menuWindow = new MenuForm(menuViewModel);
-                    menuWindow.Show();
+                    menuWindow = new MenuForm(menuViewModel, this);
+                    menuWindow.StartPosition = FormStartPosition.Manual;
                 }
                 else
                 {
                     menuViewModel.currentImage.ImagePath = fileName;
                     menuWindow.UpdateLabels();
-                    menuWindow.Show();
                 }
+                menuWindow.Location = Location;
+                menuWindow.Show();
+                Hide();
             }
             catch
             {

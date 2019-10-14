@@ -96,6 +96,13 @@
     <Compile Include="Feature\Camera\cameraForm.Designer.cs">
       <DependentUpon>cameraForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\Group\GroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Feature\Group\GroupForm.Designer.cs">
+      <DependentUpon>GroupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Feature\Group\GroupViewModel.cs" />
     <Compile Include="Feature\Login\Encryption\Crypto.cs" />
     <Compile Include="Feature\Login\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Login\SignIn\SignInForm.cs">
@@ -124,6 +131,7 @@
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Feature\Login\Encryption\Serializer.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\Face\Face.cs" />
     <Compile Include="Program.cs" />
@@ -138,6 +146,9 @@
     </Compile>
     <EmbeddedResource Include="Feature\Camera\cameraForm.resx">
       <DependentUpon>cameraForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Feature\Group\GroupForm.resx">
+      <DependentUpon>GroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Feature\Login\SignIn\SignInForm.resx">
       <DependentUpon>SignInForm.cs</DependentUpon>

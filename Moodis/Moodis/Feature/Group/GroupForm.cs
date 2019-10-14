@@ -15,6 +15,7 @@ namespace Moodis.Feature.Group
 {
     public partial class GroupForm : Form
     {
+
         GroupViewModel groupViewModel;
         public GroupForm()
         {

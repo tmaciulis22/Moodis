@@ -17,11 +17,10 @@ namespace Moodis.Feature.Login
         [field: NonSerialized]
         public Person faceApiPerson { get; set; }
 
-        public User(string username, string password)
+        public User(string username, string password,string groupName = "")
         {
             this.username = username;
             this.password = password;
-            this.groupName = "";
         }
         public void addImage(ImageInfo image)
         {

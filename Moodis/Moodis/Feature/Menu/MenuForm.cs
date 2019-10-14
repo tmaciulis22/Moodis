@@ -61,7 +61,7 @@ namespace Moodis.Ui
         private void BtnCalendar_Click(object sender, EventArgs e)
         {
             Hide();
-            var calendarForm = new CalendarForm(new CalendarViewModel(), this);
+            var calendarForm = new CalendarForm(new CalendarViewModel(), this, SignInViewModel.currentUser.username);
             calendarForm.Show();
         }
 

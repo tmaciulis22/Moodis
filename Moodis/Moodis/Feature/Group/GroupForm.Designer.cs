@@ -38,6 +38,7 @@
             this.groupsLabel = new System.Windows.Forms.Label();
             this.yourGroupLabel = new System.Windows.Forms.Label();
             this.removeGroupButton = new System.Windows.Forms.Button();
+            this.seeCalendarButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // groupList
@@ -136,11 +137,22 @@
             this.removeGroupButton.UseVisualStyleBackColor = true;
             this.removeGroupButton.Click += new System.EventHandler(this.RemoveGroupButton_Click);
             // 
+            // seeCalendarButton
+            // 
+            this.seeCalendarButton.Location = new System.Drawing.Point(180, 392);
+            this.seeCalendarButton.Name = "seeCalendarButton";
+            this.seeCalendarButton.Size = new System.Drawing.Size(219, 38);
+            this.seeCalendarButton.TabIndex = 11;
+            this.seeCalendarButton.Text = "See Calendar";
+            this.seeCalendarButton.UseVisualStyleBackColor = true;
+            this.seeCalendarButton.Click += new System.EventHandler(this.SeeCalendarButton_Click);
+            // 
             // GroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(411, 450);
+            this.Controls.Add(this.seeCalendarButton);
             this.Controls.Add(this.removeGroupButton);
             this.Controls.Add(this.yourGroupLabel);
             this.Controls.Add(this.groupsLabel);
@@ -170,5 +182,6 @@
         private System.Windows.Forms.Label groupsLabel;
         private System.Windows.Forms.Label yourGroupLabel;
         private System.Windows.Forms.Button removeGroupButton;
+        private System.Windows.Forms.Button seeCalendarButton;
     }
 }

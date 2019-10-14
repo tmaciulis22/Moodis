@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
+using Moodis.Feature.Statistics;
 
 namespace Moodis.Feature.Group
 {
@@ -25,7 +26,6 @@ namespace Moodis.Feature.Group
         private void updateView()
         {
             groupViewModel.getGroup();
-            Console.WriteLine(SignInViewModel.currentUser.groupName);
 
             if (GroupViewModel.group != null) {
                 yourGroupLabel.Show();
@@ -46,6 +46,8 @@ namespace Moodis.Feature.Group
                     groupUsersList.Show();
                     groupUsersList.Items.Clear();
                     removeGroupButton.Show();
+                    seeCalendarButton.Show();
+
                     foreach (User user in groupViewModel.getGroupUsers(GroupViewModel.group.name))
                     {
                         groupUsersList.Items.Add(user.username);
@@ -60,6 +62,7 @@ namespace Moodis.Feature.Group
                     groupUsersList.Hide();
                     usersInGroupLabel.Hide();
                     removeGroupButton.Hide();
+                    seeCalendarButton.Hide();
 
                     groupList.Items.Clear();
 
@@ -86,6 +89,7 @@ namespace Moodis.Feature.Group
                 yourGroupLabel.Hide();
                 groupUsersList.Hide();
                 groupsLabel.Show();
+                seeCalendarButton.Hide();
 
                 groupList.Items.Clear();
 
@@ -112,6 +116,8 @@ namespace Moodis.Feature.Group
 
         private void GroupJoinButton_Click(object sender, EventArgs e)
         {
+
+            
             if (GroupViewModel.group == null && groupList.SelectedItem != null)
             {
                 groupViewModel.joinGroup(groupList.SelectedItem.ToString());
@@ -122,6 +128,7 @@ namespace Moodis.Feature.Group
 
         private void LeaveGroupButton_Click(object sender, EventArgs e)
         {
+
             if (GroupViewModel.group != null)
             {
                 groupViewModel.leaveGroup();
@@ -133,8 +140,18 @@ namespace Moodis.Feature.Group
         private void RemoveGroupButton_Click(object sender, EventArgs e)
         {
             groupViewModel.removeGroup();
-            
             updateView();
+        }
+
+        private void SeeCalendarButton_Click(object sender, EventArgs e)
+        {
+            if (GroupViewModel.group != null && groupUsersList.SelectedItem != null)
+            {
+                Hide();
+                var calendarForm = new CalendarForm(new CalendarViewModel(), this, groupUsersList.SelectedItem.ToString());
+                calendarForm.Show();
+
+            }
         }
     }
 }

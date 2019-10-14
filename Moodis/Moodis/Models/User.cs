@@ -21,7 +21,6 @@ namespace Moodis.Feature.Login
             this.password = password;
             this.groupName = "";
         }
-
         public void addImage(ImageInfo image)
         {
             imageStats.Add(image);

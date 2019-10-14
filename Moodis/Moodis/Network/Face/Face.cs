@@ -113,7 +113,7 @@ namespace Moodis.Network.Face
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
 
             var personsList = new List<Person>();
-            var personGroups = await faceClient.PersonGroup.ListAsync() as List<PersonGroup>;
+            var personGroups = await faceClient.PersonGroup.ListAsync();
 
             foreach (var group in personGroups)
             {

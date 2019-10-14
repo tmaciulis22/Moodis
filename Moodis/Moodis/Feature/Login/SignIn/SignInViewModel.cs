@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
+using Moodis.Extensions;
 using Moodis.Network.Face;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,11 @@ namespace Moodis.Feature.Login
             catch
             {
                 return Response.ApiError;
+            }
+
+            if (identifiedPersons.IsNullOrEmpty())
+            {
+                return Response.UserNotFound;
             }
 
             currentUser = userList.Find(user => user.username == identifiedPersons[0].Name); //TODO change this to multiple user recognition.

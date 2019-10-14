@@ -18,10 +18,15 @@ namespace moodis
 
         private const string WarningMessage = "You must first turn on the camera!";
         private const string NoDeviceMessage = "Your device does not have a camera.";
+
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         private const string ApiErrorMessage = "Something wrong happened, please try again later";
+
         private const string RegistrationSuccessful = "Registration was successful, you may now login!";
         private const string SignInSuccessful = "You successfully signed in!";
+        private const string UserNotFoundMessage = "User not found";
+
+
         private const int ProgressBarValueFactor = 33;
         private const int RequiredNumberOfPhotos = 3;
 
@@ -154,7 +159,7 @@ namespace moodis
                 if (registerViewModel.photosTaken == RequiredNumberOfPhotos)
                 {
                     MessageBox.Show(RegistrationSuccessful);
-                    Hide();
+                    Close();
                 }
             }
             else if (response == Response.ApiTrainingError)
@@ -175,13 +180,20 @@ namespace moodis
             if (response == Response.OK)
             {
                 MessageBox.Show(SignInSuccessful);
-                new CameraForm().Show();
+                var cameraWindow = new CameraForm();
+                cameraWindow.StartPosition = FormStartPosition.Manual;
+                cameraWindow.Location = Location;
+                cameraWindow.Show();
+                Close();
+            }
+            else if (response == Response.UserNotFound)
+            {
+                MessageBox.Show(UserNotFoundMessage);
             }
             else
             {
-                MessageBox.Show(ApiErrorMessage);
+                MessageBox.Show(WarningFaceDetection);
             }
-            Close();
         }
 
         private void TakePictureForStatistics(string fileName)

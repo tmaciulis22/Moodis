@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Moodis.Feature.Login;
 using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
+using Moodis.Feature.Group;
 
 namespace Moodis.Ui
 {
@@ -109,7 +110,8 @@ namespace Moodis.Ui
             player.StopMusic();
         }
 
-        private void GroupsButton_Click(object sender, EventArgs e)
+
+        private void GroupButton_Click(object sender, EventArgs e)
         {
             var groupForm = new GroupForm();
             groupForm.Show();

@@ -24,7 +24,7 @@ namespace Moodis.Feature.Group
                 groupList = Serializer.Load<List<Group>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/groups.bin");
             }
 
-            if (!groupList.Exists(x => x.name == name && x.manager == SignInViewModel.currentUser.username))
+            if (!groupList.Exists(groupObj => groupObj.name == name && groupObj.manager == SignInViewModel.currentUser.username))
             {
                 groupList.Add(group);
                 Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/groups.bin", groupList);
@@ -54,16 +54,16 @@ namespace Moodis.Feature.Group
                 groupList = Serializer.Load<List<Group>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/groups.bin");
             }
 
-            if (groupList.Exists(x => x.manager == SignInViewModel.currentUser.username))
+            if (groupList.Exists(groupObj => groupObj.manager == SignInViewModel.currentUser.username))
             {
-                group = groupList.Find(x => x.manager == SignInViewModel.currentUser.username);
+                group = groupList.Find(groupObj => groupObj.manager == SignInViewModel.currentUser.username);
                 return group;
             }
             else
             {
-                if (groupList.Exists(x => x.name == SignInViewModel.currentUser.groupName))
+                if (groupList.Exists(groupObj => groupObj.name == SignInViewModel.currentUser.groupName))
                 {
-                    group = groupList.Find(x => x.name == SignInViewModel.currentUser.groupName);
+                    group = groupList.Find(groupObj => groupObj.name == SignInViewModel.currentUser.groupName);
                     return group;
                 }
                 else
@@ -87,9 +87,9 @@ namespace Moodis.Feature.Group
                 return null;
             }
 
-            if (groupList.Exists(x => x.name == groupName))
+            if (groupList.Exists(groupObj => groupObj.name == groupName))
             {
-                int index = groupList.FindIndex(x => x.name == groupName);
+                int index = groupList.FindIndex(groupObj => groupObj.name == groupName);
                 if (!groupList[index].users.Contains(SignInViewModel.currentUser.username))
                 {
                     groupList[index].users.Add(SignInViewModel.currentUser.username);
@@ -136,7 +136,7 @@ namespace Moodis.Feature.Group
                 groupList = Serializer.Load<List<Group>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/groups.bin");
             }
 
-            if (groupList.Exists(x => x.name == SignInViewModel.currentUser.groupName))
+            if (groupList.Exists(groupObj => groupObj.name == SignInViewModel.currentUser.groupName))
             {
                 int index = groupList.FindIndex(x => x.name == SignInViewModel.currentUser.groupName);
                 int userIndexGroup = groupList[index].users.FindIndex(username => username == SignInViewModel.currentUser.username);
@@ -176,7 +176,7 @@ namespace Moodis.Feature.Group
                 groupList = Serializer.Load<List<Group>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/groups.bin");
             }
 
-            if (groupList.Exists(x => x.name == SignInViewModel.currentUser.groupName))
+            if (groupList.Exists(groupObj => groupObj.name == SignInViewModel.currentUser.groupName))
             {
                 group = groupList.Find(x => x.name == SignInViewModel.currentUser.groupName);
                 int groupIndex = groupList.FindIndex(x => x.name == SignInViewModel.currentUser.groupName);

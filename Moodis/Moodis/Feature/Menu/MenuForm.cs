@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
+using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
-using Moodis.Feature.Group;
 
 namespace Moodis.Ui
 {
@@ -12,13 +14,17 @@ namespace Moodis.Ui
         public bool running = false;
         private const string WarningInRequest = "Azure api request failed. Is your internet turned on ?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
+        private const string WarningPlayingMusic = "Because face was not detected, cannot play music based on it.";
         public MenuViewModel menuViewModel;
+        private Form parentForm;
+        private MusicPlayerModel player = new MusicPlayerModel();
         private const string FormatDouble = "N3";
 
-        public MenuForm(MenuViewModel viewModel)
+        public MenuForm(MenuViewModel viewModel,Form parent)
         {
             InitializeComponent();
             menuViewModel = viewModel;
+            parentForm = parent;
             UpdateLabels();
         }
 
@@ -58,14 +64,15 @@ namespace Moodis.Ui
                MessageBox.Show(WarningFaceDetection);
             }
         }
-
         private void BtnCalendar_Click(object sender, EventArgs e)
         {
             Hide();
             var calendarForm = new CalendarForm(new CalendarViewModel(), this, SignInViewModel.currentUser.username);
+            calendarForm.StartPosition = FormStartPosition.Manual;
+            calendarForm.Location = Location;
             calendarForm.Show();
+            player.StopMusic();
         }
-
 
         private void MenuFormClose(object sender, FormClosingEventArgs e)
         {
@@ -73,7 +80,33 @@ namespace Moodis.Ui
             {
                 e.Cancel = true;
                 Hide();
+                player.StopMusic();
             }
+            parentForm.Location = Location;
+            parentForm.Show();
+        }
+
+        private void BtnToCamera_Click(object sender, EventArgs e)
+        {
+            Hide();
+            parentForm.Location = Location;
+            parentForm.Show();
+        }
+        private void ButtonMusicController_Click(object sender, EventArgs e)
+        {
+            if(menuViewModel.currentImage.emotions != null)
+            {
+                player.StartMusic(menuViewModel.getHighestEmotionIndex());
+            }
+            else
+            {
+                MessageBox.Show(WarningPlayingMusic);
+            }
+        }
+
+        private void BtnStopMusic_Click(object sender, EventArgs e)
+        {
+            player.StopMusic();
         }
 
         private void GroupsButton_Click(object sender, EventArgs e)

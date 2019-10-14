@@ -11,6 +11,7 @@ namespace Moodis.Ui
         public bool running = false;
         private const string WarningInRequest = "Something wrong happened. Is your internet turned on?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
+        private const string WarningPlayingMusic = "Because face was not detected, cannot play music based on it.";
         public MenuViewModel menuViewModel;
         private Form parentForm;
         private MusicPlayerModel player = new MusicPlayerModel();
@@ -89,7 +90,19 @@ namespace Moodis.Ui
         }
         private void ButtonMusicController_Click(object sender, EventArgs e)
         {
-            player.StartMusic(menuViewModel.getHighestEmotionIndex());
+            if(menuViewModel.currentImage.emotions != null)
+            {
+                player.StartMusic(menuViewModel.getHighestEmotionIndex());
+            }
+            else
+            {
+                MessageBox.Show(WarningPlayingMusic);
+            }
+        }
+
+        private void BtnStopMusic_Click(object sender, EventArgs e)
+        {
+            player.StopMusic();
         }
     }
 }

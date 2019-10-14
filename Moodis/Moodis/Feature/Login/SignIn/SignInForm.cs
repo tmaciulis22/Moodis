@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace Moodis.Feature.Login
 {
-    public partial class LoginForm : Form
+    public partial class SignInForm : Form
     {
         SignInViewModel signInViewModel;
 
@@ -20,7 +20,7 @@ namespace Moodis.Feature.Login
         public const string passwordEmpty = "Password field is empty!";
         public const string userNotFound = "User not found!";
 
-        public LoginForm()
+        public SignInForm()
         {
             InitializeComponent();
             signInViewModel = new SignInViewModel();

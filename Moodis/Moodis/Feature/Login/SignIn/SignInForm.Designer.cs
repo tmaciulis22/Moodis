@@ -1,6 +1,6 @@
 ﻿namespace Moodis.Feature.Login
 {
-    partial class LoginForm
+    partial class SignInForm
     {
         /// <summary>
         /// Required designer variable.

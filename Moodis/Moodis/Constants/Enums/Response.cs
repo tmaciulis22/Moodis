@@ -8,7 +8,7 @@
         //Registration-specific errors
         UserExists,
         ApiTrainingError,
-        //SignIn Erros
+        //SignIn Errors
         UserNotFound,
         //Registration and singIn errors
         SerializationError,

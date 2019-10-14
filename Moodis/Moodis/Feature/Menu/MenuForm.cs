@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
 using Moodis.Feature.Statistics;
+using Moodis.Feature.Group;
 
 namespace Moodis.Ui
 {
@@ -65,6 +66,7 @@ namespace Moodis.Ui
             calendarForm.Show();
         }
 
+
         private void MenuFormClose(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -72,6 +74,12 @@ namespace Moodis.Ui
                 e.Cancel = true;
                 Hide();
             }
+        }
+
+        private void GroupsButton_Click(object sender, EventArgs e)
+        {
+            var groupForm = new GroupForm();
+            groupForm.Show();
         }
     }
 }

@@ -42,8 +42,6 @@ namespace Moodis.Feature.Login
                     var cameraWindow = new CameraForm();
                     cameraWindow.Show();
                     this.Hide();
-                    var groupForm = new GroupForm();
-                    groupForm.Show();
                 }
                 else
                 {

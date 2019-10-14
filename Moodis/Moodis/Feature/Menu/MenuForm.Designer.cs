@@ -39,14 +39,16 @@
             this.lblSadness = new System.Windows.Forms.Label();
             this.lblSurprise = new System.Windows.Forms.Label();
             this.btnCalendar = new System.Windows.Forms.Button();
+            this.groupsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgTakenPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // imgTakenPicture
             // 
-            this.imgTakenPicture.Location = new System.Drawing.Point(12, 28);
+            this.imgTakenPicture.Location = new System.Drawing.Point(16, 34);
+            this.imgTakenPicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.imgTakenPicture.Name = "imgTakenPicture";
-            this.imgTakenPicture.Size = new System.Drawing.Size(330, 285);
+            this.imgTakenPicture.Size = new System.Drawing.Size(440, 351);
             this.imgTakenPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgTakenPicture.TabIndex = 0;
             this.imgTakenPicture.TabStop = false;
@@ -54,100 +56,122 @@
             // lblCurrentPicture
             // 
             this.lblCurrentPicture.AutoSize = true;
-            this.lblCurrentPicture.Location = new System.Drawing.Point(12, 12);
+            this.lblCurrentPicture.Location = new System.Drawing.Point(16, 15);
+            this.lblCurrentPicture.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCurrentPicture.Name = "lblCurrentPicture";
-            this.lblCurrentPicture.Size = new System.Drawing.Size(80, 13);
+            this.lblCurrentPicture.Size = new System.Drawing.Size(107, 17);
             this.lblCurrentPicture.TabIndex = 1;
             this.lblCurrentPicture.Text = "Current Picture:";
             // 
             // lblAnger
             // 
             this.lblAnger.AutoSize = true;
-            this.lblAnger.Location = new System.Drawing.Point(15, 320);
+            this.lblAnger.Location = new System.Drawing.Point(20, 394);
+            this.lblAnger.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAnger.Name = "lblAnger";
-            this.lblAnger.Size = new System.Drawing.Size(44, 13);
+            this.lblAnger.Size = new System.Drawing.Size(58, 17);
             this.lblAnger.TabIndex = 2;
             this.lblAnger.Text = "loading.";
             // 
             // lblContempt
             // 
             this.lblContempt.AutoSize = true;
-            this.lblContempt.Location = new System.Drawing.Point(15, 349);
+            this.lblContempt.Location = new System.Drawing.Point(20, 430);
+            this.lblContempt.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblContempt.Name = "lblContempt";
-            this.lblContempt.Size = new System.Drawing.Size(44, 13);
+            this.lblContempt.Size = new System.Drawing.Size(58, 17);
             this.lblContempt.TabIndex = 3;
             this.lblContempt.Text = "loading.";
             // 
             // lblDisgust
             // 
             this.lblDisgust.AutoSize = true;
-            this.lblDisgust.Location = new System.Drawing.Point(15, 376);
+            this.lblDisgust.Location = new System.Drawing.Point(20, 463);
+            this.lblDisgust.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDisgust.Name = "lblDisgust";
-            this.lblDisgust.Size = new System.Drawing.Size(44, 13);
+            this.lblDisgust.Size = new System.Drawing.Size(58, 17);
             this.lblDisgust.TabIndex = 4;
             this.lblDisgust.Text = "loading.";
             // 
             // lblFear
             // 
             this.lblFear.AutoSize = true;
-            this.lblFear.Location = new System.Drawing.Point(15, 406);
+            this.lblFear.Location = new System.Drawing.Point(20, 500);
+            this.lblFear.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFear.Name = "lblFear";
-            this.lblFear.Size = new System.Drawing.Size(44, 13);
+            this.lblFear.Size = new System.Drawing.Size(58, 17);
             this.lblFear.TabIndex = 5;
             this.lblFear.Text = "loading.";
             // 
             // lblHappiness
             // 
             this.lblHappiness.AutoSize = true;
-            this.lblHappiness.Location = new System.Drawing.Point(151, 320);
+            this.lblHappiness.Location = new System.Drawing.Point(201, 394);
+            this.lblHappiness.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHappiness.Name = "lblHappiness";
-            this.lblHappiness.Size = new System.Drawing.Size(44, 13);
+            this.lblHappiness.Size = new System.Drawing.Size(58, 17);
             this.lblHappiness.TabIndex = 6;
             this.lblHappiness.Text = "loading.";
             // 
             // lblNeutral
             // 
             this.lblNeutral.AutoSize = true;
-            this.lblNeutral.Location = new System.Drawing.Point(151, 349);
+            this.lblNeutral.Location = new System.Drawing.Point(201, 430);
+            this.lblNeutral.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNeutral.Name = "lblNeutral";
-            this.lblNeutral.Size = new System.Drawing.Size(44, 13);
+            this.lblNeutral.Size = new System.Drawing.Size(58, 17);
             this.lblNeutral.TabIndex = 7;
             this.lblNeutral.Text = "loading.";
             // 
             // lblSadness
             // 
             this.lblSadness.AutoSize = true;
-            this.lblSadness.Location = new System.Drawing.Point(151, 376);
+            this.lblSadness.Location = new System.Drawing.Point(201, 463);
+            this.lblSadness.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSadness.Name = "lblSadness";
-            this.lblSadness.Size = new System.Drawing.Size(44, 13);
+            this.lblSadness.Size = new System.Drawing.Size(58, 17);
             this.lblSadness.TabIndex = 8;
             this.lblSadness.Text = "loading.";
             // 
             // lblSurprise
             // 
             this.lblSurprise.AutoSize = true;
-            this.lblSurprise.Location = new System.Drawing.Point(151, 406);
+            this.lblSurprise.Location = new System.Drawing.Point(201, 500);
+            this.lblSurprise.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSurprise.Name = "lblSurprise";
-            this.lblSurprise.Size = new System.Drawing.Size(44, 13);
+            this.lblSurprise.Size = new System.Drawing.Size(58, 17);
             this.lblSurprise.TabIndex = 9;
             this.lblSurprise.Text = "loading.";
             // 
             // btnCalendar
             // 
-            this.btnCalendar.Location = new System.Drawing.Point(366, 28);
+            this.btnCalendar.Location = new System.Drawing.Point(488, 34);
+            this.btnCalendar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCalendar.Name = "btnCalendar";
-            this.btnCalendar.Size = new System.Drawing.Size(153, 41);
+            this.btnCalendar.Size = new System.Drawing.Size(204, 50);
             this.btnCalendar.TabIndex = 10;
             this.btnCalendar.Text = "Go to Calendar";
             this.btnCalendar.UseVisualStyleBackColor = true;
             this.btnCalendar.Click += new System.EventHandler(this.BtnCalendar_Click);
             // 
+            // groupsButton
+            // 
+            this.groupsButton.Location = new System.Drawing.Point(488, 105);
+            this.groupsButton.Margin = new System.Windows.Forms.Padding(4);
+            this.groupsButton.Name = "groupsButton";
+            this.groupsButton.Size = new System.Drawing.Size(204, 50);
+            this.groupsButton.TabIndex = 11;
+            this.groupsButton.Text = "Groups";
+            this.groupsButton.UseVisualStyleBackColor = true;
+            this.groupsButton.Click += new System.EventHandler(this.GroupsButton_Click);
+            // 
             // MenuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.ClientSize = new System.Drawing.Size(531, 442);
+            this.ClientSize = new System.Drawing.Size(708, 544);
+            this.Controls.Add(this.groupsButton);
             this.Controls.Add(this.btnCalendar);
             this.Controls.Add(this.lblSurprise);
             this.Controls.Add(this.lblSadness);
@@ -160,6 +184,7 @@
             this.Controls.Add(this.lblCurrentPicture);
             this.Controls.Add(this.imgTakenPicture);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MenuForm";
             this.Text = "Menu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MenuFormClose);
@@ -182,5 +207,6 @@
         private System.Windows.Forms.Label lblSadness;
         private System.Windows.Forms.Label lblSurprise;
         private System.Windows.Forms.Button btnCalendar;
+        private System.Windows.Forms.Button groupsButton;
     }
 }

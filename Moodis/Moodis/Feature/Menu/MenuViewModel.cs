@@ -27,7 +27,7 @@ namespace Moodis.Ui
 
         public async Task GetFaceEmotionsAsync()
         {
-            var face = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
+            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
 
             if (face != null)
             {

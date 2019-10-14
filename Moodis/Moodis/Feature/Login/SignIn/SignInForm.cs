@@ -38,7 +38,7 @@ namespace Moodis.Feature.Login
             }
             else
             {
-                if(signInViewModel.Authenticate(textBoxUsername.Text,textBoxPassword.Text) != null)
+                if(signInViewModel.Authenticate(textBoxUsername.Text,textBoxPassword.Text))
                 {
                     var cameraWindow = new CameraForm();
                     cameraWindow.StartPosition = FormStartPosition.Manual;

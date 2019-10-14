@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Extensions;
 using Moodis.Feature.Login;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<DetectedFace> DetectFaceEmotions(string imageFilePath, string personGroupId, string username)
+        private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
@@ -49,14 +50,21 @@ namespace Moodis.Network.Face
                 FaceAttributeType.Age,
                 FaceAttributeType.Emotion
             };
-            IList<DetectedFace> detectedFaces = null;
 
             try
             {
                 using (Stream imageFileStream = File.OpenRead(imageFilePath))
                 {
-                    detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
-                    return detectedFaces[0];
+                    var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
+
+                    if (detectedFaces.IsNullOrEmpty())
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return detectedFaces;
+                    }
                 }
             }
             catch (APIErrorException apiException)
@@ -69,24 +77,66 @@ namespace Moodis.Network.Face
                 Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
                 return null;
             }
+        }
 
-            //var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
-            //var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, personGroupId);
+        public async Task<DetectedFace> DetectUserEmotions(string imageFilePath, string personGroupId, string username)
+        {
+            var detectedFaces = await DetectFaceEmotions(imageFilePath);
+            var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
+            var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, personGroupId);
 
-            //foreach (var identifiedPerson in identifiedPersons)
-            //{
-            //    if (identifiedPerson.Candidates.Count != 0)
-            //    {
-            //        var candidateId = identifiedPerson.Candidates[0].PersonId;
-            //        var person = await faceClient.PersonGroupPerson.GetAsync(personGroupId, candidateId);
+            if (identifiedPersons.IsNullOrEmpty())
+            {
+                return null;
+            }
 
-            //        if (person.Name == username)
-            //        {
-            //            return detectedFaces.First(face => face.FaceId == identifiedPerson.FaceId);
-            //        }
-            //    }
-            //}
-            //return null;
+            foreach (var identifiedPerson in identifiedPersons)
+            {
+                if (identifiedPerson.Candidates.Count != 0)
+                {
+                    var candidateId = identifiedPerson.Candidates[0].PersonId;
+                    var person = await faceClient.PersonGroupPerson.GetAsync(personGroupId, candidateId);
+
+                    if (person.Name == username)
+                    {
+                        return detectedFaces.First(face => face.FaceId == identifiedPerson.FaceId);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public async Task<IList<Person>> IdentifyPersons(string imageFilePath)
+        {
+            var detectedFaces = await DetectFaceEmotions(imageFilePath);
+            var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
+
+            var personsList = new List<Person>();
+            var personGroups = await faceClient.PersonGroup.ListAsync() as List<PersonGroup>;
+
+            foreach (var group in personGroups)
+            {
+                var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, group.PersonGroupId);
+
+                if (identifiedPersons.IsNullOrEmpty())
+                {
+                    return null;
+                }
+
+                foreach (var identifiedPerson in identifiedPersons)
+                {
+                    if (identifiedPerson.Candidates.Count != 0)
+                    {
+                        var candidateId = identifiedPerson.Candidates[0].PersonId;
+                        var person = await faceClient.PersonGroupPerson.GetAsync(group.PersonGroupId, candidateId);
+
+                        personsList.AddNonNull(person);
+                    }
+                }
+            }
+
+            return personsList;
         }
 
         public async Task<Person> CreateNewPerson(string personGroupId, string username)

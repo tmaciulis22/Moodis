@@ -8,21 +8,20 @@ namespace Moodis.Extensions
 {
     public static class IListExtensions
     {
-        public static void ForEach<T>(this IList<T> list, Action<T> action)
-        {
-            foreach (T t in list)
-                action(t);
-        }
-
         public static bool IsNullOrEmpty<T>(this IList<T> list)
         {
-            if (list.Count == 0 || list == null)
+            if(list == null || list.Count == 0)
             {
                 return true;
             }
-            else
+            return false;
+        }
+
+        public static void AddNonNull<T>(this IList<T> list, T item)
+        {
+            if (item != null)
             {
-                return false;
+                list.Add(item);
             }
         }
     }

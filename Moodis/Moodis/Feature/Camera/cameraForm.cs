@@ -20,7 +20,8 @@ namespace moodis
         private const string NoDeviceMessage = "Your device does not have a camera.";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         private const string ApiErrorMessage = "Something wrong happened, please try again later";
-        private const string RegistrationSuccessful = "Registration was successful, now you may login!";
+        private const string RegistrationSuccessful = "Registration was successful, you may now login!";
+        private const string SignInSuccessful = "You successfully signed in!";
         private const int ProgressBarValueFactor = 33;
         private const int RequiredNumberOfPhotos = 3;
 
@@ -100,7 +101,7 @@ namespace moodis
             }
         }
 
-        private async void ButtonPicture(object sender, EventArgs e)
+        private void ButtonPicture(object sender, EventArgs e)
         {
             saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
             var fileName = DateTime.Now.ToString().Replace("-","").Replace("/", "").Replace(":","").Replace("PM","").Replace(" ","") + ".jpeg";
@@ -115,47 +116,17 @@ namespace moodis
                 MessageBox.Show(WarningMessage);
             }
 
-            if (isRegistering == false)
+            if(isRegistering)
             {
-                if (menuWindow == null)
-                {
-                    menuViewModel = new MenuViewModel();
-                    menuViewModel.currentImage.ImagePath = fileName;
-                    menuWindow = new MenuForm(menuViewModel, this);
-                    menuWindow.StartPosition = FormStartPosition.Manual;
-                }
-                else
-                {
-                    menuViewModel.currentImage.ImagePath = fileName;
-                    menuWindow.UpdateLabels();
-                }
-                menuWindow.Location = Location;
-                menuWindow.Show();
-                Hide();
+                TakePictureForRegistration(fileName);
+            }
+            else if(isSignIn)
+            {
+                TakePictureForSignIn(fileName);
             }
             else
             {
-                var response = await registerViewModel.AddFaceToPerson(fileName);
-
-                if (response == Response.OK)
-                {
-                    progressBar.Value = ProgressBarValueFactor * registerViewModel.photosTaken;
-
-                    if (registerViewModel.photosTaken == RequiredNumberOfPhotos)
-                    {
-                        MessageBox.Show(RegistrationSuccessful);
-                        Hide();
-                    }
-                }
-                else if(response == Response.ApiTrainingError)
-                {
-                    MessageBox.Show(ApiErrorMessage);
-                    Close();
-                }
-                else
-                {
-                    MessageBox.Show(WarningFaceDetection);
-                }
+                TakePictureForStatistics(fileName);
             }
         }
 
@@ -170,6 +141,66 @@ namespace moodis
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        private async void TakePictureForRegistration(string fileName)
+        {
+            var response = await registerViewModel.AddFaceToPerson(fileName);
+
+            if (response == Response.OK)
+            {
+                progressBar.Value = ProgressBarValueFactor * registerViewModel.photosTaken;
+
+                if (registerViewModel.photosTaken == RequiredNumberOfPhotos)
+                {
+                    MessageBox.Show(RegistrationSuccessful);
+                    Hide();
+                }
+            }
+            else if (response == Response.ApiTrainingError)
+            {
+                MessageBox.Show(ApiErrorMessage);
+                Close();
+            }
+            else
+            {
+                MessageBox.Show(WarningFaceDetection);
+            }
+        }
+
+        private async void TakePictureForSignIn(string fileName)
+        {
+            var response = await signInViewModel.AuthenticateWithFace(fileName);
+
+            if (response == Response.OK)
+            {
+                MessageBox.Show(SignInSuccessful);
+                new CameraForm().Show();
+            }
+            else
+            {
+                MessageBox.Show(ApiErrorMessage);
+            }
+            Close();
+        }
+
+        private void TakePictureForStatistics(string fileName)
+        {
+            if (menuWindow == null)
+            {
+                menuViewModel = new MenuViewModel();
+                menuViewModel.currentImage.ImagePath = fileName;
+                menuWindow = new MenuForm(menuViewModel, this);
+                menuWindow.StartPosition = FormStartPosition.Manual;
+            }
+            else
+            {
+                menuViewModel.currentImage.ImagePath = fileName;
+                menuWindow.UpdateLabels();
+            }
+            menuWindow.Location = Location;
+            menuWindow.Show();
+            Hide();
         }
     }
 }

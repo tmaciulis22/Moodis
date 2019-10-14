@@ -2,9 +2,6 @@
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Moodis.Feature.Login
 {

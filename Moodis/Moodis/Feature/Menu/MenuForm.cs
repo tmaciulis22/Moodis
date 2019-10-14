@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
+using Moodis.Feature.Group;
 
 namespace Moodis.Ui
 {
@@ -64,12 +65,13 @@ namespace Moodis.Ui
         private void BtnCalendar_Click(object sender, EventArgs e)
         {
             Hide();
-            var calendarForm = new CalendarForm(new CalendarViewModel(), this);
+            var calendarForm = new CalendarForm(new CalendarViewModel(), this, SignInViewModel.currentUser.username);
             calendarForm.StartPosition = FormStartPosition.Manual;
             calendarForm.Location = Location;
             calendarForm.Show();
             player.StopMusic();
         }
+
         private void MenuFormClose(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -103,6 +105,13 @@ namespace Moodis.Ui
         private void BtnStopMusic_Click(object sender, EventArgs e)
         {
             player.StopMusic();
+        }
+
+
+        private void GroupButton_Click(object sender, EventArgs e)
+        {
+            var groupForm = new GroupForm();
+            groupForm.Show();
         }
     }
 }

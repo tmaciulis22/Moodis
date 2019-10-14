@@ -11,12 +11,14 @@ namespace Moodis.Feature.Statistics
         private CalendarViewModel calendarViewModel;
         private Form parentForm;
         private const string FormatDouble = "N3";
+        private string username;
 
-        public CalendarForm(CalendarViewModel viewModel, Form form)
+        public CalendarForm(CalendarViewModel viewModel, Form form, string username)
         {
             InitializeComponent();
             calendarViewModel = viewModel;
             parentForm = form;
+            this.username = username;
             updateView();
         }
 
@@ -38,21 +40,21 @@ namespace Moodis.Feature.Statistics
             calendarViewModel.updateViewModel();
 
             int counter = 0, counterM = 0, counterD = 0;
-            foreach (ImageInfo data in SignInViewModel.currentUser.imageStats)
+            foreach (ImageInfo data in SignInViewModel.getUser(username).imageStats)
             {
                 if (data.imageDate.Date == customCalendar.SelectionRange.Start.Date)
                 {
-                    listOfData.Items.Add(SignInViewModel.currentUser.imageStats[counter]);
+                    listOfData.Items.Add(SignInViewModel.getUser(username).imageStats[counter]);
                     counter++;
                 }
                 if (data.imageDate.Month == customCalendar.SelectionRange.Start.Month)
                 {
-                    calendarViewModel.monthlyList.Add(SignInViewModel.currentUser.imageStats[counterM]);
+                    calendarViewModel.monthlyList.Add(SignInViewModel.getUser(username).imageStats[counterM]);
                     counterM++;
                 }
                 if (data.imageDate.Day == customCalendar.SelectionRange.Start.Day)
                 {
-                    calendarViewModel.dailyList.Add(SignInViewModel.currentUser.imageStats[counterD]);
+                    calendarViewModel.dailyList.Add(SignInViewModel.getUser(username).imageStats[counterD]);
                     counterD++;
                 }
             }

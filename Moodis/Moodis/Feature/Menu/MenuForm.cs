@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Moodis.Feature.MP3Player;
 using Moodis.Feature.Statistics;
 using Moodis.Feature.Group;
+using Moodis.Feature.Login;
 
 namespace Moodis.Ui
 {

@@ -178,8 +178,8 @@ namespace Moodis.Feature.Group
 
             if (groupList.Exists(groupObj => groupObj.name == SignInViewModel.currentUser.groupName))
             {
-                group = groupList.Find(x => x.name == SignInViewModel.currentUser.groupName);
-                int groupIndex = groupList.FindIndex(x => x.name == SignInViewModel.currentUser.groupName);
+                group = groupList.Find(group => group.name == SignInViewModel.currentUser.groupName);
+                int groupIndex = groupList.FindIndex(group => group.name == SignInViewModel.currentUser.groupName);
 
                 foreach (string username in group.users)
                 {

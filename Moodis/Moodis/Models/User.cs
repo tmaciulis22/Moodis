@@ -1,22 +1,34 @@
-﻿using System;
+﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Ui;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Moodis.Feature.Login
 {
     [Serializable]
-    class User
+    public class User
     {
-        public String username { get; set; }
-        public String password { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public string personGroupId { get; set; }
+        public string groupName { get; set; }
 
-        public User(String username, String password)
+        public List<ImageInfo> imageStats = new List<ImageInfo>();
+        [field: NonSerialized]
+        public Person faceApiPerson { get; set; }
+
+        public User(string username, string password)
         {
             this.username = username;
             this.password = password;
+            this.groupName = "";
         }
-
+        public void addImage(ImageInfo image)
+        {
+            imageStats.Add(image);
+        }
     }
 }

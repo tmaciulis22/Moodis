@@ -1,23 +1,24 @@
 ﻿using Moodis.Network.Face;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using moodis;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Moodis.Feature.Login;
+using Moodis.Extensions;
+using System.Linq;
 
 namespace Moodis.Ui
 {
-    class MenuViewModel
+    public class MenuViewModel
     {
-        public static ImageInfo currentImage = new ImageInfo();
-        private static Bitmap userImage;
-        private static string jsonAsString;
+        public ImageInfo currentImage;
+        private Bitmap userImage;
 
-        public Bitmap ShowImage(String fileToDisplay)
+        public MenuViewModel()
+        {
+            currentImage = new ImageInfo();
+        }
+
+        public Bitmap ShowImage(string fileToDisplay)
         {
             userImage?.Dispose();
             userImage = new Bitmap(fileToDisplay);
@@ -26,32 +27,24 @@ namespace Moodis.Ui
 
         public async Task GetFaceEmotionsAsync()
         {
-            Face face = Face.Instance;
-            jsonAsString = await face.SendImageForAnalysis(currentImage.ImagePath);
-            if (ValidateJson())
+            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
+
+            if (face != null)
             {
-                currentImage.SetImageInfo(jsonAsString);
+                currentImage.SetImageInfo(face);
             }
         }
 
-        public bool ValidateJson()
+        public void UserAddImage()
         {
-            try
-            {
-                jsonAsString = jsonAsString.Replace("[", " ").Replace("]", "").Replace(" ", "");
-            }
-            catch (NullReferenceException e)
-            {
-                Console.WriteLine(e);
-            }
-            if (string.IsNullOrEmpty(jsonAsString))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            SignInViewModel.currentUser.addImage(currentImage);
+            Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", SignInViewModel.userList);
+        }
+
+        public int getHighestEmotionIndex()
+        {
+            var highestConfidence = currentImage.emotions.Max();
+            return currentImage.emotions.ToList().IndexOf(highestConfidence);
         }
     }
 }

@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Constants\Enums\Response.cs" />
     <Compile Include="Encryption\Crypto.cs" />
+    <Compile Include="Extensions\ContextExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
     <Compile Include="Feature\SignIn\SignInViewModel.cs" />

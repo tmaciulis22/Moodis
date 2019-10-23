@@ -34,7 +34,7 @@ namespace Moodis
             base.OnActivityReenter(resultCode, data);
             if (resultCode == (int)Result.Ok)
             {
-                //Do something from here afte sign in
+                //Do something from here after sign in
             }
         }
     }

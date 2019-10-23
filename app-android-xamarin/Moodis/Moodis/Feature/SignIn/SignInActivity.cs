@@ -4,6 +4,7 @@ using Android.Support.V7.App;
 using Android.Arch.Lifecycle;
 using Android.Widget;
 using Android.Content;
+using Moodis.Extensions;
 
 namespace Moodis.Feature.SignIn
 {
@@ -42,6 +43,19 @@ namespace Moodis.Feature.SignIn
                 if (string.IsNullOrEmpty((sender as EditText).Text))
                 {
                     usernameInput.SetError(GetString(Resource.String.password_empty_error), null);
+                }
+            };
+
+            usernameInput.KeyPress += (sender, e) => {
+                if (e.KeyCode == Android.Views.Keycode.Enter)
+                {
+                    this.HideKeyboard(usernameInput);
+                }
+            };
+            passwordInput.KeyPress += (sender, e) => {
+                if (e.KeyCode == Android.Views.Keycode.Enter)
+                {
+                    this.HideKeyboard(usernameInput);
                 }
             };
 

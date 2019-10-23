@@ -7,7 +7,7 @@ namespace Moodis.Feature.Login
     {
         public static string CalculateMD5Hash(string input)
         {
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            var md5 = MD5.Create();
             var inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
             var hash = md5.ComputeHash(inputBytes);
 

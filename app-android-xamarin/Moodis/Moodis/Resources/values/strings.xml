@@ -8,4 +8,8 @@
   <string name="signin_face_button_text">Sign In With Face</string>
   <string name="signin_register_button_text">Register</string>
 
+  <string name="username_empty_error">Please enter username</string>
+  <string name="password_empty_error">Please enter password</string>
+  <string name="user_not_found_error">User not found</string>
+
 </resources>

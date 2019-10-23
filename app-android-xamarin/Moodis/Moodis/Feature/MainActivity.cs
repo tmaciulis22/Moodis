@@ -29,14 +29,14 @@ namespace Moodis
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        public override void OnActivityReenter(int resultCode, Intent data)
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
-            base.OnActivityReenter(resultCode, data);
-            if (resultCode == (int)Result.Ok)
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (resultCode == Result.Ok && requestCode == REQUEST_CODE_LOGIN)
             {
                 //Do something from here after sign in
             }
-            else if (resultCode == (int)Result.Canceled)
+            else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_LOGIN)
             {
                 Finish();
             }

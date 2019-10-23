@@ -8,7 +8,7 @@ using Moodis.Extensions;
 
 namespace Moodis.Feature.SignIn
 {
-    [Activity(Label = "SignInActivity")]
+    [Activity(Label = "Sign In")]
     public class SignInActivity : AppCompatActivity
     {
         private static string EXTRA_USER = "EXTRA_USER";
@@ -23,6 +23,12 @@ namespace Moodis.Feature.SignIn
             InitButtonsAndInputs();
             //TODO when Android.Arch.Lifecycle lib gets updated use this provider, so various lifecycle and configuration changes won't affect data stored in viewmodel
             //SignInViewModel = ViewModelProviders.Of(this).Get(Java.Lang.Class.FromType(typeof(SignInViewModel))) as SignInViewModel;
+        }
+
+        public override void OnBackPressed()
+        {
+            SetResult(Result.Canceled);
+            Finish();
         }
 
         private void InitButtonsAndInputs()
@@ -47,15 +53,41 @@ namespace Moodis.Feature.SignIn
             };
 
             usernameInput.KeyPress += (sender, e) => {
-                if (e.KeyCode == Android.Views.Keycode.Enter)
+                if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
                 {
-                    this.HideKeyboard(usernameInput);
+                    e.Handled = true;
+                    if (!string.IsNullOrEmpty((sender as EditText).Text))
+                    {
+                        this.HideKeyboard(usernameInput);
+                        passwordInput.RequestFocus();
+                        this.ShowKeyboard(passwordInput);
+                    }
+                    else
+                    {
+                        usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
+                    }
+                }
+                else
+                {
+                    e.Handled = false;
                 }
             };
             passwordInput.KeyPress += (sender, e) => {
-                if (e.KeyCode == Android.Views.Keycode.Enter)
+                if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
                 {
-                    this.HideKeyboard(usernameInput);
+                    e.Handled = true;
+                    if (string.IsNullOrEmpty((sender as EditText).Text))
+                    {
+                        passwordInput.SetError(GetString(Resource.String.password_empty_error), null);
+                    }
+                    else
+                    {
+                        this.HideKeyboard(passwordInput);
+                    }
+                }
+                else
+                {
+                    e.Handled = false;
                 }
             };
 
@@ -77,7 +109,7 @@ namespace Moodis.Feature.SignIn
                     }
                     else
                     {
-                        usernameInput.SetError(GetString(Resource.String.user_not_found_error), null);
+                        Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
                     }
                 }
             };

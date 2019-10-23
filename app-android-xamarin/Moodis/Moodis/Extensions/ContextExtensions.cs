@@ -20,5 +20,11 @@ namespace Moodis.Extensions
             var inputMethodManager = context.GetSystemService(Context.InputMethodService) as InputMethodManager;
             inputMethodManager.HideSoftInputFromWindow(view.WindowToken, HideSoftInputFlags.None);
         }
+
+        public static void ShowKeyboard(this Context context, View view)
+        {
+            var inputMethodManager = context.GetSystemService(Context.InputMethodService) as InputMethodManager;
+            inputMethodManager.ShowSoftInput(view, ShowFlags.Implicit);
+        }
     }
 }

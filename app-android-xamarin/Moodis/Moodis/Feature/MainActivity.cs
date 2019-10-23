@@ -36,6 +36,10 @@ namespace Moodis
             {
                 //Do something from here after sign in
             }
+            else if (resultCode == (int)Result.Canceled)
+            {
+                Finish();
+            }
         }
     }
 }

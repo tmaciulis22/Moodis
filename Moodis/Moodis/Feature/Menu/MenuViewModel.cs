@@ -3,7 +3,6 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using Moodis.Feature.Login;
-using Moodis.Extensions;
 using System.Linq;
 
 namespace Moodis.Ui

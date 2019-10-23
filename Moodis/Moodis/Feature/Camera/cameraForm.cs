@@ -169,6 +169,7 @@ namespace moodis
                 if (registerViewModel.photosTaken == RequiredNumberOfPhotos)
                 {
                     MessageBox.Show(RegistrationSuccessful);
+                    new SignInForm().Show();
                     Close();
                 }
             }

@@ -18,7 +18,7 @@ namespace Moodis.Feature.SignIn
         {
             FetchUserList();
 
-            //currentUser = userList.Find(user => user.username == username && user.password == Crypto.CalculateMD5Hash(password));
+            //TODO Change to Crypto.CalculateMD5Hash(password));
             currentUser = userList.Find(user => user.username == username && user.password == password);
 
             if (currentUser == null)

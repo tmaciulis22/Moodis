@@ -10,11 +10,7 @@ namespace Moodis.Extensions
     {
         public static bool IsNullOrEmpty<T>(this IList<T> list)
         {
-            if(list == null || list.Count == 0)
-            {
-                return true;
-            }
-            return false;
+            return list == null || list.Count == 0;
         }
 
         public static void AddNonNull<T>(this IList<T> list, T item)

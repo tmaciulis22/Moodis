@@ -55,7 +55,7 @@ namespace Moodis.Feature.CameraFeature
             }
             catch (Exception ex)
             {
-                throw;
+                Log.Error(TAG, "Error taking picture: " + ex.Message);
             }
         }
 

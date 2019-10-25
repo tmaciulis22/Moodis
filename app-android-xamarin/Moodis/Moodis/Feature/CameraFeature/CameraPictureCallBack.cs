@@ -13,17 +13,18 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Java.IO;
+using static Java.Util.Jar.Attributes;
 
 namespace Moodis.Feature.CameraFeature
 {
     public class CameraPictureCallBack : Java.Lang.Object, Camera.IPictureCallback
     {
-        const string APP_NAME = "Moodis";
-        Context _context;
+        private static readonly string TAG = nameof(CameraPictureCallBack);
+        Context context;
 
         public CameraPictureCallBack(Context cont)
         {
-            _context = cont;
+            context = cont;
         }
 
         public void OnPictureTaken(byte[] data, Camera camera)
@@ -32,17 +33,16 @@ namespace Moodis.Feature.CameraFeature
             {
                 var fileNameFormatting = System.DateTime.Now.ToString().Replace("-", "").Replace("/", "").Replace(":", "").Replace("PM", "").Replace(" ", "") + ".jpeg";
                 string fileName = Uri.Parse(fileNameFormatting).LastPathSegment;
-                var os = _context.OpenFileOutput(fileName, FileCreationMode.Private);
+                var os = context.OpenFileOutput(fileName, FileCreationMode.Private);
                 System.IO.BinaryWriter binaryWriter = new System.IO.BinaryWriter(os);
                 binaryWriter.Write(data);
                 binaryWriter.Close();
-
-                //We start the camera preview back since after taking a picture it freezes
+                Log.Info(TAG,"Picture saved successfully with name: " + fileName);
                 camera.StartPreview();
             }
             catch (System.Exception e)
             {
-                Log.Debug(APP_NAME, "File not found: " + e.Message);
+                Log.Debug(TAG, "File not found: " + e.Message);
             }
         }
     }

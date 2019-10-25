@@ -23,9 +23,6 @@ namespace Moodis.Feature.SignIn
             SetContentView(Resource.Layout.activity_signin);
             InitButtonsAndInputs();
 
-            var cameraActivity = new Intent(this, typeof(CameraActivity));
-            StartActivity(cameraActivity);
-
             //TODO when Android.Arch.Lifecycle lib gets updated use this provider, so various lifecycle and configuration changes won't affect data stored in viewmodel
             //SignInViewModel = ViewModelProviders.Of(this).Get(Java.Lang.Class.FromType(typeof(SignInViewModel))) as SignInViewModel;
         }
@@ -110,6 +107,8 @@ namespace Moodis.Feature.SignIn
                     if (SignInViewModel.Authenticate(usernameInput.Text, passwordInput.Text))
                     {
                         SetResult(Result.Ok);
+                        var cameraActivity = new Intent(this, typeof(CameraActivity));
+                        StartActivity(cameraActivity);
                         Finish();
                     }
                     else

@@ -18,11 +18,12 @@ namespace Moodis.Feature.CameraFeature
 {
     public class CameraFragment : Fragment
     {
-        Camera _camera;
-        CameraPreview _camPreview;
-        FrameLayout _frameLayout;
+        private readonly string TAG = nameof(CameraFragment);
+        Camera camera;
+        CameraPreview camPreview;
+        FrameLayout frameLayout;
 
-        bool _cameraReleased = false;
+        bool cameraReleased = false;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -38,8 +39,8 @@ namespace Moodis.Feature.CameraFeature
             snapButton.BringToFront();
             snapButton.Click += SnapButtonClick; ;
 
-            _camera = SetUpCamera();
-            _frameLayout = view.FindViewById<FrameLayout>(Resource.Id.camera_preview);
+            camera = SetUpCamera();
+            frameLayout = view.FindViewById<FrameLayout>(Resource.Id.camera_preview);
             SetCameraPreview();
 
             return view;
@@ -49,8 +50,8 @@ namespace Moodis.Feature.CameraFeature
         {
             try
             {
-                _camera.StartPreview();
-                _camera.TakePicture(null, null, new CameraPictureCallBack(Activity));
+                camera.StartPreview();
+                camera.TakePicture(null, null, new CameraPictureCallBack(Activity));
             }
             catch (Exception ex)
             {
@@ -60,26 +61,26 @@ namespace Moodis.Feature.CameraFeature
 
         public override void OnDestroy()
         {
-            _camera.StopPreview();
-            _camera.Release();
-            _cameraReleased = true;
+            camera.StopPreview();
+            camera.Release();
+            cameraReleased = true;
             base.OnDestroy();
         }
 
         public override void OnResume()
         {
-            if (_cameraReleased)
+            if (cameraReleased)
             {
-                _camera.Reconnect();
-                _camera.StartPreview();
-                _cameraReleased = false;
+                camera.Reconnect();
+                camera.StartPreview();
+                cameraReleased = false;
             }
             base.OnResume();
         }
 
         private void SetCameraPreview()
         {
-            _frameLayout.AddView(new CameraPreview(Activity, _camera));
+            frameLayout.AddView(new CameraPreview(Activity, camera));
         }
 
         Camera SetUpCamera()
@@ -91,7 +92,7 @@ namespace Moodis.Feature.CameraFeature
             }
             catch (Exception e)
             {
-                Log.Debug("", "Device camera not available now.");
+                Log.Debug(TAG, "Device camera not available now. " + e.Message);
             }
 
             return c;

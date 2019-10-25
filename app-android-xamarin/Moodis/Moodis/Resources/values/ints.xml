@@ -1,0 +1,3 @@
+﻿<resources>
+  <int name="REQUEST_CAMERA">1</int>
+</resources>

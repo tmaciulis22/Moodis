@@ -14,10 +14,10 @@
     </FrameLayout>
 
   <Button
-      android:text="Snap"
+      android:text="Take picture"
       android:layout_width="match_parent"
-      android:layout_height="35.0dp"
+      android:layout_height="70.0dp"
       android:gravity="center"
       android:layout_alignParentBottom="true"
-      android:id="@+id/snapButton" />
+      android:id="@+id/takePictureButton" />
 </RelativeLayout>

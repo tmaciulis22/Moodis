@@ -34,7 +34,7 @@ namespace Moodis.Feature.CameraFeature
             var ignor = base.OnCreateView(inflater, container, savedInstanceState);
             var view = inflater.Inflate(Resource.Layout.CameraFragmentLayout, container, false);
 
-            var snapButton = view.FindViewById<Button>(Resource.Id.snapButton);
+            var snapButton = view.FindViewById<Button>(Resource.Id.takePictureButton);
             snapButton.BringToFront();
             snapButton.Click += SnapButtonClick; ;
 
@@ -45,11 +45,6 @@ namespace Moodis.Feature.CameraFeature
             return view;
         }
 
-        /// <summary>
-        /// Take a picture.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void SnapButtonClick(object sender, EventArgs e)
         {
             try
@@ -82,24 +77,17 @@ namespace Moodis.Feature.CameraFeature
             base.OnResume();
         }
 
-        /// <summary>
-        /// Set the Camera Preview, and pass it the current device's Camera
-        /// </summary>
         private void SetCameraPreview()
         {
             _frameLayout.AddView(new CameraPreview(Activity, _camera));
         }
 
-        /// <summary>
-        /// Get an instace of the current hardware camera of the device
-        /// </summary>
-        /// <returns></returns>
         Camera SetUpCamera()
         {
             Camera c = null;
             try
             {
-                c = Camera.Open();
+                c = Camera.Open(1);
             }
             catch (Exception e)
             {

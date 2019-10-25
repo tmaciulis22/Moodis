@@ -24,8 +24,6 @@ namespace Moodis.Feature.CameraFeature
             _camera = camera;
             _camera.SetDisplayOrientation(90);
 
-            //Surface holder callback is set so theat SurfaceChanged, Created, destroy... 
-            //Could be called from here.
             Holder.AddCallback(this);
             // deprecated but required on Android versions less than 3.0
             Holder.SetType(SurfaceType.PushBuffers);
@@ -42,20 +40,19 @@ namespace Moodis.Feature.CameraFeature
             {
                 _camera.StopPreview();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                // ignore: tried to stop a non-existent preview
+                Log.Error("CAMERA_PREVIEW","Error Stopping preview" + e.Message);
             }
 
             try
             {
-                // start preview with new settings
                 _camera.SetPreviewDisplay(Holder);
                 _camera.StartPreview();
             }
             catch (Exception e)
             {
-                Log.Debug("", "Error starting camera preview: " + e.Message);
+                Log.Debug("CAMERA_PREVIEW", "Error starting camera preview: " + e.Message);
             }
         }
 
@@ -74,7 +71,7 @@ namespace Moodis.Feature.CameraFeature
 
         public void SurfaceDestroyed(ISurfaceHolder holder)
         {
-            //You could handle release of camera and holder here, but I did it already in the CameraFragment.
+            _camera.Dispose();
         }
     }
 }

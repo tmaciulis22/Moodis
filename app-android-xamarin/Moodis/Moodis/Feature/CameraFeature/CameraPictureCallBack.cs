@@ -18,7 +18,7 @@ namespace Moodis.Feature.CameraFeature
 {
     public class CameraPictureCallBack : Java.Lang.Object, Camera.IPictureCallback
     {
-        const string APP_NAME = "SimpleCameraApp";
+        const string APP_NAME = "Moodis";
         Context _context;
 
         public CameraPictureCallBack(Context cont)
@@ -26,16 +26,12 @@ namespace Moodis.Feature.CameraFeature
             _context = cont;
         }
 
-        /// <summary>
-        /// Callback when the picture is taken by the Camera
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="camera"></param>
         public void OnPictureTaken(byte[] data, Camera camera)
         {
             try
             {
-                string fileName = Uri.Parse("test.jpg").LastPathSegment;
+                var fileNameFormatting = System.DateTime.Now.ToString().Replace("-", "").Replace("/", "").Replace(":", "").Replace("PM", "").Replace(" ", "") + ".jpeg";
+                string fileName = Uri.Parse(fileNameFormatting).LastPathSegment;
                 var os = _context.OpenFileOutput(fileName, FileCreationMode.Private);
                 System.IO.BinaryWriter binaryWriter = new System.IO.BinaryWriter(os);
                 binaryWriter.Write(data);

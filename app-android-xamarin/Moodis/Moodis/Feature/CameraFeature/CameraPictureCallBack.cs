@@ -38,6 +38,9 @@ namespace Moodis.Feature.CameraFeature
                 binaryWriter.Write(data);
                 binaryWriter.Close();
                 Log.Info(TAG,"Picture saved successfully with name: " + fileName);
+
+                context.DeleteFile(fileName);//TODO HANDLE FILE DELETION AFTER IT HAS BEEN PARSED THROUGH FACE DETECTION API
+
                 camera.StartPreview();
             }
             catch (System.Exception e)

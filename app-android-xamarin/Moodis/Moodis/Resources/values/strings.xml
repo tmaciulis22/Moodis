@@ -12,4 +12,6 @@
   <string name="password_empty_error">Please enter password</string>
   <string name="user_not_found_error">User not found</string>
 
+  <string name="non_existant_preview">Preview does not exist </string>
+
 </resources>

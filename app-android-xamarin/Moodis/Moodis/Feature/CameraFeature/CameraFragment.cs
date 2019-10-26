@@ -16,7 +16,7 @@ using Moodis.Feature.Menu;
 
 namespace Moodis.Feature.CameraFeature
 {
-    public class CameraFragment : Fragment
+    public class CameraFragment : Android.Support.V4.App.Fragment
     {
         private readonly string TAG = nameof(CameraFragment);
         public bool pictureTaken { get; set; }
@@ -53,8 +53,6 @@ namespace Moodis.Feature.CameraFeature
             {
                 camera.StartPreview();
                 camera.TakePicture(null, null, new CameraPictureCallBack(Activity));//sends photo to cameraPicturecallBack
-                var menuActivity = new Intent(Activity, typeof(MenuActivity));
-                StartActivity(menuActivity);
             }
             catch (Exception ex)
             {

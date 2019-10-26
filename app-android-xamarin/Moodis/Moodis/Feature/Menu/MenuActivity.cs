@@ -49,8 +49,8 @@ namespace Moodis.Feature.Menu
             {
                 label.Text = "loading";
             }
-
-            /*try
+            /*
+            try
             {
                 await ActivityMenuViewModel.GetFaceEmotionsAsync();
             }
@@ -75,7 +75,8 @@ namespace Moodis.Feature.Menu
             else
             {
                 Toast.MakeText(this, WarningFaceDetection, ToastLength.Short).Show();
-            }*/
+            }
+            */
         }
 
         private void InitButtonsAndInputs()

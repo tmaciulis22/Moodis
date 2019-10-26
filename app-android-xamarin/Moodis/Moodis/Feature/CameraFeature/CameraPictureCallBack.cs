@@ -10,10 +10,7 @@ using Android.Net;
 using Android.OS;
 using Android.Runtime;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
-using Java.IO;
-using static Java.Util.Jar.Attributes;
+using Moodis.Feature.Menu;
 
 namespace Moodis.Feature.CameraFeature
 {
@@ -38,9 +35,7 @@ namespace Moodis.Feature.CameraFeature
                 binaryWriter.Write(data);
                 binaryWriter.Close();
                 Log.Info(TAG,"Picture saved successfully with name: " + fileName);
-                
-
-               // context.DeleteFile(fileName);//TODO HANDLE FILE DELETION AFTER IT HAS BEEN PARSED THROUGH FACE DETECTION API
+                // context.DeleteFile(fileName);//TODO HANDLE FILE DELETION AFTER IT HAS BEEN PARSED THROUGH FACE DETECTION API
 
                 camera.StartPreview();
             }

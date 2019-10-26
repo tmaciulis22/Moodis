@@ -27,7 +27,7 @@ namespace Moodis.Feature.CameraFeature
             if (checkCameraPermission())
             {
                 cameraFragment = new CameraFragment();
-                FragmentManager.BeginTransaction()
+                SupportFragmentManager.BeginTransaction()
                     .Replace(Resource.Id.content_frame, cameraFragment)
                     .Commit();
             }

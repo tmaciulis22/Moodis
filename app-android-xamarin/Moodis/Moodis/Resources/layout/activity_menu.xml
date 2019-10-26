@@ -24,6 +24,8 @@
         android:layout_marginRight="112dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/lblSadness"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
     <TextView
@@ -34,6 +36,8 @@
         android:layout_marginRight="112dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/lblNeutral"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblFear" />
 
     <TextView
@@ -50,13 +54,12 @@
         android:id="@+id/lblFear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginLeft="6dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/lblContempt"
         app:layout_constraintEnd_toStartOf="@+id/lblDisgust"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblAnger" />
 
@@ -100,6 +103,8 @@
         android:layout_marginRight="112dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/lblHappiness"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblContempt" />
 
     <Button

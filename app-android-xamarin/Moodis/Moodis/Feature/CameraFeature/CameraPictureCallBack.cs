@@ -18,6 +18,7 @@ namespace Moodis.Feature.CameraFeature
     {
         private static readonly string TAG = nameof(CameraPictureCallBack);
         Context context;
+        private string imageFileName;
 
         public CameraPictureCallBack(Context cont)
         {
@@ -29,15 +30,19 @@ namespace Moodis.Feature.CameraFeature
             try
             {
                 var fileNameFormatting = System.DateTime.Now.ToString().Replace("-", "").Replace("/", "").Replace(":", "").Replace("PM", "").Replace(" ", "") + ".jpeg";
-                string fileName = Uri.Parse(fileNameFormatting).LastPathSegment;
-                var os = context.OpenFileOutput(fileName, FileCreationMode.Private);
+                imageFileName = Uri.Parse(fileNameFormatting).LastPathSegment;
+                var os = context.OpenFileOutput(imageFileName, FileCreationMode.Private);
+
                 System.IO.BinaryWriter binaryWriter = new System.IO.BinaryWriter(os);
                 binaryWriter.Write(data);
                 binaryWriter.Close();
-                Log.Info(TAG,"Picture saved successfully with name: " + fileName);
-                // context.DeleteFile(fileName);//TODO HANDLE FILE DELETION AFTER IT HAS BEEN PARSED THROUGH FACE DETECTION API
+      
+                var menuActivity = new Intent(context, typeof(MenuActivity));
+                imageFileName = (string)context.GetFileStreamPath(imageFileName);
+                menuActivity.PutExtra("ImagePath", imageFileName);
+                context.StartActivity(menuActivity);
 
-                camera.StartPreview();
+                //camera.StartPreview(); use when you want to take multiple pictures.
             }
             catch (System.Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -10,6 +11,8 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.Menu;
+using Moodis.Ui;
 using System;
 
 namespace Moodis.Feature.CameraFeature
@@ -19,6 +22,7 @@ namespace Moodis.Feature.CameraFeature
     {
         private readonly string TAG = nameof(CameraActivity);
         private CameraFragment cameraFragment;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -36,6 +40,7 @@ namespace Moodis.Feature.CameraFeature
         {
             Finish();
         }
+
         private bool checkCameraPermission()
         {
             if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.AccessFineLocation))

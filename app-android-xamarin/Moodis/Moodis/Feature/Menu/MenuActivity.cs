@@ -10,6 +10,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Java.Lang;
@@ -33,8 +34,13 @@ namespace Moodis.Feature.Menu
             base.OnCreate(savedInstanceState);
             ActivityMenuViewModel = new MenuViewModel();
             SetContentView(Resource.Layout.activity_menu);
+
+            Intent intent = Intent;
+            ActivityMenuViewModel.currentImage.ImagePath = intent.GetStringExtra("ImagePath");
+
             InitButtonsAndInputs();
             UpdateLabels();
+            DeleteImage(ActivityMenuViewModel.currentImage.ImagePath);
         }
 
         public async void UpdateLabels()
@@ -101,6 +107,14 @@ namespace Moodis.Feature.Menu
             btnTakePicture.Click += (sender, e) => {
                 BtnTakePicture_Click();
             };
+        }
+
+        private void DeleteImage(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
 
         private void BtnTakePicture_Click()

@@ -19,7 +19,6 @@ namespace Moodis.Feature.CameraFeature
     public class CameraFragment : Android.Support.V4.App.Fragment
     {
         private readonly string TAG = nameof(CameraFragment);
-        public bool pictureTaken { get; set; }
         Camera camera;
         CameraPreview camPreview;
         FrameLayout frameLayout;
@@ -38,7 +37,7 @@ namespace Moodis.Feature.CameraFeature
 
             var snapButton = view.FindViewById<Button>(Resource.Id.takePictureButton);
             snapButton.BringToFront();
-            snapButton.Click += SnapButtonClick; ;
+            snapButton.Click += SnapButtonClick;
 
             camera = SetUpCamera();
             frameLayout = view.FindViewById<FrameLayout>(Resource.Id.camera_preview);
@@ -65,6 +64,7 @@ namespace Moodis.Feature.CameraFeature
             camera.StopPreview();
             camera.Release();
             cameraReleased = true;
+            Log.Info("DEBUGTESTINGTAG ", "DEBUG2 ");
             base.OnDestroy();
         }
 

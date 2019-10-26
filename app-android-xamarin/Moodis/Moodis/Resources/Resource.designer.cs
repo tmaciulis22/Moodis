@@ -4318,53 +4318,53 @@ namespace Moodis
 			// aapt resource value: 0x7F080070
 			public const int forever = 2131230832;
 			
-			// aapt resource value: 0x7F080071
-			public const int frameLayout = 2131230833;
-			
 			// aapt resource value: 0x7F080002
 			public const int FUNCTION = 2131230722;
 			
+			// aapt resource value: 0x7F080071
+			public const int ghost_view = 2131230833;
+			
 			// aapt resource value: 0x7F080072
-			public const int ghost_view = 2131230834;
+			public const int gone = 2131230834;
 			
 			// aapt resource value: 0x7F080073
-			public const int gone = 2131230835;
+			public const int graph = 2131230835;
 			
 			// aapt resource value: 0x7F080074
-			public const int graph = 2131230836;
-			
-			// aapt resource value: 0x7F080075
-			public const int graph_wrap = 2131230837;
-			
-			// aapt resource value: 0x7F080077
-			public const int groups = 2131230839;
+			public const int graph_wrap = 2131230836;
 			
 			// aapt resource value: 0x7F080076
-			public const int group_divider = 2131230838;
+			public const int groups = 2131230838;
+			
+			// aapt resource value: 0x7F080075
+			public const int group_divider = 2131230837;
+			
+			// aapt resource value: 0x7F080077
+			public const int header = 2131230839;
 			
 			// aapt resource value: 0x7F080078
-			public const int header = 2131230840;
+			public const int home = 2131230840;
 			
 			// aapt resource value: 0x7F080079
-			public const int home = 2131230841;
+			public const int homeAsUp = 2131230841;
 			
 			// aapt resource value: 0x7F08007A
-			public const int homeAsUp = 2131230842;
+			public const int icon = 2131230842;
 			
 			// aapt resource value: 0x7F08007B
-			public const int icon = 2131230843;
+			public const int icon_group = 2131230843;
 			
 			// aapt resource value: 0x7F08007C
-			public const int icon_group = 2131230844;
+			public const int ifRoom = 2131230844;
 			
 			// aapt resource value: 0x7F08007D
-			public const int ifRoom = 2131230845;
+			public const int ignore = 2131230845;
 			
 			// aapt resource value: 0x7F08007E
-			public const int ignore = 2131230846;
+			public const int image = 2131230846;
 			
 			// aapt resource value: 0x7F08007F
-			public const int image = 2131230847;
+			public const int imageForView = 2131230847;
 			
 			// aapt resource value: 0x7F080080
 			public const int info = 2131230848;

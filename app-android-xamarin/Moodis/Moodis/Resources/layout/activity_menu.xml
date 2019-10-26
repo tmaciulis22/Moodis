@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,14 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
+    <ImageView
+        android:id="@+id/imageForView"
         android:layout_width="412dp"
         android:layout_height="352dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
+    </ImageView>
 
     <TextView
         android:id="@+id/lblAnger"
@@ -25,7 +24,7 @@
         android:layout_marginRight="112dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/lblSadness"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
     <TextView
         android:id="@+id/lblContempt"
@@ -87,7 +86,7 @@
         android:layout_marginRight="176dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
     <TextView
         android:id="@+id/lblSurprise"

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageForView"
@@ -52,7 +52,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
+        android:layout_marginEnd="112dp"
+        android:layout_marginRight="112dp"
         android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/lblContempt"
+        app:layout_constraintEnd_toStartOf="@+id/lblDisgust"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblAnger" />
 
@@ -99,45 +103,57 @@
         app:layout_constraintTop_toBottomOf="@+id/lblContempt" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/goToCalendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:text="Button"
+        android:text="To calendar"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/playMusic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
         android:layout_marginLeft="11dp"
         android:layout_marginBottom="3dp"
-        android:text="Button"
+        android:text="Play music"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/goToCalendar" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/groups"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginLeft="9dp"
         android:layout_marginBottom="3dp"
-        android:text="Button"
+        android:text="To Groups"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button4" />
+        app:layout_constraintStart_toEndOf="@+id/StopMusic" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/StopMusic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="39dp"
         android:layout_marginLeft="39dp"
         android:layout_marginBottom="3dp"
-        android:text="Button"
+        android:text="Stop Music"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button2" />
+        app:layout_constraintStart_toEndOf="@+id/playMusic" />
+     <Button
+        android:id="@+id/goToCamera"
+        android:layout_width="88dp"
+        android:layout_height="76dp"
+        android:text="Take another Picture"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
 </android.support.constraint.ConstraintLayout>

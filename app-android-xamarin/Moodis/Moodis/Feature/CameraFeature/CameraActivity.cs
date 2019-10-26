@@ -35,7 +35,6 @@ namespace Moodis.Feature.CameraFeature
         public override void OnBackPressed()
         {
             Finish();
-            //TODO GO TO MENU 
         }
         private bool checkCameraPermission()
         {

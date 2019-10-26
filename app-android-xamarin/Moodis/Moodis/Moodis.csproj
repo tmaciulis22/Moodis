@@ -73,7 +73,6 @@
     <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
-    <Compile Include="Feature\Menu\MenuForm.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
     <Compile Include="Feature\SignIn\SignInViewModel.cs" />

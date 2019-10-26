@@ -12,13 +12,14 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-
+using Moodis.Feature.Menu;
 
 namespace Moodis.Feature.CameraFeature
 {
     public class CameraFragment : Fragment
     {
         private readonly string TAG = nameof(CameraFragment);
+        public bool pictureTaken { get; set; }
         Camera camera;
         CameraPreview camPreview;
         FrameLayout frameLayout;
@@ -51,7 +52,9 @@ namespace Moodis.Feature.CameraFeature
             try
             {
                 camera.StartPreview();
-                camera.TakePicture(null, null, new CameraPictureCallBack(Activity));
+                camera.TakePicture(null, null, new CameraPictureCallBack(Activity));//sends photo to cameraPicturecallBack
+                var menuActivity = new Intent(Activity, typeof(MenuActivity));
+                StartActivity(menuActivity);
             }
             catch (Exception ex)
             {

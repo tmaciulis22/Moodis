@@ -20,7 +20,6 @@ namespace Moodis.Feature.CameraFeature
     {
         private readonly string TAG = nameof(CameraFragment);
         Camera camera;
-        CameraPreview camPreview;
         FrameLayout frameLayout;
 
         bool cameraReleased = false;
@@ -32,12 +31,11 @@ namespace Moodis.Feature.CameraFeature
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var ignor = base.OnCreateView(inflater, container, savedInstanceState);
             var view = inflater.Inflate(Resource.Layout.CameraFragmentLayout, container, false);
 
             var snapButton = view.FindViewById<Button>(Resource.Id.takePictureButton);
             snapButton.BringToFront();
-            snapButton.Click += SnapButtonClick; ;
+            snapButton.Click += SnapButtonClick;
 
             camera = SetUpCamera();
             frameLayout = view.FindViewById<FrameLayout>(Resource.Id.camera_preview);
@@ -55,7 +53,7 @@ namespace Moodis.Feature.CameraFeature
             }
             catch (Exception ex)
             {
-                throw;
+                Log.Debug(TAG, ex.Message);
             }
         }
 

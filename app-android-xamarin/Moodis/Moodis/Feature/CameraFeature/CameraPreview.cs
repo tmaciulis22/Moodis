@@ -17,12 +17,12 @@ namespace Moodis.Feature.CameraFeature
     public class CameraPreview : SurfaceView, ISurfaceHolderCallback
     {
         Android.Hardware.Camera _camera;
-        static bool _stopped;
+        private const int rotation = 90;
 
         public CameraPreview(Context context, Android.Hardware.Camera camera) : base(context)
         {
             _camera = camera;
-            _camera.SetDisplayOrientation(90);
+            _camera.SetDisplayOrientation(rotation);
 
             Holder.AddCallback(this);
             // deprecated but required on Android versions less than 3.0

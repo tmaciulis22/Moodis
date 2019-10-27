@@ -77,6 +77,10 @@
   <dimen name="negative_grid_unit_4x">-8dp</dimen>
   <dimen name="negative_grid_unit_12x">-24dp</dimen>
 
+  <!-- Gravity Units -->
+  <dimen name="gravity_unit_100x">1</dimen>
+  <dimen name="gravity_unit_50x">0.5</dimen>
+  
   <!-- Font Sizes -->
   <dimen name="login_header">64sp</dimen>
   <dimen name="regular_text">24sp</dimen>

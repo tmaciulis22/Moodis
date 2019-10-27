@@ -32,7 +32,7 @@ namespace Moodis.Feature.CameraFeature
             try
             {
                 var fileNameFormatting = System.DateTime.Now.ToString().Replace("-", "").Replace("/", "").Replace(":", "").Replace("PM", "").Replace(" ", "") + ".jpeg";
-                string fileName = Uri.Parse(fileNameFormatting).LastPathSegment;
+                var fileName = Uri.Parse(fileNameFormatting).LastPathSegment;
                 var os = context.OpenFileOutput(fileName, FileCreationMode.Private);
                 System.IO.BinaryWriter binaryWriter = new System.IO.BinaryWriter(os);
                 binaryWriter.Write(data);

@@ -107,8 +107,6 @@ namespace Moodis.Feature.SignIn
                     if (SignInViewModel.Authenticate(usernameInput.Text, passwordInput.Text))
                     {
                         SetResult(Result.Ok);
-                        var cameraActivity = new Intent(this, typeof(CameraActivity));
-                        StartActivity(cameraActivity);
                         Finish();
                     }
                     else

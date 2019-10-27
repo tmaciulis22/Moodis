@@ -10,10 +10,6 @@ using Android.Net;
 using Android.OS;
 using Android.Runtime;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
-using Java.IO;
-using static Java.Util.Jar.Attributes;
 
 namespace Moodis.Feature.CameraFeature
 {

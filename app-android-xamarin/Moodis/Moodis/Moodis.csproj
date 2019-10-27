@@ -222,7 +222,7 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\CameraFragmentLayout.xml">
+    <AndroidResource Include="Resources\layout\fragment_camera.xml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>

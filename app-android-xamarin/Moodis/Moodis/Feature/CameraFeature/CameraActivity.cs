@@ -45,22 +45,22 @@ namespace Moodis.Feature.CameraFeature
         {
             if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.AccessFineLocation))
             {
-            Log.Info(TAG, "Camera permissions are needed for the app to work.");
+                Log.Info(TAG, "Camera permissions are needed for the app to work.");
 
-            var requiredPermissions = new String[] { Manifest.Permission.AccessFineLocation };
-            Snackbar.Make((View)Resource.Layout.activity_camera,
-                           Resource.String.permission_camera_rationale,
-                           Snackbar.LengthIndefinite)
-                    .SetAction(Resource.String.ok,
-                               new Action<View>(delegate (View obj) {
-                                   ActivityCompat.RequestPermissions(this, requiredPermissions, 1);
-                               }
-                    )
-            ).Show();
+                var requiredPermissions = new String[] { Manifest.Permission.AccessFineLocation };
+                Snackbar.Make((View)Resource.Layout.activity_camera,
+                               Resource.String.permission_camera_rationale,
+                               Snackbar.LengthIndefinite)
+                        .SetAction(Resource.String.ok,
+                                   new Action<View>(delegate (View obj) {
+                                       ActivityCompat.RequestPermissions(this, requiredPermissions, 1);
+                                   }
+                        )
+                ).Show();
             }
             else
             {
-            ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.Camera }, 1);
+                ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.Camera }, 1);
                 return true;
             }
             return false;

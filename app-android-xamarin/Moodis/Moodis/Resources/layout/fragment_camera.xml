@@ -3,20 +3,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="25px"
-    android:minHeight="25px">
+    android:minWidth="@dimen/grid_unit_12x"
+    android:minHeight="@dimen/grid_unit_12x">
   
     <FrameLayout
         android:id="@+id/camera_preview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1">
+        android:layout_weight="@dimen/gravity_unit_100x">
     </FrameLayout>
 
   <Button
-      android:text="Take picture"
+      android:text="@string/pictureButton"
       android:layout_width="match_parent"
-      android:layout_height="70.0dp"
+      android:layout_height="@dimen/grid_unit_36x"
       android:gravity="center"
       android:layout_alignParentBottom="true"
       android:id="@+id/takePictureButton" />

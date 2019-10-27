@@ -108,6 +108,10 @@ namespace Moodis.Feature.Register
                             StartActivity(new Android.Content.Intent(this, typeof(SignInActivity)));
                             Finish();
                         }
+                        else if(response == Response.UserExists)
+                        {
+                            Toast.MakeText(this, Resource.String.user_exists, ToastLength.Short).Show();
+                        }
                     }
                     else
                     {

@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.V7.App;
-using Android.Util;
-using Android.Views;
 using Android.Widget;
-using Java.Lang;
 using Moodis.Feature.CameraFeature;
 using Moodis.Ui;
 
@@ -47,6 +41,7 @@ namespace Moodis.Feature.Menu
         {
             var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
             Bitmap bmImg = BitmapFactory.DecodeFile(ActivityMenuViewModel.currentImage.ImagePath);
+            bmImg = RotateImage(bmImg);
             imageBox.SetImageBitmap(bmImg);
             var emotionLabels = new List<TextView> { FindViewById<TextView>(Resource.Id.lblAnger), FindViewById<TextView>(Resource.Id.lblContempt), FindViewById<TextView>(Resource.Id.lblDisgust),
                 FindViewById<TextView>(Resource.Id.lblFear), FindViewById<TextView>(Resource.Id.lblHappiness), FindViewById<TextView>(Resource.Id.lblNeutral), FindViewById<TextView>(Resource.Id.lblSadness),
@@ -83,6 +78,17 @@ namespace Moodis.Feature.Menu
                 Toast.MakeText(this, WarningFaceDetection, ToastLength.Short).Show();
             }
             */
+        }
+
+        private Bitmap RotateImage(Bitmap image)
+        {
+            Matrix matrix = new Matrix();
+            matrix.PostRotate(-90);
+            return Bitmap.CreateBitmap(image, 0, 0, image.Width, image.Height, matrix, true);
+        }
+        public override void OnBackPressed()
+        {
+            Finish();
         }
 
         private void InitButtonsAndInputs()

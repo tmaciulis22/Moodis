@@ -9,8 +9,9 @@
 
     <ImageView
         android:id="@+id/imageForView"
-        android:layout_width="412dp"
-        android:layout_height="352dp"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </ImageView>
@@ -19,6 +20,8 @@
         android:id="@+id/lblAnger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
@@ -32,6 +35,8 @@
         android:id="@+id/lblContempt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
         android:text="TextView"
@@ -54,6 +59,8 @@
         android:id="@+id/lblFear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
         android:text="TextView"
@@ -99,6 +106,8 @@
         android:id="@+id/lblSurprise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginEnd="112dp"
         android:layout_marginRight="112dp"
         android:text="TextView"

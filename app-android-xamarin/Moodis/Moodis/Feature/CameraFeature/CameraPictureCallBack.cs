@@ -42,7 +42,7 @@ namespace Moodis.Feature.CameraFeature
                 menuActivity.PutExtra("ImagePath", imageFileName);
                 context.StartActivity(menuActivity);
 
-                //camera.StartPreview(); use when you want to take multiple pictures.
+                camera.StartPreview();
             }
             catch (System.Exception e)
             {

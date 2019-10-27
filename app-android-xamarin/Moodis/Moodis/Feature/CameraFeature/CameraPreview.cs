@@ -16,13 +16,13 @@ namespace Moodis.Feature.CameraFeature
 {
     public class CameraPreview : SurfaceView, ISurfaceHolderCallback
     {
-        Android.Hardware.Camera _camera;
-        static bool _stopped;
+        Android.Hardware.Camera customCamera;
+        static bool stopped;
 
         public CameraPreview(Context context, Android.Hardware.Camera camera) : base(context)
         {
-            _camera = camera;
-            _camera.SetDisplayOrientation(90);
+            customCamera = camera;
+            customCamera.SetDisplayOrientation(90);
 
             Holder.AddCallback(this);
             // deprecated but required on Android versions less than 3.0
@@ -38,7 +38,7 @@ namespace Moodis.Feature.CameraFeature
 
             try
             {
-                _camera.StopPreview();
+                customCamera.StopPreview();
             }
             catch (Exception e)
             {
@@ -47,8 +47,8 @@ namespace Moodis.Feature.CameraFeature
 
             try
             {
-                _camera.SetPreviewDisplay(Holder);
-                _camera.StartPreview();
+                customCamera.SetPreviewDisplay(Holder);
+                customCamera.StartPreview();
             }
             catch (Exception e)
             {
@@ -60,8 +60,8 @@ namespace Moodis.Feature.CameraFeature
         {
             try
             {
-                _camera.SetPreviewDisplay(holder);
-                _camera.StartPreview();
+                customCamera.SetPreviewDisplay(holder);
+                customCamera.StartPreview();
             }
             catch (IOException e)
             {
@@ -71,7 +71,7 @@ namespace Moodis.Feature.CameraFeature
 
         public void SurfaceDestroyed(ISurfaceHolder holder)
         {
-            _camera.Dispose();
+            customCamera.Dispose();
         }
     }
 }

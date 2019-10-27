@@ -7,7 +7,9 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Widget;
+using Java.Lang;
 using Moodis.Feature.CameraFeature;
 using Moodis.Ui;
 
@@ -19,6 +21,7 @@ namespace Moodis.Feature.Menu
         private const string WarningInRequest = "Something wrong happened. Is your internet turned on?";
         private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
         private const string WarningPlayingMusic = "Because face was not detected, cannot play music based on it.";
+        private readonly string TAG = nameof(MenuActivity);
         public MenuViewModel ActivityMenuViewModel { get; set; }
         private AppCompatActivity parentActivity;
         private const string FormatDouble = "N3";
@@ -50,7 +53,7 @@ namespace Moodis.Feature.Menu
             {
                 label.Text = "loading";
             }
-            /*
+            /* COMENTED UNTIL WE FIGURE OUT A WAY TO STORE ENVIROMENTAL VARIABLES
             try
             {
                 await ActivityMenuViewModel.GetFaceEmotionsAsync();
@@ -61,7 +64,7 @@ namespace Moodis.Feature.Menu
                 Toast.MakeText(this, WarningInRequest, ToastLength.Short).Show();
                 JavaSystem.Exit(0);
             }
-
+            */
             if (ActivityMenuViewModel.currentImage.emotions != null)
             {
                 var counter = 0;
@@ -77,7 +80,6 @@ namespace Moodis.Feature.Menu
             {
                 Toast.MakeText(this, WarningFaceDetection, ToastLength.Short).Show();
             }
-            */
         }
 
         private Bitmap RotateImage(Bitmap image)
@@ -88,7 +90,7 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
-            Finish();
+            //Finish(); TODO figure out what to do when back pressed while in menu (maybe logout user ?)
         }
 
         private void InitButtonsAndInputs()

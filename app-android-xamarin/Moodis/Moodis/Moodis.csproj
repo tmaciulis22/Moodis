@@ -76,6 +76,7 @@
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
+    <Compile Include="Feature\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Register\RegisterActivity.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
     <Compile Include="Feature\SignIn\SignInViewModel.cs" />

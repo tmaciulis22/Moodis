@@ -5391,11 +5391,20 @@ namespace Moodis
 			// aapt resource value: 0x7F0D0041
 			public const int status_bar_notification_info_overflow = 2131558465;
 			
-			// aapt resource value: 0x7F0D0043
-			public const int username_empty_error = 2131558467;
-			
 			// aapt resource value: 0x7F0D0042
-			public const int user_not_found_error = 2131558466;
+			public const int stronger_password = 2131558466;
+			
+			// aapt resource value: 0x7F0D0046
+			public const int username_empty_error = 2131558470;
+			
+			// aapt resource value: 0x7F0D0043
+			public const int user_created = 2131558467;
+			
+			// aapt resource value: 0x7F0D0044
+			public const int user_exists = 2131558468;
+			
+			// aapt resource value: 0x7F0D0045
+			public const int user_not_found_error = 2131558469;
 			
 			static String()
 			{

@@ -6,6 +6,7 @@ using Android.Widget;
 using Android.Content;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.Register;
 
 namespace Moodis.Feature.SignIn
 {
@@ -119,10 +120,14 @@ namespace Moodis.Feature.SignIn
             };
             signInWithFaceButton.Click += (sender, e) => {
                 //StartActivityForResult(new Android.Content.Intent(this, typeof(CameraActivity)), REQUEST_CODE_CAMERA);
+                
             };
             registerButton.Click += (sender, e) =>
             {
                 //StartActivityForResult(new Android.Content.Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
+                var registerActivity = new Intent(this, typeof(RegisterActivity));
+                StartActivity(registerActivity);
+                Finish();
             };
         }
     }

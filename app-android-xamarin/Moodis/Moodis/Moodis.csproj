@@ -76,6 +76,7 @@
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
+    <Compile Include="Feature\Register\RegisterActivity.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
     <Compile Include="Feature\SignIn\SignInViewModel.cs" />
     <Compile Include="Feature\MainActivity.cs" />
@@ -118,7 +119,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Feature\Register\" />
+    <AndroidResource Include="Resources\layout\activity_register.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.Face">

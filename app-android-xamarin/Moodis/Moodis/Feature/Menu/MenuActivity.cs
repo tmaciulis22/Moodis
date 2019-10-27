@@ -57,7 +57,7 @@ namespace Moodis.Feature.Menu
             }
             catch (System.Net.Http.HttpRequestException e)
             {
-                Console.WriteLine(e);
+                Log.Debug(TAG,e.Message);
                 Toast.MakeText(this, WarningInRequest, ToastLength.Short).Show();
                 JavaSystem.Exit(0);
             }

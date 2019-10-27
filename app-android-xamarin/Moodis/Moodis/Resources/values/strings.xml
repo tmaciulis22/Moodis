@@ -14,7 +14,13 @@
 
   <string name="non_existant_preview">Preview does not exist </string>
 
-  <string name="pictureButton">Take Picture </string>
+  <string name="picture_button">Take Picture </string>
+  <string name="placeholder">placeholder string</string>
+  <string name="calendar_button">To Calendar</string>
+  <string name="play_music_button">Play music</string>
+  <string name="stop_music_button">Stop music</string>
+  <string name="groups_button">To Groups</string>
+  <string name="take_another_picture">Take another picture</string>
 
   <string name="permission_camera_rationale">Camera is required for the app to work. </string>
   <string name="ok">OK</string>

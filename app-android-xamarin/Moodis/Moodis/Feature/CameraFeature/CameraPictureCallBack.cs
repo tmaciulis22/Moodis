@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -18,7 +17,6 @@ namespace Moodis.Feature.CameraFeature
     {
         private static readonly string TAG = nameof(CameraPictureCallBack);
         Context context;
-        private string imageFileName;
 
         public CameraPictureCallBack(Context cont)
         {
@@ -30,7 +28,7 @@ namespace Moodis.Feature.CameraFeature
             try
             {
                 var fileNameFormatting = System.DateTime.Now.ToString().Replace("-", "").Replace("/", "").Replace(":", "").Replace("PM", "").Replace(" ", "") + ".jpeg";
-                imageFileName = Uri.Parse(fileNameFormatting).LastPathSegment;
+                var imageFileName = Uri.Parse(fileNameFormatting).LastPathSegment;
                 var os = context.OpenFileOutput(imageFileName, FileCreationMode.Private);
 
                 System.IO.BinaryWriter binaryWriter = new System.IO.BinaryWriter(os);

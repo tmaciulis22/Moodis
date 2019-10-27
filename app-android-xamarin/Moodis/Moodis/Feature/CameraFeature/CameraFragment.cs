@@ -7,11 +7,10 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Moodis.Feature.Menu;
 
 namespace Moodis.Feature.CameraFeature
 {
-    public class CameraFragment : Android.Support.V4.App.Fragment
+    public class CameraFragment : Fragment
     {
         private readonly string TAG = nameof(CameraFragment);
         Camera camera;
@@ -57,7 +56,6 @@ namespace Moodis.Feature.CameraFeature
             camera.StopPreview();
             camera.Release();
             cameraReleased = true;
-            Log.Info("DEBUGTESTINGTAG ", "DEBUG2 ");
             base.OnDestroy();
         }
 

@@ -1,13 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
-using Moodis.Extensions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Moodis.Ui

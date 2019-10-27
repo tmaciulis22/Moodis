@@ -10,6 +10,7 @@ namespace Moodis.Feature.Login.Register
     public partial class RegisterForm : Form
     {
         RegisterViewModel registerViewModel;
+        private Form parentForm;
         public const string passwordsNotSame = "Passwords must be the same!";
         public const string created = " was created!";
         public const string exists = " already exists!";
@@ -18,9 +19,11 @@ namespace Moodis.Feature.Login.Register
         public const string passwordEmpty = "Password field is empty!";
         public const string GeneralErrorMessage = "Something wrong happened, please try again later";
 
-        public RegisterForm()
+
+        public RegisterForm(Form parent)
         {
             registerViewModel = new RegisterViewModel();
+            parentForm = parent;
             InitializeComponent();
         }
 
@@ -72,6 +75,13 @@ namespace Moodis.Feature.Login.Register
                     labelNotification.Text = strongerPassword;
                 }
             }
+        }
+
+        private void BtnToSignIn_Click(object sender, EventArgs e)
+        {
+            parentForm.Location = Location;
+            parentForm.Show();
+            Close();
         }
     }
 }

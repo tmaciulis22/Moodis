@@ -46,7 +46,10 @@ namespace Moodis.Ui
                 MessageBox.Show(WarningInRequest);
                 Application.Exit();
             }
-
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine(e);
+            }
             if (menuViewModel.currentImage.emotions != null)
             {
                 var counter = 0;
@@ -75,14 +78,8 @@ namespace Moodis.Ui
 
         private void MenuFormClose(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                Hide();
-                player.StopMusic();
-            }
-            parentForm.Location = Location;
-            parentForm.Show();
+            player.StopMusic();
+            Application.Exit();
         }
 
         private void BtnToCamera_Click(object sender, EventArgs e)
@@ -91,6 +88,7 @@ namespace Moodis.Ui
             parentForm.Location = Location;
             parentForm.Show();
         }
+
         private void ButtonMusicController_Click(object sender, EventArgs e)
         {
             if(menuViewModel.currentImage.emotions != null)
@@ -111,8 +109,11 @@ namespace Moodis.Ui
 
         private void GroupButton_Click(object sender, EventArgs e)
         {
-            var groupForm = new GroupForm();
+            var groupForm = new GroupForm(this);
+            groupForm.StartPosition = FormStartPosition.Manual;
+            groupForm.Location = Location;
             groupForm.Show();
+            Hide();
         }
     }
 }

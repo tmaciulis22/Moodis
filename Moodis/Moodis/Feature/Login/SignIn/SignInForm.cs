@@ -1,15 +1,7 @@
 ﻿using moodis;
 using Moodis.Feature.Login.Register;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Moodis.Feature.Group;
 
 namespace Moodis.Feature.Login
 {
@@ -56,8 +48,11 @@ namespace Moodis.Feature.Login
 
         private void ButtonRegister_Click(object sender, EventArgs e)
         {
-            var registerWindow = new RegisterForm();
+            var registerWindow = new RegisterForm(this);
+            registerWindow.StartPosition = FormStartPosition.Manual;
+            registerWindow.Location = Location;
             registerWindow.Show();
+            Hide();
         }
 
         private async void LabelSignIn_Click(object sender, EventArgs e)

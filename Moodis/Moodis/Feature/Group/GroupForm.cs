@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Moodis.Feature.Login;
 using Moodis.Feature.Statistics;
@@ -15,11 +7,12 @@ namespace Moodis.Feature.Group
 {
     public partial class GroupForm : Form
     {
-
+        Form parentForm;
         GroupViewModel groupViewModel;
-        public GroupForm()
+        public GroupForm(Form parent)
         {
             groupViewModel = new GroupViewModel();
+            parentForm = parent;
             InitializeComponent();
             updateView();
         }
@@ -138,6 +131,13 @@ namespace Moodis.Feature.Group
                 var calendarForm = new CalendarForm(new CalendarViewModel(), this, groupUsersList.SelectedItem.ToString());
                 calendarForm.Show();
             }
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            parentForm.Location = Location;
+            parentForm.Show();
+            Close();
         }
     }
 }

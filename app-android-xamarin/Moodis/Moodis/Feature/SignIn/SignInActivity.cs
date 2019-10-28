@@ -13,8 +13,6 @@ namespace Moodis.Feature.SignIn
     [Activity(Label = "Sign In")]
     public class SignInActivity : AppCompatActivity
     {
-        private static string EXTRA_USER = "EXTRA_USER";
-
         private SignInViewModel SignInViewModel = new SignInViewModel();
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -120,7 +118,6 @@ namespace Moodis.Feature.SignIn
             };
             signInWithFaceButton.Click += (sender, e) => {
                 //StartActivityForResult(new Android.Content.Intent(this, typeof(CameraActivity)), REQUEST_CODE_CAMERA);
-                
             };
             registerButton.Click += (sender, e) =>
             {

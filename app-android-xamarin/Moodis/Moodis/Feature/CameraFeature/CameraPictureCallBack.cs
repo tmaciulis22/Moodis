@@ -34,13 +34,11 @@ namespace Moodis.Feature.CameraFeature
                 System.IO.BinaryWriter binaryWriter = new System.IO.BinaryWriter(os);
                 binaryWriter.Write(data);
                 binaryWriter.Close();
-      
+
                 var menuActivity = new Intent(context, typeof(MenuActivity));
                 imageFileName = (string)context.GetFileStreamPath(imageFileName);
                 menuActivity.PutExtra("ImagePath", imageFileName);
                 context.StartActivity(menuActivity);
-
-                camera.StartPreview();
             }
             catch (System.Exception e)
             {

@@ -18,9 +18,6 @@ namespace Moodis.Feature.Menu
     [Activity(Label = "Menu")]
     public class MenuActivity : AppCompatActivity
     {
-        private const string WarningInRequest = Resources.GetString(Resource.String.warning_in_request);
-        private const string WarningFaceDetection = Resources.GetString(Resource.String.warning_face_detection);
-        private const string WarningPlayingMusic = Resources.GetString(Resource.String.warning_playing_music);
         private readonly string TAG = nameof(MenuActivity);
         public MenuViewModel ActivityMenuViewModel { get; set; }
         private const string FormatDouble = "N3";
@@ -49,7 +46,7 @@ namespace Moodis.Feature.Menu
                 FindViewById<TextView>(Resource.Id.lblSurprise) };
             foreach (var label in emotionLabels)
             {
-                label.Text = "loading";
+                label.Text = GetString(Resource.String.loading);
             }
             /* COMENTED UNTIL WE FIGURE OUT A WAY TO STORE ENVIROMENTAL VARIABLES
             try
@@ -59,7 +56,7 @@ namespace Moodis.Feature.Menu
             catch (System.Net.Http.HttpRequestException e)
             {
                 Log.Debug(TAG,e.Message);
-                Toast.MakeText(this, WarningInRequest, ToastLength.Short).Show();
+                Toast.MakeText(this, GetString(Resource.String.warning_in_request), ToastLength.Short).Show();
                 JavaSystem.Exit(0);
             }
             */
@@ -76,7 +73,7 @@ namespace Moodis.Feature.Menu
             }
             else
             {
-                Toast.MakeText(this, WarningFaceDetection, ToastLength.Short).Show();
+                Toast.MakeText(this, GetString(Resource.String.warning_face_detection), ToastLength.Short).Show();
             }
         }
 

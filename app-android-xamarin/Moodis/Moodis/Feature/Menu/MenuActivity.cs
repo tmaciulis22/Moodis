@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+using Android;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -15,15 +15,14 @@ using Moodis.Ui;
 
 namespace Moodis.Feature.Menu
 {
-    [Activity(Label = "Menu Activity")]
+    [Activity(Label = "Menu")]
     public class MenuActivity : AppCompatActivity
     {
-        private const string WarningInRequest = "Something wrong happened. Is your internet turned on?";
-        private const string WarningFaceDetection = "Face not detected, please try to use better lighting and stay in front of camera";
-        private const string WarningPlayingMusic = "Because face was not detected, cannot play music based on it.";
+        private const string WarningInRequest = Resources.GetString(Resource.String.warning_in_request);
+        private const string WarningFaceDetection = Resources.GetString(Resource.String.warning_face_detection);
+        private const string WarningPlayingMusic = Resources.GetString(Resource.String.warning_playing_music);
         private readonly string TAG = nameof(MenuActivity);
         public MenuViewModel ActivityMenuViewModel { get; set; }
-        private AppCompatActivity parentActivity;
         private const string FormatDouble = "N3";
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -32,10 +31,9 @@ namespace Moodis.Feature.Menu
             ActivityMenuViewModel = new MenuViewModel();
             SetContentView(Resource.Layout.activity_menu);
 
-            Intent intent = Intent;
-            ActivityMenuViewModel.currentImage.ImagePath = intent.GetStringExtra("ImagePath");
+            ActivityMenuViewModel.currentImage.ImagePath = Intent.GetStringExtra("ImagePath");
 
-            InitButtonsAndInputs();
+            InitButtons();
             UpdateLabels();
             DeleteImage(ActivityMenuViewModel.currentImage.ImagePath);
         }
@@ -93,7 +91,7 @@ namespace Moodis.Feature.Menu
             //Finish(); TODO figure out what to do when back pressed while in menu (maybe logout user ?)
         }
 
-        private void InitButtonsAndInputs()
+        private void InitButtons()
         {
             var bntToCalendar = FindViewById(Resource.Id.goToCalendar);
             var btnPlayMusic = FindViewById(Resource.Id.playMusic);
@@ -129,7 +127,6 @@ namespace Moodis.Feature.Menu
         {
             var cameraActivity = new Intent(this, typeof(CameraActivity));
             StartActivity(cameraActivity);
-            Finish();
         }
 
         private void BtnGroups_Click()

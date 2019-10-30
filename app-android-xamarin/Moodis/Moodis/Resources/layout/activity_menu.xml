@@ -10,10 +10,10 @@
     <ImageView
         android:id="@+id/imageForView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/grid_unit_7x"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/goToCamera"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lblAnger"
         app:layout_constraintTop_toTopOf="parent">
     </ImageView>
 
@@ -170,6 +170,7 @@
         android:text="@string/take_another_picture"
         android:textSize="@dimen/menu_buttons"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/groups"
         app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
 </android.support.constraint.ConstraintLayout>

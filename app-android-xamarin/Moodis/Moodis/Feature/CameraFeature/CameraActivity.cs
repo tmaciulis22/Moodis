@@ -30,7 +30,7 @@ namespace Moodis.Feature.CameraFeature
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_camera);
-            layout = FindViewById(Resource.Id.camera_layout);
+            layout = FindViewById(Resource.Id.content_frame);
 
             if (ActivityCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != (int)Permission.Granted)
             {

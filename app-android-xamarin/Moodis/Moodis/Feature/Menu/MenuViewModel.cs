@@ -1,29 +1,30 @@
 ﻿using Moodis.Network.Face;
 using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using Moodis.Feature.Login;
 using Moodis.Extensions;
 using System.Linq;
 using Moodis.Feature.SignIn;
+using System.IO;
+using Android.Graphics;
 
 namespace Moodis.Ui
 {
     public class MenuViewModel
     {
         public ImageInfo currentImage;
-        private Bitmap userImage;
+        public Bitmap image;
 
-        public MenuViewModel()
-        {
-            currentImage = new ImageInfo();
+        private static readonly Lazy<MenuViewModel> obj = new Lazy<MenuViewModel>(() => new MenuViewModel());
+        private MenuViewModel() { 
+            currentImage = new ImageInfo(); 
         }
-
-        public Bitmap ShowImage(string fileToDisplay)
+        public static MenuViewModel Instance
         {
-            userImage?.Dispose();
-            userImage = new Bitmap(fileToDisplay);
-            return userImage;
+            get
+            {
+                return obj.Value;
+            }
         }
 
         public async Task GetFaceEmotionsAsync()
@@ -33,6 +34,20 @@ namespace Moodis.Ui
             if (face != null)
             {
                 currentImage.SetImageInfo(face);
+            }
+        }
+        public Bitmap RotateImage()
+        {
+            Matrix matrix = new Matrix();
+            matrix.PostRotate(-90);
+            return Bitmap.CreateBitmap(image, 0, 0, image.Width, image.Height, matrix, true);
+        }
+
+        public void DeleteImage()
+        {
+            if (File.Exists(currentImage.ImagePath))
+            {
+                File.Delete(currentImage.ImagePath);
             }
         }
 

@@ -8,6 +8,7 @@ using Android.Content;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
+using Moodis.Feature.CameraFeature;
 
 namespace Moodis
 {
@@ -23,7 +24,7 @@ namespace Moodis
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
-            StartActivityForResult(new Android.Content.Intent(this, typeof(SignInActivity)), REQUEST_CODE_LOGIN);
+            StartActivityForResult(new Intent(this, typeof(SignInActivity)), REQUEST_CODE_LOGIN);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -38,7 +39,8 @@ namespace Moodis
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.Ok && requestCode == REQUEST_CODE_LOGIN)
             {
-                //Do something from here after sign in
+                var cameraActivity = new Intent(this, typeof(CameraActivity));
+                StartActivity(cameraActivity);
             }
             else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_LOGIN)
             {

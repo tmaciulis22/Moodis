@@ -1,0 +1,176 @@
+﻿
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageForView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/grid_unit_0x"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/goToCamera"
+        app:layout_constraintEnd_toEndOf="@+id/lblAnger"
+        app:layout_constraintTop_toTopOf="parent">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/lblAnger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_unit_4x"
+        android:layout_marginLeft="@dimen/grid_unit_4x"
+        android:layout_marginTop="@dimen/grid_unit_2x"
+        android:layout_marginEnd="@dimen/grid_unit_56x"
+        android:layout_marginRight="@dimen/grid_unit_56x"
+        tools:text="placeholder"
+        app:layout_constraintEnd_toStartOf="@+id/lblSadness"
+        app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageForView" />
+
+    <TextView
+        android:id="@+id/lblContempt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_unit_4x"
+        android:layout_marginLeft="@dimen/grid_unit_4x"
+        android:layout_marginEnd="@dimen/grid_unit_56x"
+        android:layout_marginRight="@dimen/grid_unit_56x"
+        tools:text="placeholder"
+        app:layout_constraintEnd_toStartOf="@+id/lblNeutral"
+        app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblFear" />
+
+    <TextView
+        android:id="@+id/lblDisgust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblSadness" />
+
+    <TextView
+        android:id="@+id/lblFear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_unit_4x"
+        android:layout_marginLeft="@dimen/grid_unit_4x"
+        android:layout_marginEnd="@dimen/grid_unit_56x"
+        android:layout_marginRight="@dimen/grid_unit_56x"
+        tools:text="placeholder"
+        app:layout_constraintBottom_toTopOf="@+id/lblContempt"
+        app:layout_constraintEnd_toStartOf="@+id/lblDisgust"
+        app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblAnger" />
+
+    <TextView
+        android:id="@+id/lblHappiness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblNeutral" />
+
+    <TextView
+        android:id="@+id/lblNeutral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_unit_9x"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblSadness" />
+
+    <TextView
+        android:id="@+id/lblSadness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_unit_3x"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageForView" />
+
+    <TextView
+        android:id="@+id/lblSurprise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_unit_4x"
+        android:layout_marginLeft="@dimen/grid_unit_4x"
+        android:layout_marginEnd="@dimen/grid_unit_56x"
+        android:layout_marginRight="@dimen/grid_unit_56x"
+        tools:text="placeholder"
+        app:layout_constraintEnd_toStartOf="@+id/lblHappiness"
+        app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblContempt" />
+
+    <Button
+        android:id="@+id/goToCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_unit_2x"
+        android:text="@string/calendar_button"
+        android:textSize="@dimen/menu_buttons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/playMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_unit_6x"
+        android:layout_marginLeft="@dimen/grid_unit_6x"
+        android:layout_marginBottom="@dimen/grid_unit_2x"
+        android:text="@string/play_music_button"
+        android:textSize="@dimen/menu_buttons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/goToCalendar" />
+
+    <Button
+        android:id="@+id/groups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_unit_5x"
+        android:layout_marginLeft="@dimen/grid_unit_5x"
+        android:layout_marginBottom="@dimen/grid_unit_2x"
+        android:text="@string/groups_button"
+        android:textSize="@dimen/menu_buttons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/StopMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_unit_19x"
+        android:layout_marginLeft="@dimen/grid_unit_19x"
+        android:layout_marginBottom="@dimen/grid_unit_2x"
+        android:text="@string/stop_music_button"
+        android:textSize="@dimen/menu_buttons"
+        app:layout_constraintEnd_toStartOf="@+id/groups"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/playMusic" />
+     <Button
+        android:id="@+id/goToCamera"
+        android:layout_width="@dimen/grid_unit_44x"
+        android:layout_height="@dimen/grid_unit_38x"
+        android:text="@string/take_another_picture"
+        android:textSize="@dimen/menu_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/groups"
+        app:layout_constraintTop_toBottomOf="@+id/imageForView" />
+
+</android.support.constraint.ConstraintLayout>

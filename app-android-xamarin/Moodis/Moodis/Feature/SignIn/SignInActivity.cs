@@ -6,14 +6,13 @@ using Android.Widget;
 using Android.Content;
 using Moodis.Extensions;
 using Android.Views.InputMethods;
+using Moodis.Feature.CameraFeature;
 
 namespace Moodis.Feature.SignIn
 {
     [Activity(Label = "Sign In")]
     public class SignInActivity : AppCompatActivity
     {
-        private static string EXTRA_USER = "EXTRA_USER";
-
         private SignInViewModel SignInViewModel = new SignInViewModel();
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -72,7 +71,6 @@ namespace Moodis.Feature.SignIn
                     e.Handled = false;
                 }
             };
-
             passwordInput.KeyPress += (sender, e) => {
                 if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
                 {

@@ -5,6 +5,9 @@ using Android.Runtime;
 using Android.Widget;
 using Moodis.Feature.SignIn;
 using Android.Content;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 
 namespace Moodis
 {
@@ -15,6 +18,7 @@ namespace Moodis
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            AppCenter.Start("4493172f-d0e0-49d4-bb48-bc5a529ac6ee",typeof(Analytics), typeof(Crashes));
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);

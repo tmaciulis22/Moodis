@@ -6,14 +6,13 @@ using Android.Widget;
 using Android.Content;
 using Moodis.Extensions;
 using Android.Views.InputMethods;
+using Moodis.Feature.CameraFeature;
 
 namespace Moodis.Feature.SignIn
 {
     [Activity(Label = "Sign In")]
     public class SignInActivity : AppCompatActivity
     {
-        private static string EXTRA_USER = "EXTRA_USER";
-
         private SignInViewModel SignInViewModel = new SignInViewModel();
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -22,6 +21,7 @@ namespace Moodis.Feature.SignIn
 
             SetContentView(Resource.Layout.activity_signin);
             InitButtonsAndInputs();
+
             //TODO when Android.Arch.Lifecycle lib gets updated use this provider, so various lifecycle and configuration changes won't affect data stored in viewmodel
             //SignInViewModel = ViewModelProviders.Of(this).Get(Java.Lang.Class.FromType(typeof(SignInViewModel))) as SignInViewModel;
         }

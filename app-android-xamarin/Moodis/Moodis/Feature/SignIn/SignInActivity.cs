@@ -5,6 +5,7 @@ using Android.Arch.Lifecycle;
 using Android.Widget;
 using Android.Content;
 using Moodis.Extensions;
+using Android.Views.InputMethods;
 using Moodis.Feature.CameraFeature;
 
 namespace Moodis.Feature.SignIn
@@ -52,19 +53,18 @@ namespace Moodis.Feature.SignIn
                 }
             };
 
-            usernameInput.KeyPress += (sender, e) => {
-                if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
+            usernameInput.EditorAction += (sender, e) =>
+            {
+                if (e.ActionId == ImeAction.Next)
                 {
-                    e.Handled = true;
-                    if (!string.IsNullOrEmpty((sender as EditText).Text))
+                    if (string.IsNullOrEmpty((sender as EditText).Text))
                     {
-                        this.HideKeyboard(usernameInput);
-                        passwordInput.RequestFocus();
-                        this.ShowKeyboard(passwordInput);
+                        usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
+                        e.Handled = true;
                     }
                     else
                     {
-                        usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
+                        e.Handled = false;
                     }
                 }
                 else
@@ -72,17 +72,19 @@ namespace Moodis.Feature.SignIn
                     e.Handled = false;
                 }
             };
+
             passwordInput.KeyPress += (sender, e) => {
                 if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
                 {
                     e.Handled = true;
-                    if (string.IsNullOrEmpty((sender as EditText).Text))
+                    if (string.IsNullOrWhiteSpace((sender as EditText).Text))
                     {
                         passwordInput.SetError(GetString(Resource.String.password_empty_error), null);
                     }
                     else
                     {
                         this.HideKeyboard(passwordInput);
+                        SignIn(usernameInput.Text, passwordInput.Text);
                     }
                 }
                 else
@@ -102,15 +104,7 @@ namespace Moodis.Feature.SignIn
                 }
                 else
                 {
-                    if (SignInViewModel.Authenticate(usernameInput.Text, passwordInput.Text))
-                    {
-                        SetResult(Result.Ok);
-                        Finish();
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
-                    }
+                    SignIn(usernameInput.Text, passwordInput.Text);
                 }
             };
             signInWithFaceButton.Click += (sender, e) => {
@@ -120,6 +114,19 @@ namespace Moodis.Feature.SignIn
             {
                 //StartActivityForResult(new Android.Content.Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
+        }
+
+        private void SignIn(string username, string password)
+        {
+            if (SignInViewModel.Authenticate(username, password))
+            {
+                SetResult(Result.Ok);
+                Finish();
+            }
+            else
+            {
+                Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+            }
         }
     }
 }

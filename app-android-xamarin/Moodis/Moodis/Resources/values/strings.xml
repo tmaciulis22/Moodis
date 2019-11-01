@@ -14,8 +14,22 @@
 
   <string name="non_existant_preview">Preview does not exist </string>
 
-  <string name="pictureButton">Take Picture </string>
+  <string name="picture_button">Take Picture </string>
+  <string name="placeholder">placeholder string</string>
+  <string name="calendar_button">To Calendar</string>
+  <string name="play_music_button">Play music</string>
+  <string name="stop_music_button">Stop music</string>
+  <string name="groups_button">To Groups</string>
+  <string name="take_another_picture">Take another picture</string>
 
   <string name="permission_camera_rationale">Camera is required for the app to work. </string>
+  <string name="permissions_not_granted">Camera permissions not granted</string>
+  <string name="permission_available_camera">Camera is now available to use.</string>
   <string name="ok">OK</string>
+  <string name="loading">loading</string>
+
+  <string name="warning_in_request">Something wrong happened. Is your internet turned on?</string>
+  <string name="warning_face_detection">Face not detected, please try to use better lighting and stay in front of camera</string>
+  <string name="warning_playing_music">Because face was not detected, cannot play music based on it.</string>
+  
 </resources>

@@ -14,7 +14,7 @@
     </FrameLayout>
 
   <Button
-      android:text="@string/pictureButton"
+      android:text="@string/picture_button"
       android:layout_width="match_parent"
       android:layout_height="@dimen/grid_unit_36x"
       android:gravity="center"

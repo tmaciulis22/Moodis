@@ -16,6 +16,7 @@ namespace Moodis.Feature.CameraFeature
 {
     public class CameraPreview : SurfaceView, ISurfaceHolderCallback
     {
+        static readonly string TAG = "CameraPreview";
         Android.Hardware.Camera _camera;
         private const int rotation = 90;
 
@@ -65,7 +66,7 @@ namespace Moodis.Feature.CameraFeature
             }
             catch (IOException e)
             {
-                throw e;
+                Log.Debug(TAG, "Error setting camera preview: " + e.Message);
             }
         }
 

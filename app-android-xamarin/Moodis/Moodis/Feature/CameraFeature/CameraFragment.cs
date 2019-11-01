@@ -8,7 +8,6 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 
-
 namespace Moodis.Feature.CameraFeature
 {
     public class CameraFragment : Fragment
@@ -44,11 +43,11 @@ namespace Moodis.Feature.CameraFeature
             try
             {
                 camera.StartPreview();
-                camera.TakePicture(null, null, new CameraPictureCallBack(Activity));
+                camera.TakePicture(null, null, new CameraPictureCallBack(Activity));//sends photo to cameraPicturecallBack
             }
             catch (Exception ex)
             {
-                Log.Debug(TAG, ex.Message);
+                Log.Error(TAG, "Error taking picture: " + ex.Message);
             }
         }
 

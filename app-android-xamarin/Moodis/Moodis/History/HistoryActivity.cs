@@ -34,6 +34,7 @@ namespace Moodis.History
                 DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
                 {
                     dateInput.Text = time.ToLongDateString();
+                    //TODO fetch new statistics
                 });
                 frag.Show(SupportFragmentManager, DatePickerFragment.TAG);
             };

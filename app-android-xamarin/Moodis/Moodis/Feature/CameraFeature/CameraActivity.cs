@@ -18,7 +18,7 @@ using System;
 
 namespace Moodis.Feature.CameraFeature
 {
-    [Activity(Label = "Camera activity")]
+    [Activity(Label = "Camera")]
     class CameraActivity : AppCompatActivity
     {
         private readonly string TAG = nameof(CameraActivity);
@@ -38,14 +38,14 @@ namespace Moodis.Feature.CameraFeature
             }
             else
             {
-                startCamera();
+                StartCamera();
             }
         }
         public override void OnBackPressed()
         {
             Finish();
         }
-        private void startCamera()
+        private void StartCamera()
         {
             cameraFragment = new CameraFragment();
             SupportFragmentManager.BeginTransaction()
@@ -79,7 +79,7 @@ namespace Moodis.Feature.CameraFeature
                 {
                     Log.Info(TAG, "CAMERA permission has now been granted. Showing preview.");
                     Snackbar.Make(layout, Resource.String.permission_available_camera, Snackbar.LengthShort).Show();
-                    startCamera();
+                    StartCamera();
                 }
                 else
                 {

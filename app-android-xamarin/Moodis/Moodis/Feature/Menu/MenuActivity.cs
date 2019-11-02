@@ -19,7 +19,6 @@ namespace Moodis.Feature.Menu
     [Activity(Label = "Menu")]
     public class MenuActivity : AppCompatActivity
     {
-        private readonly string TAG = nameof(MenuActivity);
         private MenuViewModel MenuViewModel;
         private const string FormatDouble = "N3";
 

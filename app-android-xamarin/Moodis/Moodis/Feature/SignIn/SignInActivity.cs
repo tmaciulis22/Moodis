@@ -21,7 +21,6 @@ namespace Moodis.Feature.SignIn
 
             SetContentView(Resource.Layout.activity_signin);
             InitButtonsAndInputs();
-
             //TODO when Android.Arch.Lifecycle lib gets updated use this provider, so various lifecycle and configuration changes won't affect data stored in viewmodel
             //SignInViewModel = ViewModelProviders.Of(this).Get(Java.Lang.Class.FromType(typeof(SignInViewModel))) as SignInViewModel;
         }

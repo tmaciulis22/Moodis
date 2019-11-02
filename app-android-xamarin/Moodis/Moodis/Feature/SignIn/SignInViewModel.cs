@@ -1,6 +1,7 @@
 ﻿using Android.Arch.Lifecycle;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
+using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
@@ -18,8 +19,7 @@ namespace Moodis.Feature.SignIn
         {
             FetchUserList();
 
-            //TODO Change to Crypto.CalculateMD5Hash(password));
-            currentUser = userList.Find(user => user.username == username && user.password == password);
+            currentUser = userList.Find(user => user.username == username && user.password == Crypto.CalculateMD5Hash(password));
 
             if (currentUser == null)
             {
@@ -58,13 +58,7 @@ namespace Moodis.Feature.SignIn
 
         private void FetchUserList()
         {
-            userList = new List<User>();
-            userList.Add(new User("juris", "@Komparchas1"));
-
-            //if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
-            //{
-            //    userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
-            //}
+            userList = Database.DatabaseModel.FetchData();
         }
 
         public static User getUser(string username)

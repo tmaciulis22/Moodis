@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 
 namespace Moodis.Widget
 {
-    public class DatePickerFragment : DialogFragment,
+    public class DatePickerFragment : Android.Support.V4.App.DialogFragment,
                                   DatePickerDialog.IOnDateSetListener
     {
         public static readonly string TAG = "DatePicker:" + typeof(DatePickerFragment).Name.ToUpper();

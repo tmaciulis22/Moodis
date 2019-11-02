@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Enums\Response.cs" />
-    <Compile Include="Database\databaseModel.cs" />
+    <Compile Include="Database\DatabaseModel.cs" />
     <Compile Include="Encryption\Crypto.cs" />
     <Compile Include="Extensions\ContextExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />

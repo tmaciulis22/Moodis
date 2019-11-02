@@ -4,10 +4,10 @@ using Moodis.Feature.Login;
 
 namespace Moodis.Database
 {
-    class databaseModel
+    class DatabaseModel
     {
         private static SQLite.SQLiteConnection databaseConnection;
-        static databaseModel()
+        static DatabaseModel()
         {
             string filename = "users_db.sqlite";
             string fileLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);

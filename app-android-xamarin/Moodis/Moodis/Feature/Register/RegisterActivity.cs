@@ -104,7 +104,6 @@ namespace Moodis.Feature.Register
                         var response = await registerViewModel.AddUser(usernameInput.Text, passwordInput.Text);
                         if(response == Response.OK)
                         {
-                            Toast.MakeText(this, Resource.String.user_created, ToastLength.Short).Show();
                             SetResult(Result.Ok);
                             Finish();
                         }

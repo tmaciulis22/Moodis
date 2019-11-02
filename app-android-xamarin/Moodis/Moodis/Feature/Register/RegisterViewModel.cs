@@ -8,7 +8,7 @@ namespace Moodis.Feature.Register
 {
     class RegisterViewModel
     {
-        public static List<User> userList = databaseModel.FetchData();
+        public static List<User> userList = DatabaseModel.FetchData();
         public User currentUser;
         public async Task<Response> AddUser(string username, string password)
         {
@@ -19,14 +19,14 @@ namespace Moodis.Feature.Register
             else
             {
                 currentUser = new User(username, Crypto.CalculateMD5Hash(password));
-                databaseModel.AddUserToDatabase(currentUser);
+                DatabaseModel.AddUserToDatabase(currentUser);
                 UpdateLocalStorage();
                 return Response.OK;
             }
         }
         public void UpdateLocalStorage()
         {
-            userList = databaseModel.FetchData();
+            userList = Database.DatabaseModel.FetchData();
         }
     }
 }

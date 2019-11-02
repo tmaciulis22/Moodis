@@ -58,7 +58,7 @@ namespace Moodis.Feature.SignIn
 
         private void FetchUserList()
         {
-            userList = databaseModel.FetchData();
+            userList = Database.DatabaseModel.FetchData();
         }
 
         public static User getUser(string username)

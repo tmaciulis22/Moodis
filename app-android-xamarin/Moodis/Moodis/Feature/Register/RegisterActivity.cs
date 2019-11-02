@@ -15,7 +15,7 @@ using Moodis.Feature.SignIn;
 
 namespace Moodis.Feature.Register
 {
-    [Activity(Label = "Register Activity")]
+    [Activity(Label = "Register")]
     public class RegisterActivity : Activity
     {
         RegisterViewModel registerViewModel = new RegisterViewModel();
@@ -105,7 +105,7 @@ namespace Moodis.Feature.Register
                         if(response == Response.OK)
                         {
                             Toast.MakeText(this, Resource.String.user_created, ToastLength.Short).Show();
-                            StartActivity(new Android.Content.Intent(this, typeof(SignInActivity)));
+                            SetResult(Result.Ok);
                             Finish();
                         }
                         else if(response == Response.UserExists)
@@ -119,6 +119,12 @@ namespace Moodis.Feature.Register
                     }
                 }
             };
+        }
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            SetResult(Result.Canceled);
+            Finish();
         }
     }
 }

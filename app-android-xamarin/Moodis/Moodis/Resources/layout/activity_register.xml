@@ -9,7 +9,7 @@
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/register_text"
         android:layout_margin="@dimen/grid_unit_4x"
         android:textSize="@dimen/login_header"
         android:textColor="@color/foreground_material_light"

@@ -19,7 +19,6 @@ namespace Moodis.Feature.SignIn
         {
             FetchUserList();
 
-            //TODO Change to Crypto.CalculateMD5Hash(password));
             currentUser = userList.Find(user => user.username == username && user.password == Crypto.CalculateMD5Hash(password));
 
             if (currentUser == null)
@@ -59,12 +58,7 @@ namespace Moodis.Feature.SignIn
 
         private void FetchUserList()
         {
-            userList = DatabaseModel.FetchData();
-
-            //if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
-            //{
-            //    userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
-            //}
+            userList = databaseModel.FetchData();
         }
 
         public static User getUser(string username)

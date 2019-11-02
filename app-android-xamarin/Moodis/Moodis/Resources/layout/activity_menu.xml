@@ -10,9 +10,10 @@
     <ImageView
         android:id="@+id/imageForView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/grid_unit_190x"
+        android:layout_height="@dimen/grid_unit_0x"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/goToCamera"
+        app:layout_constraintEnd_toEndOf="@+id/lblAnger"
         app:layout_constraintTop_toTopOf="parent">
     </ImageView>
 
@@ -25,7 +26,7 @@
         android:layout_marginTop="@dimen/grid_unit_2x"
         android:layout_marginEnd="@dimen/grid_unit_56x"
         android:layout_marginRight="@dimen/grid_unit_56x"
-        android:text="@string/placeholder"
+        tools:text="placeholder"
         app:layout_constraintEnd_toStartOf="@+id/lblSadness"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +40,7 @@
         android:layout_marginLeft="@dimen/grid_unit_4x"
         android:layout_marginEnd="@dimen/grid_unit_56x"
         android:layout_marginRight="@dimen/grid_unit_56x"
-        android:text="@string/placeholder"
+        tools:text="placeholder"
         app:layout_constraintEnd_toStartOf="@+id/lblNeutral"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,9 +50,9 @@
         android:id="@+id/lblDisgust"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/grid_unit_87x"
-        android:layout_marginRight="@dimen/grid_unit_87x"
-        android:text="@string/placeholder"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblSadness" />
 
@@ -63,7 +64,7 @@
         android:layout_marginLeft="@dimen/grid_unit_4x"
         android:layout_marginEnd="@dimen/grid_unit_56x"
         android:layout_marginRight="@dimen/grid_unit_56x"
-        android:text="@string/placeholder"
+        tools:text="placeholder"
         app:layout_constraintBottom_toTopOf="@+id/lblContempt"
         app:layout_constraintEnd_toStartOf="@+id/lblDisgust"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
@@ -74,9 +75,9 @@
         android:id="@+id/lblHappiness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/grid_unit_87x"
-        android:layout_marginRight="@dimen/grid_unit_87x"
-        android:text="@string/placeholder"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblNeutral" />
 
@@ -85,9 +86,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/grid_unit_9x"
-        android:layout_marginEnd="@dimen/grid_unit_87x"
-        android:layout_marginRight="@dimen/grid_unit_87x"
-        android:text="@string/placeholder"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblSadness" />
 
@@ -96,9 +97,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/grid_unit_3x"
-        android:layout_marginEnd="@dimen/grid_unit_87x"
-        android:layout_marginRight="@dimen/grid_unit_87x"
-        android:text="@string/placeholder"
+        android:layout_marginEnd="@dimen/grid_unit_88x"
+        android:layout_marginRight="@dimen/grid_unit_88x"
+        tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
@@ -110,7 +111,7 @@
         android:layout_marginLeft="@dimen/grid_unit_4x"
         android:layout_marginEnd="@dimen/grid_unit_56x"
         android:layout_marginRight="@dimen/grid_unit_56x"
-        android:text="@string/placeholder"
+        tools:text="placeholder"
         app:layout_constraintEnd_toStartOf="@+id/lblHappiness"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,7 +149,7 @@
         android:text="@string/groups_button"
         android:textSize="@dimen/menu_buttons"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/StopMusic" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/StopMusic"
@@ -159,6 +160,7 @@
         android:layout_marginBottom="@dimen/grid_unit_2x"
         android:text="@string/stop_music_button"
         android:textSize="@dimen/menu_buttons"
+        app:layout_constraintEnd_toStartOf="@+id/groups"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playMusic" />
      <Button
@@ -168,6 +170,7 @@
         android:text="@string/take_another_picture"
         android:textSize="@dimen/menu_buttons"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/groups"
         app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
 </android.support.constraint.ConstraintLayout>

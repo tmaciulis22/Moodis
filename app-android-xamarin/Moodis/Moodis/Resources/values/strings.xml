@@ -26,8 +26,16 @@
   <string name="permissions_not_granted">Camera permissions not granted</string>
   <string name="permission_available_camera">Camera is now available to use.</string>
   <string name="ok">OK</string>
+
   <string name="register_text">Register</string>
   <string name="stronger_password">Password must be stronger</string>
   <string name="user_created">User created successfully</string>
   <string name="user_exists">User allready exists</string>
+
+  <string name="loading">loading</string>
+
+  <string name="warning_in_request">Something wrong happened. Is your internet turned on?</string>
+  <string name="warning_face_detection">Face not detected, please try to use better lighting and stay in front of camera</string>
+  <string name="warning_playing_music">Because face was not detected, cannot play music based on it.</string>
+  
 </resources>

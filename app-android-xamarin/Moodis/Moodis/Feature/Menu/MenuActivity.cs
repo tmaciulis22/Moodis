@@ -11,6 +11,7 @@ using Android.Util;
 using Android.Widget;
 using Java.Lang;
 using Moodis.Feature.CameraFeature;
+using Moodis.History;
 using Moodis.Ui;
 
 namespace Moodis.Feature.Menu
@@ -91,7 +92,7 @@ namespace Moodis.Feature.Menu
             var btnTakePicture = FindViewById(Resource.Id.goToCamera);
 
             bntToCalendar.Click += (sender, e) => {
-                throw new NotImplementedException();
+                StartActivity(new Intent(this, typeof(HistoryActivity)));
             };
             btnPlayMusic.Click += (sender, e) => {
                 throw new NotImplementedException();

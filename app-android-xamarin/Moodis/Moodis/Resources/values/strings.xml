@@ -33,7 +33,7 @@
   <string name="warning_playing_music">Because face was not detected, cannot play music based on it.</string>
 
   <string name="history_today">Today</string>
-  <string name="history_emotion">Emotion</string>
+  <string name="history_time">%1$d:%2$d</string>
 
   <string name="lorem_ipsum">Lorem ipsum</string>
 </resources>

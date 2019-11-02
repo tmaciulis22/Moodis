@@ -81,7 +81,9 @@
     <Compile Include="Feature\SignIn\SignInViewModel.cs" />
     <Compile Include="Feature\MainActivity.cs" />
     <Compile Include="History\HistoryActivity.cs" />
+    <Compile Include="History\HistoryStatsAdapter.cs" />
     <Compile Include="History\HistoryViewModel.cs" />
+    <Compile Include="History\StatViewHolder.cs" />
     <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\Face\Face.cs" />

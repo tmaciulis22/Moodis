@@ -9,14 +9,13 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
 using Moodis.Ui;
 
 namespace Moodis.History
 {
     class HistoryStatsAdapter : RecyclerView.Adapter
     {
-        public List<ImageInfo> _statList;
+        private List<ImageInfo> _statList;
         public HistoryStatsAdapter(IList<ImageInfo> statList)
         {
             _statList = statList.ToList();
@@ -27,13 +26,21 @@ namespace Moodis.History
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var viewHolder = holder as StatViewHolder;
-            viewholder.Image.SetImageResource(mPhotoAlbum[position].mPhotoID);
-            vh.Caption.Text = mPhotoAlbum[position].mCaption;
+            viewHolder.TimeLabel.Text = (_statList[position].imageDate.Hour.ToString() + ":" + _statList[position].imageDate.Minute.ToString());
+            viewHolder.EmotionLabel.Text = _statList[position].emotions.Max().name;
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            throw new NotImplementedException();
+            View itemView = LayoutInflater.From(parent.Context).
+                Inflate(Resource.Layout.holder_history_stat, parent, false);
+            return new StatViewHolder(itemView);
+        }
+
+        public void UpdateList(IList<ImageInfo> statList)
+        {
+            _statList = statList.ToList();
+            NotifyDataSetChanged();
         }
     }
 }

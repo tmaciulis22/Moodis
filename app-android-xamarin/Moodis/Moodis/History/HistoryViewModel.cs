@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.Lifecycle;
 using Moodis.Ui;
+using static Moodis.Ui.ImageInfo;
 
 namespace Moodis.History
 {
@@ -48,6 +49,19 @@ namespace Moodis.History
             }
             int index = confidenceList.IndexOf(confidenceList.Max());
             return dailyList[0].emotions[index].name + " avg: " + (confidenceList[index] / dailyList.Count).ToString(FormatDouble);
+        }
+
+        public IList<ImageInfo> FetchStats(string userId, DateTime? dateTime = null)
+        {
+            //TODO refactor this method to fetch from DB emotion statistics, if dateTime is null, then return todays stats
+            var listToReturn = new List<ImageInfo>();
+            var exampleImageInfo = new ImageInfo();
+            exampleImageInfo.emotions = new Emotion[8];
+            exampleImageInfo.emotions[0].name = "Happiness";
+            exampleImageInfo.emotions[0].confidence = 1;
+            exampleImageInfo.imageDate = DateTime.Now;
+            listToReturn.Add(exampleImageInfo);
+            return listToReturn;
         }
     }
 }

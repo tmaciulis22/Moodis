@@ -28,15 +28,15 @@ namespace Moodis.History
 
         void AddClickListeners()
         {
-            var dateInput = FindViewById<EditText>(Resource.Id.datePicker);
-            dateInput.Click += (sender, e) =>
-            {
-                DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
-                {
-                    dateInput.Text = time.ToLongDateString();
-                });
-                frag.Show(FragmentManager, DatePickerFragment.TAG);
-            };
+            //var dateInput = FindViewById<EditText>(Resource.Id.datePicker);
+            //dateInput.Click += (sender, e) =>
+            //{
+            //    DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+            //    {
+            //        dateInput.Text = time.ToLongDateString();
+            //    });
+            //    frag.Show(FragmentManager, DatePickerFragment.TAG);
+            //};
         }
     }
 }

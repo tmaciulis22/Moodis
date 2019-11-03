@@ -58,17 +58,11 @@ namespace Moodis.Feature.SignIn
 
         private void FetchUserList()
         {
-            userList = Database.DatabaseModel.FetchData();
+            userList = Database.DatabaseModel.FetchUsers();
         }
 
         public static User getUser(string username)
         {
-            //userList = new List<User>();
-
-            //if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
-            //{
-            //    userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
-            //}
             return userList.Find(user => user.username == username);
         }
     }

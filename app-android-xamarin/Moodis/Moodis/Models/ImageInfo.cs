@@ -30,6 +30,7 @@ namespace Moodis.Ui
             }
         }
 
+        public string UserId { get; set; }
         public string ImagePath { get; set; }
         public Emotion[] emotions;
         public DateTime imageDate { get; set; }

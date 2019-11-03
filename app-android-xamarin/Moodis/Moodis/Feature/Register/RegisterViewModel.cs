@@ -8,7 +8,7 @@ namespace Moodis.Feature.Register
 {
     class RegisterViewModel
     {
-        public static List<User> userList = DatabaseModel.FetchData();
+        public static List<User> userList = DatabaseModel.FetchUsers();
         public User currentUser;
         public async Task<Response> AddUser(string username, string password)
         {
@@ -26,7 +26,7 @@ namespace Moodis.Feature.Register
         }
         public void UpdateLocalStorage()
         {
-            userList = Database.DatabaseModel.FetchData();
+            userList = Database.DatabaseModel.FetchUsers();
         }
     }
 }

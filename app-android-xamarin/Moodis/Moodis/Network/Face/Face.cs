@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using Android.Util;
 using System.Threading.Tasks;
+using Moodis.Helpers;
 
 namespace Moodis.Network.Face
 {
@@ -15,8 +16,8 @@ namespace Moodis.Network.Face
     {
         private Face(){}
         private readonly string TAG = "RARETAGS";
-        private static string SUBSCRIPTION_KEY = Secret.Secret_SearchApiKey;
-        private static string ENDPOINT = Secret_SearchFaceEndpoint;
+        private static string SUBSCRIPTION_KEY = Secrets.SearchApiKey;
+        private static string ENDPOINT = Secrets.SearchFaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";
         private string GENERAL_ERROR = "General Error";

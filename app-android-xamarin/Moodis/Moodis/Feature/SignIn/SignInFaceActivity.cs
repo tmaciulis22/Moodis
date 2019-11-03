@@ -111,6 +111,7 @@ namespace Moodis.Feature.SignIn
             {
                 var progressBar = FindViewById(Resource.Id.progressBarSignInFace);
                 progressBar.Visibility = ViewStates.Visible;
+                progressBar.BringToFront();
 
                 var response = await SignInViewModel.AuthenticateWithFace(e.ImagePath);
                 if (response == Response.ApiError)

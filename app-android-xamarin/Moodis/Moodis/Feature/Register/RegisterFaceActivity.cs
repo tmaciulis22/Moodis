@@ -44,8 +44,6 @@ namespace Moodis.Feature.Register
             PhotosLeft = FindViewById<TextView>(Resource.Id.photosLeft);
             PhotosLeft.Text = GetString(Resource.String.register_face_photos_left, RegisterViewModel.RequiredNumberOfPhotos - registerViewModel.photosTaken);
 
-            this.SetSupportActionBar();
-
             InitEventHandler();
 
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != (int)Permission.Granted)
@@ -56,12 +54,6 @@ namespace Moodis.Feature.Register
             {
                 StartCamera();
             }
-        }
-
-        public override bool OnSupportNavigateUp()
-        {
-            OnBackPressed();
-            return true;
         }
 
         public override void OnBackPressed()
@@ -123,6 +115,7 @@ namespace Moodis.Feature.Register
             {
                 var progressBar = FindViewById(Resource.Id.progressBarRegisterFace);
                 progressBar.Visibility = ViewStates.Visible;
+                progressBar.BringToFront();
 
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
                 if (response == Response.ApiError || response == Response.ApiTrainingError)

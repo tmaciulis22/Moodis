@@ -123,6 +123,7 @@ namespace Moodis.Feature.Register
                 {
                     var progressBar = FindViewById(Resource.Id.progressBarRegister);
                     progressBar.Visibility = ViewStates.Visible;
+                    progressBar.BringToFront();
 
                     var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
                     if(regex.IsMatch(passwordInput.Text))

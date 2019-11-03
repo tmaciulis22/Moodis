@@ -11,6 +11,7 @@ using Android.Util;
 using Android.Widget;
 using Java.Lang;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.Music;
 using Moodis.Ui;
 
 namespace Moodis.Feature.Menu
@@ -20,12 +21,14 @@ namespace Moodis.Feature.Menu
     {
         private readonly string TAG = nameof(MenuActivity);
         private MenuViewModel MenuViewModel;
+        private MusicPlayer MusicPlayer;
         private const string FormatDouble = "N3";
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             MenuViewModel = MenuViewModel.Instance;
+            MusicPlayer = new MusicPlayer(this);
             SetContentView(Resource.Layout.activity_menu);
 
             MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra("ImagePath");
@@ -94,10 +97,11 @@ namespace Moodis.Feature.Menu
                 throw new NotImplementedException();
             };
             btnPlayMusic.Click += (sender, e) => {
-                throw new NotImplementedException();
+                MusicPlayer.Play("https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3");
             };
             btnStopMusic.Click += (sender, e) => {
-                throw new NotImplementedException();
+                if(MusicPlayer != null)
+                    MusicPlayer.Stop();
             };
             btnGroups.Click += (sender, e) => {
                 throw new NotImplementedException();

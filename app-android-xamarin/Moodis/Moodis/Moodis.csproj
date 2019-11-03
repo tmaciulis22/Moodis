@@ -77,6 +77,7 @@
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
+    <Compile Include="Feature\MusicPlayer\MusicPlayer.cs" />
     <Compile Include="Feature\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Register\RegisterActivity.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
@@ -244,6 +245,10 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_menu.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\raw\sample.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -69,6 +69,7 @@
     <Compile Include="Constants\Enums\Response.cs" />
     <Compile Include="Database\DatabaseModel.cs" />
     <Compile Include="Encryption\Crypto.cs" />
+    <Compile Include="Events\TakenPicture.cs" />
     <Compile Include="Extensions\AppCompatActivityExtensions.cs" />
     <Compile Include="Extensions\ContextExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
+    <Compile Include="Feature\Register\RegisterFaceActivity.cs" />
     <Compile Include="Feature\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Register\RegisterActivity.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
@@ -258,6 +260,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\holder_history_stat.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\circular_progress_bar.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_register_face.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

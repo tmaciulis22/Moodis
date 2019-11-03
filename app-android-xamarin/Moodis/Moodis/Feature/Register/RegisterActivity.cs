@@ -19,12 +19,30 @@ namespace Moodis.Feature.Register
     public class RegisterActivity : Activity
     {
         RegisterViewModel registerViewModel = new RegisterViewModel();
+        private const int REQUEST_CODE_REGISTER_FACE = 1;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_register);
             InitButtonsAndInputs();
-            
+        }
+
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            SetResult(Result.Canceled);
+            Finish();
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER_FACE)
+            {
+                SetResult(Result.FirstUser);
+                Finish();
+            }
         }
 
         private void InitButtonsAndInputs()
@@ -86,7 +104,7 @@ namespace Moodis.Feature.Register
                 }
             };
 
-            registerButton.Click += async(sender, e) =>
+            registerButton.Click += async (sender, e) =>
             {
                 if(string.IsNullOrEmpty(usernameInput.Text))
                 {
@@ -98,14 +116,17 @@ namespace Moodis.Feature.Register
                 }
                 else
                 {
+                    var progressBar = FindViewById(Resource.Id.progressBarRegister);
+                    progressBar.Visibility = ViewStates.Visible;
+
                     var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
                     if(regex.IsMatch(passwordInput.Text))
                     {
                         var response = await registerViewModel.AddUser(usernameInput.Text, passwordInput.Text);
-                        if(response == Response.OK)
+
+                        if (response == Response.OK)
                         {
-                            SetResult(Result.Ok);
-                            Finish();
+                            StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
                         }
                         else if(response == Response.UserExists)
                         {
@@ -116,14 +137,9 @@ namespace Moodis.Feature.Register
                     {
                         Toast.MakeText(this, Resource.String.stronger_password, ToastLength.Short).Show();
                     }
+                    progressBar.Visibility = ViewStates.Gone;
                 }
             };
-        }
-        public override void OnBackPressed()
-        {
-            base.OnBackPressed();
-            SetResult(Result.Canceled);
-            Finish();
         }
     }
 }

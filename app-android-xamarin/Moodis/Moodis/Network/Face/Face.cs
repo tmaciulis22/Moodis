@@ -14,8 +14,8 @@ namespace Moodis.Network.Face
     {
         private Face(){}
 
-        private static string SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
-        private static string ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
+        private static string SUBSCRIPTION_KEY = "8d0853136f974ea5a73fb4faae69f570";
+        private static string ENDPOINT = "https://aurimas.cognitiveservices.azure.com";
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";
         private string GENERAL_ERROR = "General Error";
@@ -69,7 +69,7 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);//TODO change to Log
                 return null;
             }
             catch (Exception exception)

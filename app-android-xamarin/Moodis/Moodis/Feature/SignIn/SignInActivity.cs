@@ -9,6 +9,7 @@ using Android.Views.InputMethods;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Register;
 using Android.Runtime;
+using Android.Views;
 
 namespace Moodis.Feature.SignIn
 {
@@ -16,7 +17,7 @@ namespace Moodis.Feature.SignIn
     public class SignInActivity : AppCompatActivity
     {
         public static int REQUEST_CODE_REGISTER = 1;
-        private SignInViewModel SignInViewModel = new SignInViewModel();
+        private readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -121,6 +122,9 @@ namespace Moodis.Feature.SignIn
 
         private void SignIn(string username, string password)
         {
+            var progressBar = FindViewById(Resource.Id.progressBarSignIn);
+            progressBar.Visibility = ViewStates.Visible;
+
             if (SignInViewModel.Authenticate(username, password))
             {
                 SetResult(Result.Ok);
@@ -128,6 +132,7 @@ namespace Moodis.Feature.SignIn
             }
             else
             {
+                progressBar.Visibility = ViewStates.Gone;
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
             }
         }
@@ -136,9 +141,9 @@ namespace Moodis.Feature.SignIn
         {
             //As we implement new Activities there will be more if statements
             base.OnActivityResult(requestCode, resultCode, data);
-            if(Result.Ok == resultCode && requestCode == REQUEST_CODE_REGISTER)
+            if(resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
             {
-                Toast.MakeText(this, Resource.String.user_created_success, ToastLength.Short);
+                Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
             }
         }
     }

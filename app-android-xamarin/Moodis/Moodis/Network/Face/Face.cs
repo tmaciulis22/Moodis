@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Android.Util;
 using System.Threading.Tasks;
 
 namespace Moodis.Network.Face
@@ -13,9 +14,9 @@ namespace Moodis.Network.Face
     public sealed class Face
     {
         private Face(){}
-
-        private static string SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
-        private static string ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
+        private readonly string TAG = "RARETAGS";
+        private static string SUBSCRIPTION_KEY = Secret.Secret_SearchApiKey;
+        private static string ENDPOINT = Secret_SearchFaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";
         private string GENERAL_ERROR = "General Error";
@@ -42,7 +43,7 @@ namespace Moodis.Network.Face
             }
         }
 
-        private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
+        public async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
@@ -69,12 +70,12 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                Log.Debug(TAG, API_ERROR + " " + apiException.StackTrace);
                 return null;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                Log.Debug(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return null;
             }
         }
@@ -152,12 +153,12 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                Log.Debug(TAG, API_ERROR + " " + apiException.StackTrace);
                 return null;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                Log.Debug(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return null;
             }
         }
@@ -175,12 +176,12 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                Log.Debug(TAG, API_ERROR + " " + apiException.StackTrace);
                 return false;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                Log.Debug(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return false;
             }
         }
@@ -193,7 +194,7 @@ namespace Moodis.Network.Face
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Log.Debug(TAG, ex.StackTrace);
                 return false;
             }
 

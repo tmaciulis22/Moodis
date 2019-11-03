@@ -7,6 +7,7 @@ using System.Linq;
 using Moodis.Feature.SignIn;
 using System.IO;
 using Android.Graphics;
+using Android.Util;
 
 namespace Moodis.Ui
 {
@@ -14,6 +15,7 @@ namespace Moodis.Ui
     {
         public ImageInfo currentImage;
         public Bitmap image;
+        private readonly string TAG = "RARETAGS";
 
         private static readonly Lazy<MenuViewModel> obj = new Lazy<MenuViewModel>(() => new MenuViewModel());
         private MenuViewModel() { 
@@ -29,14 +31,18 @@ namespace Moodis.Ui
 
         public async Task GetFaceEmotionsAsync()
         {
-            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
-
-            if (face != null)
+            Log.Debug(TAG, "getFaceEmotions async start");
+            //var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
+            // Reform after creatign login with user faces
+            var face = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath);
+            var tmp = face.First();
+            Log.Debug(TAG, "getting face");
+            if (tmp != null)
             {
-                currentImage.SetImageInfo(face);
+                currentImage.SetImageInfo(tmp);
             }
         }
-        public Bitmap RotateImage()
+        public Bitmap RotateImage(Bitmap image)
         {
             Matrix matrix = new Matrix();
             matrix.PostRotate(-90);

@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Widget;
+using Java.IO;
 using Java.Lang;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Music;
@@ -34,6 +35,12 @@ namespace Moodis.Feature.Menu
             MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra("ImagePath");
             MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
 
+            MenuViewModel.image = MenuViewModel.RotateImage(MenuViewModel.image);
+            var stream = new FileStream(MenuViewModel.currentImage.ImagePath, FileMode.Create);
+            MenuViewModel.image.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
+            stream.Close();
+
+
             InitButtons();
             UpdateLabels();
             MenuViewModel.DeleteImage();
@@ -42,7 +49,7 @@ namespace Moodis.Feature.Menu
         public async void UpdateLabels()
         {
             var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
-            imageBox.SetImageBitmap(MenuViewModel.RotateImage());
+            imageBox.SetImageBitmap(MenuViewModel.image);
 
             var emotionLabels = new List<TextView> { FindViewById<TextView>(Resource.Id.lblAnger), FindViewById<TextView>(Resource.Id.lblContempt), FindViewById<TextView>(Resource.Id.lblDisgust),
                 FindViewById<TextView>(Resource.Id.lblFear), FindViewById<TextView>(Resource.Id.lblHappiness), FindViewById<TextView>(Resource.Id.lblNeutral), FindViewById<TextView>(Resource.Id.lblSadness),
@@ -51,10 +58,10 @@ namespace Moodis.Feature.Menu
             {
                 label.Text = GetString(Resource.String.loading);
             }
-            /* COMENTED UNTIL WE FIGURE OUT A WAY TO STORE ENVIROMENTAL VARIABLES
+            
             try
             {
-                await ActivityMenuViewModel.GetFaceEmotionsAsync();
+                await MenuViewModel.GetFaceEmotionsAsync();
             }
             catch (System.Net.Http.HttpRequestException e)
             {
@@ -62,7 +69,7 @@ namespace Moodis.Feature.Menu
                 Toast.MakeText(this, GetString(Resource.String.warning_in_request), ToastLength.Short).Show();
                 JavaSystem.Exit(0);
             }
-            */
+            
             if (MenuViewModel.currentImage.emotions != null)
             {
                 var counter = 0;

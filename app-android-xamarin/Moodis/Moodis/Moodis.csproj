@@ -73,6 +73,7 @@
     <Compile Include="Extensions\AppCompatActivityExtensions.cs" />
     <Compile Include="Extensions\ContextExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Feature\CameraFeature\CameraActivity.cs" />
     <Compile Include="Feature\CameraFeature\CameraPreview.cs" />
     <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />

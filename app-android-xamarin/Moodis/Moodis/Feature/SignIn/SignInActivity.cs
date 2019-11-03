@@ -17,6 +17,7 @@ namespace Moodis.Feature.SignIn
     public class SignInActivity : AppCompatActivity
     {
         public static int REQUEST_CODE_REGISTER = 1;
+        public static int REQUEST_CODE_FACE = 1;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -113,7 +114,7 @@ namespace Moodis.Feature.SignIn
             };
             signInWithFaceButton.Click += (sender, e) =>
             {
-                StartActivity(new Android.Content.Intent(this, typeof(SignInFaceActivity)));
+                StartActivityForResult(new Android.Content.Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
             };
             registerButton.Click += (sender, e) =>
             {
@@ -142,9 +143,14 @@ namespace Moodis.Feature.SignIn
         {
             //As we implement new Activities there will be more if statements
             base.OnActivityResult(requestCode, resultCode, data);
-            if(resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
+            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
             {
                 Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
+            }
+            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            {
+                SetResult(Result.Ok);
+                Finish();
             }
         }
     }

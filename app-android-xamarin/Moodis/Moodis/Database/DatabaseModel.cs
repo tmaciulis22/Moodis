@@ -15,7 +15,7 @@ namespace Moodis.Database
             string fileLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             databaseConnection = new SQLite.SQLiteConnection(Path.Combine(fileLocation, filename));
             //Use this for testing compatability with new users
-            databaseConnection.DeleteAll<User>();
+            //databaseConnection.DeleteAll<User>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
         }

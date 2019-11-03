@@ -13,6 +13,7 @@ using Android.Widget;
 using Android.Media;
 using Android.Util;
 using System.IO;
+using Android.Support.Design.Widget;
 
 namespace Moodis.Feature.Music
 {
@@ -21,7 +22,7 @@ namespace Moodis.Feature.Music
         private readonly string TAG = nameof(MusicPlayer);
         private Context context;
 
-        private MediaPlayer player;
+        private static MediaPlayer player;
         public MusicPlayer(Context context)
         {
             player = new MediaPlayer();
@@ -30,38 +31,50 @@ namespace Moodis.Feature.Music
 
         public void Play(string filePath)
         {
+            if (player != null)
+            {
                 Uri uriResult;
                 if (Uri.TryCreate(filePath, UriKind.Absolute, out uriResult)
-                          && (uriResult.Scheme == Uri.UriSchemeHttps || uriResult.Scheme == Uri.UriSchemeHttp))
+                              && (uriResult.Scheme == Uri.UriSchemeHttps || uriResult.Scheme == Uri.UriSchemeHttp))
                 {
                     Log.Info(TAG, "url");
                     try
                     {
-                        player.SetDataSource(filePath);
-                        player.Prepare();
+                        if (!player.IsPlaying)
+                        {
+                            player.SetDataSource(filePath);
+                            player.Prepare();
+                        }
+                        else
+                        {
+                            Snackbar.Make(((Activity)context).FindViewById(Resource.Id.menuActivity), Resource.String.song_already_playing, Snackbar.LengthShort).Show();
+                        }
                     }
                     catch (IOException e)
                     {
                         Log.Debug(TAG, e.Message);
                     }
                     player.Start();
-            }
-            else
-            {
-                Log.Info(TAG, "other");
-                Play(Resource.Raw.sample);
+                    }
+                    else
+                    {
+                        Log.Info(TAG, "other");
+                        Play(Resource.Raw.sample);
+                    }
             }
         }
 
         public void Play(int resId)
         {
             player = MediaPlayer.Create(context, resId);
+            player.Start();
         }
 
         public void Stop()
         {
             if (player != null) { 
-            player.Stop();
+                player.Stop();
+                player.Reset();
             }
         }
 

@@ -97,7 +97,8 @@ namespace Moodis.Feature.Menu
                 throw new NotImplementedException();
             };
             btnPlayMusic.Click += (sender, e) => {
-                MusicPlayer.Play("https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3");
+                MusicPlayer.Play("https://p.scdn.co/mp3-preview/3eb16018c2a700240e9dfb8817b6f2d041f15eb1?cid=774b29d4f13844c495f206cafdad9c86");
+                //MusicPlayer.Play(Resource.Raw.sample);
             };
             btnStopMusic.Click += (sender, e) => {
                 if(MusicPlayer != null)

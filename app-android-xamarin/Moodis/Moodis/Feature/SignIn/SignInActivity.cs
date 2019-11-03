@@ -7,12 +7,15 @@ using Android.Content;
 using Moodis.Extensions;
 using Android.Views.InputMethods;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.Register;
+using Android.Runtime;
 
 namespace Moodis.Feature.SignIn
 {
     [Activity(Label = "Sign In")]
     public class SignInActivity : AppCompatActivity
     {
+        public static int REQUEST_CODE_REGISTER = 1;
         private SignInViewModel SignInViewModel = new SignInViewModel();
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -27,6 +30,7 @@ namespace Moodis.Feature.SignIn
 
         public override void OnBackPressed()
         {
+            base.OnBackPressed();
             SetResult(Result.Canceled);
             Finish();
         }
@@ -111,7 +115,7 @@ namespace Moodis.Feature.SignIn
             };
             registerButton.Click += (sender, e) =>
             {
-                //StartActivityForResult(new Android.Content.Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
+                StartActivityForResult(new Android.Content.Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
         }
 
@@ -125,6 +129,16 @@ namespace Moodis.Feature.SignIn
             else
             {
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+            }
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            //As we implement new Activities there will be more if statements
+            base.OnActivityResult(requestCode, resultCode, data);
+            if(Result.Ok == resultCode && requestCode == REQUEST_CODE_REGISTER)
+            {
+                Toast.MakeText(this, Resource.String.user_created_success, ToastLength.Short);
             }
         }
     }

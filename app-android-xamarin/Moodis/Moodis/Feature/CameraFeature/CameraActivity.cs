@@ -43,6 +43,7 @@ namespace Moodis.Feature.CameraFeature
         }
         public override void OnBackPressed()
         {
+            base.OnBackPressed();
             Finish();
         }
         private void StartCamera()

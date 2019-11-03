@@ -4526,52 +4526,52 @@ namespace Moodis
 			public const int parentRelative = 2131230891;
 			
 			// aapt resource value: 0x7F0800AC
-			public const int parent_matrix = 2131230892;
+			public const int passwordInputToAdd = 2131230892;
 			
 			// aapt resource value: 0x7F0800AD
-			public const int passwordInput = 2131230893;
+			public const int passwordLabel = 2131230893;
 			
 			// aapt resource value: 0x7F0800AE
-			public const int passwordLabel = 2131230894;
+			public const int path = 2131230894;
 			
 			// aapt resource value: 0x7F0800AF
-			public const int path = 2131230895;
+			public const int pathRelative = 2131230895;
 			
 			// aapt resource value: 0x7F0800B0
-			public const int pathRelative = 2131230896;
+			public const int percent = 2131230896;
 			
 			// aapt resource value: 0x7F0800B1
-			public const int percent = 2131230897;
+			public const int pin = 2131230897;
 			
 			// aapt resource value: 0x7F0800B2
-			public const int pin = 2131230898;
+			public const int playMusic = 2131230898;
 			
 			// aapt resource value: 0x7F0800B3
-			public const int playMusic = 2131230899;
+			public const int position = 2131230899;
 			
 			// aapt resource value: 0x7F0800B4
-			public const int position = 2131230900;
+			public const int postLayout = 2131230900;
 			
 			// aapt resource value: 0x7F0800B5
-			public const int postLayout = 2131230901;
+			public const int progress_circular = 2131230901;
 			
 			// aapt resource value: 0x7F0800B6
-			public const int progress_circular = 2131230902;
+			public const int progress_horizontal = 2131230902;
 			
 			// aapt resource value: 0x7F0800B7
-			public const int progress_horizontal = 2131230903;
+			public const int radio = 2131230903;
 			
 			// aapt resource value: 0x7F0800B8
-			public const int radio = 2131230904;
+			public const int ratio = 2131230904;
 			
 			// aapt resource value: 0x7F0800B9
-			public const int ratio = 2131230905;
+			public const int rectangles = 2131230905;
 			
 			// aapt resource value: 0x7F0800BA
-			public const int rectangles = 2131230906;
+			public const int registerButton = 2131230906;
 			
 			// aapt resource value: 0x7F0800BB
-			public const int registerButton = 2131230907;
+			public const int registerButtonToAdd = 2131230907;
 			
 			// aapt resource value: 0x7F0800BC
 			public const int reverseSawtooth = 2131230908;
@@ -4745,55 +4745,70 @@ namespace Moodis
 			public const int staticPostLayout = 2131230960;
 			
 			// aapt resource value: 0x7F0800F1
-			public const int statsList = 2131230961;
-			
-			// aapt resource value: 0x7F0800F2
-			public const int stop = 2131230962;
+			public const int stop = 2131230961;
 			
 			// aapt resource value: 0x7F08000A
 			public const int StopMusic = 2131230730;
 			
+			// aapt resource value: 0x7F0800F2
+			public const int stretch = 2131230962;
+			
 			// aapt resource value: 0x7F0800F3
-			public const int stretch = 2131230963;
+			public const int submenuarrow = 2131230963;
 			
 			// aapt resource value: 0x7F0800F4
-			public const int submenuarrow = 2131230964;
+			public const int submit_area = 2131230964;
+			
+			// aapt resource value: 0x7F080009
+			public const int SYM = 2131230729;
 			
 			// aapt resource value: 0x7F0800F5
-			public const int submit_area = 2131230965;
+			public const int tabMode = 2131230965;
 			
 			// aapt resource value: 0x7F080009
 			public const int SYM = 2131230729;
 			
 			// aapt resource value: 0x7F0800F6
-			public const int tabMode = 2131230966;
+			public const int tag_transition_group = 2131230966;
 			
 			// aapt resource value: 0x7F0800F7
-			public const int tag_transition_group = 2131230967;
+			public const int tag_unhandled_key_event_manager = 2131230967;
 			
 			// aapt resource value: 0x7F0800F8
-			public const int tag_unhandled_key_event_manager = 2131230968;
+			public const int tag_unhandled_key_listeners = 2131230968;
 			
 			// aapt resource value: 0x7F0800F9
-			public const int tag_unhandled_key_listeners = 2131230969;
+			public const int takePictureButton = 2131230969;
 			
 			// aapt resource value: 0x7F0800FA
-			public const int takePictureButton = 2131230970;
+			public const int text = 2131230970;
 			
 			// aapt resource value: 0x7F0800FB
-			public const int text = 2131230971;
+			public const int text2 = 2131230971;
 			
-			// aapt resource value: 0x7F0800FC
-			public const int text2 = 2131230972;
+			// aapt resource value: 0x7F080100
+			public const int textinput_counter = 2131230976;
 			
 			// aapt resource value: 0x7F080101
-			public const int textinput_counter = 2131230977;
+			public const int textinput_error = 2131230977;
 			
 			// aapt resource value: 0x7F080102
-			public const int textinput_error = 2131230978;
+			public const int textinput_helper_text = 2131230978;
+			
+			// aapt resource value: 0x7F0800FC
+			public const int textSpacerNoButtons = 2131230972;
+			
+			// aapt resource value: 0x7F0800FD
+			public const int textSpacerNoTitle = 2131230973;
+			
+			// aapt resource value: 0x7F0800FE
+			public const int textStart = 2131230974;
+			
+			// aapt resource value: 0x7F0800FF
+			public const int text_input_password_toggle = 2131230975;
 			
 			// aapt resource value: 0x7F080103
-			public const int textinput_helper_text = 2131230979;
+			public const int time = 2131230979;
 			
 			// aapt resource value: 0x7F0800FD
 			public const int textSpacerNoButtons = 2131230973;
@@ -4808,88 +4823,85 @@ namespace Moodis
 			public const int text_input_password_toggle = 2131230976;
 			
 			// aapt resource value: 0x7F080104
-			public const int time = 2131230980;
+			public const int title = 2131230980;
 			
 			// aapt resource value: 0x7F080105
-			public const int timeLabel = 2131230981;
+			public const int titleDividerNoCustom = 2131230981;
 			
 			// aapt resource value: 0x7F080106
-			public const int title = 2131230982;
+			public const int title_template = 2131230982;
 			
 			// aapt resource value: 0x7F080107
-			public const int titleDividerNoCustom = 2131230983;
+			public const int toggle = 2131230983;
 			
 			// aapt resource value: 0x7F080108
-			public const int title_template = 2131230984;
+			public const int top = 2131230984;
 			
 			// aapt resource value: 0x7F080109
-			public const int toggle = 2131230985;
+			public const int topPanel = 2131230985;
 			
 			// aapt resource value: 0x7F08010A
-			public const int top = 2131230986;
+			public const int touch_outside = 2131230986;
 			
 			// aapt resource value: 0x7F08010B
-			public const int topPanel = 2131230987;
+			public const int transitionToEnd = 2131230987;
 			
 			// aapt resource value: 0x7F08010C
-			public const int touch_outside = 2131230988;
+			public const int transitionToStart = 2131230988;
 			
 			// aapt resource value: 0x7F08010D
-			public const int transitionToEnd = 2131230989;
+			public const int transition_current_scene = 2131230989;
 			
 			// aapt resource value: 0x7F08010E
-			public const int transitionToStart = 2131230990;
+			public const int transition_layout_save = 2131230990;
 			
 			// aapt resource value: 0x7F08010F
-			public const int transition_current_scene = 2131230991;
+			public const int transition_position = 2131230991;
 			
 			// aapt resource value: 0x7F080110
-			public const int transition_layout_save = 2131230992;
+			public const int transition_scene_layoutid_cache = 2131230992;
 			
 			// aapt resource value: 0x7F080111
-			public const int transition_position = 2131230993;
+			public const int transition_transform = 2131230993;
 			
 			// aapt resource value: 0x7F080112
-			public const int transition_scene_layoutid_cache = 2131230994;
+			public const int triangle = 2131230994;
 			
 			// aapt resource value: 0x7F080113
-			public const int transition_transform = 2131230995;
+			public const int uniform = 2131230995;
 			
 			// aapt resource value: 0x7F080114
-			public const int triangle = 2131230996;
+			public const int unlabeled = 2131230996;
 			
 			// aapt resource value: 0x7F080115
-			public const int uniform = 2131230997;
+			public const int up = 2131230997;
 			
 			// aapt resource value: 0x7F080116
-			public const int unlabeled = 2131230998;
+			public const int useLogo = 2131230998;
 			
 			// aapt resource value: 0x7F080117
-			public const int up = 2131230999;
+			public const int usernameInput = 2131230999;
 			
 			// aapt resource value: 0x7F080118
-			public const int useLogo = 2131231000;
+			public const int usernameInputToAdd = 2131231000;
 			
 			// aapt resource value: 0x7F080119
-			public const int usernameInput = 2131231001;
+			public const int usernameLabel = 2131231001;
 			
 			// aapt resource value: 0x7F08011A
-			public const int usernameLabel = 2131231002;
+			public const int view_offset_helper = 2131231002;
 			
 			// aapt resource value: 0x7F08011B
-			public const int view_offset_helper = 2131231003;
+			public const int visible = 2131231003;
 			
 			// aapt resource value: 0x7F08011C
-			public const int visible = 2131231004;
+			public const int withText = 2131231004;
 			
 			// aapt resource value: 0x7F08011D
-			public const int withText = 2131231005;
+			public const int wrap = 2131231005;
 			
 			// aapt resource value: 0x7F08011E
-			public const int wrap = 2131231006;
-			
-			// aapt resource value: 0x7F08011F
-			public const int wrap_content = 2131231007;
+			public const int wrap_content = 2131231006;
 			
 			static Id()
 			{
@@ -5081,7 +5093,7 @@ namespace Moodis
 			public const int activity_main = 2131427358;
 			
 			// aapt resource value: 0x7F0B001F
-			public const int activity_menu = 2131427359;
+			public const int activity_register = 2131427359;
 			
 			// aapt resource value: 0x7F0B0020
 			public const int activity_signin = 2131427360;
@@ -5138,43 +5150,40 @@ namespace Moodis
 			public const int fragment_camera = 2131427377;
 			
 			// aapt resource value: 0x7F0B0032
-			public const int holder_history_stat = 2131427378;
+			public const int mtrl_layout_snackbar = 2131427378;
 			
 			// aapt resource value: 0x7F0B0033
-			public const int mtrl_layout_snackbar = 2131427379;
+			public const int mtrl_layout_snackbar_include = 2131427379;
 			
 			// aapt resource value: 0x7F0B0034
-			public const int mtrl_layout_snackbar_include = 2131427380;
+			public const int notification_action = 2131427380;
 			
 			// aapt resource value: 0x7F0B0035
-			public const int notification_action = 2131427381;
+			public const int notification_action_tombstone = 2131427381;
 			
 			// aapt resource value: 0x7F0B0036
-			public const int notification_action_tombstone = 2131427382;
+			public const int notification_template_custom_big = 2131427382;
 			
 			// aapt resource value: 0x7F0B0037
-			public const int notification_template_custom_big = 2131427383;
+			public const int notification_template_icon_group = 2131427383;
 			
 			// aapt resource value: 0x7F0B0038
-			public const int notification_template_icon_group = 2131427384;
+			public const int notification_template_part_chronometer = 2131427384;
 			
 			// aapt resource value: 0x7F0B0039
-			public const int notification_template_part_chronometer = 2131427385;
+			public const int notification_template_part_time = 2131427385;
 			
 			// aapt resource value: 0x7F0B003A
-			public const int notification_template_part_time = 2131427386;
+			public const int select_dialog_item_material = 2131427386;
 			
 			// aapt resource value: 0x7F0B003B
-			public const int select_dialog_item_material = 2131427387;
+			public const int select_dialog_multichoice_material = 2131427387;
 			
 			// aapt resource value: 0x7F0B003C
-			public const int select_dialog_multichoice_material = 2131427388;
+			public const int select_dialog_singlechoice_material = 2131427388;
 			
 			// aapt resource value: 0x7F0B003D
-			public const int select_dialog_singlechoice_material = 2131427389;
-			
-			// aapt resource value: 0x7F0B003E
-			public const int support_simple_spinner_dropdown_item = 2131427390;
+			public const int support_simple_spinner_dropdown_item = 2131427389;
 			
 			static Layout()
 			{
@@ -5422,55 +5431,64 @@ namespace Moodis
 			public const int permission_camera_rationale = 2131558464;
 			
 			// aapt resource value: 0x7F0D0042
-			public const int picture_button = 2131558466;
+			public const int register_text = 2131558466;
 			
 			// aapt resource value: 0x7F0D0043
-			public const int placeholder = 2131558467;
+			public const int search_menu_title = 2131558467;
 			
 			// aapt resource value: 0x7F0D0044
-			public const int play_music_button = 2131558468;
+			public const int signin_button_text = 2131558468;
 			
 			// aapt resource value: 0x7F0D0045
-			public const int search_menu_title = 2131558469;
+			public const int signin_face_button_text = 2131558469;
 			
 			// aapt resource value: 0x7F0D0046
-			public const int signin_button_text = 2131558470;
+			public const int signin_password_label = 2131558470;
 			
 			// aapt resource value: 0x7F0D0047
-			public const int signin_face_button_text = 2131558471;
+			public const int signin_register_button_text = 2131558471;
 			
 			// aapt resource value: 0x7F0D0048
-			public const int signin_password_label = 2131558472;
+			public const int signin_username_label = 2131558472;
 			
 			// aapt resource value: 0x7F0D0049
-			public const int signin_register_button_text = 2131558473;
+			public const int status_bar_notification_info_overflow = 2131558473;
 			
 			// aapt resource value: 0x7F0D004A
-			public const int signin_username_label = 2131558474;
+			public const int stop_music_button = 2131558474;
 			
 			// aapt resource value: 0x7F0D004B
-			public const int status_bar_notification_info_overflow = 2131558475;
+			public const int stronger_password = 2131558475;
 			
 			// aapt resource value: 0x7F0D004C
-			public const int stop_music_button = 2131558476;
+			public const int take_another_picture = 2131558476;
+			
+			// aapt resource value: 0x7F0D0051
+			public const int username_empty_error = 2131558481;
 			
 			// aapt resource value: 0x7F0D004D
-			public const int take_another_picture = 2131558477;
+			public const int user_created = 2131558477;
 			
 			// aapt resource value: 0x7F0D004F
 			public const int username_empty_error = 2131558479;
 			
 			// aapt resource value: 0x7F0D004E
-			public const int user_not_found_error = 2131558478;
+			public const int user_created_success = 2131558478;
+			
+			// aapt resource value: 0x7F0D004F
+			public const int user_exists = 2131558479;
 			
 			// aapt resource value: 0x7F0D0050
-			public const int warning_face_detection = 2131558480;
-			
-			// aapt resource value: 0x7F0D0051
-			public const int warning_in_request = 2131558481;
+			public const int user_not_found_error = 2131558480;
 			
 			// aapt resource value: 0x7F0D0052
-			public const int warning_playing_music = 2131558482;
+			public const int warning_face_detection = 2131558482;
+			
+			// aapt resource value: 0x7F0D0053
+			public const int warning_in_request = 2131558483;
+			
+			// aapt resource value: 0x7F0D0054
+			public const int warning_playing_music = 2131558484;
 			
 			static String()
 			{

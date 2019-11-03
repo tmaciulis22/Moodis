@@ -43,6 +43,11 @@ namespace Moodis.Feature.Register
                 SetResult(Result.FirstUser);
                 Finish();
             }
+            else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_REGISTER_FACE)
+            {
+                SetResult(Result.Canceled);
+                Finish();
+            }
         }
 
         private void InitButtonsAndInputs()

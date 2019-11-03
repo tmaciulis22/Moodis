@@ -83,6 +83,7 @@
     <Compile Include="Feature\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Register\RegisterActivity.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
+    <Compile Include="Feature\SignIn\SignInFaceActivity.cs" />
     <Compile Include="Feature\SignIn\SignInViewModel.cs" />
     <Compile Include="Feature\MainActivity.cs" />
     <Compile Include="History\HistoryActivity.cs" />
@@ -270,6 +271,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_register_face.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_signin_face.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -44,7 +44,7 @@ namespace Moodis.Feature.Register
             PhotosLeft = FindViewById<TextView>(Resource.Id.photosLeft);
             PhotosLeft.Text = GetString(Resource.String.register_face_photos_left, RegisterViewModel.RequiredNumberOfPhotos - registerViewModel.photosTaken);
 
-            this.SetSupportActionBar(Resource.String.register_text);
+            this.SetSupportActionBar();
 
             InitEventHandler();
 
@@ -56,6 +56,19 @@ namespace Moodis.Feature.Register
             {
                 StartCamera();
             }
+        }
+
+        public override bool OnSupportNavigateUp()
+        {
+            OnBackPressed();
+            return true;
+        }
+
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            SetResult(Result.Canceled);
+            Finish();
         }
 
         private void RequestCameraPermission()

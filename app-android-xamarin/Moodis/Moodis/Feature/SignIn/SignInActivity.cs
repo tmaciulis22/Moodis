@@ -111,8 +111,9 @@ namespace Moodis.Feature.SignIn
                     SignIn(usernameInput.Text, passwordInput.Text);
                 }
             };
-            signInWithFaceButton.Click += (sender, e) => {
-                //StartActivityForResult(new Android.Content.Intent(this, typeof(CameraActivity)), REQUEST_CODE_CAMERA);
+            signInWithFaceButton.Click += (sender, e) =>
+            {
+                StartActivity(new Android.Content.Intent(this, typeof(SignInFaceActivity)));
             };
             registerButton.Click += (sender, e) =>
             {

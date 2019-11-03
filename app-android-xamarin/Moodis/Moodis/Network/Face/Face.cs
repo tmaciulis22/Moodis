@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
+﻿using Android.Graphics;
+using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
@@ -44,6 +45,8 @@ namespace Moodis.Network.Face
 
         private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
+            imageFilePath.RotateImage();
+
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
                 FaceAttributeType.Gender,
@@ -166,6 +169,8 @@ namespace Moodis.Network.Face
         {
             try
             {
+                imageFilePath.RotateImage();
+
                 using (Stream imageFileStream = File.OpenRead(imageFilePath))
                 {
                     await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(

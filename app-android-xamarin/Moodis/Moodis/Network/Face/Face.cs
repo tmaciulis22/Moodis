@@ -15,7 +15,7 @@ namespace Moodis.Network.Face
     public sealed class Face
     {
         private Face(){}
-        private readonly string TAG = "RARETAGS";
+        private readonly string TAG = nameof(Face);
         private static string SUBSCRIPTION_KEY = Secrets.SearchApiKey;
         private static string ENDPOINT = Secrets.SearchFaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;

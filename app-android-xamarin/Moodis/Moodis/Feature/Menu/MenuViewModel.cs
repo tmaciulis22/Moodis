@@ -8,6 +8,7 @@ using Moodis.Feature.SignIn;
 using System.IO;
 using Android.Graphics;
 using Android.Util;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 
 namespace Moodis.Ui
 {
@@ -15,7 +16,7 @@ namespace Moodis.Ui
     {
         public ImageInfo currentImage;
         public Bitmap image;
-        private readonly string TAG = "RARETAGS";
+        private readonly string TAG = nameof(MenuViewModel);
 
         private static readonly Lazy<MenuViewModel> obj = new Lazy<MenuViewModel>(() => new MenuViewModel());
         private MenuViewModel() { 
@@ -33,20 +34,41 @@ namespace Moodis.Ui
         {
             Log.Debug(TAG, "getFaceEmotions async start");
             //var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
-            // Reform after creatign login with user faces
+            // Reform after creating login with user faces
             var face = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath);
-            var tmp = face.First();
+            DetectedFace tmp;
+            try
+            {
+                tmp = face.First();
+            }
+            catch (ArgumentNullException e)
+            {
+                Log.Debug(TAG, e.Message);
+                tmp = null;
+            }
             Log.Debug(TAG, "getting face");
             if (tmp != null)
             {
                 currentImage.SetImageInfo(tmp);
             }
+            else
+            {
+                currentImage = new ImageInfo();
+            }
         }
-        public Bitmap RotateImage(Bitmap image)
+        private Bitmap RotateImage(Bitmap image)
         {
             Matrix matrix = new Matrix();
             matrix.PostRotate(-90);
             return Bitmap.CreateBitmap(image, 0, 0, image.Width, image.Height, matrix, true);
+        }
+
+        public void RotateAndOverrideImage()
+        {
+            image = RotateImage(image);
+            var stream = new FileStream(currentImage.ImagePath, FileMode.Create);
+            image.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
+            stream.Close();
         }
 
         public void DeleteImage()

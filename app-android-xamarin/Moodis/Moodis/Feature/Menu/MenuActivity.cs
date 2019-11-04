@@ -6,6 +6,7 @@ using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Widget;
@@ -13,6 +14,7 @@ using Java.IO;
 using Java.Lang;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Music;
+using Moodis.Feature.SignIn;
 using Moodis.Ui;
 
 namespace Moodis.Feature.Menu
@@ -34,12 +36,7 @@ namespace Moodis.Feature.Menu
 
             MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra("ImagePath");
             MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
-
-            MenuViewModel.image = MenuViewModel.RotateImage(MenuViewModel.image);
-            var stream = new FileStream(MenuViewModel.currentImage.ImagePath, FileMode.Create);
-            MenuViewModel.image.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
-            stream.Close();
-
+            MenuViewModel.RotateAndOverrideImage();
 
             InitButtons();
             UpdateLabels();
@@ -49,16 +46,15 @@ namespace Moodis.Feature.Menu
         public async void UpdateLabels()
         {
             var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
-            imageBox.SetImageBitmap(MenuViewModel.image);
-
             var emotionLabels = new List<TextView> { FindViewById<TextView>(Resource.Id.lblAnger), FindViewById<TextView>(Resource.Id.lblContempt), FindViewById<TextView>(Resource.Id.lblDisgust),
                 FindViewById<TextView>(Resource.Id.lblFear), FindViewById<TextView>(Resource.Id.lblHappiness), FindViewById<TextView>(Resource.Id.lblNeutral), FindViewById<TextView>(Resource.Id.lblSadness),
                 FindViewById<TextView>(Resource.Id.lblSurprise) };
+
+            imageBox.SetImageBitmap(MenuViewModel.image);
             foreach (var label in emotionLabels)
             {
                 label.Text = GetString(Resource.String.loading);
             }
-            
             try
             {
                 await MenuViewModel.GetFaceEmotionsAsync();
@@ -88,8 +84,9 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
-            Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-            //TODO figure out what to do when back pressed while in menu (maybe logout user ?) it currently exits program.
+            var signInActivity = new Intent(this, typeof(SignInActivity));
+            StartActivity(signInActivity);
+            Finish();
         }
 
         private void InitButtons()
@@ -104,8 +101,25 @@ namespace Moodis.Feature.Menu
                 throw new NotImplementedException();
             };
             btnPlayMusic.Click += (sender, e) => {
-                MusicPlayer.Play("https://p.scdn.co/mp3-preview/3eb16018c2a700240e9dfb8817b6f2d041f15eb1?cid=774b29d4f13844c495f206cafdad9c86");
-                //MusicPlayer.Play(Resource.Raw.sample);
+                if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
+                {
+                    int[] musicLabels = { Resource.Raw.Anger, Resource.Raw.Contempt, Resource.Raw.Disgust, Resource.Raw.Fear, Resource.Raw.Happiness, Resource.Raw.Neutral,
+                                Resource.Raw.Sadness, Resource.Raw.Surprise };
+                     if (MenuViewModel.getHighestEmotionIndex() != -1)
+                     {
+                        MusicPlayer.Play(musicLabels[MenuViewModel.getHighestEmotionIndex()]); 
+                     }
+                }
+                else if(MusicPlayer.IsPlaying())
+                {
+                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.info_music_is_playing, Snackbar.LengthShort).Show();
+                }
+                else 
+                {
+                    Log.Debug(TAG, Resources.GetString(Resource.String.warning_playing_music));
+                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_playing_music, Snackbar.LengthShort).Show();
+                }
+
             };
             btnStopMusic.Click += (sender, e) => {
                 if(MusicPlayer != null)

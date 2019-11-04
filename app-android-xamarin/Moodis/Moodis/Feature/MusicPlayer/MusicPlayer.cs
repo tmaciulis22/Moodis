@@ -3,7 +3,7 @@
 using Android.Content;
 using Android.Media;
 using Android.Util;
-using System.IO;
+using Java.IO;
 
 namespace Moodis.Feature.Music
 {
@@ -41,8 +41,22 @@ namespace Moodis.Feature.Music
                 }
                 else
                 {
-                    Log.Info(TAG, "Playing sample music, because filepath was not recognized");
-                    Play(Resource.Raw.sample);
+                    FileInputStream fileInputStream = null;
+                    try
+                    {
+                        fileInputStream = new FileInputStream(filePath);
+                        player.SetDataSource(fileInputStream.FD);
+                        fileInputStream.Close();
+                        player.Prepare();
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Log.Debug(TAG, e.Message);
+                    }
+                    catch (IOException e)
+                    {
+                        Log.Debug(TAG, e.Message);
+                    }
                 }
             }
         }

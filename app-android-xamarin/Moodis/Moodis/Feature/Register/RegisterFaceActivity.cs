@@ -93,8 +93,8 @@ namespace Moodis.Feature.Register
 
         protected override void OnDestroy()
         {
-            camera.StopPreview();
-            camera.Release();
+            camera?.StopPreview();
+            camera?.Release();
             CameraReleased = true;
             base.OnDestroy();
         }
@@ -103,8 +103,8 @@ namespace Moodis.Feature.Register
         {
             if (CameraReleased)
             {
-                camera.Reconnect();
-                camera.StartPreview();
+                camera?.Reconnect();
+                camera?.StartPreview();
                 CameraReleased = false;
             }
             base.OnResume();

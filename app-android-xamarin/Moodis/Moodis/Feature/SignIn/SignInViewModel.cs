@@ -38,7 +38,7 @@ namespace Moodis.Feature.SignIn
             {
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath) as List<Person>;
             }
-            catch(APIErrorException apiException)
+            catch(APIErrorException)
             {
                 return Response.ApiError;
             }

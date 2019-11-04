@@ -216,5 +216,24 @@ namespace Moodis.Network.Face
                 await Task.Delay(TRAIN_WAIT_TIME_DELAY);
             }
         }
+
+        public async Task<bool> DeletePerson(string personGroupId)
+        {
+            try
+            {
+                await faceClient.PersonGroup.DeleteAsync(personGroupId);//TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
+                return true;
+            }
+            catch (APIErrorException apiException)
+            {
+                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                return false;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                return false;
+            }
+        }
     }
 }

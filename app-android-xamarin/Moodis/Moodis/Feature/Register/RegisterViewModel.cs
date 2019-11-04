@@ -44,6 +44,20 @@ namespace Moodis.Feature.Register
             }
         }
 
+        public async Task<Response> DeleteUser()
+        {
+            DatabaseModel.DeleteUserFromDatabase(currentUser);
+            var wasSuccessful = await Face.Instance.DeletePerson(currentUser.personGroupId);
+            if (wasSuccessful)
+            {
+                return Response.OK;
+            }
+            else
+            {
+                return Response.ApiError;
+            }
+        }
+
         public async Task<Response> AddFaceToPerson(string imagePath)
         {
             bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.personGroupId, currentUser);

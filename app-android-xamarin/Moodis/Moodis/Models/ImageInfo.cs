@@ -2,6 +2,7 @@
 using Moodis.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SQLite;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ namespace Moodis.Ui
             }
         }
 
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
         public string UserId { get; set; }
         public string ImagePath { get; set; }
         public Emotion[] emotions;

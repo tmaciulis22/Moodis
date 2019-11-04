@@ -43,6 +43,11 @@ namespace Moodis.Database
             databaseConnection.Insert(user);
         }
 
+        public static void DeleteUserFromDatabase(User user)
+        {
+            databaseConnection.Delete(user);
+        }
+
         public static void AddImageInfoToDatabase(ImageInfo imageInfo)
         {
             databaseConnection.Insert(imageInfo);

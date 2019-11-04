@@ -4556,7 +4556,7 @@ namespace Moodis
 			public const int percent = 2131230900;
 			
 			// aapt resource value: 0x7F0800B5
-			public const int photoContainer = 2131230901;
+			public const int photoContainerRegister = 2131230901;
 			
 			// aapt resource value: 0x7F0800B6
 			public const int photoContainerSignIn = 2131230902;

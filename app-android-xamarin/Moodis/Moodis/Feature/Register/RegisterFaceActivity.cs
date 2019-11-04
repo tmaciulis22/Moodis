@@ -9,6 +9,7 @@ using Android.Content.PM;
 using Android.Hardware;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Support.V7.App;
@@ -34,8 +35,9 @@ namespace Moodis.Feature.Register
 
         event EventHandler<TakenPictureArgs> AfterTakenPictures;
 
-        TextView PhotosLeft;
-        Button snapButton;
+        private TextView PhotosLeft;
+        private Button snapButton;
+        private FrameLayout photoContainer;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -47,6 +49,7 @@ namespace Moodis.Feature.Register
 
             InitEventHandler();
 
+            photoContainer = FindViewById<FrameLayout>(Resource.Id.photoContainerRegister);
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != (int)Permission.Granted)
             {
                 RequestCameraPermission();
@@ -66,7 +69,18 @@ namespace Moodis.Feature.Register
 
         private void RequestCameraPermission()
         {
-            ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
+            if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.Camera))
+            {
+                Snackbar.Make(photoContainer, Resource.String.permission_camera_rationale,
+                    Snackbar.LengthIndefinite)
+                    .SetAction(Resource.String.ok, new Action<View>(delegate (View obj) {
+                        ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
+                    })).Show();
+            }
+            else
+            {
+                ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
+            }
         }
 
         private void StartCamera()
@@ -93,8 +107,8 @@ namespace Moodis.Feature.Register
 
         protected override void OnDestroy()
         {
-            camera?.StopPreview();
-            camera?.Release();
+            camera.StopPreview();
+            camera.Release();
             CameraReleased = true;
             base.OnDestroy();
         }
@@ -103,11 +117,32 @@ namespace Moodis.Feature.Register
         {
             if (CameraReleased)
             {
-                camera?.Reconnect();
-                camera?.StartPreview();
+                camera.Reconnect();
+                camera.StartPreview();
                 CameraReleased = false;
             }
             base.OnResume();
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            if (requestCode == REQUEST_CAMERA)
+            {
+                if (grantResults.Length == 1 && grantResults[0] == Permission.Granted)
+                {
+                    Snackbar.Make(photoContainer, Resource.String.permission_available_camera, Snackbar.LengthShort).Show();
+                    StartCamera();
+                }
+                else
+                {
+                    Snackbar.Make(photoContainer, Resource.String.permissions_not_granted, Snackbar.LengthShort).Show();
+                    RequestCameraPermission();
+                }
+            }
+            else
+            {
+                base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
         }
 
         private void InitEventHandler()
@@ -140,8 +175,7 @@ namespace Moodis.Feature.Register
 
         private void SetCameraPreview()
         {
-            var photoContainter = FindViewById<FrameLayout>(Resource.Id.photoContainer);
-            photoContainter.AddView(new CameraPreview(this, camera));
+            photoContainer.AddView(new CameraPreview(this, camera));
         }
 
         private Camera SetUpCamera()

@@ -9,6 +9,7 @@ using Android.Content.PM;
 using Android.Hardware;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Support.V7.App;
@@ -32,7 +33,8 @@ namespace Moodis.Feature.SignIn
         static readonly int REQUEST_CAMERA = 0;
         private readonly string TAG = nameof(SignInFaceActivity);
 
-        Button snapButton;
+        private Button snapButton;
+        private FrameLayout photoContainer;
 
         event EventHandler<TakenPictureArgs> AfterTakenPictures;
 
@@ -45,6 +47,7 @@ namespace Moodis.Feature.SignIn
 
             InitEventHandler();
 
+            photoContainer = FindViewById<FrameLayout>(Resource.Id.photoContainerSignIn);
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != (int)Permission.Granted)
             {
                 RequestCameraPermission();
@@ -63,7 +66,19 @@ namespace Moodis.Feature.SignIn
 
         private void RequestCameraPermission()
         {
-            ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
+            photoContainer = FindViewById<FrameLayout>(Resource.Id.photoContainerSignIn);
+            if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.Camera))
+            {
+                Snackbar.Make(photoContainer, Resource.String.permission_camera_rationale,
+                    Snackbar.LengthIndefinite)
+                    .SetAction(Resource.String.ok, new Action<View>(delegate (View obj) {
+                        ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
+                    })).Show();
+            }
+            else
+            {
+                ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
+            }
         }
 
         private void StartCamera()
@@ -107,6 +122,27 @@ namespace Moodis.Feature.SignIn
             base.OnResume();
         }
 
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            if (requestCode == REQUEST_CAMERA)
+            {
+                if (grantResults.Length == 1 && grantResults[0] == Permission.Granted)
+                {
+                    Snackbar.Make(photoContainer, Resource.String.permission_available_camera, Snackbar.LengthShort).Show();
+                    StartCamera();
+                }
+                else
+                {
+                    Snackbar.Make(photoContainer, Resource.String.permissions_not_granted, Snackbar.LengthShort).Show();
+                    RequestCameraPermission();
+                }
+            }
+            else
+            {
+                base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
+
         private void InitEventHandler()
         {
             AfterTakenPictures = async (sender, e) =>
@@ -137,8 +173,7 @@ namespace Moodis.Feature.SignIn
 
         private void SetCameraPreview()
         {
-            var photoContainter = FindViewById<FrameLayout>(Resource.Id.photoContainerSignIn);
-            photoContainter.AddView(new CameraPreview(this, camera));
+            photoContainer.AddView(new CameraPreview(this, camera));
         }
 
         private Camera SetUpCamera()

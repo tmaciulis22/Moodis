@@ -16,7 +16,7 @@
 
   <string name="picture_button">Take Picture </string>
   <string name="placeholder">placeholder string</string>
-  <string name="calendar_button">To Calendar</string>
+  <string name="history_button">History</string>
   <string name="play_music_button">Play music</string>
   <string name="stop_music_button">Stop music</string>
   <string name="groups_button">To Groups</string>

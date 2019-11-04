@@ -44,12 +44,6 @@ namespace Moodis.Ui
                 return Response.FaceNotDetected;
             }
         }
-        public Bitmap RotateImage()
-        {
-            Matrix matrix = new Matrix();
-            matrix.PostRotate(-90);
-            return Bitmap.CreateBitmap(image, 0, 0, image.Width, image.Height, matrix, true);
-        }
 
         public void DeleteImage()
         {

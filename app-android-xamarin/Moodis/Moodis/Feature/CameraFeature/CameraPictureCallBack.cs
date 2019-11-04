@@ -46,12 +46,6 @@ namespace Moodis.Feature.CameraFeature
                 {
                     AfterTakenPicture.Invoke(this, new TakenPictureArgs(imageFileName));
                 }
-                else
-                {
-                    var menuActivity = new Intent(context, typeof(MenuActivity));
-                    menuActivity.PutExtra("ImagePath", imageFileName);
-                    context.StartActivity(menuActivity);
-                }
             }
             catch (System.IO.FileNotFoundException e)
             {

@@ -12,6 +12,7 @@ using Android.Widget;
 using Java.Lang;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
 
@@ -23,6 +24,8 @@ namespace Moodis.Feature.Menu
         private MenuViewModel MenuViewModel;
         private const string FormatDouble = "N3";
 
+        private bool JustSignedIn = false;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -32,8 +35,10 @@ namespace Moodis.Feature.Menu
             MenuViewModel = MenuViewModel.Instance;
             SetContentView(Resource.Layout.activity_menu);
 
-            MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra("ImagePath");
+            MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra(CameraFragment.EXTRA_PATH);
             MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
+
+            JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
             InitButtons();
             UpdateLabels();
@@ -42,14 +47,22 @@ namespace Moodis.Feature.Menu
 
         public override bool OnSupportNavigateUp()
         {
-            OnBackPressed();
+            if (JustSignedIn)
+            {
+                StartActivity(new Intent(this, typeof(CameraActivity)));
+                Finish();
+            }
+            else
+            {
+                OnBackPressed();
+            }
             return true;
         }
 
-        public async void UpdateLabels()
+        public void UpdateLabels()
         {
             var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
-            imageBox.SetImageBitmap(MenuViewModel.RotateImage());
+            imageBox.SetImageBitmap(MenuViewModel.image);
 
             var emotionLabels = new List<TextView> { FindViewById<TextView>(Resource.Id.lblAnger), FindViewById<TextView>(Resource.Id.lblContempt), FindViewById<TextView>(Resource.Id.lblDisgust),
                 FindViewById<TextView>(Resource.Id.lblFear), FindViewById<TextView>(Resource.Id.lblHappiness), FindViewById<TextView>(Resource.Id.lblNeutral), FindViewById<TextView>(Resource.Id.lblSadness),
@@ -58,6 +71,7 @@ namespace Moodis.Feature.Menu
             {
                 label.Text = GetString(Resource.String.loading);
             }
+
             if (MenuViewModel.currentImage.emotions != null)
             {
                 var counter = 0;
@@ -81,12 +95,12 @@ namespace Moodis.Feature.Menu
 
         private void InitButtons()
         {
-            var bntToCalendar = FindViewById(Resource.Id.goToCalendar);
+            var btnHistory = FindViewById(Resource.Id.buttonHistory);
             var btnPlayMusic = FindViewById(Resource.Id.playMusic);
             var btnStopMusic = FindViewById(Resource.Id.StopMusic);
             var btnGroups = FindViewById(Resource.Id.groups);
 
-            bntToCalendar.Click += (sender, e) => {
+            btnHistory.Click += (sender, e) => {
                 StartActivity(new Intent(this, typeof(HistoryActivity)));
             };
             btnPlayMusic.Click += (sender, e) => {

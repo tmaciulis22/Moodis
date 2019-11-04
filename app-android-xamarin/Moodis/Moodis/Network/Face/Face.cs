@@ -111,6 +111,7 @@ namespace Moodis.Network.Face
             return null;
         }
 
+        //TODO change this to multiple user recognition(return both persons and detected faces)
         public async Task<IList<Person>> IdentifyPersons(string imageFilePath)
         {
             var detectedFaces = await DetectFaceEmotions(imageFilePath);

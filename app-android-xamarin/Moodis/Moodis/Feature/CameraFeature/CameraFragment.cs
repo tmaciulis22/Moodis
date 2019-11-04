@@ -22,9 +22,11 @@ namespace Moodis.Feature.CameraFeature
         FrameLayout frameLayout;
         Button snapButton;
 
-        bool cameraReleased = false;
+        bool CameraReleased = false;
 
         event EventHandler<TakenPictureArgs> AfterTakenPicture;
+
+        public static string EXTRA_PATH = "EXTRA_PATH";
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -69,7 +71,7 @@ namespace Moodis.Feature.CameraFeature
                 else
                 {
                     var intent = new Intent(Context, typeof(MenuActivity));
-                    intent.PutExtra("ImagePath", e.ImagePath);
+                    intent.PutExtra(EXTRA_PATH, e.ImagePath);
                     StartActivity(intent);
                 }
                 progressBar.Visibility = ViewStates.Gone;
@@ -92,19 +94,34 @@ namespace Moodis.Feature.CameraFeature
 
         public override void OnDestroy()
         {
-            camera.StopPreview();
-            camera.Release();
-            cameraReleased = true;
+            try
+            {
+                camera.StopPreview();
+                camera.Release();
+            }
+            catch (Exception e)
+            {
+                Log.Error(TAG, e.StackTrace);
+            }
+
+            CameraReleased = true;
             base.OnDestroy();
         }
 
         public override void OnResume()
         {
-            if (cameraReleased)
+            if (CameraReleased)
             {
-                camera.Reconnect();
-                camera.StartPreview();
-                cameraReleased = false;
+                try
+                {
+                    camera.Reconnect();
+                    camera.StartPreview();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(TAG, e.StackTrace);
+                }
+                CameraReleased = false;
             }
             base.OnResume();
         }

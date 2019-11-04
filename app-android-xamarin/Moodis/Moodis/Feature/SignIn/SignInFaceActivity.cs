@@ -20,10 +20,11 @@ using Moodis.Constants.Enums;
 using Moodis.Events;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
+using Moodis.Ui;
 
 namespace Moodis.Feature.SignIn
 {
-    [Activity(Label = "SignInFaceActivity")]
+    [Activity(Label = "Sign In")]
     public class SignInFaceActivity : AppCompatActivity
     {
         SignInViewModel SignInViewModel = new SignInViewModel();
@@ -105,8 +106,16 @@ namespace Moodis.Feature.SignIn
 
         protected override void OnDestroy()
         {
-            camera?.StopPreview();
-            camera?.Release();
+            try
+            {
+                camera.StopPreview();
+                camera.Release();
+            }
+            catch (Exception e)
+            {
+                Log.Error(TAG, e.StackTrace);
+            }
+
             CameraReleased = true;
             base.OnDestroy();
         }
@@ -115,8 +124,15 @@ namespace Moodis.Feature.SignIn
         {
             if (CameraReleased)
             {
-                camera?.Reconnect();
-                camera?.StartPreview();
+                try
+                {
+                    camera.Reconnect();
+                    camera.StartPreview();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(TAG, e.StackTrace);
+                }
                 CameraReleased = false;
             }
             base.OnResume();
@@ -152,6 +168,7 @@ namespace Moodis.Feature.SignIn
                 progressBar.BringToFront();
                 snapButton.Enabled = false;
 
+                //TODO also set image info emotions
                 var response = await SignInViewModel.AuthenticateWithFace(e.ImagePath);
                 if (response == Response.ApiError)
                 {
@@ -163,7 +180,7 @@ namespace Moodis.Feature.SignIn
                 }
                 else
                 {
-                    SetResult(Result.Ok);
+                    SetResult(Result.Ok, new Intent().PutExtra(CameraFragment.EXTRA_PATH, e.ImagePath));
                     Finish();
                 }
                 progressBar.Visibility = ViewStates.Gone;

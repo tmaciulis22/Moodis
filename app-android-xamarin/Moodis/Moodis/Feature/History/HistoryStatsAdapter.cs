@@ -16,6 +16,7 @@ namespace Moodis.History
     class HistoryStatsAdapter : RecyclerView.Adapter
     {
         private List<ImageInfo> _statList;
+
         public HistoryStatsAdapter(IList<ImageInfo> statList)
         {
             _statList = statList.ToList();

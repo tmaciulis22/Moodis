@@ -20,6 +20,8 @@ namespace Moodis.Feature.SignIn
         public static int REQUEST_CODE_FACE = 1;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
+        public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -150,7 +152,7 @@ namespace Moodis.Feature.SignIn
             }
             else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
             {
-                SetResult(Result.Ok);
+                SetResult(Result.Ok, data.PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
             }
         }

@@ -16,6 +16,7 @@ namespace Moodis.Database
             databaseConnection = new SQLite.SQLiteConnection(Path.Combine(fileLocation, filename));
             //Use this for testing compatability with new users
             //databaseConnection.DeleteAll<User>();
+            //databaseConnection.DeleteAll<ImageInfo>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
         }

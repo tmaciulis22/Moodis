@@ -29,6 +29,7 @@ namespace Moodis.Feature.SignIn
             return true;
         }
 
+        //TODO change this to multiple user recognition.
         public async Task<Response> AuthenticateWithFace(string imagePath)
         {
             FetchUserList();
@@ -48,7 +49,7 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
-            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name); //TODO change this to multiple user recognition.
+            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name); 
 
             if (currentUser == null)
             {

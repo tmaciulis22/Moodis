@@ -47,7 +47,7 @@ namespace Moodis.History
                 DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
                 {
                     dateInput.Text = time.ToLongDateString();
-                    (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchStats(SignInViewModel.currentUser.Id.ToString(), time));
+                    (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchStats(SignInViewModel.currentUser.Id, time));
                 });
                 frag.Show(SupportFragmentManager, DatePickerFragment.TAG);
             };
@@ -60,7 +60,7 @@ namespace Moodis.History
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
 
-            var adapter = new HistoryStatsAdapter(historyViewModel.FetchStats(SignInViewModel.currentUser.Id.ToString()));
+            var adapter = new HistoryStatsAdapter(historyViewModel.FetchStats(SignInViewModel.currentUser.Id));
             recyclerView.SetAdapter(adapter);
         }
     }

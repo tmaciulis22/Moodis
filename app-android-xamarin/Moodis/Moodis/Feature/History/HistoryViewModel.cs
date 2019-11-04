@@ -35,7 +35,7 @@ namespace Moodis.History
             {
                 return ErrorWhenNoEmotionsFound;
             }
-            size = dailyList[0].emotions.Length - 1;
+            size = dailyList[0].emotions.Count - 1;
             List<double> confidenceList = new List<double>(new double[size + 1]);
 
             foreach (ImageInfo imageInfo in dailyList)
@@ -52,9 +52,21 @@ namespace Moodis.History
             return dailyList[0].emotions[index].name + " avg: " + (confidenceList[index] / dailyList.Count).ToString(FormatDouble);
         }
 
-        public IList<ImageInfo> FetchStats(string userId, DateTime? dateTime = null)
+        public IList<ImageInfo> FetchStats(int userId, DateTime? dateTime = null)
         {
-            return DatabaseModel.FetchUserStats(userId, dateTime);
+            //TODO refactor this method to fetch from DB emotion statistics, if dateTime is null, then return todays stats
+            //return DatabaseModel.FetchUserStats(userId, dateTime);
+            var listToReturn = new List<ImageInfo>();
+            var exampleImageInfo = new ImageInfo
+            {
+                emotions = new List<Emotion>(8)
+            };
+            exampleImageInfo.emotions.Add(new Emotion { name = "Happiness", confidence = 1 });
+            exampleImageInfo.imageDate = DateTime.Now;
+
+            listToReturn.Add(exampleImageInfo);
+
+            return listToReturn;
         }
     }
 }

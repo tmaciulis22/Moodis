@@ -21,6 +21,7 @@ namespace Moodis.Feature.CameraFeature
         Camera camera;
         FrameLayout frameLayout;
         Button snapButton;
+        View progressBar;
 
         bool CameraReleased = false;
 
@@ -54,11 +55,15 @@ namespace Moodis.Feature.CameraFeature
 
             AfterTakenPicture = async (sender, e) =>
             {
-                var progressBar = view.FindViewById(Resource.Id.progressBarCamera);
+                progressBar = view.FindViewById(Resource.Id.progressBarCamera);
                 progressBar.Visibility = ViewStates.Visible;
                 progressBar.BringToFront();
                 snapButton.Enabled = false;
 
+                MenuViewModel.Instance.currentImage = new ImageInfo
+                {
+                    ImagePath = e.ImagePath
+                };
                 var response = await MenuViewModel.Instance.GetFaceEmotionsAsync();
                 if (response == Response.ApiError)
                 {

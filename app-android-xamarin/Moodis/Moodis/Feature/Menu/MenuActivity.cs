@@ -36,6 +36,13 @@ namespace Moodis.Feature.Menu
             SetContentView(Resource.Layout.activity_menu);
 
             MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra(CameraFragment.EXTRA_PATH);
+
+            if (MenuViewModel.currentImage.ImagePath == null)
+            {
+                StartActivity(new Intent(this, typeof(CameraActivity)));
+                Finish();
+            }
+
             MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
 
             JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);

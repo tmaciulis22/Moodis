@@ -36,6 +36,7 @@ namespace Moodis.Feature.SignIn
 
         private Button snapButton;
         private FrameLayout photoContainer;
+        private View progressBar; 
 
         event EventHandler<TakenPictureArgs> AfterTakenPicture;
 
@@ -91,11 +92,18 @@ namespace Moodis.Feature.SignIn
             snapButton.Click += (sender, e) => {
                 try
                 {
+                    progressBar = FindViewById(Resource.Id.progressBarSignInFace);
+                    progressBar.Visibility = ViewStates.Visible;
+                    progressBar.BringToFront();
+                    snapButton.Enabled = false;
+
                     camera.StartPreview();
                     camera.TakePicture(null, null, new CameraPictureCallBack(this, AfterTakenPicture));//sends photo to cameraPicturecallBack
                 }
                 catch (Exception ex)
                 {
+                    progressBar.Visibility = ViewStates.Gone;
+                    snapButton.Enabled = true;
                     Toast.MakeText(this, Resource.String.camera_error, ToastLength.Short).Show();
                     Log.Error(TAG, "Error taking picture: " + ex.Message);
                 }
@@ -163,11 +171,6 @@ namespace Moodis.Feature.SignIn
         {
             AfterTakenPicture = async (sender, e) =>
             {
-                var progressBar = FindViewById(Resource.Id.progressBarSignInFace);
-                progressBar.Visibility = ViewStates.Visible;
-                progressBar.BringToFront();
-                snapButton.Enabled = false;
-
                 //TODO also set image info emotions
                 var response = await SignInViewModel.AuthenticateWithFace(e.ImagePath);
                 if (response == Response.ApiError)

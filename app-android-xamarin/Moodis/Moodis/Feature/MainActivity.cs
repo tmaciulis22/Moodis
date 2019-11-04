@@ -41,8 +41,11 @@ namespace Moodis
             if (resultCode == Result.Ok && requestCode == REQUEST_CODE_LOGIN)
             {
                 var intent = new Intent(this, typeof(MenuActivity))
-                    .PutExtra(CameraFragment.EXTRA_PATH, data.GetStringExtra(CameraFragment.EXTRA_PATH))
                     .PutExtra(SignInActivity.EXTRA_SIGNED_IN, data.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false));
+
+                var path = data.GetStringExtra(CameraFragment.EXTRA_PATH);
+                if (path != null)
+                    intent.PutExtra(CameraFragment.EXTRA_PATH, data.GetStringExtra(CameraFragment.EXTRA_PATH));
                 StartActivity(intent);
             }
             else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_LOGIN)

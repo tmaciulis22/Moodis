@@ -38,6 +38,7 @@ namespace Moodis.Feature.Register
         private TextView PhotosLeft;
         private Button snapButton;
         private FrameLayout photoContainer;
+        private View progressBar;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -92,11 +93,18 @@ namespace Moodis.Feature.Register
             snapButton.Click += (sender, e) => {
                 try
                 {
+                    progressBar = FindViewById(Resource.Id.progressBarRegisterFace);
+                    progressBar.Visibility = ViewStates.Visible;
+                    progressBar.BringToFront();
+                    snapButton.Enabled = false;
+
                     camera.StartPreview();
                     camera.TakePicture(null, null, new CameraPictureCallBack(this, AfterTakenPictures));//sends photo to cameraPicturecallBack
                 }
                 catch (Exception ex)
                 {
+                    progressBar.Visibility = ViewStates.Gone;
+                    snapButton.Enabled = true;
                     Toast.MakeText(this, Resource.String.camera_error, ToastLength.Short).Show();
                     Log.Error(TAG, "Error taking picture: " + ex.Message);
                 }
@@ -164,11 +172,6 @@ namespace Moodis.Feature.Register
         {
             AfterTakenPictures = async (sender, e) =>
             {
-                var progressBar = FindViewById(Resource.Id.progressBarRegisterFace);
-                progressBar.Visibility = ViewStates.Visible;
-                progressBar.BringToFront();
-                snapButton.Enabled = false;
-
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
                 if (response == Response.ApiError || response == Response.ApiTrainingError)
                 {

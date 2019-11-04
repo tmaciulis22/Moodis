@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Moodis.Feature.Login;
 using Moodis.Ui;
+using static Moodis.Ui.ImageInfo;
 
 namespace Moodis.Database
 {
@@ -26,7 +27,7 @@ namespace Moodis.Database
             return databaseConnection.Table<User>().ToList();
         }
 
-        public static List<ImageInfo> FetchUserStats(string userId, DateTime? dateTime = null)
+        public static List<ImageInfo> FetchUserStats(int userId, DateTime? dateTime = null)
         {
             var table = databaseConnection.Table<ImageInfo>();
 

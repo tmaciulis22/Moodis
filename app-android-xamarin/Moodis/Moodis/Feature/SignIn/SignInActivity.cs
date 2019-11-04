@@ -132,7 +132,7 @@ namespace Moodis.Feature.SignIn
 
             if (SignInViewModel.Authenticate(username, password))
             {
-                SetResult(Result.Ok);
+                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
             }
             else

@@ -3,6 +3,7 @@ using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
+using Moodis.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,8 +16,8 @@ namespace Moodis.Network.Face
     {
         private Face(){}
 
-        private static string SUBSCRIPTION_KEY = "8d0853136f974ea5a73fb4faae69f570";
-        private static string ENDPOINT = "https://aurimas.cognitiveservices.azure.com";
+        private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
+        private static string ENDPOINT = Secrets.FaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";
         private string GENERAL_ERROR = "General Error";

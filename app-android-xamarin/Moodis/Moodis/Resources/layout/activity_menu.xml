@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toStartOf="@id/lblSadness"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageForView" />
+        app:layout_constraintBottom_toTopOf="@id/lblFear" />
 
     <TextView
         android:id="@+id/lblContempt"
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toStartOf="@id/lblNeutral"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblFear" />
+        app:layout_constraintBottom_toTopOf="@id/lblSurprise" />
 
     <TextView
         android:id="@+id/lblDisgust"
@@ -54,7 +54,7 @@
         android:layout_marginRight="@dimen/grid_unit_88x"
         tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblSadness" />
+        app:layout_constraintBottom_toTopOf="@id/lblSadness" />
 
     <TextView
         android:id="@+id/lblFear"
@@ -65,11 +65,10 @@
         android:layout_marginEnd="@dimen/grid_unit_56x"
         android:layout_marginRight="@dimen/grid_unit_56x"
         tools:text="placeholder"
-        app:layout_constraintBottom_toTopOf="@id/lblContempt"
         app:layout_constraintEnd_toStartOf="@id/lblDisgust"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblAnger" />
+        app:layout_constraintBottom_toTopOf="@id/lblContempt" />
 
     <TextView
         android:id="@+id/lblHappiness"
@@ -79,7 +78,7 @@
         android:layout_marginRight="@dimen/grid_unit_88x"
         tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblNeutral" />
+        app:layout_constraintBottom_toTopOf="@id/StopMusic" />
 
     <TextView
         android:id="@+id/lblNeutral"
@@ -90,7 +89,7 @@
         android:layout_marginRight="@dimen/grid_unit_88x"
         tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblSadness" />
+        app:layout_constraintBottom_toTopOf="@id/lblHappiness" />
 
     <TextView
         android:id="@+id/lblSadness"
@@ -101,7 +100,7 @@
         android:layout_marginRight="@dimen/grid_unit_88x"
         tools:text="placeholder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageForView" />
+        app:layout_constraintBottom_toTopOf="@id/lblNeutral" />
 
     <TextView
         android:id="@+id/lblSurprise"
@@ -115,7 +114,7 @@
         app:layout_constraintEnd_toStartOf="@id/lblHappiness"
         app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblContempt" />
+        app:layout_constraintBottom_toTopOf="@id/buttonHistory" />
 
     <Button
         android:id="@+id/buttonHistory"

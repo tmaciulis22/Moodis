@@ -45,6 +45,7 @@ namespace Moodis.Feature.Register
             }
             else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_REGISTER_FACE)
             {
+                //TODO Delete User from DB
                 SetResult(Result.Canceled);
                 Finish();
             }
@@ -124,6 +125,7 @@ namespace Moodis.Feature.Register
                     var progressBar = FindViewById(Resource.Id.progressBarRegister);
                     progressBar.Visibility = ViewStates.Visible;
                     progressBar.BringToFront();
+                    registerButton.Enabled = false;
 
                     var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
                     if(regex.IsMatch(passwordInput.Text))
@@ -144,6 +146,7 @@ namespace Moodis.Feature.Register
                         Toast.MakeText(this, Resource.String.stronger_password, ToastLength.Short).Show();
                     }
                     progressBar.Visibility = ViewStates.Gone;
+                    registerButton.Enabled = true;
                 }
             };
         }

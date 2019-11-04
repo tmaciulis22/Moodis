@@ -32,6 +32,8 @@ namespace Moodis.Feature.SignIn
         static readonly int REQUEST_CAMERA = 0;
         private readonly string TAG = nameof(SignInFaceActivity);
 
+        Button snapButton;
+
         event EventHandler<TakenPictureArgs> AfterTakenPictures;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -67,7 +69,7 @@ namespace Moodis.Feature.SignIn
         private void StartCamera()
         {
 
-            var snapButton = FindViewById<Button>(Resource.Id.buttonSignIn);
+            snapButton = FindViewById<Button>(Resource.Id.buttonSignIn);
             camera = SetUpCamera();
 
             snapButton.Click += (sender, e) => {
@@ -88,8 +90,8 @@ namespace Moodis.Feature.SignIn
 
         protected override void OnDestroy()
         {
-            camera.StopPreview();
-            camera.Release();
+            camera?.StopPreview();
+            camera?.Release();
             CameraReleased = true;
             base.OnDestroy();
         }
@@ -98,8 +100,8 @@ namespace Moodis.Feature.SignIn
         {
             if (CameraReleased)
             {
-                camera.Reconnect();
-                camera.StartPreview();
+                camera?.Reconnect();
+                camera?.StartPreview();
                 CameraReleased = false;
             }
             base.OnResume();
@@ -112,6 +114,7 @@ namespace Moodis.Feature.SignIn
                 var progressBar = FindViewById(Resource.Id.progressBarSignInFace);
                 progressBar.Visibility = ViewStates.Visible;
                 progressBar.BringToFront();
+                snapButton.Enabled = false;
 
                 var response = await SignInViewModel.AuthenticateWithFace(e.ImagePath);
                 if (response == Response.ApiError)
@@ -127,6 +130,8 @@ namespace Moodis.Feature.SignIn
                     SetResult(Result.Ok);
                     Finish();
                 }
+                progressBar.Visibility = ViewStates.Gone;
+                snapButton.Enabled = true;
             };
         }
 

@@ -35,6 +35,7 @@ namespace Moodis.Feature.Register
         event EventHandler<TakenPictureArgs> AfterTakenPictures;
 
         TextView PhotosLeft;
+        Button snapButton;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -71,7 +72,7 @@ namespace Moodis.Feature.Register
         private void StartCamera()
         {
 
-            var snapButton = FindViewById<Button>(Resource.Id.buttonTakePicture);
+            snapButton = FindViewById<Button>(Resource.Id.buttonTakePicture);
             camera = SetUpCamera();
 
             snapButton.Click += (sender, e) => {
@@ -116,6 +117,7 @@ namespace Moodis.Feature.Register
                 var progressBar = FindViewById(Resource.Id.progressBarRegisterFace);
                 progressBar.Visibility = ViewStates.Visible;
                 progressBar.BringToFront();
+                snapButton.Enabled = false;
 
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
                 if (response == Response.ApiError || response == Response.ApiTrainingError)
@@ -132,6 +134,7 @@ namespace Moodis.Feature.Register
                     PhotosLeft.Text = GetString(Resource.String.register_face_photos_left, RegisterViewModel.RequiredNumberOfPhotos - registerViewModel.photosTaken);
                 }
                 progressBar.Visibility = ViewStates.Gone;
+                snapButton.Enabled = true;
             };
         }
 

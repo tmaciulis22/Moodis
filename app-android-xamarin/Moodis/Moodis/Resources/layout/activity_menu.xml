@@ -163,14 +163,5 @@
         app:layout_constraintEnd_toStartOf="@+id/groups"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/playMusic" />
-     <Button
-        android:id="@+id/goToCamera"
-        android:layout_width="@dimen/grid_unit_44x"
-        android:layout_height="@dimen/grid_unit_38x"
-        android:text="@string/take_another_picture"
-        android:textSize="@dimen/menu_buttons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/groups"
-        app:layout_constraintTop_toBottomOf="@+id/imageForView" />
 
 </android.support.constraint.ConstraintLayout>

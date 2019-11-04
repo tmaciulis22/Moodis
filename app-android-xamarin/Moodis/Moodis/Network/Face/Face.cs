@@ -175,7 +175,7 @@ namespace Moodis.Network.Face
                 using (Stream imageFileStream = File.OpenRead(imageFilePath))
                 {
                     await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(
-                            personGroupId, user.faceApiPerson.PersonId, imageFileStream);
+                            personGroupId, user.FaceApiPerson.PersonId, imageFileStream);
                     return true;
                 }
             }

@@ -36,7 +36,7 @@ namespace Moodis.Feature.SignIn
         private Button snapButton;
         private FrameLayout photoContainer;
 
-        event EventHandler<TakenPictureArgs> AfterTakenPictures;
+        event EventHandler<TakenPictureArgs> AfterTakenPicture;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -91,7 +91,7 @@ namespace Moodis.Feature.SignIn
                 try
                 {
                     camera.StartPreview();
-                    camera.TakePicture(null, null, new CameraPictureCallBack(this, AfterTakenPictures));//sends photo to cameraPicturecallBack
+                    camera.TakePicture(null, null, new CameraPictureCallBack(this, AfterTakenPicture));//sends photo to cameraPicturecallBack
                 }
                 catch (Exception ex)
                 {
@@ -145,7 +145,7 @@ namespace Moodis.Feature.SignIn
 
         private void InitEventHandler()
         {
-            AfterTakenPictures = async (sender, e) =>
+            AfterTakenPicture = async (sender, e) =>
             {
                 var progressBar = FindViewById(Resource.Id.progressBarSignInFace);
                 progressBar.Visibility = ViewStates.Visible;

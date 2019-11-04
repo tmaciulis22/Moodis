@@ -5,6 +5,7 @@
         OK,
         GeneralError,
         ApiError,
+        FaceNotDetected,
         //Registration-specific errors
         UserExists,
         ApiTrainingError,

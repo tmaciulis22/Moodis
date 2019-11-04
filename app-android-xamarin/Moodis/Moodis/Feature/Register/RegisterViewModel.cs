@@ -33,7 +33,7 @@ namespace Moodis.Feature.Register
 
                 if (newFaceApiPerson != null)
                 {
-                    currentUser.faceApiPerson = newFaceApiPerson;
+                    currentUser.FaceApiPerson = newFaceApiPerson;
                 }
                 else
                 {

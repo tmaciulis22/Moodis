@@ -10,6 +10,7 @@ using Android.Support.V7.App;
 using Android.Util;
 using Android.Widget;
 using Java.Lang;
+using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
 using Moodis.History;
 using Moodis.Ui;
@@ -25,6 +26,9 @@ namespace Moodis.Feature.Menu
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            this.SetSupportActionBar();
+
             MenuViewModel = MenuViewModel.Instance;
             SetContentView(Resource.Layout.activity_menu);
 
@@ -34,6 +38,12 @@ namespace Moodis.Feature.Menu
             InitButtons();
             UpdateLabels();
             MenuViewModel.DeleteImage();
+        }
+
+        public override bool OnSupportNavigateUp()
+        {
+            OnBackPressed();
+            return true;
         }
 
         public async void UpdateLabels()
@@ -48,18 +58,6 @@ namespace Moodis.Feature.Menu
             {
                 label.Text = GetString(Resource.String.loading);
             }
-            /* COMENTED UNTIL WE FIGURE OUT A WAY TO STORE ENVIROMENTAL VARIABLES
-            try
-            {
-                await ActivityMenuViewModel.GetFaceEmotionsAsync();
-            }
-            catch (System.Net.Http.HttpRequestException e)
-            {
-                Log.Debug(TAG,e.Message);
-                Toast.MakeText(this, GetString(Resource.String.warning_in_request), ToastLength.Short).Show();
-                JavaSystem.Exit(0);
-            }
-            */
             if (MenuViewModel.currentImage.emotions != null)
             {
                 var counter = 0;
@@ -69,7 +67,7 @@ namespace Moodis.Feature.Menu
                         + MenuViewModel.currentImage.emotions[counter].confidence.ToString(FormatDouble);
                     counter++;
                 }
-                MenuViewModel.UserAddImage();
+                MenuViewModel.AddImage();
             }
             else
             {
@@ -78,8 +76,7 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
-            Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-            //TODO figure out what to do when back pressed while in menu (maybe logout user ?) it currently exits program.
+            Finish();
         }
 
         private void InitButtons()
@@ -88,7 +85,6 @@ namespace Moodis.Feature.Menu
             var btnPlayMusic = FindViewById(Resource.Id.playMusic);
             var btnStopMusic = FindViewById(Resource.Id.StopMusic);
             var btnGroups = FindViewById(Resource.Id.groups);
-            var btnTakePicture = FindViewById(Resource.Id.goToCamera);
 
             bntToCalendar.Click += (sender, e) => {
                 StartActivity(new Intent(this, typeof(HistoryActivity)));
@@ -101,10 +97,6 @@ namespace Moodis.Feature.Menu
             };
             btnGroups.Click += (sender, e) => {
                 throw new NotImplementedException();
-            };
-            btnTakePicture.Click += (sender, e) => {
-                var cameraActivity = new Intent(this, typeof(CameraActivity));
-                StartActivity(cameraActivity);
             };
         }
     }

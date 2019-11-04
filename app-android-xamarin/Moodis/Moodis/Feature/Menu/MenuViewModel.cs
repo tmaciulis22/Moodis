@@ -7,6 +7,8 @@ using System.Linq;
 using Moodis.Feature.SignIn;
 using System.IO;
 using Android.Graphics;
+using Moodis.Constants.Enums;
+using Moodis.Database;
 
 namespace Moodis.Ui
 {
@@ -19,6 +21,7 @@ namespace Moodis.Ui
         private MenuViewModel() { 
             currentImage = new ImageInfo(); 
         }
+
         public static MenuViewModel Instance
         {
             get
@@ -27,13 +30,18 @@ namespace Moodis.Ui
             }
         }
 
-        public async Task GetFaceEmotionsAsync()
+        public async Task<Response> GetFaceEmotionsAsync()
         {
             var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
 
             if (face != null)
             {
                 currentImage.SetImageInfo(face);
+                return Response.OK;
+            }
+            else
+            {
+                return Response.FaceNotDetected;
             }
         }
         public Bitmap RotateImage()
@@ -51,15 +59,12 @@ namespace Moodis.Ui
             }
         }
 
-        public void UserAddImage()
+        public void AddImage()
         {
-            /*
-            SignInViewModel.currentUser.addImage(currentImage);
-            Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", SignInViewModel.userList);
-            */
+            DatabaseModel.AddImageInfoToDatabase(currentImage);
         }
 
-        public int getHighestEmotionIndex()
+        public int GetHighestEmotionIndex()
         {
             var highestConfidence = currentImage.emotions.Max();
             return currentImage.emotions.ToList().IndexOf(highestConfidence);

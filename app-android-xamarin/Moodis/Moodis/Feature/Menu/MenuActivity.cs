@@ -35,8 +35,6 @@ namespace Moodis.Feature.Menu
             MenuViewModel = MenuViewModel.Instance;
             SetContentView(Resource.Layout.activity_menu);
 
-            MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra(CameraFragment.EXTRA_PATH);
-
             if (MenuViewModel.currentImage.ImagePath == null)
             {
                 StartActivity(new Intent(this, typeof(CameraActivity)));

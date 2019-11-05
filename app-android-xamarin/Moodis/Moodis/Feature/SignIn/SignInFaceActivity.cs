@@ -183,7 +183,8 @@ namespace Moodis.Feature.SignIn
                 }
                 else
                 {
-                    SetResult(Result.Ok, new Intent().PutExtra(CameraFragment.EXTRA_PATH, e.ImagePath));
+                    MenuViewModel.Instance.currentImage.ImagePath = e.ImagePath;
+                    SetResult(Result.Ok);
                     Finish();
                 }
                 progressBar.Visibility = ViewStates.Gone;

@@ -27,8 +27,6 @@ namespace Moodis.Feature.CameraFeature
 
         event EventHandler<TakenPictureArgs> AfterTakenPicture;
 
-        public static string EXTRA_PATH = "EXTRA_PATH";
-
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -76,7 +74,6 @@ namespace Moodis.Feature.CameraFeature
                 else
                 {
                     var intent = new Intent(Context, typeof(MenuActivity));
-                    intent.PutExtra(EXTRA_PATH, e.ImagePath);
                     StartActivity(intent);
                 }
                 progressBar.Visibility = ViewStates.Gone;

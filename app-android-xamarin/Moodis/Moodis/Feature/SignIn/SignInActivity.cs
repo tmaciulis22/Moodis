@@ -39,6 +39,21 @@ namespace Moodis.Feature.SignIn
             Finish();
         }
 
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            //As we implement new Activities there will be more if statements
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
+            {
+                Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
+            }
+            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            {
+                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                Finish();
+            }
+        }
+
         private void InitButtonsAndInputs()
         {
             var usernameInput = FindViewById<EditText>(Resource.Id.usernameInput);
@@ -139,21 +154,6 @@ namespace Moodis.Feature.SignIn
             {
                 progressBar.Visibility = ViewStates.Gone;
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
-            }
-        }
-
-        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
-        {
-            //As we implement new Activities there will be more if statements
-            base.OnActivityResult(requestCode, resultCode, data);
-            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
-            {
-                Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
-            }
-            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
-            {
-                SetResult(Result.Ok, data.PutExtra(EXTRA_SIGNED_IN, true));
-                Finish();
             }
         }
     }

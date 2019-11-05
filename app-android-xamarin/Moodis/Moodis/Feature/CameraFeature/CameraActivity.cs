@@ -45,7 +45,15 @@ namespace Moodis.Feature.CameraFeature
         {
             base.OnBackPressed();
             Finish();
+            //TODO Exit application
         }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            StartCamera();
+        }
+
         private void StartCamera()
         {
             cameraFragment = new CameraFragment();

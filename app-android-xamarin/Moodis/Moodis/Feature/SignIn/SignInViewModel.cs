@@ -1,7 +1,6 @@
 ﻿using Android.Arch.Lifecycle;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
-using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
@@ -30,14 +29,18 @@ namespace Moodis.Feature.SignIn
         }
 
         //TODO change this to multiple user recognition.
-        public async Task<Response> AuthenticateWithFace(string imagePath)
+        public async Task<Response> AuthenticateWithFace(string imagePath, Action<DetectedFace> callback)
         {
             FetchUserList();
+
+            List<DetectedFace> detectedFaces = null;
+            Action<List<DetectedFace>> setFace = face => detectedFaces = face;
+            DetectedFace face;
 
             List<Person> identifiedPersons = null;
             try
             {
-                identifiedPersons = await Face.Instance.IdentifyPersons(imagePath) as List<Person>;
+                identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
             catch(APIErrorException)
             {
@@ -49,12 +52,14 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
-            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name); 
+            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name);
+            face = detectedFaces.ToArray()[0];
 
             if (currentUser == null)
             {
                 return Response.UserNotFound;
             }
+            callback(face);
             return Response.OK;
         }
 

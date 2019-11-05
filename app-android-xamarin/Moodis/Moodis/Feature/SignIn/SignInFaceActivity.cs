@@ -171,8 +171,8 @@ namespace Moodis.Feature.SignIn
         {
             AfterTakenPicture = async (sender, e) =>
             {
-                //TODO also set image info emotions
-                var response = await SignInViewModel.AuthenticateWithFace(e.ImagePath);
+                var menuViewModel = MenuViewModel.Instance;
+                var response = await SignInViewModel.AuthenticateWithFace(e.ImagePath, menuViewModel.currentImage.SetImageInfo);
                 if (response == Response.ApiError)
                 {
                     Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
@@ -183,7 +183,7 @@ namespace Moodis.Feature.SignIn
                 }
                 else
                 {
-                    MenuViewModel.Instance.currentImage.ImagePath = e.ImagePath;
+                    menuViewModel.currentImage.ImagePath = e.ImagePath;
                     SetResult(Result.Ok);
                     Finish();
                 }

@@ -86,7 +86,6 @@ namespace Moodis.Feature.Register
 
         private void StartCamera()
         {
-
             snapButton = FindViewById<Button>(Resource.Id.buttonTakePicture);
             camera = SetUpCamera();
 

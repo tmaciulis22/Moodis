@@ -17,7 +17,7 @@ namespace Moodis.Feature.SignIn
     public class SignInActivity : AppCompatActivity
     {
         public static int REQUEST_CODE_REGISTER = 1;
-        public static int REQUEST_CODE_FACE = 1;
+        public static int REQUEST_CODE_FACE = 2;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
         public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";

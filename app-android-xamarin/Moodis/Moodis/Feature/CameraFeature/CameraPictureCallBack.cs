@@ -42,10 +42,7 @@ namespace Moodis.Feature.CameraFeature
                 binaryWriter.Close();
 
                 imageFileName = (string)context.GetFileStreamPath(imageFileName);
-                if (AfterTakenPicture != null)
-                {
-                    AfterTakenPicture.Invoke(this, new TakenPictureArgs(imageFileName));
-                }
+                AfterTakenPicture?.Invoke(this, new TakenPictureArgs(imageFileName));
             }
             catch (System.IO.FileNotFoundException e)
             {

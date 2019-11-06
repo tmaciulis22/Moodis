@@ -7,6 +7,11 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Moodis.Events;
+using Moodis.Ui;
+using Moodis.Constants.Enums;
+using Android.Content;
+using Moodis.Feature.Menu;
 
 namespace Moodis.Feature.CameraFeature
 {
@@ -15,8 +20,12 @@ namespace Moodis.Feature.CameraFeature
         private readonly string TAG = nameof(CameraFragment);
         Camera camera;
         FrameLayout frameLayout;
+        Button snapButton;
+        View progressBar;
 
-        bool cameraReleased = false;
+        bool CameraReleased = false;
+
+        event EventHandler<TakenPictureArgs> AfterTakenPicture;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,7 +36,7 @@ namespace Moodis.Feature.CameraFeature
         {
             var view = inflater.Inflate(Resource.Layout.fragment_camera, container, false);
 
-            var snapButton = view.FindViewById<Button>(Resource.Id.takePictureButton);
+            snapButton = view.FindViewById<Button>(Resource.Id.takePictureButton);
             snapButton.BringToFront();
             snapButton.Click += SnapButtonClick;
 
@@ -38,12 +47,46 @@ namespace Moodis.Feature.CameraFeature
             return view;
         }
 
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            base.OnViewCreated(view, savedInstanceState);
+
+            AfterTakenPicture = async (sender, e) =>
+            {
+                progressBar = view.FindViewById(Resource.Id.progressBarCamera);
+                progressBar.Visibility = ViewStates.Visible;
+                progressBar.BringToFront();
+                snapButton.Enabled = false;
+
+                MenuViewModel.Instance.currentImage = new ImageInfo
+                {
+                    ImagePath = e.ImagePath
+                };
+                var response = await MenuViewModel.Instance.GetFaceEmotionsAsync();
+                if (response == Response.ApiError)
+                {
+                    Toast.MakeText(Context, Resource.String.api_error, ToastLength.Short).Show();
+                }
+                else if (response == Response.FaceNotDetected)
+                {
+                    Toast.MakeText(Context, Resource.String.warning_face_detection, ToastLength.Short).Show();
+                }
+                else
+                {
+                    var intent = new Intent(Context, typeof(MenuActivity));
+                    StartActivity(intent);
+                }
+                progressBar.Visibility = ViewStates.Gone;
+                snapButton.Enabled = true;
+            };
+        }
+
         private void SnapButtonClick(object sender, EventArgs e)
         {
             try
             {
                 camera.StartPreview();
-                camera.TakePicture(null, null, new CameraPictureCallBack(Activity));//sends photo to cameraPicturecallBack
+                camera.TakePicture(null, null, new CameraPictureCallBack(Activity, AfterTakenPicture));//sends photo to cameraPicturecallBack
             }
             catch (Exception ex)
             {
@@ -53,19 +96,34 @@ namespace Moodis.Feature.CameraFeature
 
         public override void OnDestroy()
         {
-            camera.StopPreview();
-            camera.Release();
-            cameraReleased = true;
+            try
+            {
+                camera.StopPreview();
+                camera.Release();
+            }
+            catch (Exception e)
+            {
+                Log.Error(TAG, e.StackTrace);
+            }
+
+            CameraReleased = true;
             base.OnDestroy();
         }
 
         public override void OnResume()
         {
-            if (cameraReleased)
+            if (CameraReleased)
             {
-                camera.Reconnect();
-                camera.StartPreview();
-                cameraReleased = false;
+                try
+                {
+                    camera.Reconnect();
+                    camera.StartPreview();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(TAG, e.StackTrace);
+                }
+                CameraReleased = false;
             }
             base.OnResume();
         }

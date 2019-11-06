@@ -1,7 +1,9 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Extensions;
+using Moodis.Feature.SignIn;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SQLite;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,16 +32,18 @@ namespace Moodis.Ui
             }
         }
 
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public int UserId { get; set; }
         public string ImagePath { get; set; }
-        public Emotion[] emotions;
+        public List<Emotion> emotions;
         public DateTime imageDate { get; set; }
-        private string id;
         private double? age;
         private Gender? gender;
 
         public void SetImageInfo(DetectedFace face)
         {
-            id = face.FaceId.ToString();
+            UserId = SignInViewModel.currentUser.Id;
             age = face.FaceAttributes.Age;
             gender = face.FaceAttributes.Gender;
             imageDate = DateTime.Now;
@@ -48,13 +52,15 @@ namespace Moodis.Ui
 
         private void AddEmotions(Microsoft.Azure.CognitiveServices.Vision.Face.Models.Emotion detectedEmotions)
         {
-            emotions = new Emotion[8];
+            emotions = new List<Emotion>(8);
 
             var properties = detectedEmotions.GetType().GetProperties().ToList();
             properties.ForEach(property => {
                 var index = properties.IndexOf(property);
-                emotions[index].name = property.Name;
-                emotions[index].confidence = (double) property.GetValue(detectedEmotions, null);
+                emotions.Add(new Emotion {
+                    name = property.Name,
+                    confidence = (double)property.GetValue(detectedEmotions, null),
+                });
             });
         }
         public override string ToString()

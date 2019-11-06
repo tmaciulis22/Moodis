@@ -1,7 +1,10 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.Face;
+﻿using Android.Graphics;
+using Android.Util;
+using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
+using Moodis.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,11 +17,12 @@ namespace Moodis.Network.Face
     {
         private Face(){}
 
-        private static string SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
-        private static string ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
+        private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
+        private static string ENDPOINT = Secrets.FaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";
         private string GENERAL_ERROR = "General Error";
+        private const string TAG = "Face";
 
         private static readonly IFaceClient faceClient = new FaceClient(
             new ApiKeyServiceClientCredentials(SUBSCRIPTION_KEY),
@@ -44,6 +48,8 @@ namespace Moodis.Network.Face
 
         private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
+            imageFilePath.RotateImage();
+
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
                 FaceAttributeType.Gender,
@@ -69,12 +75,12 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
                 return null;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return null;
             }
         }
@@ -107,9 +113,11 @@ namespace Moodis.Network.Face
             return null;
         }
 
-        public async Task<IList<Person>> IdentifyPersons(string imageFilePath)
+        public async Task<IList<Person>> IdentifyPersons(string imageFilePath, Action<List<DetectedFace>> callback)
         {
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
+            callback(detectedFaces.ToList<DetectedFace>());
+
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
 
             var personsList = new List<Person>();
@@ -152,12 +160,12 @@ namespace Moodis.Network.Face
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
                 return null;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return null;
             }
         }
@@ -166,21 +174,23 @@ namespace Moodis.Network.Face
         {
             try
             {
+                imageFilePath.RotateImage();
+
                 using (Stream imageFileStream = File.OpenRead(imageFilePath))
                 {
                     await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(
-                            personGroupId, user.faceApiPerson.PersonId, imageFileStream);
+                            personGroupId, user.FaceApiPerson.PersonId, imageFileStream);
                     return true;
                 }
             }
             catch (APIErrorException apiException)
             {
-                Console.WriteLine(API_ERROR + " " + apiException.StackTrace);
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
                 return false;
             }
             catch (Exception exception)
             {
-                Console.WriteLine(GENERAL_ERROR + " " + exception.StackTrace);
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return false;
             }
         }
@@ -193,7 +203,7 @@ namespace Moodis.Network.Face
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Log.Error(TAG, ex.StackTrace);
                 return false;
             }
 
@@ -208,6 +218,25 @@ namespace Moodis.Network.Face
                 }
 
                 await Task.Delay(TRAIN_WAIT_TIME_DELAY);
+            }
+        }
+
+        public async Task<bool> DeletePerson(string personGroupId)
+        {
+            try
+            {
+                await faceClient.PersonGroup.DeleteAsync(personGroupId);//TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
+                return true;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return false;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return false;
             }
         }
     }

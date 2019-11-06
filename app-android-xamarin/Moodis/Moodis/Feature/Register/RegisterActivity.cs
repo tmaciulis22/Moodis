@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -19,20 +20,47 @@ namespace Moodis.Feature.Register
     public class RegisterActivity : Activity
     {
         RegisterViewModel registerViewModel = new RegisterViewModel();
+        private const int REQUEST_CODE_REGISTER_FACE = 1;
+
+        View progressBar;
+        Button registerButton;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_register);
             InitButtonsAndInputs();
-            
+        }
+
+        public override void OnBackPressed()
+        {
+            base.OnBackPressed();
+            SetResult(Result.Canceled);
+            Finish();
+        }
+
+        protected override async void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER_FACE)
+            {
+                SetResult(Result.FirstUser);
+                Finish();
+            }
+            else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_REGISTER_FACE)
+            {
+                await DeleteUser();
+                SetResult(Result.Canceled);
+                Finish();
+            }
         }
 
         private void InitButtonsAndInputs()
         {
             var usernameInput = FindViewById<EditText>(Resource.Id.usernameInputToAdd);
             var passwordInput = FindViewById<EditText>(Resource.Id.passwordInputToAdd);
-
-            var registerButton = FindViewById(Resource.Id.registerButtonToAdd);
+            progressBar = FindViewById(Resource.Id.progressBarRegister);
+            registerButton = FindViewById<Button>(Resource.Id.registerButtonToAdd);
 
             usernameInput.TextChanged += (sender, e) => {
                 if (string.IsNullOrEmpty((sender as EditText).Text))
@@ -86,7 +114,7 @@ namespace Moodis.Feature.Register
                 }
             };
 
-            registerButton.Click += async(sender, e) =>
+            registerButton.Click += async (sender, e) =>
             {
                 if(string.IsNullOrEmpty(usernameInput.Text))
                 {
@@ -98,14 +126,18 @@ namespace Moodis.Feature.Register
                 }
                 else
                 {
+                    progressBar.Visibility = ViewStates.Visible;
+                    progressBar.BringToFront();
+                    registerButton.Enabled = false;
+
                     var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
                     if(regex.IsMatch(passwordInput.Text))
                     {
                         var response = await registerViewModel.AddUser(usernameInput.Text, passwordInput.Text);
-                        if(response == Response.OK)
+
+                        if (response == Response.OK)
                         {
-                            SetResult(Result.Ok);
-                            Finish();
+                            StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
                         }
                         else if(response == Response.UserExists)
                         {
@@ -116,14 +148,26 @@ namespace Moodis.Feature.Register
                     {
                         Toast.MakeText(this, Resource.String.stronger_password, ToastLength.Short).Show();
                     }
+                    progressBar.Visibility = ViewStates.Gone;
+                    registerButton.Enabled = true;
                 }
             };
         }
-        public override void OnBackPressed()
+
+        private async Task DeleteUser()
         {
-            base.OnBackPressed();
-            SetResult(Result.Canceled);
-            Finish();
+            progressBar.Visibility = ViewStates.Visible;
+            progressBar.BringToFront();
+            registerButton.Enabled = false;
+
+            var response = await registerViewModel.DeleteUser();
+            while (response != Response.OK)
+            {
+                response = await registerViewModel.DeleteUser();
+            }
+
+            progressBar.Visibility = ViewStates.Gone;
+            registerButton.Enabled = true;
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.Menu;
 
 namespace Moodis
 {
@@ -39,8 +40,10 @@ namespace Moodis
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.Ok && requestCode == REQUEST_CODE_LOGIN)
             {
-                var cameraActivity = new Intent(this, typeof(CameraActivity));
-                StartActivity(cameraActivity);
+                var intent = new Intent(this, typeof(MenuActivity))
+                    .PutExtra(SignInActivity.EXTRA_SIGNED_IN, data.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false));
+
+                StartActivity(intent);
             }
             else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_LOGIN)
             {

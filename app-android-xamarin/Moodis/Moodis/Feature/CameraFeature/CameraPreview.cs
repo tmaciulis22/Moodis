@@ -64,7 +64,7 @@ namespace Moodis.Feature.CameraFeature
                 _camera.SetPreviewDisplay(holder);
                 _camera.StartPreview();
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 Log.Debug(TAG, "Error setting camera preview: " + e.Message);
             }

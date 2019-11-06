@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Database;
 using Moodis.Ui;
 using SQLite;
 using System;
@@ -16,9 +17,8 @@ namespace Moodis.Feature.Login
         public string personGroupId { get; set; }
         public string groupName { get; set; }
 
-        public List<ImageInfo> imageStats = new List<ImageInfo>();
         [Ignore]
-        public Person faceApiPerson { get; set; }
+        public Person FaceApiPerson { get; set; }
 
         public User()
         {
@@ -28,10 +28,6 @@ namespace Moodis.Feature.Login
         {
             this.username = username;
             this.password = password;
-        }
-        public void AddImage(ImageInfo image)
-        {
-            imageStats.Add(image);
         }
     }
 }

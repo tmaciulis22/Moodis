@@ -1,10 +1,10 @@
 ﻿using Android.Arch.Lifecycle;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
-using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -28,16 +28,21 @@ namespace Moodis.Feature.SignIn
             return true;
         }
 
-        public async Task<Response> AuthenticateWithFace(string imagePath)
+        //TODO change this to multiple user recognition.
+        public async Task<Response> AuthenticateWithFace(string imagePath, Action<DetectedFace> callback)
         {
             FetchUserList();
+
+            List<DetectedFace> detectedFaces = null;
+            Action<List<DetectedFace>> setFace = face => detectedFaces = face;
+            DetectedFace face;
 
             List<Person> identifiedPersons = null;
             try
             {
-                identifiedPersons = await Face.Instance.IdentifyPersons(imagePath) as List<Person>;
+                identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
-            catch
+            catch(APIErrorException)
             {
                 return Response.ApiError;
             }
@@ -47,28 +52,24 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
-            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name); //TODO change this to multiple user recognition.
+            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name);
+            face = detectedFaces.ToArray()[0];
 
             if (currentUser == null)
             {
                 return Response.UserNotFound;
             }
+            callback(face);
             return Response.OK;
         }
 
         private void FetchUserList()
         {
-            userList = Database.DatabaseModel.FetchData();
+            userList = Database.DatabaseModel.FetchUsers();
         }
 
         public static User getUser(string username)
         {
-            //userList = new List<User>();
-
-            //if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin"))
-            //{
-            //    userList = Serializer.Load<List<User>>(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin");
-            //}
             return userList.Find(user => user.username == username);
         }
     }

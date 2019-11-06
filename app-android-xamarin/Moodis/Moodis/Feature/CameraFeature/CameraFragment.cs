@@ -47,7 +47,7 @@ namespace Moodis.Feature.CameraFeature
             return view;
         }
 
-        public override async void OnViewCreated(View view, Bundle savedInstanceState)
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
 

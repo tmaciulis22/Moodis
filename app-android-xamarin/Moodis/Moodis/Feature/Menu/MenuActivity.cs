@@ -97,7 +97,16 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
-            Finish();
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
+                .SetTitle(Resource.String.logout)
+                .SetMessage(Resource.String.logout_confirmation_message)
+                .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
+                .SetPositiveButton(Resource.String.yes, (senderAlert, args) => {
+                    StartActivity(new Intent(this, typeof(SignInActivity)));
+                    Finish();
+                });
+            builder.Create().Show();
+            builder.Dispose();
         }
 
         private void InitButtons()

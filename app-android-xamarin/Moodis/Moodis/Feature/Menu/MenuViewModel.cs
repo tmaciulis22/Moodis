@@ -9,6 +9,8 @@ using System.IO;
 using Android.Graphics;
 using Android.Util;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Constants.Enums;
+using Moodis.Database;
 
 namespace Moodis.Ui
 {
@@ -22,6 +24,7 @@ namespace Moodis.Ui
         private MenuViewModel() { 
             currentImage = new ImageInfo(); 
         }
+
         public static MenuViewModel Instance
         {
             get
@@ -30,45 +33,19 @@ namespace Moodis.Ui
             }
         }
 
-        public async Task GetFaceEmotionsAsync()
+        public async Task<Response> GetFaceEmotionsAsync()
         {
-            Log.Debug(TAG, "getFaceEmotions async start");
-            //var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
-            // Reform after creating login with user faces
-            var face = await Face.Instance.DetectFaceEmotions(currentImage.ImagePath);
-            DetectedFace tmp;
-            try
+            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
+
+            if (face != null)
             {
-                tmp = face.First();
-            }
-            catch (ArgumentNullException e)
-            {
-                Log.Debug(TAG, e.Message);
-                tmp = null;
-            }
-            Log.Debug(TAG, "getting face");
-            if (tmp != null)
-            {
-                currentImage.SetImageInfo(tmp);
+                currentImage.SetImageInfo(face);
+                return Response.OK;
             }
             else
             {
-                currentImage = new ImageInfo();
+                return Response.FaceNotDetected;
             }
-        }
-        private Bitmap RotateImage(Bitmap image)
-        {
-            Matrix matrix = new Matrix();
-            matrix.PostRotate(-90);
-            return Bitmap.CreateBitmap(image, 0, 0, image.Width, image.Height, matrix, true);
-        }
-
-        public void RotateAndOverrideImage()
-        {
-            image = RotateImage(image);
-            var stream = new FileStream(currentImage.ImagePath, FileMode.Create);
-            image.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
-            stream.Close();
         }
 
         public void DeleteImage()
@@ -79,15 +56,12 @@ namespace Moodis.Ui
             }
         }
 
-        public void UserAddImage()
+        public void AddImage()
         {
-            /*
-            SignInViewModel.currentUser.addImage(currentImage);
-            Serializer.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/users.bin", SignInViewModel.userList);
-            */
+            DatabaseModel.AddImageInfoToDatabase(currentImage);
         }
 
-        public int getHighestEmotionIndex()
+        public int GetHighestEmotionIndex()
         {
             var highestConfidence = currentImage.emotions.Max();
             return currentImage.emotions.ToList().IndexOf(highestConfidence);

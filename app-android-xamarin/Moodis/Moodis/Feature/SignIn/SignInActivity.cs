@@ -9,6 +9,7 @@ using Android.Views.InputMethods;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Register;
 using Android.Runtime;
+using Android.Views;
 
 namespace Moodis.Feature.SignIn
 {
@@ -16,7 +17,10 @@ namespace Moodis.Feature.SignIn
     public class SignInActivity : AppCompatActivity
     {
         public static int REQUEST_CODE_REGISTER = 1;
-        private SignInViewModel SignInViewModel = new SignInViewModel();
+        public static int REQUEST_CODE_FACE = 2;
+        private readonly SignInViewModel SignInViewModel = new SignInViewModel();
+
+        public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -33,6 +37,21 @@ namespace Moodis.Feature.SignIn
             base.OnBackPressed();
             SetResult(Result.Canceled);
             Finish();
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            //As we implement new Activities there will be more if statements
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
+            {
+                Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
+            }
+            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            {
+                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                Finish();
+            }
         }
 
         private void InitButtonsAndInputs()
@@ -110,8 +129,9 @@ namespace Moodis.Feature.SignIn
                     SignIn(usernameInput.Text, passwordInput.Text);
                 }
             };
-            signInWithFaceButton.Click += (sender, e) => {
-                //StartActivityForResult(new Android.Content.Intent(this, typeof(CameraActivity)), REQUEST_CODE_CAMERA);
+            signInWithFaceButton.Click += (sender, e) =>
+            {
+                StartActivityForResult(new Android.Content.Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
             };
             registerButton.Click += (sender, e) =>
             {
@@ -121,24 +141,19 @@ namespace Moodis.Feature.SignIn
 
         private void SignIn(string username, string password)
         {
+            var progressBar = FindViewById(Resource.Id.progressBarSignIn);
+            progressBar.Visibility = ViewStates.Visible;
+            progressBar.BringToFront();
+
             if (SignInViewModel.Authenticate(username, password))
             {
-                SetResult(Result.Ok);
+                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
             }
             else
             {
+                progressBar.Visibility = ViewStates.Gone;
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
-            }
-        }
-
-        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
-        {
-            //As we implement new Activities there will be more if statements
-            base.OnActivityResult(requestCode, resultCode, data);
-            if(Result.Ok == resultCode && requestCode == REQUEST_CODE_REGISTER)
-            {
-                Toast.MakeText(this, Resource.String.user_created_success, ToastLength.Short);
             }
         }
     }

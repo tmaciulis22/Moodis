@@ -12,9 +12,12 @@ using Android.Util;
 using Android.Widget;
 using Java.IO;
 using Java.Lang;
+using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Music;
 using Moodis.Feature.SignIn;
+using Moodis.Feature.SignIn;
+using Moodis.History;
 using Moodis.Ui;
 
 namespace Moodis.Feature.Menu
@@ -22,30 +25,56 @@ namespace Moodis.Feature.Menu
     [Activity(Label = "Menu")]
     public class MenuActivity : AppCompatActivity
     {
-        private readonly string TAG = nameof(MenuActivity);
         private MenuViewModel MenuViewModel;
         private MusicPlayer MusicPlayer;
         private const string FormatDouble = "N3";
 
+        private bool JustSignedIn = false;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            this.SetSupportActionBar();
+
             MenuViewModel = MenuViewModel.Instance;
             MusicPlayer = new MusicPlayer(this);
             SetContentView(Resource.Layout.activity_menu);
 
-            MenuViewModel.currentImage.ImagePath = Intent.GetStringExtra("ImagePath");
+            if (MenuViewModel.currentImage.ImagePath == null)
+            {
+                StartActivity(new Intent(this, typeof(CameraActivity)));
+                Finish();
+            }
+
             MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
-            MenuViewModel.RotateAndOverrideImage();
+
+            JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
             InitButtons();
             UpdateLabels();
             MenuViewModel.DeleteImage();
         }
 
-        public async void UpdateLabels()
+        public override bool OnSupportNavigateUp()
+        {
+            if (JustSignedIn)
+            {
+                StartActivity(new Intent(this, typeof(CameraActivity)));
+                Finish();
+            }
+            else
+            {
+                OnBackPressed();
+            }
+            return true;
+        }
+
+        public void UpdateLabels()
         {
             var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
+            imageBox.SetImageBitmap(MenuViewModel.RotateImage());
+
             var emotionLabels = new List<TextView> { FindViewById<TextView>(Resource.Id.lblAnger), FindViewById<TextView>(Resource.Id.lblContempt), FindViewById<TextView>(Resource.Id.lblDisgust),
                 FindViewById<TextView>(Resource.Id.lblFear), FindViewById<TextView>(Resource.Id.lblHappiness), FindViewById<TextView>(Resource.Id.lblNeutral), FindViewById<TextView>(Resource.Id.lblSadness),
                 FindViewById<TextView>(Resource.Id.lblSurprise) };
@@ -55,17 +84,7 @@ namespace Moodis.Feature.Menu
             {
                 label.Text = GetString(Resource.String.loading);
             }
-            try
-            {
-                await MenuViewModel.GetFaceEmotionsAsync();
-            }
-            catch (System.Net.Http.HttpRequestException e)
-            {
-                Log.Debug(TAG,e.Message);
-                Toast.MakeText(this, GetString(Resource.String.warning_in_request), ToastLength.Short).Show();
-                JavaSystem.Exit(0);
-            }
-            
+
             if (MenuViewModel.currentImage.emotions != null)
             {
                 var counter = 0;
@@ -75,7 +94,7 @@ namespace Moodis.Feature.Menu
                         + MenuViewModel.currentImage.emotions[counter].confidence.ToString(FormatDouble);
                     counter++;
                 }
-                MenuViewModel.UserAddImage();
+                MenuViewModel.AddImage();
             }
             else
             {
@@ -91,14 +110,13 @@ namespace Moodis.Feature.Menu
 
         private void InitButtons()
         {
-            var bntToCalendar = FindViewById(Resource.Id.goToCalendar);
+            var btnHistory = FindViewById(Resource.Id.buttonHistory);
             var btnPlayMusic = FindViewById(Resource.Id.playMusic);
             var btnStopMusic = FindViewById(Resource.Id.StopMusic);
             var btnGroups = FindViewById(Resource.Id.groups);
-            var btnTakePicture = FindViewById(Resource.Id.goToCamera);
 
-            bntToCalendar.Click += (sender, e) => {
-                throw new NotImplementedException();
+            btnHistory.Click += (sender, e) => {
+                StartActivity(new Intent(this, typeof(HistoryActivity)));
             };
             btnPlayMusic.Click += (sender, e) => {
                 if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
@@ -127,10 +145,6 @@ namespace Moodis.Feature.Menu
             };
             btnGroups.Click += (sender, e) => {
                 throw new NotImplementedException();
-            };
-            btnTakePicture.Click += (sender, e) => {
-                var cameraActivity = new Intent(this, typeof(CameraActivity));
-                StartActivity(cameraActivity);
             };
         }
     }

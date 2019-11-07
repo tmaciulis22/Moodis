@@ -16,7 +16,7 @@
 
   <string name="picture_button">Take Picture </string>
   <string name="placeholder">placeholder string</string>
-  <string name="calendar_button">To Calendar</string>
+  <string name="history_button">History</string>
   <string name="play_music_button">Play music</string>
   <string name="stop_music_button">Stop music</string>
   <string name="groups_button">To Groups</string>
@@ -28,17 +28,25 @@
   <string name="ok">OK</string>
 
   <string name="register_text">Register</string>
+  <string name="register_face_photos_left">Photos left to be taken: %1$d</string>
   <string name="stronger_password">Password must be stronger</string>
   <string name="user_created">User created successfully</string>
-  <string name="user_exists">User allready exists</string>
+  <string name="user_exists">User already exists</string>
 
   <string name="loading">loading</string>
 
   <string name="song_already_playing">A song is already playing</string>
   <string name="warning_in_request">Something wrong happened. Is your internet turned on?</string>
+  <string name="api_error">Something wrong happened. Is your internet turned on?</string>
   <string name="warning_face_detection">Face not detected, please try to use better lighting and stay in front of camera</string>
   <string name="warning_playing_music">Because face was not detected, cannot play music based on it.</string>
   <string name="info_music_is_playing">Music is already playing</string>
   <string name="user_created_success">User was created successfully</string>
   
+  
+  <string name="camera_error">Something wrong happened while taking picture :/</string>
+  
+  <string name="history_today">Today</string>
+
+  <string name="lorem_ipsum">Lorem ipsum</string>
 </resources>

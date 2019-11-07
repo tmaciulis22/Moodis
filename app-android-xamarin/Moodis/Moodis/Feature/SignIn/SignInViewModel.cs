@@ -68,7 +68,7 @@ namespace Moodis.Feature.SignIn
             userList = Database.DatabaseModel.FetchUsers();
         }
 
-        public static User getUser(string username)
+        public static User GetUser(string username)
         {
             return userList.Find(user => user.username == username);
         }

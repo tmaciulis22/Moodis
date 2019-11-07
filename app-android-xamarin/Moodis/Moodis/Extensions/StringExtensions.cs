@@ -15,6 +15,7 @@ namespace Moodis.Extensions
             var stream = new FileStream(imageFilePath, FileMode.Create);
             bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
             stream.Close();
+            bitmap.Dispose();
         }
     }
 }

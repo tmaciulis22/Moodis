@@ -58,18 +58,16 @@ namespace Moodis.Network.Face
 
             try
             {
-                using (Stream imageFileStream = File.OpenRead(imageFilePath))
-                {
-                    var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
+                using Stream imageFileStream = File.OpenRead(imageFilePath);
+                var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
 
-                    if (detectedFaces.IsNullOrEmpty())
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        return detectedFaces;
-                    }
+                if (detectedFaces.IsNullOrEmpty())
+                {
+                    return null;
+                }
+                else
+                {
+                    return detectedFaces;
                 }
             }
             catch (APIErrorException apiException)
@@ -175,12 +173,10 @@ namespace Moodis.Network.Face
             {
                 imageFilePath.RotateImage();
 
-                using (Stream imageFileStream = File.OpenRead(imageFilePath))
-                {
-                    await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(
-                            personGroupId, user.FaceApiPerson.PersonId, imageFileStream);
-                    return true;
-                }
+                using Stream imageFileStream = File.OpenRead(imageFilePath);
+                await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
+                    user.FaceApiPerson.PersonId, imageFileStream);
+                return true;
             }
             catch (APIErrorException apiException)
             {

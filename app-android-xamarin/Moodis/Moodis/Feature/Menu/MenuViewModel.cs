@@ -1,16 +1,12 @@
-﻿using Moodis.Network.Face;
-using System;
-using System.Threading.Tasks;
-using Moodis.Feature.Login;
-using Moodis.Extensions;
-using System.Linq;
-using Moodis.Feature.SignIn;
-using System.IO;
-using Android.Graphics;
-using Android.Util;
-using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+﻿using Android.Graphics;
 using Moodis.Constants.Enums;
 using Moodis.Database;
+using Moodis.Feature.SignIn;
+using Moodis.Network.Face;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Moodis.Ui
 {
@@ -18,11 +14,11 @@ namespace Moodis.Ui
     {
         public ImageInfo currentImage;
         public Bitmap image;
-        private readonly string TAG = nameof(MenuViewModel);
 
         private static readonly Lazy<MenuViewModel> obj = new Lazy<MenuViewModel>(() => new MenuViewModel());
-        private MenuViewModel() { 
-            currentImage = new ImageInfo(); 
+        private MenuViewModel()
+        {
+            currentImage = new ImageInfo();
         }
 
         public static MenuViewModel Instance

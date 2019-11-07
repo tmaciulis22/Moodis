@@ -1,17 +1,8 @@
-﻿using System;
+﻿using AndroidX.Lifecycle;
+using Moodis.Ui;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using AndroidX.Lifecycle;
-using Moodis.Database;
-using Moodis.Ui;
 using static Moodis.Ui.ImageInfo;
 
 namespace Moodis.History
@@ -62,7 +53,7 @@ namespace Moodis.History
                 emotions = new List<Emotion>(8)
             };
             exampleImageInfo.emotions.Add(new Emotion { name = "Happiness", confidence = 1 });
-            exampleImageInfo.imageDate = DateTime.Now;
+            exampleImageInfo.ImageDate = DateTime.Now;
 
             listToReturn.Add(exampleImageInfo);
 

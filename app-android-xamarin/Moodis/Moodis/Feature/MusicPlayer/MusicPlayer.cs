@@ -1,9 +1,8 @@
-﻿using System;
-
-using Android.Content;
+﻿using Android.Content;
 using Android.Media;
 using Android.Util;
 using Java.IO;
+using System;
 
 namespace Moodis.Feature.Music
 {
@@ -72,7 +71,8 @@ namespace Moodis.Feature.Music
 
         public void Stop()
         {
-            if (player != null) { 
+            if (player != null)
+            {
                 player.Stop();
                 player.Reset();
             }

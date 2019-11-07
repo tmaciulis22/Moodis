@@ -1,19 +1,12 @@
 ﻿using Android;
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.App;
-using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
-using Java.Lang;
-using Moodis.Feature.CameraFeature;
-using Moodis.Feature.Menu;
-using Moodis.Ui;
 using System;
 
 namespace Moodis.Feature.CameraFeature
@@ -70,7 +63,8 @@ namespace Moodis.Feature.CameraFeature
             {
                 Snackbar.Make(layout, Resource.String.permission_camera_rationale,
                     Snackbar.LengthIndefinite)
-                    .SetAction(Resource.String.ok, new Action<View>(delegate (View obj) {
+                    .SetAction(Resource.String.ok, new Action<View>(delegate (View obj)
+                    {
                         ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
                     })).Show();
             }

@@ -1,15 +1,9 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
-using Moodis.Extensions;
 using Moodis.Feature.SignIn;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using SQLite;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Moodis.Ui
@@ -37,7 +31,7 @@ namespace Moodis.Ui
         public int UserId { get; set; }
         public string ImagePath { get; set; }
         public List<Emotion> emotions;
-        public DateTime imageDate { get; set; }
+        public DateTime ImageDate { get; set; }
         private double? age;
         private Gender? gender;
 
@@ -46,7 +40,7 @@ namespace Moodis.Ui
             UserId = SignInViewModel.currentUser.Id;
             age = face.FaceAttributes.Age;
             gender = face.FaceAttributes.Gender;
-            imageDate = DateTime.Now;
+            ImageDate = DateTime.Now;
             AddEmotions(face.FaceAttributes.Emotion);
         }
 
@@ -55,9 +49,11 @@ namespace Moodis.Ui
             emotions = new List<Emotion>(8);
 
             var properties = detectedEmotions.GetType().GetProperties().ToList();
-            properties.ForEach(property => {
+            properties.ForEach(property =>
+            {
                 var index = properties.IndexOf(property);
-                emotions.Add(new Emotion {
+                emotions.Add(new Emotion
+                {
                     name = property.Name,
                     confidence = (double)property.GetValue(detectedEmotions, null),
                 });
@@ -65,7 +61,7 @@ namespace Moodis.Ui
         }
         public override string ToString()
         {
-            return imageDate.ToString("yyyy/MM/dd HH:mm");
+            return ImageDate.ToString("yyyy/MM/dd HH:mm");
         }
     }
 }

@@ -1,15 +1,13 @@
 ﻿using Android.App;
-using Android.OS;
-using Android.Support.V7.App;
-using Android.Arch.Lifecycle;
-using Android.Widget;
 using Android.Content;
-using Moodis.Extensions;
-using Android.Views.InputMethods;
-using Moodis.Feature.CameraFeature;
-using Moodis.Feature.Register;
+using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
 using Android.Views;
+using Android.Views.InputMethods;
+using Android.Widget;
+using Moodis.Extensions;
+using Moodis.Feature.Register;
 
 namespace Moodis.Feature.SignIn
 {
@@ -62,13 +60,15 @@ namespace Moodis.Feature.SignIn
             var signInWithFaceButton = FindViewById(Resource.Id.signInFaceButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
 
-            usernameInput.TextChanged += (sender, e) => {
+            usernameInput.TextChanged += (sender, e) =>
+            {
                 if (string.IsNullOrEmpty((sender as EditText).Text))
                 {
                     usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
                 }
             };
-            passwordInput.TextChanged += (sender, e) => {
+            passwordInput.TextChanged += (sender, e) =>
+            {
                 if (string.IsNullOrEmpty((sender as EditText).Text))
                 {
                     usernameInput.SetError(GetString(Resource.String.password_empty_error), null);
@@ -95,7 +95,8 @@ namespace Moodis.Feature.SignIn
                 }
             };
 
-            passwordInput.KeyPress += (sender, e) => {
+            passwordInput.KeyPress += (sender, e) =>
+            {
                 if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
                 {
                     e.Handled = true;
@@ -115,7 +116,8 @@ namespace Moodis.Feature.SignIn
                 }
             };
 
-            signInButton.Click += (sender, e) => {
+            signInButton.Click += (sender, e) =>
+            {
                 if (string.IsNullOrEmpty(usernameInput.Text))
                 {
                     usernameInput.SetError(GetString(Resource.String.username_empty_error), null);

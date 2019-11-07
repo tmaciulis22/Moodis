@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Moodis.Constants.Enums;
+﻿using Moodis.Constants.Enums;
 using Moodis.Database;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
 {
@@ -18,14 +18,16 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> AddUser(string username, string password)
         {
-            if(userList.Exists(userFromList => userFromList.username == username))
+            if (userList.Exists(userFromList => userFromList.username == username))
             {
                 return Response.UserExists;
             }
             else
             {
-                currentUser = new User(username, Crypto.CalculateMD5Hash(password));
-                currentUser.personGroupId = Guid.NewGuid().ToString();
+                currentUser = new User(username, Crypto.CalculateMD5Hash(password))
+                {
+                    personGroupId = Guid.NewGuid().ToString()
+                };
                 DatabaseModel.AddUserToDatabase(currentUser);
                 UpdateLocalStorage();
 

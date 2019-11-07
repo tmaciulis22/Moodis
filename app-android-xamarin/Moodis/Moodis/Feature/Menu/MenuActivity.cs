@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Android;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
@@ -10,21 +6,21 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Widget;
-using Java.IO;
-using Java.Lang;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Music;
 using Moodis.Feature.SignIn;
-using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
+using System;
+using System.Collections.Generic;
 
 namespace Moodis.Feature.Menu
 {
     [Activity(Label = "Menu")]
     public class MenuActivity : AppCompatActivity
     {
+        private readonly string TAG = nameof(MenuActivity);
         private MenuViewModel MenuViewModel;
         private MusicPlayer MusicPlayer;
         private const string FormatDouble = "N3";
@@ -73,8 +69,6 @@ namespace Moodis.Feature.Menu
         public void UpdateLabels()
         {
             var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
-            imageBox.SetImageBitmap(MenuViewModel.RotateImage());
-
             var emotionLabels = new List<TextView> { FindViewById<TextView>(Resource.Id.lblAnger), FindViewById<TextView>(Resource.Id.lblContempt), FindViewById<TextView>(Resource.Id.lblDisgust),
                 FindViewById<TextView>(Resource.Id.lblFear), FindViewById<TextView>(Resource.Id.lblHappiness), FindViewById<TextView>(Resource.Id.lblNeutral), FindViewById<TextView>(Resource.Id.lblSadness),
                 FindViewById<TextView>(Resource.Id.lblSurprise) };
@@ -103,8 +97,6 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
-            var signInActivity = new Intent(this, typeof(SignInActivity));
-            StartActivity(signInActivity);
             Finish();
         }
 
@@ -115,35 +107,39 @@ namespace Moodis.Feature.Menu
             var btnStopMusic = FindViewById(Resource.Id.StopMusic);
             var btnGroups = FindViewById(Resource.Id.groups);
 
-            btnHistory.Click += (sender, e) => {
+            btnHistory.Click += (sender, e) =>
+            {
                 StartActivity(new Intent(this, typeof(HistoryActivity)));
             };
-            btnPlayMusic.Click += (sender, e) => {
+            btnPlayMusic.Click += (sender, e) =>
+            {
                 if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
                 {
                     int[] musicLabels = { Resource.Raw.Anger, Resource.Raw.Contempt, Resource.Raw.Disgust, Resource.Raw.Fear, Resource.Raw.Happiness, Resource.Raw.Neutral,
                                 Resource.Raw.Sadness, Resource.Raw.Surprise };
-                     if (MenuViewModel.getHighestEmotionIndex() != -1)
-                     {
-                        MusicPlayer.Play(musicLabels[MenuViewModel.getHighestEmotionIndex()]); 
-                     }
+                    if (MenuViewModel.GetHighestEmotionIndex() != -1)
+                    {
+                        MusicPlayer.Play(musicLabels[MenuViewModel.GetHighestEmotionIndex()]);
+                    }
                 }
-                else if(MusicPlayer.IsPlaying())
+                else if (MusicPlayer.IsPlaying())
                 {
                     Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.info_music_is_playing, Snackbar.LengthShort).Show();
                 }
-                else 
+                else
                 {
                     Log.Debug(TAG, Resources.GetString(Resource.String.warning_playing_music));
                     Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_playing_music, Snackbar.LengthShort).Show();
                 }
 
             };
-            btnStopMusic.Click += (sender, e) => {
-                if(MusicPlayer != null)
+            btnStopMusic.Click += (sender, e) =>
+            {
+                if (MusicPlayer != null)
                     MusicPlayer.Stop();
             };
-            btnGroups.Click += (sender, e) => {
+            btnGroups.Click += (sender, e) =>
+            {
                 throw new NotImplementedException();
             };
         }

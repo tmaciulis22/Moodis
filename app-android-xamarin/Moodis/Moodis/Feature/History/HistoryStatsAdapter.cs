@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
+﻿using Android.Support.V7.Widget;
 using Android.Views;
 using Moodis.Ui;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Moodis.History
 {
@@ -27,7 +20,7 @@ namespace Moodis.History
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var viewHolder = holder as StatViewHolder;
-            viewHolder.TimeLabel.Text = (_statList[position].imageDate.Hour.ToString() + ":" + _statList[position].imageDate.Minute.ToString());
+            viewHolder.TimeLabel.Text = (_statList[position].ImageDate.Hour.ToString() + ":" + _statList[position].ImageDate.Minute.ToString());
             viewHolder.EmotionLabel.Text = _statList[position].emotions.Max().name;
         }
 

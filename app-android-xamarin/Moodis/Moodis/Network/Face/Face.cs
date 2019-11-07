@@ -1,5 +1,4 @@
-﻿using Android.Graphics;
-using Android.Util;
+﻿using Android.Util;
 using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Extensions;
@@ -15,7 +14,7 @@ namespace Moodis.Network.Face
 {
     public sealed class Face
     {
-        private Face(){}
+        private Face() { }
 
         private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
         private static string ENDPOINT = Secrets.FaceEndpoint;

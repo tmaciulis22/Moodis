@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Moodis.Feature.Login;
+using Moodis.Ui;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Moodis.Feature.Login;
-using Moodis.Ui;
-using static Moodis.Ui.ImageInfo;
 
 namespace Moodis.Database
 {
@@ -34,7 +33,7 @@ namespace Moodis.Database
             table = table.Where(stat => stat.UserId == userId);
             if (dateTime != null)
             {
-                table = table.Where(stat => stat.imageDate == dateTime);
+                table = table.Where(stat => stat.ImageDate == dateTime);
             }
 
             return table.ToList();

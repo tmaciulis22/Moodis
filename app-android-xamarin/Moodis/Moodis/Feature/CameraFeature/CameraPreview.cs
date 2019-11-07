@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
 using Android.Runtime;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
-using Java.IO;
+using System;
 
 namespace Moodis.Feature.CameraFeature
 {
@@ -43,7 +36,7 @@ namespace Moodis.Feature.CameraFeature
             }
             catch (Exception e)
             {
-                Log.Error("CAMERA_PREVIEW","Error Stopping preview" + e.Message);
+                Log.Error("CAMERA_PREVIEW", "Error Stopping preview" + e.Message);
             }
 
             try

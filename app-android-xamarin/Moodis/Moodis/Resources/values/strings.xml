@@ -44,4 +44,6 @@
   <string name="history_today">Today</string>
 
   <string name="lorem_ipsum">Lorem ipsum</string>
+
+  <string name="repeated_fail_login_face">STOP spamming the FUCKING API you WANKER</string>
 </resources>

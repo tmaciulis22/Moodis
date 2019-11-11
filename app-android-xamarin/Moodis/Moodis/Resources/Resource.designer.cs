@@ -5494,52 +5494,55 @@ namespace Moodis
 			public const int register_text = 2131558471;
 			
 			// aapt resource value: 0x7F0D0048
-			public const int search_menu_title = 2131558472;
+			public const int repeated_fail_login_face = 2131558472;
 			
 			// aapt resource value: 0x7F0D0049
-			public const int signin_button_text = 2131558473;
+			public const int search_menu_title = 2131558473;
 			
 			// aapt resource value: 0x7F0D004A
-			public const int signin_face_button_text = 2131558474;
+			public const int signin_button_text = 2131558474;
 			
 			// aapt resource value: 0x7F0D004B
-			public const int signin_password_label = 2131558475;
+			public const int signin_face_button_text = 2131558475;
 			
 			// aapt resource value: 0x7F0D004C
-			public const int signin_register_button_text = 2131558476;
+			public const int signin_password_label = 2131558476;
 			
 			// aapt resource value: 0x7F0D004D
-			public const int signin_username_label = 2131558477;
+			public const int signin_register_button_text = 2131558477;
 			
 			// aapt resource value: 0x7F0D004E
-			public const int status_bar_notification_info_overflow = 2131558478;
+			public const int signin_username_label = 2131558478;
 			
 			// aapt resource value: 0x7F0D004F
-			public const int stop_music_button = 2131558479;
+			public const int status_bar_notification_info_overflow = 2131558479;
 			
 			// aapt resource value: 0x7F0D0050
-			public const int stronger_password = 2131558480;
+			public const int stop_music_button = 2131558480;
 			
 			// aapt resource value: 0x7F0D0051
-			public const int take_another_picture = 2131558481;
-			
-			// aapt resource value: 0x7F0D0055
-			public const int username_empty_error = 2131558485;
+			public const int stronger_password = 2131558481;
 			
 			// aapt resource value: 0x7F0D0052
-			public const int user_created = 2131558482;
-			
-			// aapt resource value: 0x7F0D0053
-			public const int user_exists = 2131558483;
-			
-			// aapt resource value: 0x7F0D0054
-			public const int user_not_found_error = 2131558484;
+			public const int take_another_picture = 2131558482;
 			
 			// aapt resource value: 0x7F0D0056
-			public const int warning_face_detection = 2131558486;
+			public const int username_empty_error = 2131558486;
+			
+			// aapt resource value: 0x7F0D0053
+			public const int user_created = 2131558483;
+			
+			// aapt resource value: 0x7F0D0054
+			public const int user_exists = 2131558484;
+			
+			// aapt resource value: 0x7F0D0055
+			public const int user_not_found_error = 2131558485;
 			
 			// aapt resource value: 0x7F0D0057
-			public const int warning_playing_music = 2131558487;
+			public const int warning_face_detection = 2131558487;
+			
+			// aapt resource value: 0x7F0D0058
+			public const int warning_playing_music = 2131558488;
 			
 			static String()
 			{

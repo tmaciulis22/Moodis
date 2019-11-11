@@ -20,9 +20,8 @@ namespace Moodis.Database
             //databaseConnection.DeleteAll<User>();
             //databaseConnection.DeleteAll<ImageInfo>();
             //databaseConnection.DeleteAll<Emotion>():
-            //databaseConnection.DropTable<User>();
-            databaseConnection.DropTable<ImageInfo>();
-            databaseConnection.DropTable<Emotion>();
+            //databaseConnection.DropTable<ImageInfo>();
+            //databaseConnection.DropTable<Emotion>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();
@@ -35,24 +34,26 @@ namespace Moodis.Database
 
         public static List<ImageInfo> FetchUserStats(string userId, DateTime? dateTime = null)
         {
-            var stats = databaseConnection.Table<ImageInfo>();
+            var stats = databaseConnection.Table<ImageInfo>().ToList();
 
-            stats = stats.Where(stat => stat.UserId == userId);
+            stats = stats.Where(stat => stat.UserId == userId).ToList();
+
+            stats.ForEach(stat => stat.ImageDate = DateTime.Parse(stat.DateAsString));
 
             if (dateTime != null)
             {
-                stats = stats.Where(stat => stat.ImageDate == dateTime);
+                stats = stats.Where(stat => stat.ImageDate.Date == dateTime.Value.Date).ToList();
             }
 
             var emotions = databaseConnection.Table<Emotion>().ToList();
 
-            var statsToReturn = stats.ToList().Select(stat => {
+            stats.ForEach(stat =>
+            {
                 stat.emotions = new List<Emotion>();
                 stat.emotions.AddRange(emotions.Where(emotion => emotion.ImageId == stat.Id));
-                return stat;
-            }).ToList();
+            });
 
-            return statsToReturn;
+            return stats;
         }
 
         public static void AddUserToDatabase(User user)
@@ -67,6 +68,7 @@ namespace Moodis.Database
 
         public static void AddImageInfoToDatabase(ImageInfo imageInfo)
         {
+            imageInfo.DateAsString = imageInfo.ImageDate.ToString();
             databaseConnection.Insert(imageInfo);
             imageInfo.emotions.ForEach(emotion => databaseConnection.Insert(emotion));
         }

@@ -34,6 +34,7 @@ namespace Moodis.Ui
         public string ImagePath { get; set; }
         public List<Emotion> emotions;
         public DateTime ImageDate { get; set; }
+        public string DateAsString { get; set; }
         private double? Age;
         private Gender? Gender;
 

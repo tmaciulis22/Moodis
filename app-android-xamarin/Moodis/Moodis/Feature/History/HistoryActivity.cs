@@ -60,7 +60,7 @@ namespace Moodis.History
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
 
-            var adapter = new HistoryStatsAdapter(historyViewModel.FetchStats(SignInViewModel.currentUser.Id));
+            var adapter = new HistoryStatsAdapter(historyViewModel.FetchStats(SignInViewModel.currentUser.Id, DateTime.Now));
             recyclerView.SetAdapter(adapter);
         }
     }

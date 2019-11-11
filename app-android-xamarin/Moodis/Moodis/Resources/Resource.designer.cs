@@ -5567,46 +5567,40 @@ namespace Moodis
 			public const int signin_username_label = 2131624017;
 			
 			// aapt resource value: 0x7F0E0052
-			public const int song_already_playing = 2131624018;
+			public const int status_bar_notification_info_overflow = 2131624018;
 			
 			// aapt resource value: 0x7F0E0053
-			public const int status_bar_notification_info_overflow = 2131624019;
+			public const int stop_music_button = 2131624019;
 			
 			// aapt resource value: 0x7F0E0054
-			public const int stop_music_button = 2131624020;
+			public const int stronger_password = 2131624020;
 			
 			// aapt resource value: 0x7F0E0055
-			public const int stronger_password = 2131624021;
-			
-			// aapt resource value: 0x7F0E0056
-			public const int take_another_picture = 2131624022;
-			
-			// aapt resource value: 0x7F0E005B
-			public const int username_empty_error = 2131624027;
-			
-			// aapt resource value: 0x7F0E0057
-			public const int user_created = 2131624023;
-			
-			// aapt resource value: 0x7F0E0058
-			public const int user_created_success = 2131624024;
-			
-			// aapt resource value: 0x7F0E0059
-			public const int user_exists = 2131624025;
+			public const int take_another_picture = 2131624021;
 			
 			// aapt resource value: 0x7F0E005A
-			public const int user_not_found_error = 2131624026;
+			public const int username_empty_error = 2131624026;
+			
+			// aapt resource value: 0x7F0E0056
+			public const int user_created = 2131624022;
+			
+			// aapt resource value: 0x7F0E0057
+			public const int user_created_success = 2131624023;
+			
+			// aapt resource value: 0x7F0E0058
+			public const int user_exists = 2131624024;
+			
+			// aapt resource value: 0x7F0E0059
+			public const int user_not_found_error = 2131624025;
+			
+			// aapt resource value: 0x7F0E005B
+			public const int warning_face_detection = 2131624027;
 			
 			// aapt resource value: 0x7F0E005C
-			public const int warning_face_detection = 2131624028;
+			public const int warning_playing_music = 2131624028;
 			
 			// aapt resource value: 0x7F0E005D
-			public const int warning_in_request = 2131624029;
-			
-			// aapt resource value: 0x7F0E005E
-			public const int warning_playing_music = 2131624030;
-			
-			// aapt resource value: 0x7F0E005F
-			public const int yes = 2131624031;
+			public const int yes = 2131624029;
 			
 			static String()
 			{

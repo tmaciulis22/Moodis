@@ -35,8 +35,6 @@
 
   <string name="loading">loading</string>
 
-  <string name="song_already_playing">A song is already playing</string>
-  <string name="warning_in_request">Something wrong happened. Is your internet turned on?</string>
   <string name="api_error">Something wrong happened. Is your internet turned on?</string>
   <string name="warning_face_detection">Face not detected, please try to use better lighting and stay in front of camera</string>
   <string name="warning_playing_music">Because face was not detected, cannot play music based on it.</string>

@@ -29,6 +29,7 @@ namespace Moodis.Feature.SignIn
     {
         SignInViewModel SignInViewModel = new SignInViewModel();
 
+        public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
         Camera camera;
         private bool CameraReleased = false;
         static readonly int REQUEST_CAMERA = 0;
@@ -63,6 +64,7 @@ namespace Moodis.Feature.SignIn
         public override bool OnSupportNavigateUp()
         {
             OnBackPressed();
+            SetResult(Result.Canceled);
             return true;
         }
 
@@ -184,7 +186,7 @@ namespace Moodis.Feature.SignIn
                 else
                 {
                     menuViewModel.currentImage.ImagePath = e.ImagePath;
-                    SetResult(Result.Ok);
+                    SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                     Finish();
                 }
                 progressBar.Visibility = ViewStates.Gone;

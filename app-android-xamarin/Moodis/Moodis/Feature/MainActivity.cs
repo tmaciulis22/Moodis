@@ -17,6 +17,7 @@ namespace Moodis
     public class MainActivity : AppCompatActivity
     {
         public static int REQUEST_CODE_LOGIN = 1;
+        public static int REQUEST_CODE_FACE = 2;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -25,7 +26,7 @@ namespace Moodis
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
-            StartActivityForResult(new Intent(this, typeof(SignInActivity)), REQUEST_CODE_LOGIN);
+            StartActivityForResult(new Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -38,6 +39,16 @@ namespace Moodis
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
+            if(resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            {
+                var intent = new Intent(this, typeof(MenuActivity)).PutExtra(SignInFaceActivity.EXTRA_SIGNED_IN, data.GetBooleanExtra(SignInFaceActivity.EXTRA_SIGNED_IN, false));
+                StartActivity(intent);
+            }
+            else if(resultCode == Result.Canceled && requestCode == REQUEST_CODE_FACE)
+            {
+                StartActivityForResult(new Intent(this, typeof(SignInActivity)), REQUEST_CODE_LOGIN);
+            }
+
             if (resultCode == Result.Ok && requestCode == REQUEST_CODE_LOGIN)
             {
                 var intent = new Intent(this, typeof(MenuActivity))
@@ -49,6 +60,7 @@ namespace Moodis
             {
                 Finish();
             }
+
         }
     }
 }

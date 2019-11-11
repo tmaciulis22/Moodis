@@ -97,6 +97,12 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
+            Finish();
+        }
+
+        //TODO SHOW LOGOUT WINDOW WHEN USER LOGS OUT FROM A MENU THAT IS YET TO BE MADE.
+        public void LogoutWindowShow()
+        {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
                 .SetTitle(Resource.String.logout)
                 .SetMessage(Resource.String.logout_confirmation_message)
@@ -108,7 +114,6 @@ namespace Moodis.Feature.Menu
             builder.Create().Show();
             builder.Dispose();
         }
-
         private void InitButtons()
         {
             var btnHistory = FindViewById(Resource.Id.buttonHistory);

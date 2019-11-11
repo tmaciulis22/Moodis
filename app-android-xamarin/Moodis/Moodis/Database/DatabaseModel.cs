@@ -20,8 +20,6 @@ namespace Moodis.Database
             //databaseConnection.DeleteAll<User>();
             //databaseConnection.DeleteAll<ImageInfo>();
             //databaseConnection.DeleteAll<Emotion>():
-            //databaseConnection.DropTable<ImageInfo>();
-            //databaseConnection.DropTable<Emotion>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();

@@ -1,12 +1,12 @@
-﻿using Moodis.Network.Face;
-using System;
-using System.Threading.Tasks;
-using System.Linq;
-using Moodis.Feature.SignIn;
-using System.IO;
-using Android.Graphics;
+﻿using Android.Graphics;
 using Moodis.Constants.Enums;
 using Moodis.Database;
+using Moodis.Feature.SignIn;
+using Moodis.Network.Face;
+using System;
+using System.Threading.Tasks;
+using System.IO;
+using System.Linq;
 
 namespace Moodis.Ui
 {
@@ -16,8 +16,9 @@ namespace Moodis.Ui
         public Bitmap image;
 
         private static readonly Lazy<MenuViewModel> obj = new Lazy<MenuViewModel>(() => new MenuViewModel());
-        private MenuViewModel() { 
-            currentImage = new ImageInfo(); 
+        private MenuViewModel()
+        {
+            currentImage = new ImageInfo();
         }
 
         public static MenuViewModel Instance

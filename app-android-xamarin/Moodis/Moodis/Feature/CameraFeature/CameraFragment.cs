@@ -1,17 +1,15 @@
-﻿using System;
-
-using Android.Support.V4.App;
+﻿using Android.Content;
 using Android.Hardware;
 using Android.OS;
-using Android.Runtime;
+using Android.Support.V4.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Moodis.Events;
-using Moodis.Ui;
 using Moodis.Constants.Enums;
-using Android.Content;
+using Moodis.Events;
 using Moodis.Feature.Menu;
+using Moodis.Ui;
+using System;
 
 namespace Moodis.Feature.CameraFeature
 {

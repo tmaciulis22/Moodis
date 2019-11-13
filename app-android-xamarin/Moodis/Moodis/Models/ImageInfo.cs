@@ -57,7 +57,8 @@ namespace Moodis.Ui
             emotions = new List<Emotion>(8);
 
             var properties = detectedEmotions.GetType().GetProperties().ToList();
-            properties.ForEach(property => {
+            properties.ForEach(property =>
+            {
                 var index = properties.IndexOf(property);
                 emotions.Add(new Emotion {
                     Id = Guid.NewGuid().ToString(),

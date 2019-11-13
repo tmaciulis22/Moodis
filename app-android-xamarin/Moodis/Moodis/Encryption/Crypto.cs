@@ -16,6 +16,7 @@ namespace Moodis.Feature.Login
             {
                 sb.Append(hash[i].ToString("X2"));
             }
+            md5.Dispose();
             return sb.ToString();
         }
     }

@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.Hardware;
-using Android.Net;
-using Android.OS;
-using Android.Runtime;
 using Android.Util;
 using Moodis.Events;
-using Moodis.Feature.Menu;
-using Moodis.Feature.Register;
-using Moodis.Feature.SignIn;
+using System;
 
 namespace Moodis.Feature.CameraFeature
 {
@@ -43,6 +32,7 @@ namespace Moodis.Feature.CameraFeature
 
                 imageFileName = (string)context.GetFileStreamPath(imageFileName);
                 AfterTakenPicture?.Invoke(this, new TakenPictureArgs(imageFileName));
+                camera.StartPreview();
             }
             catch (System.IO.FileNotFoundException e)
             {

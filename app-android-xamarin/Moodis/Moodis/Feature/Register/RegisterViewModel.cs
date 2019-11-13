@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Moodis.Constants.Enums;
+﻿using Moodis.Constants.Enums;
 using Moodis.Database;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
 {
@@ -24,8 +24,10 @@ namespace Moodis.Feature.Register
             }
             else
             {
-                currentUser = new User(username, Crypto.CalculateMD5Hash(password));
-                currentUser.PersonGroupId = Guid.NewGuid().ToString();
+                currentUser = new User(username, Crypto.CalculateMD5Hash(password))
+                {
+                    PersonGroupId = Guid.NewGuid().ToString()
+                };
                 DatabaseModel.AddUserToDatabase(currentUser);
                 UpdateLocalStorage();
 

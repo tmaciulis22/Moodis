@@ -1,5 +1,4 @@
-﻿using Android.Graphics;
-using Android.Util;
+﻿using Android.Util;
 using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Extensions;
@@ -15,7 +14,7 @@ namespace Moodis.Network.Face
 {
     public sealed class Face
     {
-        private Face(){}
+        private Face() { }
 
         private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
         private static string ENDPOINT = Secrets.FaceEndpoint;
@@ -59,18 +58,16 @@ namespace Moodis.Network.Face
 
             try
             {
-                using (Stream imageFileStream = File.OpenRead(imageFilePath))
-                {
-                    var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
+                using Stream imageFileStream = File.OpenRead(imageFilePath);
+                var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
 
-                    if (detectedFaces.IsNullOrEmpty())
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        return detectedFaces;
-                    }
+                if (detectedFaces.IsNullOrEmpty())
+                {
+                    return null;
+                }
+                else
+                {
+                    return detectedFaces;
                 }
             }
             catch (APIErrorException apiException)
@@ -176,12 +173,10 @@ namespace Moodis.Network.Face
             {
                 imageFilePath.RotateImage();
 
-                using (Stream imageFileStream = File.OpenRead(imageFilePath))
-                {
-                    await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(
-                            personGroupId, user.FaceApiPerson.PersonId, imageFileStream);
-                    return true;
-                }
+                using Stream imageFileStream = File.OpenRead(imageFilePath);
+                await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
+                    user.FaceApiPerson.PersonId, imageFileStream);
+                return true;
             }
             catch (APIErrorException apiException)
             {

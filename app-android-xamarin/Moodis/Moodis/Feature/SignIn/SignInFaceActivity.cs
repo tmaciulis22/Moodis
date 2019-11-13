@@ -1,5 +1,4 @@
-﻿using System;
-using Android;
+﻿using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.Hardware;
@@ -16,6 +15,7 @@ using Moodis.Events;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
 using Moodis.Ui;
+using System;
 
 namespace Moodis.Feature.SignIn
 {
@@ -31,7 +31,7 @@ namespace Moodis.Feature.SignIn
 
         private Button snapButton;
         private FrameLayout photoContainer;
-        private View progressBar; 
+        private View progressBar;
 
         event EventHandler<TakenPictureArgs> AfterTakenPicture;
 
@@ -68,7 +68,8 @@ namespace Moodis.Feature.SignIn
             {
                 Snackbar.Make(photoContainer, Resource.String.permission_camera_rationale,
                     Snackbar.LengthIndefinite)
-                    .SetAction(Resource.String.ok, new Action<View>(delegate (View obj) {
+                    .SetAction(Resource.String.ok, new Action<View>(delegate (View obj)
+                    {
                         ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, REQUEST_CAMERA);
                     })).Show();
             }
@@ -84,7 +85,8 @@ namespace Moodis.Feature.SignIn
             snapButton = FindViewById<Button>(Resource.Id.buttonSignIn);
             camera = SetUpCamera();
 
-            snapButton.Click += (sender, e) => {
+            snapButton.Click += (sender, e) =>
+            {
                 try
                 {
                     progressBar = FindViewById(Resource.Id.progressBarSignInFace);

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Moodis.Feature.SignIn
 {
-    public class SignInViewModel: ViewModel
+    public class SignInViewModel : ViewModel
     {
         public static List<User> userList;
         public static User currentUser;
@@ -34,7 +34,7 @@ namespace Moodis.Feature.SignIn
             FetchUserList();
 
             List<DetectedFace> detectedFaces = null;
-            Action<List<DetectedFace>> setFace = face => detectedFaces = face;
+            void setFace(List<DetectedFace> face) => detectedFaces = face;
             DetectedFace face;
 
             List<Person> identifiedPersons = null;
@@ -42,7 +42,7 @@ namespace Moodis.Feature.SignIn
             {
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
-            catch(APIErrorException)
+            catch (APIErrorException)
             {
                 return Response.ApiError;
             }

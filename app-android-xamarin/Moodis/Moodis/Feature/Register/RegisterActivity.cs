@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
@@ -12,7 +6,8 @@ using Android.Views;
 using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Extensions;
-using Moodis.Feature.SignIn;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
 {
@@ -62,20 +57,23 @@ namespace Moodis.Feature.Register
             progressBar = FindViewById(Resource.Id.progressBarRegister);
             registerButton = FindViewById<Button>(Resource.Id.registerButtonToAdd);
 
-            usernameInput.TextChanged += (sender, e) => {
+            usernameInput.TextChanged += (sender, e) =>
+            {
                 if (string.IsNullOrEmpty((sender as EditText).Text))
                 {
                     usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
                 }
             };
-            passwordInput.TextChanged += (sender, e) => {
+            passwordInput.TextChanged += (sender, e) =>
+            {
                 if (string.IsNullOrEmpty((sender as EditText).Text))
                 {
                     usernameInput.SetError(GetString(Resource.String.password_empty_error), null);
                 }
             };
 
-            usernameInput.KeyPress += (sender, e) => {
+            usernameInput.KeyPress += (sender, e) =>
+            {
                 if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
                 {
                     e.Handled = true;
@@ -95,7 +93,8 @@ namespace Moodis.Feature.Register
                     e.Handled = false;
                 }
             };
-            passwordInput.KeyPress += (sender, e) => {
+            passwordInput.KeyPress += (sender, e) =>
+            {
                 if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
                 {
                     e.Handled = true;
@@ -116,11 +115,11 @@ namespace Moodis.Feature.Register
 
             registerButton.Click += async (sender, e) =>
             {
-                if(string.IsNullOrEmpty(usernameInput.Text))
+                if (string.IsNullOrEmpty(usernameInput.Text))
                 {
                     usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
                 }
-                else if(string.IsNullOrEmpty(passwordInput.Text))
+                else if (string.IsNullOrEmpty(passwordInput.Text))
                 {
                     passwordInput.SetError(GetString(Resource.String.username_empty_error), null);
                 }
@@ -131,7 +130,7 @@ namespace Moodis.Feature.Register
                     registerButton.Enabled = false;
 
                     var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
-                    if(regex.IsMatch(passwordInput.Text))
+                    if (regex.IsMatch(passwordInput.Text))
                     {
                         var response = await registerViewModel.AddUser(usernameInput.Text, passwordInput.Text);
 
@@ -139,7 +138,7 @@ namespace Moodis.Feature.Register
                         {
                             StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
                         }
-                        else if(response == Response.UserExists)
+                        else if (response == Response.UserExists)
                         {
                             Toast.MakeText(this, Resource.String.user_exists, ToastLength.Short).Show();
                         }

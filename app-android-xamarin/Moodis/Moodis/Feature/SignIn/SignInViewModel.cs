@@ -34,7 +34,7 @@ namespace Moodis.Feature.SignIn
             FetchUserList();
 
             List<DetectedFace> detectedFaces = null;
-            Action<List<DetectedFace>> setFace = face => detectedFaces = face;
+            void setFace(List<DetectedFace> face) => detectedFaces = face;
             DetectedFace face;
 
             List<Person> identifiedPersons = null;

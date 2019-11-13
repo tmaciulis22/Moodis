@@ -14,8 +14,10 @@ namespace Moodis.Widget
 
         public static DatePickerFragment NewInstance(Action<DateTime> onDateSelected)
         {
-            DatePickerFragment frag = new DatePickerFragment();
-            frag._dateSelectedHandler = onDateSelected;
+            DatePickerFragment frag = new DatePickerFragment
+            {
+                _dateSelectedHandler = onDateSelected
+            };
             return frag;
         }
 

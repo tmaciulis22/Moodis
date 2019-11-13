@@ -1,9 +1,9 @@
 ﻿using AndroidX.Lifecycle;
+using Moodis.Database;
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Moodis.Ui.ImageInfo;
 
 namespace Moodis.History
 {

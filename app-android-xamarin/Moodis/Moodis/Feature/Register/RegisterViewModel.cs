@@ -24,8 +24,10 @@ namespace Moodis.Feature.Register
             }
             else
             {
-                currentUser = new User(username, Crypto.CalculateMD5Hash(password));
-                currentUser.PersonGroupId = Guid.NewGuid().ToString();
+                currentUser = new User(username, Crypto.CalculateMD5Hash(password))
+                {
+                    PersonGroupId = Guid.NewGuid().ToString()
+                };
                 DatabaseModel.AddUserToDatabase(currentUser);
                 UpdateLocalStorage();
 

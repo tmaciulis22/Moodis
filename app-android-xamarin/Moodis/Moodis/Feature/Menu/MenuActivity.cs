@@ -4,7 +4,6 @@ using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
-using Android.Util;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
@@ -84,8 +83,8 @@ namespace Moodis.Feature.Menu
                 var counter = 0;
                 foreach (var label in emotionLabels)
                 {
-                    label.Text = MenuViewModel.currentImage.emotions[counter].name + " : "
-                        + MenuViewModel.currentImage.emotions[counter].confidence.ToString(FormatDouble);
+                    label.Text = MenuViewModel.currentImage.emotions[counter].Name + " : "
+                        + MenuViewModel.currentImage.emotions[counter].Confidence.ToString(FormatDouble);
                     counter++;
                 }
                 MenuViewModel.AddImage();

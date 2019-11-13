@@ -19,7 +19,7 @@ namespace Moodis.Feature.SignIn
         {
             FetchUserList();
 
-            currentUser = userList.Find(user => user.username == username && user.password == Crypto.CalculateMD5Hash(password));
+            currentUser = userList.Find(user => user.Username == username && user.Password == Crypto.CalculateMD5Hash(password));
 
             if (currentUser == null)
             {
@@ -52,7 +52,7 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
-            currentUser = userList.Find(user => user.username == identifiedPersons.ToArray()[0].Name);
+            currentUser = userList.Find(user => user.Username == identifiedPersons.ToArray()[0].Name);
             face = detectedFaces.ToArray()[0];
 
             if (currentUser == null)
@@ -66,11 +66,6 @@ namespace Moodis.Feature.SignIn
         private void FetchUserList()
         {
             userList = Database.DatabaseModel.FetchUsers();
-        }
-
-        public static User GetUser(string username)
-        {
-            return userList.Find(user => user.username == username);
         }
     }
 }

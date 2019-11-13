@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace Moodis.Ui
 {
     [Serializable]
@@ -14,32 +13,41 @@ namespace Moodis.Ui
         [Serializable]
         public struct Emotion : IComparable
         {
-            public string name;
-            public double confidence;
+            [PrimaryKey]
+            public string Id { get; set; }
+            public string ImageId { get; set; }
+            public string Name { get; set; }
+            public double Confidence { get; set; }
 
             public int CompareTo(object obj)
             {
                 if (obj == null) return 1;
 
                 var otherEmotion = (Emotion)obj;
-                return confidence.CompareTo(otherEmotion.confidence);
+                return Confidence.CompareTo(otherEmotion.Confidence);
             }
         }
 
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        [PrimaryKey]
+        public string Id { get; set; }
+        public string UserId { get; set; }
         public string ImagePath { get; set; }
         public List<Emotion> emotions;
         public DateTime ImageDate { get; set; }
-        private double? age;
-        private Gender? gender;
+        public string DateAsString { get; set; }
+        private double? Age;
+        private Gender? Gender;
+
+        public ImageInfo()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
 
         public void SetImageInfo(DetectedFace face)
         {
             UserId = SignInViewModel.currentUser.Id;
-            age = face.FaceAttributes.Age;
-            gender = face.FaceAttributes.Gender;
+            Age = face.FaceAttributes.Age;
+            Gender = face.FaceAttributes.Gender;
             ImageDate = DateTime.Now;
             AddEmotions(face.FaceAttributes.Emotion);
         }
@@ -52,16 +60,13 @@ namespace Moodis.Ui
             properties.ForEach(property =>
             {
                 var index = properties.IndexOf(property);
-                emotions.Add(new Emotion
-                {
-                    name = property.Name,
-                    confidence = (double)property.GetValue(detectedEmotions, null),
+                emotions.Add(new Emotion {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = property.Name,
+                    Confidence = (double)property.GetValue(detectedEmotions, null),
+                    ImageId = Id
                 });
             });
-        }
-        public override string ToString()
-        {
-            return ImageDate.ToString("yyyy/MM/dd HH:mm");
         }
     }
 }

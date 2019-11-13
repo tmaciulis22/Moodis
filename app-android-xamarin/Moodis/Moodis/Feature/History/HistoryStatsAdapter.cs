@@ -15,13 +15,16 @@ namespace Moodis.History
             _statList = statList.ToList();
         }
 
-        public override int ItemCount => _statList.Count;
+        public override int ItemCount
+        {
+            get { return _statList.Count; }
+        }
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var viewHolder = holder as StatViewHolder;
             viewHolder.TimeLabel.Text = (_statList[position].ImageDate.Hour.ToString() + ":" + _statList[position].ImageDate.Minute.ToString());
-            viewHolder.EmotionLabel.Text = _statList[position].emotions.Max().name;
+            viewHolder.EmotionLabel.Text = _statList[position].emotions.Max().Name;
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

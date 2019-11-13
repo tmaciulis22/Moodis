@@ -10,24 +10,25 @@ namespace Moodis.Feature.Login
     [Serializable]
     public class User
     {
-        [PrimaryKey,AutoIncrement]
-        public int Id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string personGroupId { get; set; }
-        public string groupName { get; set; }
+        [PrimaryKey]
+        public string Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string PersonGroupId { get; set; }
+        public string GroupName { get; set; }
 
         [Ignore]
         public Person FaceApiPerson { get; set; }
 
         public User()
         {
-            this.groupName = "";
+            Id = Guid.NewGuid().ToString();
+            GroupName = "";
         }
         public User(string username, string password) : this()
         {
-            this.username = username;
-            this.password = password;
+            Username = username;
+            Password = password;
         }
     }
 }

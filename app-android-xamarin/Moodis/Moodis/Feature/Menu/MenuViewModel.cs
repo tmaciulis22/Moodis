@@ -1,8 +1,6 @@
 ﻿using Moodis.Network.Face;
 using System;
 using System.Threading.Tasks;
-using Moodis.Feature.Login;
-using Moodis.Extensions;
 using System.Linq;
 using Moodis.Feature.SignIn;
 using System.IO;
@@ -32,7 +30,7 @@ namespace Moodis.Ui
 
         public async Task<Response> GetFaceEmotionsAsync()
         {
-            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
+            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.Username);
 
             if (face != null)
             {

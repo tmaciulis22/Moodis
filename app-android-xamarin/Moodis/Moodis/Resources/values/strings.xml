@@ -54,4 +54,6 @@
 
   <string name="join_group_success">You have joined a new group!</string>
   <string name="join_group_fail">You are already in the group</string>
+  <string name="text_group_empty_error">No group name provided</string>
+  <string name="group_exists_error">Group already exists</string>
 </resources>

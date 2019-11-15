@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Moodis.Feature.Login;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace Moodis.Feature.Group
 {
@@ -18,11 +19,19 @@ namespace Moodis.Feature.Group
     {
         [PrimaryKey]
         public string Id { get; set; }
+
+        [TextBlob("membersBlobbed")]
         public List<string> members { get; set; }
 
         public string Groupname { get; set; }
 
-        public Group(string name, string firstUser)
+        public Group()
+        {
+            Id = Guid.NewGuid().ToString();
+            members = new List<string>();
+        }
+
+        public Group(string name, string firstUser) : this()
         {
             this.Groupname = name;
             members.Add(firstUser);

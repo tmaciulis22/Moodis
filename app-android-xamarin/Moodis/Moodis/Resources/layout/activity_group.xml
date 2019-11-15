@@ -2,47 +2,76 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout2"
+    android:id="@+id/groupActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/text_groupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="416dp"
         android:width="300dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Group name"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.319" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button_join_group"
-        android:layout_width="224dp"
-        android:layout_height="50dp"
+        android:layout_width="231dp"
+        android:layout_height="45dp"
         android:text="Join a Group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_groupName"
-        app:layout_constraintVertical_bias="0.302" />
+        app:layout_constraintVertical_bias="0.265" />
 
     <Button
         android:id="@+id/button_see_groups"
-        android:layout_width="215dp"
-        android:layout_height="46dp"
+        android:layout_width="231dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="132dp"
         android:text="See my Groups"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/button_create_group"
+        android:layout_width="231dp"
+        android:layout_height="45dp"
+        android:text="Create a group"
+        app:layout_constraintBottom_toTopOf="@+id/button_see_groups"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_join_group"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintVertical_bias="0.553" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_groupName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.576"
+        tools:text="Draugeliai" />
 
 </android.support.constraint.ConstraintLayout>

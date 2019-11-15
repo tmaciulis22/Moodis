@@ -78,6 +78,8 @@
     <Compile Include="Feature\CameraFeature\CameraPreview.cs" />
     <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
+    <Compile Include="Feature\Group\GroupActivityModel.cs" />
+    <Compile Include="Feature\Group\GroupActivity.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
     <Compile Include="Feature\MusicPlayer\MusicPlayer.cs" />
@@ -310,6 +312,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_signin_face.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_group.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

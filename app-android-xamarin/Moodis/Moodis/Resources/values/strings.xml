@@ -51,4 +51,7 @@
   <string name="history_today">Today</string>
 
   <string name="lorem_ipsum">Lorem ipsum</string>
+
+  <string name="join_group_success">You have joined a new group!</string>
+  <string name="join_group_fail">You are already in the group</string>
 </resources>

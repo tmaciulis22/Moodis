@@ -1,4 +1,5 @@
-﻿using Moodis.Feature.Login;
+﻿using Moodis.Feature.Group;
+using Moodis.Feature.Login;
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace Moodis.Database
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();
+            databaseConnection.CreateTable<Group>();
         }
 
         public static List<User> FetchUsers()
@@ -69,6 +71,21 @@ namespace Moodis.Database
             imageInfo.DateAsString = imageInfo.ImageDate.ToString();
             databaseConnection.Insert(imageInfo);
             imageInfo.emotions.ForEach(emotion => databaseConnection.Insert(emotion));
+        }
+
+        public static List<Group> FetchGroupFromDatabase()
+        {
+            return databaseConnection.Table<Group>().ToList();
+        }
+
+        public static void AddGroupToDatabase(Group group)
+        {
+            databaseConnection.Insert(group);
+        }
+
+        public static void DeleteGroupFromDatabase(Group group)
+        {
+            databaseConnection.Delete(group);
         }
 
         public static void CloseConnectionToDatabase()

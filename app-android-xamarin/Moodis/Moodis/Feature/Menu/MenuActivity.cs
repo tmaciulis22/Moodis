@@ -8,6 +8,7 @@ using Android.Util;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.Group;
 using Moodis.Feature.Music;
 using Moodis.Feature.SignIn;
 using Moodis.History;
@@ -154,7 +155,7 @@ namespace Moodis.Feature.Menu
             };
             btnGroups.Click += (sender, e) =>
             {
-                throw new NotImplementedException();
+                StartActivity(new Intent(this, typeof(GroupActivity)));
             };
         }
     }

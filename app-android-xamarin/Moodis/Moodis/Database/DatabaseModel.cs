@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Moodis.Feature.Login;
+using Moodis.Ui;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Moodis.Feature.Login;
-using Moodis.Ui;
+using System.Linq;
 using static Moodis.Ui.ImageInfo;
 
 namespace Moodis.Database
@@ -18,8 +19,10 @@ namespace Moodis.Database
             //Use this for testing compatability with new users
             //databaseConnection.DeleteAll<User>();
             //databaseConnection.DeleteAll<ImageInfo>();
+            //databaseConnection.DeleteAll<Emotion>():
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
+            databaseConnection.CreateTable<Emotion>();
         }
 
         public static List<User> FetchUsers()
@@ -27,17 +30,28 @@ namespace Moodis.Database
             return databaseConnection.Table<User>().ToList();
         }
 
-        public static List<ImageInfo> FetchUserStats(int userId, DateTime? dateTime = null)
+        public static List<ImageInfo> FetchUserStats(string userId, DateTime? dateTime = null)
         {
-            var table = databaseConnection.Table<ImageInfo>();
+            var stats = databaseConnection.Table<ImageInfo>().ToList();
 
-            table = table.Where(stat => stat.UserId == userId);
+            stats = stats.Where(stat => stat.UserId == userId).ToList();
+
+            stats.ForEach(stat => stat.ImageDate = DateTime.Parse(stat.DateAsString));
+
             if (dateTime != null)
             {
-                table = table.Where(stat => stat.imageDate == dateTime);
+                stats = stats.Where(stat => stat.ImageDate.Date == dateTime.Value.Date).ToList();
             }
 
-            return table.ToList();
+            var emotions = databaseConnection.Table<Emotion>().ToList();
+
+            stats.ForEach(stat =>
+            {
+                stat.emotions = new List<Emotion>();
+                stat.emotions.AddRange(emotions.Where(emotion => emotion.ImageId == stat.Id));
+            });
+
+            return stats;
         }
 
         public static void AddUserToDatabase(User user)
@@ -52,7 +66,9 @@ namespace Moodis.Database
 
         public static void AddImageInfoToDatabase(ImageInfo imageInfo)
         {
+            imageInfo.DateAsString = imageInfo.ImageDate.ToString();
             databaseConnection.Insert(imageInfo);
+            imageInfo.emotions.ForEach(emotion => databaseConnection.Insert(emotion));
         }
 
         public static void CloseConnectionToDatabase()

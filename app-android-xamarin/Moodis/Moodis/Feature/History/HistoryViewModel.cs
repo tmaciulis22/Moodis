@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using AndroidX.Lifecycle;
+﻿using AndroidX.Lifecycle;
 using Moodis.Database;
 using Moodis.Ui;
-using static Moodis.Ui.ImageInfo;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Moodis.History
 {
@@ -40,7 +31,7 @@ namespace Moodis.History
 
             foreach (ImageInfo imageInfo in dailyList)
             {
-                var query = imageInfo.emotions.Select(x => x.confidence);
+                var query = imageInfo.emotions.Select(x => x.Confidence);
                 var i = 0;
                 foreach (var confidence in query)
                 {
@@ -49,24 +40,12 @@ namespace Moodis.History
                 }
             }
             int index = confidenceList.IndexOf(confidenceList.Max());
-            return dailyList[0].emotions[index].name + " avg: " + (confidenceList[index] / dailyList.Count).ToString(FormatDouble);
+            return dailyList[0].emotions[index].Name + " avg: " + (confidenceList[index] / dailyList.Count).ToString(FormatDouble);
         }
 
-        public IList<ImageInfo> FetchStats(int userId, DateTime? dateTime = null)
+        public IList<ImageInfo> FetchStats(string userId, DateTime? dateTime = null)
         {
-            //TODO refactor this method to fetch from DB emotion statistics, if dateTime is null, then return todays stats
-            //return DatabaseModel.FetchUserStats(userId, dateTime);
-            var listToReturn = new List<ImageInfo>();
-            var exampleImageInfo = new ImageInfo
-            {
-                emotions = new List<Emotion>(8)
-            };
-            exampleImageInfo.emotions.Add(new Emotion { name = "Happiness", confidence = 1 });
-            exampleImageInfo.imageDate = DateTime.Now;
-
-            listToReturn.Add(exampleImageInfo);
-
-            return listToReturn;
+            return DatabaseModel.FetchUserStats(userId, dateTime);
         }
     }
 }

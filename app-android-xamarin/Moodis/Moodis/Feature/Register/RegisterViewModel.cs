@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Moodis.Constants.Enums;
+﻿using Moodis.Constants.Enums;
 using Moodis.Database;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
 {
@@ -18,18 +18,20 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> AddUser(string username, string password)
         {
-            if(userList.Exists(userFromList => userFromList.username == username))
+            if(userList.Exists(userFromList => userFromList.Username == username))
             {
                 return Response.UserExists;
             }
             else
             {
-                currentUser = new User(username, Crypto.CalculateMD5Hash(password));
-                currentUser.personGroupId = Guid.NewGuid().ToString();
+                currentUser = new User(username, Crypto.CalculateMD5Hash(password))
+                {
+                    PersonGroupId = Guid.NewGuid().ToString()
+                };
                 DatabaseModel.AddUserToDatabase(currentUser);
                 UpdateLocalStorage();
 
-                var newFaceApiPerson = await Face.Instance.CreateNewPerson(currentUser.personGroupId, username);
+                var newFaceApiPerson = await Face.Instance.CreateNewPerson(currentUser.PersonGroupId, username);
 
                 if (newFaceApiPerson != null)
                 {
@@ -47,7 +49,7 @@ namespace Moodis.Feature.Register
         public async Task<Response> DeleteUser()
         {
             DatabaseModel.DeleteUserFromDatabase(currentUser);
-            var wasSuccessful = await Face.Instance.DeletePerson(currentUser.personGroupId);
+            var wasSuccessful = await Face.Instance.DeletePerson(currentUser.PersonGroupId);
             if (wasSuccessful)
             {
                 return Response.OK;
@@ -60,7 +62,7 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> AddFaceToPerson(string imagePath)
         {
-            bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.personGroupId, currentUser);
+            bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.PersonGroupId, currentUser);
 
             if (wasSuccessful)
             {
@@ -70,7 +72,7 @@ namespace Moodis.Feature.Register
                 {
                     try
                     {
-                        await Face.Instance.TrainPersonGroup(currentUser.personGroupId);
+                        await Face.Instance.TrainPersonGroup(currentUser.PersonGroupId);
                         return Response.RegistrationDone;
                     }
                     catch

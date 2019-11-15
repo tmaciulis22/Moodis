@@ -1,14 +1,12 @@
-﻿using Moodis.Network.Face;
-using System;
-using System.Threading.Tasks;
-using Moodis.Feature.Login;
-using Moodis.Extensions;
-using System.Linq;
-using Moodis.Feature.SignIn;
-using System.IO;
-using Android.Graphics;
+﻿using Android.Graphics;
 using Moodis.Constants.Enums;
 using Moodis.Database;
+using Moodis.Feature.SignIn;
+using Moodis.Network.Face;
+using System;
+using System.Threading.Tasks;
+using System.IO;
+using System.Linq;
 
 namespace Moodis.Ui
 {
@@ -18,8 +16,9 @@ namespace Moodis.Ui
         public Bitmap image;
 
         private static readonly Lazy<MenuViewModel> obj = new Lazy<MenuViewModel>(() => new MenuViewModel());
-        private MenuViewModel() { 
-            currentImage = new ImageInfo(); 
+        private MenuViewModel()
+        {
+            currentImage = new ImageInfo();
         }
 
         public static MenuViewModel Instance
@@ -32,7 +31,7 @@ namespace Moodis.Ui
 
         public async Task<Response> GetFaceEmotionsAsync()
         {
-            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.personGroupId, SignInViewModel.currentUser.username);
+            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.Username);
 
             if (face != null)
             {

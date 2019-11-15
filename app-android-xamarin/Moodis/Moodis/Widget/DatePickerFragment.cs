@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Util;
-using Android.Views;
 using Android.Widget;
+using System;
 
 namespace Moodis.Widget
 {
@@ -22,8 +14,10 @@ namespace Moodis.Widget
 
         public static DatePickerFragment NewInstance(Action<DateTime> onDateSelected)
         {
-            DatePickerFragment frag = new DatePickerFragment();
-            frag._dateSelectedHandler = onDateSelected;
+            DatePickerFragment frag = new DatePickerFragment
+            {
+                _dateSelectedHandler = onDateSelected
+            };
             return frag;
         }
 

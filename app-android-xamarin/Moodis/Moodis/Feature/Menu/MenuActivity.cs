@@ -14,11 +14,14 @@ using Moodis.History;
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
+using Android.Support.V4.View;
+using Android.Support.V4.Widget;
+using Android.Views;
 
 namespace Moodis.Feature.Menu
 {
-    [Activity(Label = "Menu")]
-    public class MenuActivity : AppCompatActivity
+    [Activity(Label = "Menu", Theme = "@style/AppTheme.NoActionBar")]
+    public class MenuActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private readonly string TAG = nameof(MenuActivity);
         private MenuViewModel MenuViewModel;
@@ -31,11 +34,20 @@ namespace Moodis.Feature.Menu
         {
             base.OnCreate(savedInstanceState);
 
-            this.SetSupportActionBar();
-
             MenuViewModel = MenuViewModel.Instance;
             MusicPlayer = new MusicPlayer(this);
             SetContentView(Resource.Layout.activity_menu);
+
+            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(toolbar);
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            drawer.AddDrawerListener(toggle);
+            toggle.SyncState();
+
+            NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            navigationView.SetNavigationItemSelectedListener(this);
+
 
             if (MenuViewModel.currentImage.ImagePath == null)
             {
@@ -97,7 +109,16 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
-            Finish();
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            if (drawer.IsDrawerOpen(GravityCompat.Start))
+            {
+                drawer.CloseDrawer(GravityCompat.Start);
+            }
+            else
+            {
+                base.OnBackPressed();
+            }
+            //Finish();
         }
 
         //TODO SHOW LOGOUT WINDOW WHEN USER LOGS OUT FROM A MENU THAT IS YET TO BE MADE.
@@ -156,6 +177,40 @@ namespace Moodis.Feature.Menu
             {
                 throw new NotImplementedException();
             };
+        }
+
+        public bool OnNavigationItemSelected(IMenuItem item)
+        {
+            int id = item.ItemId;
+
+            if (id == Resource.Id.nav_camera)
+            {
+                // Handle the camera action
+            }
+            else if (id == Resource.Id.nav_gallery)
+            {
+
+            }
+            else if (id == Resource.Id.nav_slideshow)
+            {
+
+            }
+            else if (id == Resource.Id.nav_manage)
+            {
+
+            }
+            else if (id == Resource.Id.nav_share)
+            {
+
+            }
+            else if (id == Resource.Id.nav_send)
+            {
+
+            }
+
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            drawer.CloseDrawer(GravityCompat.Start);
+            return true;
         }
     }
 }

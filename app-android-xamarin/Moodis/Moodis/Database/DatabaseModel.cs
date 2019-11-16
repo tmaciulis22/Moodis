@@ -75,11 +75,14 @@ namespace Moodis.Database
 
         public static List<Group> FetchGroupFromDatabase()
         {
-            return databaseConnection.Table<Group>().ToList();
+            var temp = databaseConnection.Table<Group>().ToList();
+            temp.ForEach(entry => entry.ConvertToList());
+            return temp;
         }
 
         public static void AddGroupToDatabase(Group group)
         {
+            group.ConvertToString();
             databaseConnection.Insert(group);
         }
 

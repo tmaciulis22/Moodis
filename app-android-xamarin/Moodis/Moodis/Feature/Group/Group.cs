@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Java.Lang;
 using Moodis.Feature.Login;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
@@ -17,11 +18,13 @@ namespace Moodis.Feature.Group
 {
     class Group
     {
+        private const string SEPARATOR = "__,__";
         [PrimaryKey]
         public string Id { get; set; }
 
-        [TextBlob("membersBlobbed")]
+        [Ignore]
         public List<string> members { get; set; }
+        public string membersInString { get; set; }
 
         public string Groupname { get; set; }
 
@@ -50,6 +53,19 @@ namespace Moodis.Feature.Group
         public bool isMember(string username)
         {
             return members.Contains(username) ? true : false;
+        }
+
+        public void ConvertToString()
+        {
+            StringBuffer stringBuffer = new StringBuffer();
+            members.ForEach(entry => stringBuffer.Append(entry).Append(SEPARATOR));
+            stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
+            membersInString = stringBuffer.ToString();
+        }
+
+        public void ConvertToList()
+        {
+            members = membersInString.Split(SEPARATOR).ToList();
         }
     }
 }

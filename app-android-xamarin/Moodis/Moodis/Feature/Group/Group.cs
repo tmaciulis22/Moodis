@@ -23,49 +23,49 @@ namespace Moodis.Feature.Group
         public string Id { get; set; }
 
         [Ignore]
-        public List<string> members { get; set; }
-        public string membersInString { get; set; }
+        public List<string> Members { get; set; }
+        public string MembersInString { get; set; }
 
         public string Groupname { get; set; }
 
         public Group()
         {
             Id = Guid.NewGuid().ToString();
-            members = new List<string>();
+            Members = new List<string>();
         }
 
         public Group(string name, string firstUser) : this()
         {
             this.Groupname = name;
-            members.Add(firstUser);
+            Members.Add(firstUser);
         }
 
         public void AddMember(string user)
         {
-            members.Add(user);
+            Members.Add(user);
         }
 
         public void RemoveMember(string user)
         {
-            members.Remove(user);
+            Members.Remove(user);
         }
 
-        public bool isMember(string username)
+        public bool IsMember(string username)
         {
-            return members.Contains(username) ? true : false;
+            return Members.Contains(username) ? true : false;
         }
 
         public void ConvertToString()
         {
-            StringBuffer stringBuffer = new StringBuffer();
-            members.ForEach(entry => stringBuffer.Append(entry).Append(SEPARATOR));
+            using StringBuffer stringBuffer = new StringBuffer();
+            Members.ForEach(entry => stringBuffer.Append(entry).Append(SEPARATOR));
             stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
-            membersInString = stringBuffer.ToString();
+            MembersInString = stringBuffer.ToString();
         }
 
         public void ConvertToList()
         {
-            members = membersInString.Split(SEPARATOR).ToList();
+            Members = MembersInString.Split(SEPARATOR).ToList();
         }
     }
 }

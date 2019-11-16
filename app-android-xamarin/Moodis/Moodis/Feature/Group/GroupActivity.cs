@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.V7.App;
-using Android.Views;
 using Android.Widget;
 using Moodis.Constants.Enums;
 
@@ -17,7 +10,7 @@ namespace Moodis.Feature.Group
     [Activity(Label = "Group Activity")]
     public class GroupActivity : AppCompatActivity
     {
-        GroupActivityModel groupActivityModel = new GroupActivityModel(); 
+        readonly GroupActivityModel groupActivityModel = new GroupActivityModel(); 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -53,6 +46,10 @@ namespace Moodis.Feature.Group
                     if(response == Response.OK)
                     {
                         Toast.MakeText(this, Resource.String.join_group_success, ToastLength.Short).Show();
+                    }
+                    else if(response == Response.UserNotFound)
+                    {
+                        Toast.MakeText(this, Resource.String.group_not_exists_error, ToastLength.Short).Show();
                     }
                     else if(response == Response.UserExists)
                     {

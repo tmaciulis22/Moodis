@@ -11,7 +11,7 @@ namespace Moodis.Database
 {
     class DatabaseModel
     {
-        private static SQLite.SQLiteConnection databaseConnection;
+        private static readonly SQLite.SQLiteConnection databaseConnection;
         static DatabaseModel()
         {
             string filename = "users_db.sqlite";
@@ -21,6 +21,9 @@ namespace Moodis.Database
             //databaseConnection.DeleteAll<User>();
             //databaseConnection.DeleteAll<ImageInfo>();
             //databaseConnection.DeleteAll<Emotion>():
+            databaseConnection.DropTable<ImageInfo>();
+            databaseConnection.DropTable<Emotion>();
+            databaseConnection.DropTable<Group>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();

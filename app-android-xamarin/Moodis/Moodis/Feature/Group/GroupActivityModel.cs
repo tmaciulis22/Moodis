@@ -31,7 +31,7 @@ namespace Moodis.Feature.Group
                 var group = groups.Find(groupTemp => groupTemp.Groupname == groupName);
                 Console.WriteLine(group.ToString());
                 var username = SignInViewModel.currentUser.Username;
-                if(!group.isMember(username))
+                if(!group.IsMember(username))
                 {
                     group.AddMember(username);
                     return Response.OK;

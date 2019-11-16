@@ -8,19 +8,7 @@
                                         android:fitsSystemWindows="true"
                                         tools:openDrawer="start">
 
-  <include
-    layout="@layout/app_bar_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-
-  <android.support.design.widget.NavigationView
-    android:id="@+id/nav_view"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    app:headerLayout="@layout/nav_header_main"
-    app:menu="@menu/activity_main_drawer" />
+ 
 
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,6 +23,7 @@
             android:id="@+id/imageForView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/grid_unit_0x"
+            android:layout_marginTop="@dimen/grid_unit_23x"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@id/lblAnger"
             app:layout_constraintEnd_toEndOf="@id/lblAnger"
@@ -98,11 +87,12 @@
             android:id="@+id/lblHappiness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_unit_3x"
             android:layout_marginEnd="@dimen/grid_unit_8x"
             android:layout_marginRight="@dimen/grid_unit_8x"
             tools:text="placeholder"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/StopMusic" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/lblNeutral"
@@ -135,63 +125,24 @@
             android:layout_marginEnd="@dimen/grid_unit_56x"
             android:layout_marginRight="@dimen/grid_unit_56x"
             tools:text="placeholder"
-            app:layout_constraintEnd_toStartOf="@id/lblHappiness"
+            app:layout_constraintEnd_toStartOf="@id/lblContempt"
             app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/buttonHistory" />
-
-        <Button
-            android:id="@+id/buttonHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/grid_unit_2x"
-            android:text="@string/history_button"
-            android:textSize="@dimen/menu_buttons"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/playMusic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/grid_unit_6x"
-            android:layout_marginLeft="@dimen/grid_unit_6x"
-            android:layout_marginBottom="@dimen/grid_unit_2x"
-            android:text="@string/play_music_button"
-            android:textSize="@dimen/menu_buttons"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/buttonHistory" />
-
-        <Button
-            android:id="@+id/groups"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/grid_unit_5x"
-            android:layout_marginBottom="@dimen/grid_unit_2x"
-            android:text="@string/groups_button"
-            android:textSize="@dimen/menu_buttons"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/StopMusic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/grid_unit_19x"
-            android:layout_marginLeft="@dimen/grid_unit_19x"
-            android:layout_marginRight="@dimen/grid_unit_6x"
-            android:layout_marginBottom="@dimen/grid_unit_2x"
-            android:text="@string/stop_music_button"
-            android:textSize="@dimen/menu_buttons"
-            app:layout_constraintEnd_toStartOf="@id/groups"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/playMusic" />
-        <android.support.v7.widget.Toolbar
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar1" />
+            app:layout_constraintStart_toStartOf="parent"  />
 
     </android.support.constraint.ConstraintLayout>
+    
+<include
+    layout="@layout/app_bar_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  <android.support.design.widget.NavigationView
+    android:id="@+id/nav_view"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:fitsSystemWindows="true"
+    app:headerLayout="@layout/nav_header_main"
+    app:menu="@menu/activity_main_drawer" />
+
 </android.support.v4.widget.DrawerLayout>

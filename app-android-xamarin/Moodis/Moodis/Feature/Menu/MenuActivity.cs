@@ -59,23 +59,8 @@ namespace Moodis.Feature.Menu
 
             JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
-            InitButtons();
             UpdateLabels();
             MenuViewModel.DeleteImage();
-        }
-
-        public override bool OnSupportNavigateUp()
-        {
-            if (JustSignedIn)
-            {
-                StartActivity(new Intent(this, typeof(CameraActivity)));
-                Finish();
-            }
-            else
-            {
-                OnBackPressed();
-            }
-            return true;
         }
 
         public void UpdateLabels()
@@ -118,10 +103,9 @@ namespace Moodis.Feature.Menu
             {
                 base.OnBackPressed();
             }
-            //Finish();
+            Finish();
         }
 
-        //TODO SHOW LOGOUT WINDOW WHEN USER LOGS OUT FROM A MENU THAT IS YET TO BE MADE.
         public void LogoutWindowShow()
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
@@ -135,18 +119,28 @@ namespace Moodis.Feature.Menu
             builder.Create().Show();
             builder.Dispose();
         }
-        private void InitButtons()
-        {
-            var btnHistory = FindViewById(Resource.Id.buttonHistory);
-            var btnPlayMusic = FindViewById(Resource.Id.playMusic);
-            var btnStopMusic = FindViewById(Resource.Id.StopMusic);
-            var btnGroups = FindViewById(Resource.Id.groups);
 
-            btnHistory.Click += (sender, e) =>
+        public bool OnNavigationItemSelected(IMenuItem item)
+        {
+            int id = item.ItemId;
+
+            if (id == Resource.Id.nav_camera)
+            {
+                StartActivity(new Intent(this, typeof(CameraActivity)));
+            }
+            else if (id == Resource.Id.nav_groups)
+            {
+
+            }
+            else if (id == Resource.Id.nav_history)
             {
                 StartActivity(new Intent(this, typeof(HistoryActivity)));
-            };
-            btnPlayMusic.Click += (sender, e) =>
+            }
+            else if (id == Resource.Id.nav_settings)
+            {
+
+            }
+            else if (id == Resource.Id.nav_music_play)
             {
                 if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
                 {
@@ -166,46 +160,11 @@ namespace Moodis.Feature.Menu
                     Log.Debug(TAG, Resources.GetString(Resource.String.warning_playing_music));
                     Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_playing_music, Snackbar.LengthShort).Show();
                 }
-
-            };
-            btnStopMusic.Click += (sender, e) =>
+            }
+            else if (id == Resource.Id.nav_music_stop)
             {
                 if (MusicPlayer != null)
                     MusicPlayer.Stop();
-            };
-            btnGroups.Click += (sender, e) =>
-            {
-                throw new NotImplementedException();
-            };
-        }
-
-        public bool OnNavigationItemSelected(IMenuItem item)
-        {
-            int id = item.ItemId;
-
-            if (id == Resource.Id.nav_camera)
-            {
-                // Handle the camera action
-            }
-            else if (id == Resource.Id.nav_gallery)
-            {
-
-            }
-            else if (id == Resource.Id.nav_slideshow)
-            {
-
-            }
-            else if (id == Resource.Id.nav_manage)
-            {
-
-            }
-            else if (id == Resource.Id.nav_share)
-            {
-
-            }
-            else if (id == Resource.Id.nav_send)
-            {
-
             }
 
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);

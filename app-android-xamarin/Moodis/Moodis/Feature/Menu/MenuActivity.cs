@@ -98,8 +98,8 @@ namespace Moodis.Feature.Menu
             else
             {
                 base.OnBackPressed();
+                Finish();
             }
-            Finish();
         }
 
         private void LogoutWindowShow()
@@ -111,7 +111,7 @@ namespace Moodis.Feature.Menu
                 .SetPositiveButton(Resource.String.yes, (senderAlert, args) =>
                 {
                     StartActivity(new Intent(this, typeof(SignInActivity)));
-                    Finish();
+                    FinishAffinity();
                 });
             builder.Create().Show();
             builder.Dispose();

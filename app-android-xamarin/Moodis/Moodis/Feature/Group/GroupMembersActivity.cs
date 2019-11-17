@@ -15,31 +15,31 @@ using Moodis.Extensions;
 
 namespace Moodis.Feature.Group
 {
-    [Activity(Label = "Group List")]
-    public class GroupListActivity : AppCompatActivity
+    [Activity(Label = "Group Members")]
+    public class GroupMembersActivity : AppCompatActivity
     {
         private RecyclerView recyclerView;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             this.SetSupportActionBar();
-            SetContentView(Resource.Layout.activity_group_list);
-            InitAdapter();
-        }
+            SetContentView(Resource.Layout.activity_group_details);
 
-        public override bool OnSupportNavigateUp()
+            InitAdapter();
+
+        }
+        private void InitAdapter()
+        {
+            recyclerView = FindViewById<RecyclerView>(Resource.Id.group_details);
+            var layoutManager = new LinearLayoutManager(this);
+            recyclerView.SetLayoutManager(layoutManager);
+            var adapter = new MembersGroupAdapter(Intent.GetIntExtra("clicked", 0));
+            recyclerView.SetAdapter(adapter);
+        }
+        public override bool OnNavigateUp()
         {
             OnBackPressed();
             return true;
-        }
-
-        private void InitAdapter()
-        {
-            recyclerView = FindViewById<RecyclerView>(Resource.Id.group_list);
-            var layoutManager = new LinearLayoutManager(this);
-            recyclerView.SetLayoutManager(layoutManager);
-            var adapter = new GroupListAdapter(this,GroupActivityModel.groups);
-            recyclerView.SetAdapter(adapter);
         }
     }
 }

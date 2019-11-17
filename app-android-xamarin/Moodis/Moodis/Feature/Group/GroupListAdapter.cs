@@ -16,11 +16,13 @@ namespace Moodis.Feature.Group
     class GroupListAdapter : RecyclerView.Adapter
     {
         List<Group> groups;
+        Context context;
         GroupActivityModel groupActivityModel = new GroupActivityModel();
 
-        public GroupListAdapter(List<Group> groups)
+        public GroupListAdapter(Context context,List<Group> groups)
         {
             this.groups = groups;
+            this.context = context;
         }
         public override int ItemCount
         {
@@ -29,9 +31,15 @@ namespace Moodis.Feature.Group
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            Console.WriteLine("indekas" + position);
             var viewHolder = holder as GroupViewHolder;
             viewHolder.GroupNameLabel.Text = groups[position].Groupname;
+            viewHolder.GroupNameLabel.Click += (sender, e) =>
+            {
+                var usersInGroup = groups[position].Members;
+                var MyIntent = new Intent(context, typeof(GroupMembersActivity));
+                MyIntent.PutExtra("clicked", position);
+                context.StartActivity(MyIntent);   
+            };
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

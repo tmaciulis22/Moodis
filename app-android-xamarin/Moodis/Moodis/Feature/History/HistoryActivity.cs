@@ -5,7 +5,6 @@ using Android.Support.V7.Widget;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.Group;
-using Moodis.Feature.SignIn;
 using Moodis.Widget;
 using System;
 

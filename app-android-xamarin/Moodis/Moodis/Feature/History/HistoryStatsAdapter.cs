@@ -2,7 +2,6 @@
 using Android.Views;
 using Moodis.Feature.SignIn;
 using Moodis.Ui;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +13,6 @@ namespace Moodis.History
 
         public HistoryStatsAdapter(IList<ImageInfo> statList)
         {
-            
             _statList = statList.ToList();
         }
 

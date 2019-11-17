@@ -7,7 +7,7 @@ using Moodis.Constants.Enums;
 
 namespace Moodis.Feature.Group
 {
-    [Activity(Label = "Group Activity")]
+    [Activity(Label = "Groups")]
     public class GroupActivity : AppCompatActivity
     {
         readonly GroupActivityModel groupActivityModel = new GroupActivityModel(); 

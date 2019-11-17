@@ -14,7 +14,7 @@ namespace Moodis.History
     [Activity(Label = "History")]
     public class HistoryActivity : AppCompatActivity
     {
-        private HistoryViewModel historyViewModel = new HistoryViewModel();
+        private readonly HistoryViewModel historyViewModel = new HistoryViewModel();
         private RecyclerView recyclerView;
 
         protected override void OnCreate(Bundle savedInstanceState)

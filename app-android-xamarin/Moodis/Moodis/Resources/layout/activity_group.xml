@@ -14,7 +14,7 @@
         android:layout_marginBottom="416dp"
         android:width="300dp"
         android:ems="10"
-        android:hint="Group name"
+        android:hint="@string/hint_group_name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         android:id="@+id/button_join_group"
         android:layout_width="231dp"
         android:layout_height="45dp"
-        android:text="Join a Group"
+        android:text="@string/string_join_a_group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
@@ -40,7 +40,7 @@
         android:layout_width="231dp"
         android:layout_height="45dp"
         android:layout_marginBottom="132dp"
-        android:text="See my Groups"
+        android:text="@string/string_see_my_groups"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
@@ -52,7 +52,7 @@
         android:id="@+id/button_create_group"
         android:layout_width="231dp"
         android:layout_height="45dp"
-        android:text="Create a group"
+        android:text="@string/string_create_a_group"
         app:layout_constraintBottom_toTopOf="@+id/button_see_groups"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -64,7 +64,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/string_groupName"
         android:textSize="50dp"
         app:layout_constraintBottom_toTopOf="@+id/text_groupName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.576"
-        tools:text="Draugeliai" />
+        
+    />
 
 </android.support.constraint.ConstraintLayout>

@@ -57,4 +57,11 @@
   <string name="text_group_empty_error">No group name provided</string>
   <string name="group_exists_error">Group already exists</string>
   <string name="group_not_exists_error">Group does not exist</string>
+
+  <string name="string_groupName">Draugeliai</string>
+  <string name="string_create_a_group">Create a group</string>
+  <string name="string_see_my_groups">See my groups</string>
+  <string name="string_join_a_group">Join a Group</string>
+  <string name="hint_group_name">Group name</string>
+  
 </resources>

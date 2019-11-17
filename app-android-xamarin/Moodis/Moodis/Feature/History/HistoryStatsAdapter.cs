@@ -1,6 +1,8 @@
 ﻿using Android.Support.V7.Widget;
 using Android.Views;
+using Moodis.Feature.SignIn;
 using Moodis.Ui;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +14,7 @@ namespace Moodis.History
 
         public HistoryStatsAdapter(IList<ImageInfo> statList)
         {
+            
             _statList = statList.ToList();
         }
 
@@ -25,7 +28,7 @@ namespace Moodis.History
             var viewHolder = holder as StatViewHolder;
             viewHolder.TimeLabel.Text = _statList[position].ImageDate.Hour.ToString() + ":" + _statList[position].ImageDate.Minute.ToString();
             viewHolder.EmotionLabel.Text = _statList[position].emotions.Max().Name;
-            viewHolder.UsernameLabel.Text = "temporary";
+            viewHolder.UsernameLabel.Text = SignInViewModel.userList.Find(user => user.Id == _statList[position].UserId).Username;
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

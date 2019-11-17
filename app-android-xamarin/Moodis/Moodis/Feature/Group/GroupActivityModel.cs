@@ -67,7 +67,7 @@ namespace Moodis.Feature.Group
             List<string> FriendUsernames = new List<string>();
             whereUserIs.ForEach(group => group.Members.ForEach(username => FriendUsernames.Add(username)));
             List<string> UserIds = new List<string>();
-            FriendUsernames.ForEach(username => UserIds.Add(RegisterViewModel.getIdByUsername(username)));
+            FriendUsernames.ForEach(username => UserIds.Add(RegisterViewModel.GetIdByUsername(username)));
             return UserIds;
         }
     }

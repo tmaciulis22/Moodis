@@ -166,6 +166,15 @@ namespace Moodis.Feature.Menu
                 if (MusicPlayer != null)
                     MusicPlayer.Stop();
             }
+            else if (id == Resource.Id.nav_music_settings)
+            {
+
+            }
+            else if (id == Resource.Id.nav_menu_logout)
+            {
+                LogoutWindowShow();
+            }
+
 
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.CloseDrawer(GravityCompat.Start);

@@ -93,5 +93,10 @@ namespace Moodis.Feature.Register
         {
             userList = Database.DatabaseModel.FetchUsers();
         }
+
+        public static string getIdByUsername(string username)
+        {
+           return userList.Find(user => user.Username == username).Id;
+        }
     }
 }

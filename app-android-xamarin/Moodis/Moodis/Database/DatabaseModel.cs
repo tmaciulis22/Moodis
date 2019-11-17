@@ -21,9 +21,9 @@ namespace Moodis.Database
             //databaseConnection.DeleteAll<User>();
             //databaseConnection.DeleteAll<ImageInfo>();
             //databaseConnection.DeleteAll<Emotion>():
-            databaseConnection.DropTable<ImageInfo>();
-            databaseConnection.DropTable<Emotion>();
-            databaseConnection.DropTable<Group>();
+            //databaseConnection.DropTable<ImageInfo>();
+            //databaseConnection.DropTable<Emotion>();
+            //databaseConnection.DropTable<Group>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();
@@ -35,11 +35,11 @@ namespace Moodis.Database
             return databaseConnection.Table<User>().ToList();
         }
 
-        public static List<ImageInfo> FetchUserStats(string userId, DateTime? dateTime = null)
+        public static List<ImageInfo> FetchUserStats(List<string> userIds, DateTime? dateTime = null)
         {
             var stats = databaseConnection.Table<ImageInfo>().ToList();
 
-            stats = stats.Where(stat => stat.UserId == userId).ToList();
+            stats = stats.Where(stat => userIds.Contains(stat.Id)).ToList();
 
             stats.ForEach(stat => stat.ImageDate = DateTime.Parse(stat.DateAsString));
 

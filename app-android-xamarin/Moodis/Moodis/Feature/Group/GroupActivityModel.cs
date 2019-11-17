@@ -11,26 +11,25 @@ using Android.Views;
 using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Database;
+using Moodis.Feature.Register;
 using Moodis.Feature.SignIn;
 
 namespace Moodis.Feature.Group
 {
     class GroupActivityModel
     {
-        public List<Group> groups;
-        
-        public GroupActivityModel()
-        {
-            groups = DatabaseModel.FetchGroupFromDatabase();
-        }
+        public static List<Group> groups = DatabaseModel.FetchGroupFromDatabase();
 
         public Response AddUserToGroup(string groupName)
         {
             if(groups != null)
             {
-                var group = groups.Find(groupTemp => groupTemp.Groupname == groupName);
-                Console.WriteLine(group.ToString());
                 var username = SignInViewModel.currentUser.Username;
+                var group = groups.Find(groupTemp => groupTemp.Groupname == groupName);
+                if(group == null)
+                {
+                    return Response.UserNotFound;
+                }
                 if(!group.IsMember(username))
                 {
                     group.AddMember(username);
@@ -60,6 +59,16 @@ namespace Moodis.Feature.Group
             {
                 return Response.UserExists;
             }
+        }
+
+        public static List<string> GetFriendIds()
+        {
+            var whereUserIs = groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username)).ToList();
+            List<string> FriendUsernames = new List<string>();
+            whereUserIs.ForEach(group => group.Members.ForEach(username => FriendUsernames.Add(username)));
+            List<string> UserIds = new List<string>();
+            FriendUsernames.ForEach(username => UserIds.Add(RegisterViewModel.getIdByUsername(username)));
+            return UserIds;
         }
     }
 }

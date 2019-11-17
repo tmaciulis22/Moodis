@@ -23,8 +23,9 @@ namespace Moodis.History
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var viewHolder = holder as StatViewHolder;
-            viewHolder.TimeLabel.Text = (_statList[position].ImageDate.Hour.ToString() + ":" + _statList[position].ImageDate.Minute.ToString());
+            viewHolder.TimeLabel.Text = _statList[position].ImageDate.Hour.ToString() + ":" + _statList[position].ImageDate.Minute.ToString();
             viewHolder.EmotionLabel.Text = _statList[position].emotions.Max().Name;
+            viewHolder.UsernameLabel.Text = "temporary";
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

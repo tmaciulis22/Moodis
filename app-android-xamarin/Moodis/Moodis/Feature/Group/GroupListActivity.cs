@@ -25,9 +25,6 @@ namespace Moodis.Feature.Group
             this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_group_list);
             InitAdapter();
-
-
-            // Create your application here
         }
 
         public override bool OnSupportNavigateUp()
@@ -41,7 +38,9 @@ namespace Moodis.Feature.Group
             recyclerView = FindViewById<RecyclerView>(Resource.Id.group_list);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-
+            var adapter = new GroupListAdapter(GroupActivityModel.groups);
+            recyclerView.SetAdapter(adapter);
+            Console.WriteLine("ilgis " + GroupActivityModel.groups.Count());
         }
     }
 }

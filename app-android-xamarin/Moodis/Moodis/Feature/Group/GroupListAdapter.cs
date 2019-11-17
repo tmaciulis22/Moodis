@@ -29,6 +29,7 @@ namespace Moodis.Feature.Group
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
+            Console.WriteLine("indekas" + position);
             var viewHolder = holder as GroupViewHolder;
             viewHolder.GroupNameLabel.Text = groups[position].Groupname;
         }

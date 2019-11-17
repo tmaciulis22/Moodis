@@ -25,6 +25,7 @@ namespace Moodis.Feature.Menu
         private MenuViewModel MenuViewModel;
         private MusicPlayer MusicPlayer;
         private const string FormatDouble = "N3";
+        private bool JustSignedIn = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -44,7 +45,6 @@ namespace Moodis.Feature.Menu
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
 
-
             if (MenuViewModel.currentImage.ImagePath == null)
             {
                 StartActivity(new Intent(this, typeof(CameraActivity)));
@@ -52,6 +52,8 @@ namespace Moodis.Feature.Menu
             }
 
             MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
+
+            JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
             UpdateLabels();
             MenuViewModel.DeleteImage();
@@ -100,7 +102,7 @@ namespace Moodis.Feature.Menu
             Finish();
         }
 
-        public void LogoutWindowShow()
+        private void LogoutWindowShow()
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
                 .SetTitle(Resource.String.logout)
@@ -114,61 +116,66 @@ namespace Moodis.Feature.Menu
             builder.Dispose();
         }
 
+        private void MusicPlay()
+        {
+            if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
+            {
+                int[] musicLabels = { Resource.Raw.Anger, Resource.Raw.Contempt, Resource.Raw.Disgust, Resource.Raw.Fear, Resource.Raw.Happiness, Resource.Raw.Neutral,
+                                Resource.Raw.Sadness, Resource.Raw.Surprise };
+                if (MenuViewModel.GetHighestEmotionIndex() != -1)
+                {
+                    MusicPlayer.Play(musicLabels[MenuViewModel.GetHighestEmotionIndex()]);
+                }
+            }
+            else if (MusicPlayer.IsPlaying())
+            {
+                Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.info_music_is_playing, Snackbar.LengthShort).Show();
+            }
+            else
+            {
+                Log.Debug(TAG, Resources.GetString(Resource.String.warning_playing_music));
+                Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_playing_music, Snackbar.LengthShort).Show();
+            }
+        }
+
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
 
-            if (id == Resource.Id.nav_camera)
-            {
-                StartActivity(new Intent(this, typeof(CameraActivity)));
-            }
-            else if (id == Resource.Id.nav_groups)
-            {
-
-            }
-            else if (id == Resource.Id.nav_history)
-            {
-                StartActivity(new Intent(this, typeof(HistoryActivity)));
-            }
-            else if (id == Resource.Id.nav_settings)
-            {
-
-            }
-            else if (id == Resource.Id.nav_music_play)
-            {
-                if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
-                {
-                    int[] musicLabels = { Resource.Raw.Anger, Resource.Raw.Contempt, Resource.Raw.Disgust, Resource.Raw.Fear, Resource.Raw.Happiness, Resource.Raw.Neutral,
-                                Resource.Raw.Sadness, Resource.Raw.Surprise };
-                    if (MenuViewModel.GetHighestEmotionIndex() != -1)
+            switch(id)  
+            {  
+               case Resource.Id.nav_camera:
+                    if (JustSignedIn)
                     {
-                        MusicPlayer.Play(musicLabels[MenuViewModel.GetHighestEmotionIndex()]);
+                        StartActivity(new Intent(this, typeof(CameraActivity)));
+                        Finish();
                     }
-                }
-                else if (MusicPlayer.IsPlaying())
-                {
-                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.info_music_is_playing, Snackbar.LengthShort).Show();
-                }
-                else
-                {
-                    Log.Debug(TAG, Resources.GetString(Resource.String.warning_playing_music));
-                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_playing_music, Snackbar.LengthShort).Show();
-                }
-            }
-            else if (id == Resource.Id.nav_music_stop)
-            {
-                if (MusicPlayer != null)
+                    else
+                    {
+                        OnBackPressed();
+                    }
+                 break;
+               case Resource.Id.nav_groups:  
+                 break; 
+               case Resource.Id.nav_history:  
+                 StartActivity(new Intent(this, typeof(HistoryActivity)));
+                 break;
+               case Resource.Id.nav_music_play:
+                    MusicPlay();
+                 break;
+               case Resource.Id.nav_music_stop:  
+                 if (MusicPlayer != null)
                     MusicPlayer.Stop();
-            }
-            else if (id == Resource.Id.nav_music_settings)
-            {
-
-            }
-            else if (id == Resource.Id.nav_menu_logout)
-            {
-                LogoutWindowShow();
-            }
-
+                 break;
+               case Resource.Id.nav_music_settings:  
+                 break;
+               case Resource.Id.nav_menu_logout:  
+                    LogoutWindowShow();
+                 break;
+               default:
+                    Log.Info(TAG, "Nothing selected");
+                 break;
+            }   
 
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.CloseDrawer(GravityCompat.Start);

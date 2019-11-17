@@ -6,13 +6,11 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Widget;
-using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Music;
 using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
-using System;
 using System.Collections.Generic;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
@@ -27,8 +25,6 @@ namespace Moodis.Feature.Menu
         private MenuViewModel MenuViewModel;
         private MusicPlayer MusicPlayer;
         private const string FormatDouble = "N3";
-
-        private bool JustSignedIn = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -56,8 +52,6 @@ namespace Moodis.Feature.Menu
             }
 
             MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
-
-            JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
             UpdateLabels();
             MenuViewModel.DeleteImage();

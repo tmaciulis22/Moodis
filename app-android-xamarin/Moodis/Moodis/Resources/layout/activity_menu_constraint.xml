@@ -28,7 +28,6 @@
         android:layout_marginEnd="@dimen/grid_unit_56x"
         android:layout_marginRight="@dimen/grid_unit_56x"
         app:layout_constraintBottom_toTopOf="@+id/lblFear"
-
         app:layout_constraintStart_toStartOf="parent"
         tools:text="placeholder" />
 

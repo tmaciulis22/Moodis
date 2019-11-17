@@ -5700,10 +5700,13 @@ namespace Moodis
 			public const int warning_face_detection = 2131689565;
 			
 			// aapt resource value: 0x7F0F005E
-			public const int warning_playing_music = 2131689566;
+			public const int warning_no_music_playing = 2131689566;
 			
 			// aapt resource value: 0x7F0F005F
-			public const int yes = 2131689567;
+			public const int warning_playing_music = 2131689567;
+			
+			// aapt resource value: 0x7F0F0060
+			public const int yes = 2131689568;
 			
 			static String()
 			{

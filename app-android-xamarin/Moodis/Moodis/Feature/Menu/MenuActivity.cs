@@ -3,8 +3,11 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
+using Android.Support.V4.View;
+using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Util;
+using Android.Views;
 using Android.Widget;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Music;
@@ -12,9 +15,6 @@ using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
 using System.Collections.Generic;
-using Android.Support.V4.View;
-using Android.Support.V4.Widget;
-using Android.Views;
 
 namespace Moodis.Feature.Menu
 {
@@ -108,7 +108,8 @@ namespace Moodis.Feature.Menu
                 .SetTitle(Resource.String.logout)
                 .SetMessage(Resource.String.logout_confirmation_message)
                 .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
-                .SetPositiveButton(Resource.String.yes, (senderAlert, args) => {
+                .SetPositiveButton(Resource.String.yes, (senderAlert, args) =>
+                {
                     StartActivity(new Intent(this, typeof(SignInActivity)));
                     Finish();
                 });
@@ -142,41 +143,47 @@ namespace Moodis.Feature.Menu
         {
             int id = item.ItemId;
 
-            switch(id)  
-            {  
-               case Resource.Id.nav_camera:
-                    if (JustSignedIn)
-                    {
-                        StartActivity(new Intent(this, typeof(CameraActivity)));
-                        Finish();
-                    }
-                    else
-                    {
-                        OnBackPressed();
-                    }
-                 break;
-               case Resource.Id.nav_groups:  
-                 break; 
-               case Resource.Id.nav_history:  
-                 StartActivity(new Intent(this, typeof(HistoryActivity)));
-                 break;
-               case Resource.Id.nav_music_play:
-                    MusicPlay();
-                 break;
-               case Resource.Id.nav_music_stop:  
-                 if (MusicPlayer != null)
-                    MusicPlayer.Stop();
-                 break;
-               case Resource.Id.nav_music_settings:  
-                 break;
-               case Resource.Id.nav_menu_logout:  
-                    LogoutWindowShow();
-                 break;
-               default:
-                    Log.Info(TAG, "Nothing selected");
-                 break;
-            }   
+            if (id == Resource.Id.nav_camera)
+            {
+                if (JustSignedIn)
+                {
+                    StartActivity(new Intent(this, typeof(CameraActivity)));
+                    Finish();
+                }
+                else
+                {
+                    OnBackPressed();
+                }
+            }
+            else if (id == Resource.Id.nav_groups)
+            {
 
+            }
+            else if (id == Resource.Id.nav_history)
+            {
+                StartActivity(new Intent(this, typeof(HistoryActivity)));
+            }
+            else if (id == Resource.Id.nav_music_play)
+            {
+                MusicPlay();
+            }
+            else if (id == Resource.Id.nav_music_stop)
+            {
+                if (MusicPlayer != null)
+                    MusicPlayer.Stop();
+                else
+                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_no_music_playing, Snackbar.LengthShort).Show();
+            }
+            else if (id == Resource.Id.nav_music_settings)
+            {
+
+            }
+            else if (id == Resource.Id.nav_menu_logout)
+            {
+                LogoutWindowShow();
+            }
+
+            Log.Info(TAG, "Interraction with navigation window");
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             drawer.CloseDrawer(GravityCompat.Start);
             return true;

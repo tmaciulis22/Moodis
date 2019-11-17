@@ -1,5 +1,6 @@
 ﻿
 using Android.App;
+using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Widget;
@@ -84,6 +85,11 @@ namespace Moodis.Feature.Group
                 {
                     Toast.MakeText(this, Resource.String.text_group_empty_error, ToastLength.Short).Show();
                 }
+            };
+
+            SeeGroupsButton.Click += (sender, e) =>
+            {
+                StartActivity(new Intent(this, typeof(GroupListActivity)));
             };
         }
     }

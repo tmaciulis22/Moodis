@@ -27,12 +27,6 @@ namespace Moodis.Feature.Group
             InitAdapter();
         }
 
-        public override bool OnSupportNavigateUp()
-        {
-            OnBackPressed();
-            return true;
-        }
-
         private void InitAdapter()
         {
             recyclerView = FindViewById<RecyclerView>(Resource.Id.group_list);

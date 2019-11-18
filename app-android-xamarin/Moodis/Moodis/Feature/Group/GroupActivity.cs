@@ -1,5 +1,4 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
@@ -21,7 +20,7 @@ namespace Moodis.Feature.Group
 
         public override void OnBackPressed()
         {
-            base.OnBackPressed();
+            Finish();
         }
 
         private void InitialiseInputs()
@@ -69,7 +68,7 @@ namespace Moodis.Feature.Group
 
             CreateGroupButton.Click += (sender, e) =>
             {
-                if(!string.IsNullOrEmpty(GroupNameTextField.Text))
+                if(!string.IsNullOrWhiteSpace(GroupNameTextField.Text))
                 {
                     var respone = groupActivityModel.CreateGroup(GroupNameTextField.Text);
                     if(respone == Response.OK)

@@ -75,9 +75,9 @@ namespace Moodis.Database
 
         public static List<Group> FetchGroupFromDatabase()
         {
-            var temp = databaseConnection.Table<Group>().ToList();
-            temp.ForEach(entry => entry.ConvertToList());
-            return temp;
+            var groups = databaseConnection.Table<Group>().ToList();
+            groups.ForEach(entry => entry.ConvertToList());
+            return groups;
         }
 
         public static void AddGroupToDatabase(Group group)

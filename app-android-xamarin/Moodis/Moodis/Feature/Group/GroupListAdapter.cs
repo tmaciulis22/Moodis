@@ -24,6 +24,7 @@ namespace Moodis.Feature.Group
             this.groups = groups;
             this.context = context;
         }
+
         public override int ItemCount
         {
             get { return groups.Count(); }

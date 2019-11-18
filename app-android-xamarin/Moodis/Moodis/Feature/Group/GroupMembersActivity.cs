@@ -24,10 +24,9 @@ namespace Moodis.Feature.Group
             base.OnCreate(savedInstanceState);
             this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_group_details);
-
             InitAdapter();
-
         }
+
         private void InitAdapter()
         {
             recyclerView = FindViewById<RecyclerView>(Resource.Id.group_details);
@@ -35,11 +34,6 @@ namespace Moodis.Feature.Group
             recyclerView.SetLayoutManager(layoutManager);
             var adapter = new MembersGroupAdapter(Intent.GetIntExtra("clicked", 0));
             recyclerView.SetAdapter(adapter);
-        }
-        public override bool OnNavigateUp()
-        {
-            OnBackPressed();
-            return true;
         }
     }
 }

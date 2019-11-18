@@ -24,8 +24,5 @@ namespace Moodis.Feature.Group
             GroupNameLabel = view.FindViewById<TextView>(Resource.Id.label_groupname);
             parentLayout = view.FindViewById<ConstraintLayout>(Resource.Id.group_list);
         }
-
-
     }
-
 }

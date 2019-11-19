@@ -37,6 +37,7 @@
             this.textBoxPasswordRepeat = new System.Windows.Forms.TextBox();
             this.labelNotification = new System.Windows.Forms.Label();
             this.buttonRegister = new System.Windows.Forms.Button();
+            this.btnToSignIn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelRegister
@@ -118,11 +119,22 @@
             this.buttonRegister.UseVisualStyleBackColor = true;
             this.buttonRegister.Click += new System.EventHandler(this.ButtonRegister_Click);
             // 
+            // btnToSignIn
+            // 
+            this.btnToSignIn.Location = new System.Drawing.Point(12, 338);
+            this.btnToSignIn.Name = "btnToSignIn";
+            this.btnToSignIn.Size = new System.Drawing.Size(264, 23);
+            this.btnToSignIn.TabIndex = 9;
+            this.btnToSignIn.Text = "Go back to sign in";
+            this.btnToSignIn.UseVisualStyleBackColor = true;
+            this.btnToSignIn.Click += new System.EventHandler(this.BtnToSignIn_Click);
+            // 
             // RegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(298, 450);
+            this.ClientSize = new System.Drawing.Size(295, 376);
+            this.Controls.Add(this.btnToSignIn);
             this.Controls.Add(this.buttonRegister);
             this.Controls.Add(this.labelNotification);
             this.Controls.Add(this.textBoxPasswordRepeat);
@@ -150,5 +162,6 @@
         private System.Windows.Forms.TextBox textBoxPasswordRepeat;
         private System.Windows.Forms.Label labelNotification;
         private System.Windows.Forms.Button buttonRegister;
+        private System.Windows.Forms.Button btnToSignIn;
     }
 }

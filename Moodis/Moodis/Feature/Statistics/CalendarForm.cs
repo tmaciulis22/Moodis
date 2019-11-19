@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Moodis.Ui;
 using Moodis.Feature.Login;
-using System.Linq;
 
 namespace Moodis.Feature.Statistics
 {

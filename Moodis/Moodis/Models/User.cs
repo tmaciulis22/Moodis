@@ -2,9 +2,6 @@
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Moodis.Feature.Login
 {
@@ -20,11 +17,11 @@ namespace Moodis.Feature.Login
         [field: NonSerialized]
         public Person faceApiPerson { get; set; }
 
-        public User(string username, string password)
+        public User(string username, string password,string groupName = "")
         {
             this.username = username;
             this.password = password;
-            this.groupName = "";
+            this.groupName = groupName;
         }
         public void addImage(ImageInfo image)
         {

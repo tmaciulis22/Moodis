@@ -15,7 +15,7 @@ namespace Moodis.Feature.Group
 {
     class MembersGroupAdapter : RecyclerView.Adapter
     {
-        List<string> members;
+        readonly List<string> members;
 
         public MembersGroupAdapter(int position)
         {

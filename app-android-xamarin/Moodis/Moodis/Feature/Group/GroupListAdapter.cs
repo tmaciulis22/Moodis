@@ -15,8 +15,8 @@ namespace Moodis.Feature.Group
 {  
     class GroupListAdapter : RecyclerView.Adapter
     {
-        List<Group> groups;
-        Context context;
+        readonly List<Group> groups;
+        readonly Context context;
 
         public GroupListAdapter(Context context,List<Group> groups)
         {

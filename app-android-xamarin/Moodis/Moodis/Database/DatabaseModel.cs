@@ -20,7 +20,8 @@ namespace Moodis.Database
             //Use this for testing compatability with new users
             //databaseConnection.DeleteAll<User>();
             //databaseConnection.DeleteAll<ImageInfo>();
-            //databaseConnection.DeleteAll<Emotion>():
+            //databaseConnection.DeleteAll<Emotion>();
+            //databaseConnection.DeleteAll<Group>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();
@@ -84,6 +85,12 @@ namespace Moodis.Database
         {
             group.ConvertToString();
             databaseConnection.Insert(group);
+        }
+
+        public static void UpdateGroupToDatabase(Group group)
+        {
+            group.ConvertToString();
+            databaseConnection.Update(group);
         }
 
         public static void DeleteGroupFromDatabase(Group group)

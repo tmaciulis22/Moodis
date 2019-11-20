@@ -42,7 +42,7 @@ namespace Moodis.Feature.Group
 
         public bool IsMember(string username)
         {
-            return Members.Contains(username) ? true : false;
+            return Members.Contains(username);
         }
 
         public void ConvertToString()

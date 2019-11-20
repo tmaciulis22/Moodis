@@ -8,6 +8,7 @@ using Moodis.Constants.Enums;
 namespace Moodis.Feature.Group
 {
     [Activity(Label = "Groups")]
+
     public class GroupActivity : AppCompatActivity
     {
         readonly GroupActivityModel groupActivityModel = new GroupActivityModel(); 
@@ -16,11 +17,6 @@ namespace Moodis.Feature.Group
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_group);
             InitialiseInputs();
-        }
-
-        public override void OnBackPressed()
-        {
-            Finish();
         }
 
         private void InitialiseInputs()
@@ -34,7 +30,7 @@ namespace Moodis.Feature.Group
             {
                 if (string.IsNullOrEmpty((sender as EditText).Text))
                 {
-                    GroupNameTextField.SetError(GetString(Resource.String.username_empty_error), null);
+                    GroupNameTextField.SetError(GetString(Resource.String.group_entry_empty), null);
                 }
             };
 
@@ -47,11 +43,11 @@ namespace Moodis.Feature.Group
                     {
                         Toast.MakeText(this, Resource.String.join_group_success, ToastLength.Short).Show();
                     }
-                    else if(response == Response.UserNotFound)
+                    else if(response == Response.GroupNotFound)
                     {
                         Toast.MakeText(this, Resource.String.group_not_exists_error, ToastLength.Short).Show();
                     }
-                    else if(response == Response.UserExists)
+                    else if(response == Response.GroupExists)
                     {
                         Toast.MakeText(this, Resource.String.join_group_fail, ToastLength.Short).Show();
                     }

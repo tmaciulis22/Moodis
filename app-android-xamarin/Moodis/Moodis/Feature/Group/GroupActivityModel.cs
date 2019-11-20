@@ -19,16 +19,17 @@ namespace Moodis.Feature.Group
                 var group = groups.Find(groupTemp => groupTemp.Groupname == groupName);
                 if(group == null)
                 {
-                    return Response.UserNotFound;
+                    return Response.GroupNotFound;
                 }
                 if(!group.IsMember(username))
                 {
                     group.AddMember(username);
+                    DatabaseModel.UpdateGroupToDatabase(group);
                     return Response.OK;
                 }
                 else
                 {
-                    return Response.UserExists;
+                    return Response.GroupExists;
                 }
             }
             else
@@ -48,11 +49,11 @@ namespace Moodis.Feature.Group
             }
             else
             {
-                return Response.UserExists;
+                return Response.GroupExists;
             }
         }
 
-        public static List<string> GetFriendIds()
+        public static List<string> GetRelatedIds()
         {
             var whereUserIs = groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username)).ToList();
             List<string> FriendUsernames = new List<string>();

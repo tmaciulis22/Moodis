@@ -17,7 +17,6 @@ namespace Moodis.Feature.Group
     {
         List<Group> groups;
         Context context;
-        GroupActivityModel groupActivityModel = new GroupActivityModel();
 
         public GroupListAdapter(Context context,List<Group> groups)
         {

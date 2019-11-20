@@ -58,10 +58,11 @@
   <string name="group_exists_error">Group already exists</string>
   <string name="group_not_exists_error">Group does not exist</string>
 
-  <string name="string_groupName">Draugeliai</string>
-  <string name="string_create_a_group">Create a group</string>
-  <string name="string_see_my_groups">See my groups</string>
-  <string name="string_join_a_group">Join a Group</string>
+  <string name="groupName">Draugeliai</string>
+  <string name="create_a_group">Create a group</string>
+  <string name="see_my_groups">See my groups</string>
+  <string name="join_a_group">Join a Group</string>
   <string name="hint_group_name">Group name</string>
+  <string name="group_entry_empty">Please enter group name </string>
   
 </resources>

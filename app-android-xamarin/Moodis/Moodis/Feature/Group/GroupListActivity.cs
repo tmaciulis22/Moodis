@@ -12,6 +12,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using Moodis.Extensions;
+using Moodis.Feature.SignIn;
 
 namespace Moodis.Feature.Group
 {
@@ -32,7 +33,7 @@ namespace Moodis.Feature.Group
             recyclerView = FindViewById<RecyclerView>(Resource.Id.group_list);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-            var adapter = new GroupListAdapter(this,GroupActivityModel.groups);
+            var adapter = new GroupListAdapter(this,GroupActivityModel.groups.Where(member => member.IsMember(SignInViewModel.currentUser.Username)).ToList());
             recyclerView.SetAdapter(adapter);
         }
     }

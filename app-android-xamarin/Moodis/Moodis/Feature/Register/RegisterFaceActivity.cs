@@ -21,7 +21,7 @@ namespace Moodis.Feature.Register
     [Activity(Label = "Register")]
     public class RegisterFaceActivity : AppCompatActivity
     {
-        RegisterViewModel registerViewModel = new RegisterViewModel();
+        readonly RegisterViewModel registerViewModel = new RegisterViewModel();
 
         Camera camera;
         private bool CameraReleased = false;
@@ -170,7 +170,7 @@ namespace Moodis.Feature.Register
             AfterTakenPictures = async (sender, e) =>
             {
                 if (UserFaceAlreadyExists) {
-                    CheckWhetherUserFaceAlreadyUsedAsync(e);
+                    await CheckWhetherUserFaceAlreadyUsedAsync(e);
                 }
 
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
@@ -201,7 +201,8 @@ namespace Moodis.Feature.Register
             }
             else if (response == Response.UserExists)
             {
-                Toast.MakeText(this, Resource.String.user_exists, ToastLength.Short).Show();
+                Toast.MakeText(this, Resource.String.user_face_exists, ToastLength.Short).Show();
+                SetResult(Result.Canceled);
                 Finish();
             }
             UserFaceAlreadyExists = false;

@@ -5578,8 +5578,8 @@ namespace Moodis
 			// aapt resource value: 0x7F0E0055
 			public const int take_another_picture = 2131624021;
 			
-			// aapt resource value: 0x7F0E005A
-			public const int username_empty_error = 2131624026;
+			// aapt resource value: 0x7F0E005B
+			public const int username_empty_error = 2131624027;
 			
 			// aapt resource value: 0x7F0E0056
 			public const int user_created = 2131624022;
@@ -5591,16 +5591,19 @@ namespace Moodis
 			public const int user_exists = 2131624024;
 			
 			// aapt resource value: 0x7F0E0059
-			public const int user_not_found_error = 2131624025;
+			public const int user_face_exists = 2131624025;
 			
-			// aapt resource value: 0x7F0E005B
-			public const int warning_face_detection = 2131624027;
+			// aapt resource value: 0x7F0E005A
+			public const int user_not_found_error = 2131624026;
 			
 			// aapt resource value: 0x7F0E005C
-			public const int warning_playing_music = 2131624028;
+			public const int warning_face_detection = 2131624028;
 			
 			// aapt resource value: 0x7F0E005D
-			public const int yes = 2131624029;
+			public const int warning_playing_music = 2131624029;
+			
+			// aapt resource value: 0x7F0E005E
+			public const int yes = 2131624030;
 			
 			static String()
 			{

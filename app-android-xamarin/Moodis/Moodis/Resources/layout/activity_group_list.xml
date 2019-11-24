@@ -13,5 +13,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/group_list"
         android:layout_marginBottom="1dp" />
+    
+    <TextView
+        android:id="@+id/no_groups_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_groups"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:textColor="@color/foreground_material_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

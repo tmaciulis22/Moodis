@@ -17,11 +17,13 @@ namespace Moodis.Feature.Group
     {
         readonly List<Group> groups;
         readonly Context context;
+        TextView noGroupLabel;
 
-        public GroupListAdapter(Context context,List<Group> groups)
+        public GroupListAdapter(Context context,List<Group> groups, TextView noGroupLabel)
         {
             this.groups = groups;
             this.context = context;
+            this.noGroupLabel = noGroupLabel;
         }
 
         public override int ItemCount
@@ -45,6 +47,10 @@ namespace Moodis.Feature.Group
                 GroupActivityModel.LeaveGroup(groups[position].Groupname);
                 groups.RemoveAt(position);
                 NotifyItemRemoved(position);
+                if(groups.Count == 0)
+                {
+                    noGroupLabel.Visibility = ViewStates.Visible;
+                }
             };
         }
 

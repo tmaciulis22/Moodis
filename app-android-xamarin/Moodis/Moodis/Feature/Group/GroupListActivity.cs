@@ -25,15 +25,21 @@ namespace Moodis.Feature.Group
             base.OnCreate(savedInstanceState);
             this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_group_list);
-            InitAdapter();
+            var NoGroupLabel = FindViewById<TextView>(Resource.Id.no_groups_label);
+            var groups = GroupActivityModel.groups.Where(member => member.IsMember(SignInViewModel.currentUser.Username)).ToList();
+            if(groups.Count > 0)
+            {
+                NoGroupLabel.Visibility = ViewStates.Gone;
+            }
+            InitAdapter(groups,NoGroupLabel);
         }
 
-        private void InitAdapter()
+        private void InitAdapter(List<Group> groups, TextView noGroupLabel)
         {
             recyclerView = FindViewById<RecyclerView>(Resource.Id.group_list);
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
-            var adapter = new GroupListAdapter(this,GroupActivityModel.groups.Where(member => member.IsMember(SignInViewModel.currentUser.Username)).ToList());
+            var adapter = new GroupListAdapter(this,groups,noGroupLabel);
             recyclerView.SetAdapter(adapter);
         }
     }

@@ -64,5 +64,6 @@
   <string name="join_a_group">Join a Group</string>
   <string name="hint_group_name">Group name</string>
   <string name="group_entry_empty">Please enter group name </string>
+  <string name="no_groups">No groups. Join One!</string>
   
 </resources>

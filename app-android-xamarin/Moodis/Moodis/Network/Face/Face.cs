@@ -73,6 +73,12 @@ namespace Moodis.Network.Face
         public async Task<DetectedFace> DetectUserEmotions(string imageFilePath, string personGroupId, string username)
         {
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
+
+            if (detectedFaces.IsNullOrEmpty())
+            {
+                return null;
+            }
+
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
             var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, personGroupId);
 

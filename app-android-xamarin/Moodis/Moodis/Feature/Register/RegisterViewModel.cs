@@ -101,27 +101,23 @@ namespace Moodis.Feature.Register
             List<DetectedFace> detectedFaces = null;
             void setFace(List<DetectedFace> face) => detectedFaces = face;
             DetectedFace face;
-
-            List<Person> identifiedPersons = null;
+            bool userExists;
             try
             {
-                identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
+                userExists = await Face.Instance.MultipleAccounts(imagePath, setFace);
             }
             catch (APIErrorException e)
             {
-                Console.WriteLine(e);
+                userExists = false;
                 return Response.ApiError;
             }
 
-            currentUser = userList.Find(user => user.Username == identifiedPersons.ToArray()[0].Name);
-            face = detectedFaces.ToArray()[0];
-
-            if (currentUser == null)
+            if (userExists)
             {
-                return Response.UserNotFound;
+                return Response.UserExists;
             }
 
-            return Response.UserExists;
+            return Response.UserNotFound;
         }
     }
 }

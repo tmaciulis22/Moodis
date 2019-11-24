@@ -140,10 +140,35 @@ namespace Moodis.Network.Face
                     }
                 }
             }
-
             return personsList;
         }
 
+        //returns true if one or more users have accounts false otherwise.
+        public async Task<Boolean> MultipleAccounts(string imageFilePath, Action<List<DetectedFace>> callback)
+        {
+            var detectedFaces = await DetectFaceEmotions(imageFilePath);
+            callback(detectedFaces.ToList<DetectedFace>());
+
+            var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
+            var personGroups = await faceClient.PersonGroup.ListAsync();
+
+            foreach (var face in faceIds)
+            {
+                int counter = 0;
+
+                foreach (var group in personGroups)
+                {
+                    VerifyResult identifiedPerson = await faceClient.Face.VerifyFaceToPersonAsync(face, new Guid(group.PersonGroupId));
+                    if (identifiedPerson.Confidence > 0.4)
+                    {
+                        counter++;
+                    } else if (counter > 1) {
+                        return true;
+                     }
+                }
+            }
+            return false;
+        }
         public async Task<Person> CreateNewPerson(string personGroupId, string username)
         {
             try

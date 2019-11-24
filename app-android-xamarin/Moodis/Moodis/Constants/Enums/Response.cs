@@ -8,7 +8,6 @@
         FaceNotDetected,
         //Registration-specific errors
         UserExists,
-        ApiTrainingError,
         RegistrationDone,
         //SignIn Errors
         UserNotFound,

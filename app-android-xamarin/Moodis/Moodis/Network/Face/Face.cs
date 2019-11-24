@@ -57,29 +57,16 @@ namespace Moodis.Network.Face
                 FaceAttributeType.Emotion
             };
 
-            try
-            {
-                using Stream imageFileStream = File.OpenRead(imageFilePath);
-                var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
+            using Stream imageFileStream = File.OpenRead(imageFilePath);
+            var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
 
-                if (detectedFaces.IsNullOrEmpty())
-                {
-                    return null;
-                }
-                else
-                {
-                    return detectedFaces;
-                }
-            }
-            catch (APIErrorException apiException)
+            if (detectedFaces.IsNullOrEmpty())
             {
-                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
                 return null;
             }
-            catch (Exception exception)
+            else
             {
-                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
-                return null;
+                return detectedFaces;
             }
         }
 
@@ -113,8 +100,9 @@ namespace Moodis.Network.Face
 
         public async Task<IList<Person>> IdentifyPersons(string imageFilePath, Action<List<DetectedFace>> callback)
         {
+
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
-            callback(detectedFaces.ToList<DetectedFace>());
+            callback(detectedFaces.ToList());
 
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
 
@@ -182,7 +170,7 @@ namespace Moodis.Network.Face
             catch (APIErrorException apiException)
             {
                 Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
-                return Response.ApiError;
+                return Response.FaceNotDetected;
             }
             catch (Exception exception)
             {

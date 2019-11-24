@@ -35,7 +35,7 @@ namespace Moodis.Feature.SignIn
             FetchUserList();
 
             List<DetectedFace> detectedFaces = null;
-            void setFace(List<DetectedFace> face) => detectedFaces = face;
+            void setFace(List<DetectedFace> faces) => detectedFaces = faces;
             DetectedFace face;
 
             List<Person> identifiedPersons = null;
@@ -43,9 +43,16 @@ namespace Moodis.Feature.SignIn
             {
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
-            catch (APIErrorException)
+            catch
             {
-                return Response.ApiError;
+                if (detectedFaces.IsNullOrEmpty())
+                {
+                    return Response.FaceNotDetected;
+                }
+                else
+                {
+                    return Response.ApiError;
+                }
             }
 
             if (identifiedPersons.IsNullOrEmpty())

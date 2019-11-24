@@ -168,9 +168,13 @@ namespace Moodis.Feature.Register
             AfterTakenPictures = async (sender, e) =>
             {
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
-                if (response == Response.ApiError || response == Response.ApiTrainingError)
+                if (response == Response.ApiError || response == Response.GeneralError)
                 {
                     Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
+                }
+                else if (response == Response.FaceNotDetected)
+                {
+                    Toast.MakeText(this, Resource.String.warning_face_detection, ToastLength.Short).Show();
                 }
                 else if (response == Response.RegistrationDone)
                 {

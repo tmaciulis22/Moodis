@@ -22,7 +22,6 @@ namespace Moodis.Feature.Group
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_group_details);
             InitAdapter();
         }

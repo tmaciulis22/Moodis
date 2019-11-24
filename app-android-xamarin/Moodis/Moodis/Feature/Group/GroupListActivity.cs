@@ -23,7 +23,6 @@ namespace Moodis.Feature.Group
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_group_list);
             var NoGroupLabel = FindViewById<TextView>(Resource.Id.no_groups_label);
             var groups = GroupActivityModel.groups.Where(member => member.IsMember(SignInViewModel.currentUser.Username)).ToList();

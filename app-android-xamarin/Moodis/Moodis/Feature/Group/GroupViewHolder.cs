@@ -18,10 +18,13 @@ namespace Moodis.Feature.Group
     class GroupViewHolder : RecyclerView.ViewHolder
     {
         public TextView GroupNameLabel { get; set; }
+        public Button GroupLeaveButton { get; set; }
+
         public ConstraintLayout parentLayout;
         public GroupViewHolder(View view) : base(view)
         {
             GroupNameLabel = view.FindViewById<TextView>(Resource.Id.label_groupname);
+            GroupLeaveButton = view.FindViewById<Button>(Resource.Id.button_leave_group);
             parentLayout = view.FindViewById<ConstraintLayout>(Resource.Id.group_list);
         }
     }

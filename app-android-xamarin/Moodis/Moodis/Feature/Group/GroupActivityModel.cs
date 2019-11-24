@@ -62,5 +62,12 @@ namespace Moodis.Feature.Group
             FriendUsernames.ForEach(username => UserIds.Add(RegisterViewModel.GetIdByUsername(username)));
             return UserIds;
         }
+
+        public static void LeaveGroup(string groupname)
+        {
+            var group = groups.Find(group => group.Groupname == groupname);
+            group.Members.Remove(SignInViewModel.currentUser.Username);
+            DatabaseModel.UpdateGroupToDatabase(group);
+        }
     }
 }

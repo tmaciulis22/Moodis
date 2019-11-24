@@ -49,7 +49,10 @@ namespace Moodis.Feature.Group
         {
             using StringBuffer stringBuffer = new StringBuffer();
             Members.ForEach(entry => stringBuffer.Append(entry).Append(SEPARATOR));
-            stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
+            if(stringBuffer.Length() > 0)
+            {
+                stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
+            }
             MembersInString = stringBuffer.ToString();
         }
 

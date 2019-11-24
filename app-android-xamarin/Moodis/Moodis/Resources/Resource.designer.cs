@@ -4187,10 +4187,10 @@ namespace Moodis
 			public const int button_create_group = 2131230780;
 			
 			// aapt resource value: 0x7F08003D
-			public const int button_delete_group = 2131230781;
+			public const int button_join_group = 2131230781;
 			
 			// aapt resource value: 0x7F08003E
-			public const int button_join_group = 2131230782;
+			public const int button_leave_group = 2131230782;
 			
 			// aapt resource value: 0x7F08003F
 			public const int button_see_groups = 2131230783;

@@ -1,6 +1,7 @@
 ﻿using Android.Util;
 using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Helpers;
@@ -216,11 +217,12 @@ namespace Moodis.Network.Face
             }
         }
 
+        //TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
         public async Task<bool> DeletePerson(string personGroupId)
         {
             try
             {
-                await faceClient.PersonGroup.DeleteAsync(personGroupId);//TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
+                await faceClient.PersonGroup.DeleteAsync(personGroupId);
                 return true;
             }
             catch (APIErrorException apiException)
@@ -232,6 +234,28 @@ namespace Moodis.Network.Face
             {
                 Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return false;
+            }
+        }
+
+        public async Task<Response> DeleteEverything()
+        {
+            try
+            {
+                var listOfPersonGroups = await faceClient.PersonGroup.ListAsync();
+                listOfPersonGroups.ToList().ForEach(async group => {
+                    await faceClient.PersonGroup.DeleteAsync(group.PersonGroupId);
+                });
+                return Response.OK;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return Response.ApiError;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return Response.GeneralError;
             }
         }
     }

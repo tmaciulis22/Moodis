@@ -16,10 +16,6 @@ namespace Moodis.Database
             string filename = "users_db.sqlite";
             string fileLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             databaseConnection = new SQLite.SQLiteConnection(Path.Combine(fileLocation, filename));
-            //Use this for testing compatability with new users
-            //databaseConnection.DeleteAll<User>();
-            //databaseConnection.DeleteAll<ImageInfo>();
-            //databaseConnection.DeleteAll<Emotion>():
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();
@@ -74,6 +70,14 @@ namespace Moodis.Database
         public static void CloseConnectionToDatabase()
         {
             databaseConnection.Dispose();
+        }
+
+        //NOTE this method is used only for development and testing purposes, to clear everything in DB
+        public static void DeleteEverything()
+        {
+            databaseConnection.DeleteAll<User>();
+            databaseConnection.DeleteAll<ImageInfo>();
+            databaseConnection.DeleteAll<Emotion>();
         }
     }
 }

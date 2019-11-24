@@ -1,6 +1,7 @@
 ﻿using Android.Arch.Lifecycle;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
+using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
@@ -61,6 +62,13 @@ namespace Moodis.Feature.SignIn
             }
             callback(face);
             return Response.OK;
+        }
+
+        //NOTE this method is used only for development and testing purposes, to clear everything in DB and in Face API
+        public async Task<Response> DeleteEverything()
+        {
+            DatabaseModel.DeleteEverything();
+            return await Face.Instance.DeleteEverything();
         }
 
         private void FetchUserList()

@@ -1,5 +1,7 @@
-﻿using Moodis.Constants.Enums;
+﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Constants.Enums;
 using Moodis.Database;
+using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
 using System;
@@ -91,7 +93,39 @@ namespace Moodis.Feature.Register
 
         public void UpdateLocalStorage()
         {
-            userList = Database.DatabaseModel.FetchUsers();
+            userList = DatabaseModel.FetchUsers();
+        }
+
+        internal async Task<Response> AuthenticateFace(string imagePath)
+        {
+            List<DetectedFace> detectedFaces = null;
+            void setFace(List<DetectedFace> face) => detectedFaces = face;
+            DetectedFace face;
+
+            List<Person> identifiedPersons = null;
+            try
+            {
+                identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
+            }
+            catch (APIErrorException)
+            {
+                return Response.ApiError;
+            }
+
+            if (identifiedPersons.IsNullOrEmpty())
+            {
+                return Response.UserNotFound;
+            }
+
+            currentUser = userList.Find(user => user.Username == identifiedPersons.ToArray()[0].Name);
+            face = detectedFaces.ToArray()[0];
+
+            if (currentUser == null)
+            {
+                return Response.UserNotFound;
+            }
+
+            return Response.UserExists;
         }
     }
 }

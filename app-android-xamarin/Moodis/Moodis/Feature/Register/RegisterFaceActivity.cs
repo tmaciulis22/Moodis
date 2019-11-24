@@ -13,6 +13,7 @@ using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Events;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.SignIn;
 using System;
 
 namespace Moodis.Feature.Register
@@ -24,6 +25,7 @@ namespace Moodis.Feature.Register
 
         Camera camera;
         private bool CameraReleased = false;
+        private bool UserFaceAlreadyExists = true;
         static readonly int REQUEST_CAMERA = 0;
         private readonly string TAG = nameof(RegisterFaceActivity);
 
@@ -167,6 +169,10 @@ namespace Moodis.Feature.Register
         {
             AfterTakenPictures = async (sender, e) =>
             {
+                if (UserFaceAlreadyExists) {
+                    CheckWhetherUserFaceAlreadyUsedAsync(e);
+                }
+
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
                 if (response == Response.ApiError || response == Response.ApiTrainingError)
                 {
@@ -184,6 +190,21 @@ namespace Moodis.Feature.Register
                 progressBar.Visibility = ViewStates.Gone;
                 snapButton.Enabled = true;
             };
+        }
+
+        private async System.Threading.Tasks.Task CheckWhetherUserFaceAlreadyUsedAsync(TakenPictureArgs e)
+        {
+            var response = await registerViewModel.AuthenticateFace(e.ImagePath);
+            if (response == Response.ApiError)
+            {
+                Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
+            }
+            else if (response == Response.UserExists)
+            {
+                Toast.MakeText(this, Resource.String.user_exists, ToastLength.Short).Show();
+                Finish();
+            }
+            UserFaceAlreadyExists = false;
         }
 
         private void SetCameraPreview()

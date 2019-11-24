@@ -2,11 +2,13 @@
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Extensions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -166,11 +168,10 @@ namespace Moodis.Feature.Register
             registerButton.Enabled = false;
 
             var response = await registerViewModel.DeleteUser();
-            while (response != Response.OK)
-            {
-                response = await registerViewModel.DeleteUser();
+            if (response != Response.OK)
+            { 
+                Log.Error(Class.Name, MethodBase.GetCurrentMethod().Name + ": " + response.ToString());
             }
-
             progressBar.Visibility = ViewStates.Gone;
             registerButton.Enabled = true;
         }

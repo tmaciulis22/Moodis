@@ -168,7 +168,7 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<bool> AddFaceToPerson(string imageFilePath, string personGroupId, User user)
+        public async Task<Response> AddFaceToPerson(string imageFilePath, string personGroupId, User user)
         {
             try
             {
@@ -177,63 +177,81 @@ namespace Moodis.Network.Face
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
                     user.FaceApiPerson.PersonId, imageFileStream);
-                return true;
+                return Response.OK;
             }
             catch (APIErrorException apiException)
             {
                 Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
-                return false;
+                return Response.ApiError;
             }
             catch (Exception exception)
             {
                 Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
-                return false;
+                return Response.GeneralError;
             }
         }
 
-        public async Task<bool> TrainPersonGroup(string personGroupId)
+        public async Task<Response> TrainPersonGroup(string personGroupId)
         {
             try
             {
                 await faceClient.PersonGroup.TrainAsync(personGroupId);
             }
-            catch (Exception ex)
-            {
-                Log.Error(TAG, ex.StackTrace);
-                return false;
-            }
-
-            TrainingStatus trainingStatus = null;
-            while (true)
-            {
-                trainingStatus = await faceClient.PersonGroup.GetTrainingStatusAsync(personGroupId);
-
-                if (trainingStatus.Status != TrainingStatusType.Running)
-                {
-                    return true;
-                }
-
-                await Task.Delay(TRAIN_WAIT_TIME_DELAY);
-            }
-        }
-
-        //TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
-        public async Task<bool> DeletePerson(string personGroupId)
-        {
-            try
-            {
-                await faceClient.PersonGroup.DeleteAsync(personGroupId);
-                return true;
-            }
             catch (APIErrorException apiException)
             {
                 Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
-                return false;
+                return Response.ApiError;
             }
             catch (Exception exception)
             {
                 Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
-                return false;
+                return Response.GeneralError;
+            }
+
+            TrainingStatus trainingStatus;
+            while (true)
+            {
+                try
+                {
+                    trainingStatus = await faceClient.PersonGroup.GetTrainingStatusAsync(personGroupId);
+
+                    if (trainingStatus.Status == TrainingStatusType.Succeeded)
+                    {
+                        return Response.RegistrationDone;
+                    }
+
+                    await Task.Delay(TRAIN_WAIT_TIME_DELAY);
+                }
+                catch (APIErrorException apiException)
+                {
+                    Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                    return Response.ApiError;
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                    return Response.GeneralError;
+                }
+            }
+        }
+
+        //TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
+        public async Task<Response> DeletePerson(string personGroupId)
+        {
+            try
+            {
+                await faceClient.PersonGroup.DeleteAsync(personGroupId);
+                return Response.OK;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return Response.ApiError;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return Response.GeneralError;
             }
         }
 

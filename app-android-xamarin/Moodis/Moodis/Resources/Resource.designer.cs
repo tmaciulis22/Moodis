@@ -4208,58 +4208,58 @@ namespace Moodis
 			public const int chronometer = 2131230787;
 			
 			// aapt resource value: 0x7F080044
-			public const int clearButton = 2131230788;
+			public const int clip_horizontal = 2131230788;
 			
 			// aapt resource value: 0x7F080045
-			public const int clip_horizontal = 2131230789;
+			public const int clip_vertical = 2131230789;
 			
 			// aapt resource value: 0x7F080046
-			public const int clip_vertical = 2131230790;
+			public const int collapseActionView = 2131230790;
 			
 			// aapt resource value: 0x7F080047
-			public const int collapseActionView = 2131230791;
+			public const int container = 2131230791;
 			
 			// aapt resource value: 0x7F080048
-			public const int container = 2131230792;
+			public const int content = 2131230792;
 			
 			// aapt resource value: 0x7F080049
-			public const int content = 2131230793;
+			public const int contentPanel = 2131230793;
 			
 			// aapt resource value: 0x7F08004A
-			public const int contentPanel = 2131230794;
+			public const int content_frame = 2131230794;
 			
 			// aapt resource value: 0x7F08004B
-			public const int content_frame = 2131230795;
+			public const int coordinator = 2131230795;
 			
 			// aapt resource value: 0x7F08004C
-			public const int coordinator = 2131230796;
-			
-			// aapt resource value: 0x7F08004D
-			public const int cos = 2131230797;
+			public const int cos = 2131230796;
 			
 			// aapt resource value: 0x7F080001
 			public const int CTRL = 2131230721;
 			
+			// aapt resource value: 0x7F08004D
+			public const int custom = 2131230797;
+			
 			// aapt resource value: 0x7F08004E
-			public const int custom = 2131230798;
+			public const int customPanel = 2131230798;
 			
 			// aapt resource value: 0x7F08004F
-			public const int customPanel = 2131230799;
+			public const int datePicker = 2131230799;
 			
 			// aapt resource value: 0x7F080050
-			public const int datePicker = 2131230800;
+			public const int decelerate = 2131230800;
 			
 			// aapt resource value: 0x7F080051
-			public const int decelerate = 2131230801;
+			public const int decelerateAndComplete = 2131230801;
 			
 			// aapt resource value: 0x7F080052
-			public const int decelerateAndComplete = 2131230802;
+			public const int decor_content_parent = 2131230802;
 			
 			// aapt resource value: 0x7F080053
-			public const int decor_content_parent = 2131230803;
+			public const int default_activity_button = 2131230803;
 			
 			// aapt resource value: 0x7F080054
-			public const int default_activity_button = 2131230804;
+			public const int deleteEverythingButton = 2131230804;
 			
 			// aapt resource value: 0x7F080055
 			public const int deltaRelative = 2131230805;

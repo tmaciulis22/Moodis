@@ -62,7 +62,7 @@ namespace Moodis.Feature.SignIn
             var signInButton = FindViewById(Resource.Id.signInButton);
             var signInWithFaceButton = FindViewById(Resource.Id.signInFaceButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
-            var clearButton = FindViewById(Resource.Id.clearButton);
+            var deleteEverythingButton = FindViewById(Resource.Id.deleteEverythingButton);
             progressBar = FindViewById(Resource.Id.progressBarSignIn);
 
             usernameInput.TextChanged += (sender, e) =>
@@ -145,7 +145,7 @@ namespace Moodis.Feature.SignIn
                 StartActivityForResult(new Android.Content.Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
 
-            clearButton.Click += (sender, e) => {
+            deleteEverythingButton.Click += (sender, e) => {
                 var dialog = this.ConfirmationAlert(
                     titleRes: Resource.String.delete_everything_title,
                     messageRes: Resource.String.delete_everything_message,

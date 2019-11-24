@@ -1,5 +1,6 @@
 ﻿using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Hardware;
 using Android.OS;
@@ -179,6 +180,12 @@ namespace Moodis.Feature.SignIn
                 else if (response == Response.UserNotFound)
                 {
                     Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+                }
+                else if (response == Response.GeneralError)
+                {
+                    Toast.MakeText(this, Resource.String.repeated_fail_login_face, ToastLength.Short).Show();
+                    SetResult(Result.Canceled);
+                    Finish();
                 }
                 else
                 {

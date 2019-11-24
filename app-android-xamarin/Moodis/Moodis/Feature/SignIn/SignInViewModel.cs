@@ -14,6 +14,7 @@ namespace Moodis.Feature.SignIn
     {
         public static List<User> userList;
         public static User currentUser;
+        private int failedAttempts = 0;
 
         public bool Authenticate(string username, string password)
         {
@@ -44,6 +45,12 @@ namespace Moodis.Feature.SignIn
             }
             catch (APIErrorException)
             {
+                if(failedAttempts == 3)
+                {
+                    return Response.GeneralError;
+                }
+
+                failedAttempts++;
                 return Response.ApiError;
             }
 

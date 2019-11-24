@@ -5549,111 +5549,61 @@ namespace Moodis
 			public const int register_text = 2131624011;
 			
 			// aapt resource value: 0x7F0E004C
-			public const int search_menu_title = 2131624012;
+			public const int repeated_fail_login_face = 2131624012;
 			
 			// aapt resource value: 0x7F0E004D
-			public const int signin_button_text = 2131624013;
+			public const int search_menu_title = 2131624013;
 			
-      FaceDetectFixes
-			// aapt resource value: 0x7F0D0048
-			public const int repeated_fail_login_face = 2131558472;
-			
-			// aapt resource value: 0x7F0D0049
-			public const int search_menu_title = 2131558473;
-			
-			// aapt resource value: 0x7F0D004A
-			public const int signin_button_text = 2131558474;
-			
-			// aapt resource value: 0x7F0D004B
-			public const int signin_face_button_text = 2131558475;
-			
-			// aapt resource value: 0x7F0D004C
-			public const int signin_password_label = 2131558476;
-			
-			// aapt resource value: 0x7F0D004D
-			public const int signin_register_button_text = 2131558477;
-			
-			// aapt resource value: 0x7F0D004E
-			public const int signin_username_label = 2131558478;
-			
-			// aapt resource value: 0x7F0D004F
-			public const int status_bar_notification_info_overflow = 2131558479;
-			
-			// aapt resource value: 0x7F0D0050
-			public const int stop_music_button = 2131558480;
-			
-			// aapt resource value: 0x7F0D0051
-			public const int stronger_password = 2131558481;
-			
-			// aapt resource value: 0x7F0D0052
-			public const int take_another_picture = 2131558482;
-			
-			// aapt resource value: 0x7F0D0056
-			public const int username_empty_error = 2131558486;
-			
-			// aapt resource value: 0x7F0D0053
-			public const int user_created = 2131558483;
-			
-			// aapt resource value: 0x7F0D0054
-			public const int user_exists = 2131558484;
-			
-			// aapt resource value: 0x7F0D0055
-			public const int user_not_found_error = 2131558485;
-			
-			// aapt resource value: 0x7F0D0057
-			public const int warning_face_detection = 2131558487;
-			
-			// aapt resource value: 0x7F0D0058
-			public const int warning_playing_music = 2131558488;
-
 			// aapt resource value: 0x7F0E004E
-			public const int signin_face_button_text = 2131624014;
+			public const int signin_button_text = 2131624014;
 			
 			// aapt resource value: 0x7F0E004F
-			public const int signin_password_label = 2131624015;
+			public const int signin_face_button_text = 2131624015;
 			
 			// aapt resource value: 0x7F0E0050
-			public const int signin_register_button_text = 2131624016;
+			public const int signin_password_label = 2131624016;
 			
 			// aapt resource value: 0x7F0E0051
-			public const int signin_username_label = 2131624017;
+			public const int signin_register_button_text = 2131624017;
 			
 			// aapt resource value: 0x7F0E0052
-			public const int status_bar_notification_info_overflow = 2131624018;
+			public const int signin_username_label = 2131624018;
 			
 			// aapt resource value: 0x7F0E0053
-			public const int stop_music_button = 2131624019;
+			public const int status_bar_notification_info_overflow = 2131624019;
 			
 			// aapt resource value: 0x7F0E0054
-			public const int stronger_password = 2131624020;
+			public const int stop_music_button = 2131624020;
 			
 			// aapt resource value: 0x7F0E0055
-			public const int take_another_picture = 2131624021;
-			
-			// aapt resource value: 0x7F0E005A
-			public const int username_empty_error = 2131624026;
+			public const int stronger_password = 2131624021;
 			
 			// aapt resource value: 0x7F0E0056
-			public const int user_created = 2131624022;
-			
-			// aapt resource value: 0x7F0E0057
-			public const int user_created_success = 2131624023;
-			
-			// aapt resource value: 0x7F0E0058
-			public const int user_exists = 2131624024;
-			
-			// aapt resource value: 0x7F0E0059
-			public const int user_not_found_error = 2131624025;
+			public const int take_another_picture = 2131624022;
 			
 			// aapt resource value: 0x7F0E005B
-			public const int warning_face_detection = 2131624027;
+			public const int username_empty_error = 2131624027;
+			
+			// aapt resource value: 0x7F0E0057
+			public const int user_created = 2131624023;
+			
+			// aapt resource value: 0x7F0E0058
+			public const int user_created_success = 2131624024;
+			
+			// aapt resource value: 0x7F0E0059
+			public const int user_exists = 2131624025;
+			
+			// aapt resource value: 0x7F0E005A
+			public const int user_not_found_error = 2131624026;
 			
 			// aapt resource value: 0x7F0E005C
-			public const int warning_playing_music = 2131624028;
+			public const int warning_face_detection = 2131624028;
 			
 			// aapt resource value: 0x7F0E005D
-			public const int yes = 2131624029;
-      dev
+			public const int warning_playing_music = 2131624029;
+			
+			// aapt resource value: 0x7F0E005E
+			public const int yes = 2131624030;
 			
 			static String()
 			{

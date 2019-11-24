@@ -16,6 +16,7 @@ namespace Moodis.Feature.SignIn
     {
         public static int REQUEST_CODE_REGISTER = 1;
         public static int REQUEST_CODE_FACE = 2;
+        public static int REQUEST_CODE_REGISTER_FACE = 3;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
         public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
@@ -46,6 +47,11 @@ namespace Moodis.Feature.SignIn
                 Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
             }
             else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            {
+                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                Finish();
+            }
+            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_REGISTER_FACE)
             {
                 SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
@@ -133,11 +139,11 @@ namespace Moodis.Feature.SignIn
             };
             signInWithFaceButton.Click += (sender, e) =>
             {
-                StartActivityForResult(new Android.Content.Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
+                StartActivityForResult(new Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
             };
             registerButton.Click += (sender, e) =>
             {
-                StartActivityForResult(new Android.Content.Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
+                StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
         }
 
@@ -149,6 +155,7 @@ namespace Moodis.Feature.SignIn
 
             if (SignInViewModel.Authenticate(username, password))
             {
+                DisplayFaceNewewWindow();
                 SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
             }
@@ -157,6 +164,19 @@ namespace Moodis.Feature.SignIn
                 progressBar.Visibility = ViewStates.Gone;
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
             }
+        }
+
+        private void DisplayFaceNewewWindow()
+        {
+            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
+                .SetTitle(Resource.String.update_face)
+                .SetMessage(Resource.String.update_face_confirmation_message)
+                .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
+                .SetPositiveButton(Resource.String.yes, (senderAlert, args) => {
+                    StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
+                });
+            builder.Create().Show();
+            builder.Dispose();
         }
     }
 }

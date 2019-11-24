@@ -123,7 +123,7 @@ namespace Moodis.Network.Face
             foreach (var group in personGroups)
             {
                 var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, group.PersonGroupId);
-
+                //l
                 if (identifiedPersons.IsNullOrEmpty())
                 {
                     continue;

@@ -205,7 +205,10 @@ namespace Moodis.Feature.Register
                 SetResult(Result.Canceled);
                 Finish();
             }
-            UserFaceAlreadyExists = false;
+            else
+            {
+                UserFaceAlreadyExists = false;
+            }
         }
 
         private void SetCameraPreview()

@@ -107,14 +107,10 @@ namespace Moodis.Feature.Register
             {
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
-            catch (APIErrorException)
+            catch (APIErrorException e)
             {
+                Console.WriteLine(e);
                 return Response.ApiError;
-            }
-
-            if (identifiedPersons.IsNullOrEmpty())
-            {
-                return Response.UserNotFound;
             }
 
             currentUser = userList.Find(user => user.Username == identifiedPersons.ToArray()[0].Name);

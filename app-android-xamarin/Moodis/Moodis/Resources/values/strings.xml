@@ -46,6 +46,9 @@
   <string name="no">No</string>
   <string name="logout">Logout</string>
   <string name="logout_confirmation_message">Are you sure you want to sign out ?</string>
+
+  <string name="update_face">Update Profile</string>
+  <string name="update_face_confirmation_message">Would you like to update your face profile ? (You will be able to sign in with face next time you log in.)</string>
   
   <string name="camera_error">Something wrong happened while taking picture :/</string>
   

@@ -47,7 +47,7 @@ namespace Moodis.Network.Face
 
         private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
-            imageFilePath.RotateImage();
+            //imageFilePath.RotateImage();
 
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
@@ -123,7 +123,6 @@ namespace Moodis.Network.Face
             foreach (var group in personGroups)
             {
                 var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, group.PersonGroupId);
-                //l
                 if (identifiedPersons.IsNullOrEmpty())
                 {
                     continue;
@@ -147,18 +146,18 @@ namespace Moodis.Network.Face
         public async Task<Boolean> MultipleAccounts(string imageFilePath, Action<List<DetectedFace>> callback)
         {
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
-            callback(detectedFaces.ToList<DetectedFace>());
 
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
-            var personGroups = await faceClient.PersonGroup.ListAsync();
+            var personGroups = await IdentifyPersons(imageFilePath, callback);
+            var people = IdentifyPersons(imageFilePath, callback);
 
-            foreach (var face in faceIds)
+            if (faceIds.Count == 1)
             {
                 int counter = 0;
 
-                foreach (var group in personGroups)
+                foreach (var person in personGroups)
                 {
-                    VerifyResult identifiedPerson = await faceClient.Face.VerifyFaceToPersonAsync(face, new Guid(group.PersonGroupId));
+                    var identifiedPerson = await faceClient.Face.VerifyFaceToPersonAsync(faceIds[0], person.PersonId);
                     if (identifiedPerson.Confidence > 0.4)
                     {
                         counter++;
@@ -196,8 +195,6 @@ namespace Moodis.Network.Face
         {
             try
             {
-                imageFilePath.RotateImage();
-
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
                     user.FaceApiPerson.PersonId, imageFileStream);

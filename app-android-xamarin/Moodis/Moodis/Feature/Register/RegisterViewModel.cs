@@ -109,6 +109,7 @@ namespace Moodis.Feature.Register
             catch (APIErrorException e)
             {
                 userExists = false;
+                Console.WriteLine(e.StackTrace);
                 return Response.ApiError;
             }
 

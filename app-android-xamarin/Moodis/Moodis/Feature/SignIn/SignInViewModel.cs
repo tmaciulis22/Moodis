@@ -40,6 +40,7 @@ namespace Moodis.Feature.SignIn
             List<Person> identifiedPersons = null;
             try
             {
+                imagePath.RotateImage();
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
             catch (APIErrorException)

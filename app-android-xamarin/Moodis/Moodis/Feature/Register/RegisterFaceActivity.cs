@@ -26,7 +26,7 @@ namespace Moodis.Feature.Register
 
         Camera camera;
         private bool CameraReleased = false;
-        private bool UserFaceAlreadyExists = false;
+        private bool updating = false;
         static readonly int REQUEST_CAMERA = 0;
         private readonly string TAG = nameof(RegisterFaceActivity);
 
@@ -44,6 +44,7 @@ namespace Moodis.Feature.Register
 
             PhotosLeft = FindViewById<TextView>(Resource.Id.photosLeft);
             PhotosLeft.Text = GetString(Resource.String.register_face_photos_left, RegisterViewModel.RequiredNumberOfPhotos - registerViewModel.photosTaken);
+            updating = Intent.GetBooleanExtra("update", false);
 
             InitEventHandler();
 
@@ -171,10 +172,6 @@ namespace Moodis.Feature.Register
             AfterTakenPictures = async (sender, e) =>
             {
                 e.ImagePath.RotateImage();
-                if (UserFaceAlreadyExists)
-                {
-                    await CheckWhetherUserFaceAlreadyUsedAsync(e.ImagePath);
-                }
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
                 if (response == Response.ApiError || response == Response.ApiTrainingError)
                 {
@@ -182,6 +179,8 @@ namespace Moodis.Feature.Register
                 }
                 else if (response == Response.RegistrationDone)
                 {
+                    if(!updating)
+                        await CheckWhetherUserFaceAlreadyUsedAsync(e.ImagePath);
                     SetResult(Result.FirstUser);
                     Finish();
                 }
@@ -191,7 +190,6 @@ namespace Moodis.Feature.Register
                 }
                 progressBar.Visibility = ViewStates.Gone;
                 snapButton.Enabled = true;
-                UserFaceAlreadyExists = true;
             };
         }
 
@@ -207,10 +205,6 @@ namespace Moodis.Feature.Register
                 Toast.MakeText(this, Resource.String.user_face_exists, ToastLength.Short).Show();
                 SetResult(Result.Canceled);
                 Finish();
-            }
-            else
-            {
-                UserFaceAlreadyExists = false;
             }
         }
 

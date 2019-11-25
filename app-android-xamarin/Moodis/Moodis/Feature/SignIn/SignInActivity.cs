@@ -173,7 +173,7 @@ namespace Moodis.Feature.SignIn
                 .SetMessage(Resource.String.update_face_confirmation_message)
                 .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
                 .SetPositiveButton(Resource.String.yes, (senderAlert, args) => {
-                    StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
+                    StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)).PutExtra("update", true), REQUEST_CODE_REGISTER_FACE);
                 });
             builder.Create().Show();
             builder.Dispose();

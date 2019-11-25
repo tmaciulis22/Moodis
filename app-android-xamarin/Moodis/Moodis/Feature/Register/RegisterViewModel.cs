@@ -96,7 +96,7 @@ namespace Moodis.Feature.Register
             userList = DatabaseModel.FetchUsers();
         }
 
-        internal async Task<Response> AuthenticateFace(string imagePath)
+        public async Task<Response> AuthenticateFace(string imagePath)
         {
             List<DetectedFace> detectedFaces = null;
             void setFace(List<DetectedFace> face) => detectedFaces = face;

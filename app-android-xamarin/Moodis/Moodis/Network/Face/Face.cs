@@ -47,7 +47,6 @@ namespace Moodis.Network.Face
 
         private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
-            //imageFilePath.RotateImage();
 
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
@@ -113,7 +112,7 @@ namespace Moodis.Network.Face
         public async Task<IList<Person>> IdentifyPersons(string imageFilePath, Action<List<DetectedFace>> callback)
         {
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
-            callback(detectedFaces.ToList<DetectedFace>());
+            callback?.Invoke(detectedFaces.ToList<DetectedFace>());
 
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
 
@@ -148,22 +147,23 @@ namespace Moodis.Network.Face
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
 
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
-            var personGroups = await IdentifyPersons(imageFilePath, callback);
-            var people = IdentifyPersons(imageFilePath, callback);
+            var people = await IdentifyPersons(imageFilePath, callback);
+            var personGroups = await faceClient.PersonGroup.ListAsync();
 
             if (faceIds.Count == 1)
             {
                 int counter = 0;
 
-                foreach (var person in personGroups)
+                for (int x = 0; x < people.Count ; x++)
                 {
-                    var identifiedPerson = await faceClient.Face.VerifyFaceToPersonAsync(faceIds[0], person.PersonId);
-                    if (identifiedPerson.Confidence > 0.4)
+                    var identifiedPerson = await faceClient.Face.VerifyFaceToPersonAsync(faceIds[0], people[x].PersonId, personGroups[x].PersonGroupId);
+                    if (identifiedPerson.Confidence > 0.5)
                     {
                         counter++;
-                    } else if (counter > 1) {
+                    }
+                    if (counter > 1) {
                         return true;
-                     }
+                    }
                 }
             }
             return false;

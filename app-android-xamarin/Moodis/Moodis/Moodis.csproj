@@ -81,7 +81,7 @@
     <Compile Include="Feature\Group\MembersGroupAdapter.cs" />
     <Compile Include="Feature\Group\MembersViewHolder.cs" />
     <Compile Include="Feature\Group\GroupListAdapter.cs" />
-    <Compile Include="Feature\Group\Group.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Feature\Group\GroupActivityModel.cs" />
     <Compile Include="Feature\Group\GroupActivity.cs" />
     <Compile Include="Feature\Group\GroupListActivity.cs" />

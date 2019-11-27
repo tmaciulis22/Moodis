@@ -124,6 +124,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Models\EmotionDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
+      <LastGenOutput>EmotionDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\EmotionDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
+      <LastGenOutput>EmotionDataModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\GroupDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GroupDataModel.edmx</DependentUpon>
@@ -158,11 +168,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\EmotionController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\ImageInfoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Emotion.cs">
+      <DependentUpon>EmotionDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmotionDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmotionDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmotionDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmotionDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmotionDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Group.cs">
       <DependentUpon>GroupDataModel.tt</DependentUpon>
@@ -241,6 +270,13 @@
     </EntityDeploy>
     <Content Include="Models\ImageInfoDataModel.edmx.diagram">
       <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\EmotionDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>EmotionDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\EmotionDataModel.edmx.diagram">
+      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">

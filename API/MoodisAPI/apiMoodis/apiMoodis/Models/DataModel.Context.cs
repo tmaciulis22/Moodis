@@ -18,6 +18,8 @@ namespace apiMoodis.Models
         public DatabaseContext()
             : base("name=DatabaseContext")
         {
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -124,6 +124,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Models\GroupDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GroupDataModel.edmx</DependentUpon>
+      <LastGenOutput>GroupDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\GroupDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GroupDataModel.edmx</DependentUpon>
+      <LastGenOutput>GroupDataModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\UserDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UserDataModel.edmx</DependentUpon>
@@ -138,9 +148,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>GroupDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GroupDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>UserDataModel.tt</DependentUpon>
@@ -169,6 +198,13 @@
     </EntityDeploy>
     <Content Include="Models\UserDataModel.edmx.diagram">
       <DependentUpon>UserDataModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\GroupDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GroupDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\GroupDataModel.edmx.diagram">
+      <DependentUpon>GroupDataModel.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">

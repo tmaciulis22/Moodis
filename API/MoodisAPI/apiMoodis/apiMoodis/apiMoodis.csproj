@@ -134,6 +134,16 @@
       <DependentUpon>GroupDataModel.edmx</DependentUpon>
       <LastGenOutput>GroupDataModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\ImageInfoDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
+      <LastGenOutput>ImageInfoDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ImageInfoDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
+      <LastGenOutput>ImageInfoDataModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\UserDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>UserDataModel.edmx</DependentUpon>
@@ -149,6 +159,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\ImageInfoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -170,6 +181,24 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GroupDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageInfo.cs">
+      <DependentUpon>ImageInfoDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageInfoDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageInfoDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageInfoDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageInfoDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageInfoDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>UserDataModel.tt</DependentUpon>
@@ -205,6 +234,13 @@
     </EntityDeploy>
     <Content Include="Models\GroupDataModel.edmx.diagram">
       <DependentUpon>GroupDataModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\ImageInfoDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ImageInfoDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ImageInfoDataModel.edmx.diagram">
+      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">

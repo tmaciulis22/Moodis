@@ -12,12 +12,12 @@ namespace apiMoodis.Controllers
     {
         public HttpResponseMessage Get()
         {
-            using (EmotionDBContext dbContext = new EmotionDBContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var emotions = dbContext.Emotions.ToList();
                 if (emotions.Count() == 0)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There are no groups");
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There are no emotions");
                 }
                 else
                 {
@@ -28,7 +28,7 @@ namespace apiMoodis.Controllers
 
         public HttpResponseMessage Get(string id)
         {
-            using (EmotionDBContext dbContext = new EmotionDBContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var entity = dbContext.Emotions.FirstOrDefault(emotion => emotion.Id == id);
                 if (entity != null)
@@ -46,7 +46,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (EmotionDBContext dbContext = new EmotionDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     dbContext.Emotions.Add(emotion);
                     dbContext.SaveChanges();
@@ -67,7 +67,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (EmotionDBContext dbContext = new EmotionDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     var entity = dbContext.Emotions.FirstOrDefault(e => e.Id == id);
                     if (entity == null)

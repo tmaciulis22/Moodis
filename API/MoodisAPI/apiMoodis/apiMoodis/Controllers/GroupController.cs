@@ -12,7 +12,7 @@ namespace apiMoodis.Controllers
     {
         public HttpResponseMessage Get()
         {
-            using (GroupDBContext dbContext = new GroupDBContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var groups = dbContext.Groups.ToList();
                 if(groups.Count() == 0)
@@ -21,14 +21,14 @@ namespace apiMoodis.Controllers
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, groups);
+                    return Request.CreateResponse(HttpStatusCode.OK, groups.GetType());
                 }
             }
         }
 
         public HttpResponseMessage Get(string id)
         {
-            using (GroupDBContext dbContext = new GroupDBContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var entity = dbContext.Groups.FirstOrDefault(group => group.Id == id);
                 if (entity != null)
@@ -46,7 +46,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (GroupDBContext dbContext = new GroupDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     dbContext.Groups.Add(group);
                     dbContext.SaveChanges();
@@ -67,7 +67,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (GroupDBContext dbContext = new GroupDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     var entity = dbContext.Groups.FirstOrDefault(e => e.Id == id);
                     if (entity == null)
@@ -94,7 +94,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (GroupDBContext dbContext = new GroupDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     var entity = dbContext.Groups.FirstOrDefault(e => e.Id == id);
                     if (entity == null)

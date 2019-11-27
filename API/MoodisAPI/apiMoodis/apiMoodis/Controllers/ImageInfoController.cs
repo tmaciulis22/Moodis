@@ -12,7 +12,7 @@ namespace apiMoodis.Controllers
     {
         public HttpResponseMessage Get()
         {
-            using (ImageInfoDBContext dbContext = new ImageInfoDBContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var imageInfos = dbContext.ImageInfos.ToList();
                 if (imageInfos.Count() == 0)
@@ -28,7 +28,7 @@ namespace apiMoodis.Controllers
 
         public HttpResponseMessage Get(string id)
         {
-            using (ImageInfoDBContext dbContext = new ImageInfoDBContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var entity = dbContext.ImageInfos.FirstOrDefault(ImageInfo => ImageInfo.Id == id);
                 if (entity != null)
@@ -46,7 +46,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (ImageInfoDBContext dbContext = new ImageInfoDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     dbContext.ImageInfos.Add(imageInfo);
                     dbContext.SaveChanges();
@@ -67,7 +67,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (ImageInfoDBContext dbContext = new ImageInfoDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     var entity = dbContext.ImageInfos.FirstOrDefault(e => e.Id == id);
                     if (entity == null)
@@ -95,7 +95,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (ImageInfoDBContext dbContext = new ImageInfoDBContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     var entity = dbContext.ImageInfos.FirstOrDefault(e => e.Id == id);
                     if (entity == null)

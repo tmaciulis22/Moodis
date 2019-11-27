@@ -12,7 +12,7 @@ namespace apiMoodis.Controllers
     {
         public HttpResponseMessage Get()
         {
-            using (DBUserContext dbContext = new DBUserContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var users = dbContext.Users.ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, users);
@@ -21,11 +21,13 @@ namespace apiMoodis.Controllers
 
         public HttpResponseMessage Get(string id)
         {
-            using (DBUserContext dbContext = new DBUserContext())
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var entity = dbContext.Users.FirstOrDefault(user => user.Id == id);
+                
                 if (entity != null)
                 {
+                    Console.WriteLine(entity.ToString());
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
                 else
@@ -39,7 +41,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (DBUserContext dbContext = new DBUserContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     dbContext.Users.Add(user);
                     dbContext.SaveChanges();
@@ -60,7 +62,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (DBUserContext dbContext = new DBUserContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     var entity = dbContext.Users.FirstOrDefault(e => e.Id == id);
                     if (entity == null)
@@ -89,7 +91,7 @@ namespace apiMoodis.Controllers
         {
             try
             {
-                using (DBUserContext dbContext = new DBUserContext())
+                using (DatabaseContext dbContext = new DatabaseContext())
                 {
                     var entity = dbContext.Users.FirstOrDefault(e => e.Id == id);
                     if (entity == null)

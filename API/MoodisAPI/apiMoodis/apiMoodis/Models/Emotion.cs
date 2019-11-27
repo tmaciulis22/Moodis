@@ -18,5 +18,7 @@ namespace apiMoodis.Models
         public string ImageId { get; set; }
         public string Name { get; set; }
         public double Confidence { get; set; }
+    
+        public virtual ImageInfo ImageInfo { get; set; }
     }
 }

@@ -124,45 +124,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Models\EmotionDataModel.Context.tt">
+    <Content Include="Models\DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
-      <LastGenOutput>EmotionDataModel.Context.cs</LastGenOutput>
+      <DependentUpon>DataModel.edmx</DependentUpon>
+      <LastGenOutput>DataModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\EmotionDataModel.tt">
+    <Content Include="Models\DataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
-      <LastGenOutput>EmotionDataModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\GroupDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GroupDataModel.edmx</DependentUpon>
-      <LastGenOutput>GroupDataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\GroupDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GroupDataModel.edmx</DependentUpon>
-      <LastGenOutput>GroupDataModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\ImageInfoDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
-      <LastGenOutput>ImageInfoDataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\ImageInfoDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
-      <LastGenOutput>ImageInfoDataModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\UserDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserDataModel.edmx</DependentUpon>
-      <LastGenOutput>UserDataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\UserDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserDataModel.edmx</DependentUpon>
-      <LastGenOutput>UserDataModel.cs</LastGenOutput>
+      <DependentUpon>DataModel.edmx</DependentUpon>
+      <LastGenOutput>DataModel.cs</LastGenOutput>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>
@@ -175,108 +145,42 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Emotion.cs">
-      <DependentUpon>EmotionDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmotionDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EmotionDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmotionDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EmotionDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmotionDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
+      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Group.cs">
-      <DependentUpon>GroupDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GroupDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GroupDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GroupDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GroupDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GroupDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GroupDataModel.edmx</DependentUpon>
+      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageInfo.cs">
-      <DependentUpon>ImageInfoDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ImageInfoDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ImageInfoDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ImageInfoDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ImageInfoDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ImageInfoDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
+      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>UserDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserDataModel.edmx</DependentUpon>
+      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\UserDataModel.edmx">
+    <EntityDeploy Include="Models\DataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UserDataModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\UserDataModel.edmx.diagram">
-      <DependentUpon>UserDataModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\GroupDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GroupDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\GroupDataModel.edmx.diagram">
-      <DependentUpon>GroupDataModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\ImageInfoDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ImageInfoDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ImageInfoDataModel.edmx.diagram">
-      <DependentUpon>ImageInfoDataModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\EmotionDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EmotionDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\EmotionDataModel.edmx.diagram">
-      <DependentUpon>EmotionDataModel.edmx</DependentUpon>
+    <Content Include="Models\DataModel.edmx.diagram">
+      <DependentUpon>DataModel.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">

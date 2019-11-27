@@ -13,10 +13,10 @@ namespace apiMoodis.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DBUserContext : DbContext
+    public partial class DatabaseContext : DbContext
     {
-        public DBUserContext()
-            : base("name=DBUserContext")
+        public DatabaseContext()
+            : base("name=DatabaseContext")
         {
         }
     
@@ -25,6 +25,9 @@ namespace apiMoodis.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Emotion> Emotions { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<ImageInfo> ImageInfos { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace apiMoodis.Controllers
 {
@@ -14,7 +15,7 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var users = dbContext.Users.ToList();
+                var users = dbContext.Users.Include(item => item.ImageInfos).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, users);
             }
         }
@@ -23,16 +24,32 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.FirstOrDefault(user => user.Id == id);
-                
+                var entity = dbContext.Users.Include(item => item.ImageInfos).FirstOrDefault(user => user.Id == id);
+
                 if (entity != null)
                 {
-                    Console.WriteLine(entity.ToString());
                     return Request.CreateResponse(HttpStatusCode.OK, entity);
                 }
                 else
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Id " + id + " Not found");
+                }
+            }
+        }
+        [Route("api/User/getbyid/{username}")]
+        public HttpResponseMessage GetByUsername(string username)
+        {
+            using (DatabaseContext dbContext = new DatabaseContext())
+            {
+                var entity = dbContext.Users.Include(item => item.ImageInfos).FirstOrDefault(user => user.Username == username);
+
+                if (entity != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with username " + username + " Not found");
                 }
             }
         }

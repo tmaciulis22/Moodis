@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace apiMoodis.Controllers
 {
@@ -14,7 +15,7 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var imageInfos = dbContext.ImageInfos.ToList();
+                var imageInfos = dbContext.ImageInfos.Include(e => e.Emotions).ToList();
                 if (imageInfos.Count() == 0)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There are no ImageInfos");

@@ -11,51 +11,37 @@ namespace apiMoodis.Controllers
 {
     public class UserController : ApiController
     {
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public IHttpActionResult GetAllUsers()
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var users = dbContext.Users.Include(item => item.ImageInfos).ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, users);
+                return Ok(users);
             }
         }
-
-        public HttpResponseMessage Get(string id)
+        [HttpGet]
+        public IHttpActionResult GetByIdUser(string id)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.Include(item => item.ImageInfos).FirstOrDefault(user => user.Id == id);
-
-                if (entity != null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                }
-                else
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with Id " + id + " Not found");
-                }
+                var entity = dbContext.Users.Include(item => item.ImageInfos).Single(user => user.Id == id);
+                return Ok(entity);
             }
         }
 
         [Route("api/User/getbyname/{username}")]
-        public HttpResponseMessage GetByUsername(string username)
+        public IHttpActionResult GetByUsernameUser(string username)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.Include(item => item.ImageInfos).FirstOrDefault(user => user.Username == username);
-
-                if (entity != null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                }
-                else
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "User with username " + username + " Not found");
-                }
+                var entity = dbContext.Users.Include(item => item.ImageInfos).Single(user => user.Username == username);
+                return Ok(entity);
             }
         }
 
-        public HttpResponseMessage Post([FromBody] User user)
+        [HttpPost]
+        public IHttpActionResult PostUser([FromBody] User user)
         {
             try
             {
@@ -63,73 +49,41 @@ namespace apiMoodis.Controllers
                 {
                     dbContext.Users.Add(user);
                     dbContext.SaveChanges();
-
-                    var message = Request.CreateResponse(HttpStatusCode.Created, user);
-                    message.Headers.Location = new Uri(Request.RequestUri +
-                        user.Id.ToString());
-                    return message;
+                    return Ok();
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest(ex.ToString());
             }
         }
 
-        public HttpResponseMessage Put(string id, [FromBody]User user)
+        [HttpPut]
+        public IHttpActionResult PutUser(string id, [FromBody]User user)
         {
-            try
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                using (DatabaseContext dbContext = new DatabaseContext())
-                {
-                    var entity = dbContext.Users.FirstOrDefault(e => e.Id == id);
-                    if (entity == null)
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "User with Id " + id.ToString() + " not found to update");
-                    }
-                    else
-                    {
-                        entity.Username = user.Username;
-                        entity.Password = user.Password;
-                        entity.GroupName = user.GroupName;
-                        entity.PersonGroupId = user.PersonGroupId;
-                        dbContext.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, entity);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                var entity = dbContext.Users.Single(e => e.Id == id);
+                entity.Username = user.Username;
+                entity.Password = user.Password;
+                entity.GroupName = user.GroupName;
+                entity.PersonGroupId = user.PersonGroupId;
+                dbContext.SaveChanges();
+                return Ok();
+
             }
         }
 
-        public HttpResponseMessage Delete(string id)
+        [HttpDelete]
+        public IHttpActionResult DeleteUser(string id)
         {
-            try
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                using (DatabaseContext dbContext = new DatabaseContext())
-                {
-                    var entity = dbContext.Users.FirstOrDefault(e => e.Id == id);
-                    if (entity == null)
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "User with Id = " + id.ToString() + " not found to delete");
-                    }
-                    else
-                    {
-                        dbContext.Users.Remove(entity);
-                        dbContext.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK);
-                    }
-                }
+                var entity = dbContext.Users.Single(e => e.Id == id);
+                dbContext.Users.Remove(entity);
+                dbContext.SaveChanges();
+                return Ok();
             }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-
         }
     }
 }

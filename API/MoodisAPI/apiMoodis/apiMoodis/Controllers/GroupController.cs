@@ -10,39 +10,35 @@ namespace apiMoodis.Controllers
 {
     public class GroupController : ApiController
     {
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public IHttpActionResult GetAllGroups()
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var groups = dbContext.Groups.ToList();
                 if(groups.Count() == 0)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There are no groups");
+                    return BadRequest("There are no groups");
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, groups.GetType());
+                    return Ok(groups);
                 }
             }
         }
 
-        public HttpResponseMessage Get(string id)
+        [HttpGet]
+        public IHttpActionResult GetByIdGroup(string id)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Groups.FirstOrDefault(group => group.Id == id);
-                if (entity != null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                }
-                else
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Group with Id " + id + " Not found");
-                }
+                var entity = dbContext.Groups.Single(group => group.Id == id);
+                return Ok(entity);
             }
         }
 
-        public HttpResponseMessage Post([FromBody] Group group)
+        [HttpPost]
+        public IHttpActionResult PostGroup([FromBody] Group group)
         {
             try
             {
@@ -50,71 +46,38 @@ namespace apiMoodis.Controllers
                 {
                     dbContext.Groups.Add(group);
                     dbContext.SaveChanges();
-
-                    var message = Request.CreateResponse(HttpStatusCode.Created, group);
-                    message.Headers.Location = new Uri(Request.RequestUri +
-                        group.Id.ToString());
-                    return message;
+                    return Ok(group);
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest(ex.ToString());
             }
         }
 
-        public HttpResponseMessage Put(string id, [FromBody]Group group)
+        [HttpPut]
+        public IHttpActionResult Put(string id, [FromBody]Group group)
         {
-            try
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                using (DatabaseContext dbContext = new DatabaseContext())
-                {
-                    var entity = dbContext.Groups.FirstOrDefault(e => e.Id == id);
-                    if (entity == null)
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "Group with Id " + id.ToString() + " not found to update");
-                    }
-                    else
-                    {
-                        entity.GroupName = group.GroupName;
-                        entity.MembersInString = group.MembersInString;
-                        dbContext.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, entity);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                var entity = dbContext.Groups.Single(e => e.Id == id);
+                entity.GroupName = group.GroupName;
+                entity.MembersInString = group.MembersInString;
+                dbContext.SaveChanges();
+                return Ok(entity);
             }
         }
 
-        public HttpResponseMessage Delete(string id)
+        [HttpDelete]
+        public IHttpActionResult Delete(string id)
         {
-            try
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                using (DatabaseContext dbContext = new DatabaseContext())
-                {
-                    var entity = dbContext.Groups.FirstOrDefault(e => e.Id == id);
-                    if (entity == null)
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "Group with Id = " + id.ToString() + " not found to delete");
-                    }
-                    else
-                    {
-                        dbContext.Groups.Remove(entity);
-                        dbContext.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK);
-                    }
-                }
+                var entity = dbContext.Groups.Single(e => e.Id == id);
+                dbContext.Groups.Remove(entity);
+                dbContext.SaveChanges();
+                return Ok();
             }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-
         }
     }
 }

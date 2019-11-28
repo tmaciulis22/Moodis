@@ -11,39 +11,35 @@ namespace apiMoodis.Controllers
 {
     public class EmotionController : ApiController
     {
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public IHttpActionResult GetAllEmotions()
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var emotions = dbContext.Emotions.ToList();
                 if (emotions.Count() == 0)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There are no emotions");
+                    return BadRequest("There are no emotions");
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, emotions);
+                    return Ok(emotions);
                 }
             }
         }
 
-        public HttpResponseMessage Get(string id)
+        [HttpGet]
+        public IHttpActionResult GetByIdEmotion(string id)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Emotions.FirstOrDefault(emotion => emotion.Id == id);
-                if (entity != null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                }
-                else
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Emotion with Id " + id + " Not found");
-                }
+                var entity = dbContext.Emotions.Single(emotion => emotion.Id == id);
+                return Ok(entity);
             }
         }
 
-        public HttpResponseMessage Post([FromBody] Emotion emotion)
+        [HttpPost]
+        public IHttpActionResult PostEmotion([FromBody] Emotion emotion)
         {
             try
             {
@@ -51,44 +47,38 @@ namespace apiMoodis.Controllers
                 {
                     dbContext.Emotions.Add(emotion);
                     dbContext.SaveChanges();
-
-                    var message = Request.CreateResponse(HttpStatusCode.Created, emotion);
-                    message.Headers.Location = new Uri(Request.RequestUri +
-                        emotion.Id.ToString());
-                    return message;
+                    return Ok(emotion);
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest(ex.ToString());
             }
         }
 
-        public HttpResponseMessage Put(string id, [FromBody]Emotion emotion)
+        [HttpPut]
+        public IHttpActionResult PutEmotion(string id, [FromBody]Emotion emotion)
         {
-            try
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                using (DatabaseContext dbContext = new DatabaseContext())
-                {
-                    var entity = dbContext.Emotions.FirstOrDefault(e => e.Id == id);
-                    if (entity == null)
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "Emotion with Id " + id.ToString() + " not found to update");
-                    }
-                    else
-                    {
-                        entity.ImageId = emotion.ImageId;
-                        entity.Name = emotion.Name;
-                        entity.Confidence = emotion.Confidence;
-                        dbContext.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, entity);
-                    }
-                }
+                var entity = dbContext.Emotions.Single(e => e.Id == id);
+                entity.ImageId = emotion.ImageId;
+                entity.Name = emotion.Name;
+                entity.Confidence = emotion.Confidence;
+                dbContext.SaveChanges();
+                return Ok();
             }
-            catch (Exception ex)
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeleteEmotion(string id)
+        {
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                var entity = dbContext.Emotions.Single(e => e.Id == id);
+                dbContext.Emotions.Remove(entity);
+                dbContext.SaveChanges();
+                return Ok();
             }
         }
     }

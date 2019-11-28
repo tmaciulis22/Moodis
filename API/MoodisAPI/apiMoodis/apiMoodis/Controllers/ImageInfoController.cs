@@ -11,39 +11,35 @@ namespace apiMoodis.Controllers
 {
     public class ImageInfoController : ApiController
     {
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public IHttpActionResult GetAllImageInfos()
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var imageInfos = dbContext.ImageInfos.Include(e => e.Emotions).ToList();
                 if (imageInfos.Count() == 0)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "There are no ImageInfos");
+                    return BadRequest("There are no ImageInfos");
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, imageInfos);
+                    return Ok(imageInfos);
                 }
             }
         }
 
-        public HttpResponseMessage Get(string id)
+        [HttpGet]
+        public IHttpActionResult GetImageInfoById(string id)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.ImageInfos.FirstOrDefault(ImageInfo => ImageInfo.Id == id);
-                if (entity != null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, entity);
-                }
-                else
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "ImageInfo with Id " + id + " Not found");
-                }
+                var entity = dbContext.ImageInfos.Single(ImageInfo => ImageInfo.Id == id);
+                return Ok(entity);
             }
         }
 
-        public HttpResponseMessage Post([FromBody] ImageInfo imageInfo)
+        [HttpPost]
+        public IHttpActionResult PostImageInfo([FromBody] ImageInfo imageInfo)
         {
             try
             {
@@ -51,72 +47,39 @@ namespace apiMoodis.Controllers
                 {
                     dbContext.ImageInfos.Add(imageInfo);
                     dbContext.SaveChanges();
-
-                    var message = Request.CreateResponse(HttpStatusCode.Created, imageInfo);
-                    message.Headers.Location = new Uri(Request.RequestUri +
-                        imageInfo.Id.ToString());
-                    return message;
+                    return Ok();
                 }
             }
             catch (Exception ex)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                return BadRequest(ex.ToString());
             }
         }
 
-        public HttpResponseMessage Put(string id, [FromBody]ImageInfo imageInfo)
+        [HttpPut]
+        public IHttpActionResult PutImageInfo(string id, [FromBody]ImageInfo imageInfo)
         {
-            try
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                using (DatabaseContext dbContext = new DatabaseContext())
-                {
-                    var entity = dbContext.ImageInfos.FirstOrDefault(e => e.Id == id);
-                    if (entity == null)
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "Group with Id " + id.ToString() + " not found to update");
-                    }
-                    else
-                    {
-                        entity.DateAsString = imageInfo.DateAsString;
-                        entity.UserId = imageInfo.UserId;
-                        entity.ImagePath = imageInfo.ImagePath;
-                        dbContext.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK, entity);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+                var entity = dbContext.ImageInfos.Single(e => e.Id == id);
+                entity.DateAsString = imageInfo.DateAsString;
+                entity.UserId = imageInfo.UserId;
+                entity.ImagePath = imageInfo.ImagePath;
+                dbContext.SaveChanges();
+                return Ok(entity);
             }
         }
 
-        public HttpResponseMessage Delete(string id)
+        [HttpDelete]
+        public IHttpActionResult DeleteImageInfo(string id)
         {
-            try
+            using (DatabaseContext dbContext = new DatabaseContext())
             {
-                using (DatabaseContext dbContext = new DatabaseContext())
-                {
-                    var entity = dbContext.ImageInfos.FirstOrDefault(e => e.Id == id);
-                    if (entity == null)
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                            "ImageInfo with Id = " + id.ToString() + " not found to delete");
-                    }
-                    else
-                    {
-                        dbContext.ImageInfos.Remove(entity);
-                        dbContext.SaveChanges();
-                        return Request.CreateResponse(HttpStatusCode.OK);
-                    }
-                }
+                var entity = dbContext.Groups.Single(e => e.Id == id);
+                dbContext.Groups.Remove(entity);
+                dbContext.SaveChanges();
+                return Ok();
             }
-            catch (Exception ex)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
-            }
-
         }
     }
 }

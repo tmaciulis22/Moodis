@@ -3,10 +3,12 @@ using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
+using Android.Support.V4.View;
+using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Util;
+using Android.Views;
 using Android.Widget;
-using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
 using Moodis.Feature.Group;
 using Moodis.Feature.Music;
@@ -17,25 +19,32 @@ using System.Collections.Generic;
 
 namespace Moodis.Feature.Menu
 {
-    [Activity(Label = "Menu")]
-    public class MenuActivity : AppCompatActivity
+    [Activity(Label = "Menu", Theme = "@style/AppTheme.NoActionBar")]
+    public class MenuActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private readonly string TAG = nameof(MenuActivity);
         private MenuViewModel MenuViewModel;
         private MusicPlayer MusicPlayer;
         private const string FormatDouble = "N3";
-
         private bool JustSignedIn = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            this.SetSupportActionBar();
-
             MenuViewModel = MenuViewModel.Instance;
             MusicPlayer = new MusicPlayer(this);
             SetContentView(Resource.Layout.activity_menu);
+
+            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(toolbar);
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            drawer.AddDrawerListener(toggle);
+            toggle.SyncState();
+
+            NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            navigationView.SetNavigationItemSelectedListener(this);
 
             if (MenuViewModel.currentImage.ImagePath == null)
             {
@@ -47,23 +56,8 @@ namespace Moodis.Feature.Menu
 
             JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
-            InitButtons();
             UpdateLabels();
             MenuViewModel.DeleteImage();
-        }
-
-        public override bool OnSupportNavigateUp()
-        {
-            if (JustSignedIn)
-            {
-                StartActivity(new Intent(this, typeof(CameraActivity)));
-                Finish();
-            }
-            else
-            {
-                OnBackPressed();
-            }
-            return true;
         }
 
         public void UpdateLabels()
@@ -97,65 +91,103 @@ namespace Moodis.Feature.Menu
         }
         public override void OnBackPressed()
         {
-            Finish();
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            if (drawer.IsDrawerOpen(GravityCompat.Start))
+            {
+                drawer.CloseDrawer(GravityCompat.Start);
+            }
+            else
+            {
+                base.OnBackPressed();
+                Finish();
+            }
         }
 
-        //TODO SHOW LOGOUT WINDOW WHEN USER LOGS OUT FROM A MENU THAT IS YET TO BE MADE.
-        public void LogoutWindowShow()
+        private void LogoutWindowShow()
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
                 .SetTitle(Resource.String.logout)
                 .SetMessage(Resource.String.logout_confirmation_message)
                 .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
-                .SetPositiveButton(Resource.String.yes, (senderAlert, args) => {
+                .SetPositiveButton(Resource.String.yes, (senderAlert, args) =>
+                {
                     StartActivity(new Intent(this, typeof(SignInActivity)));
-                    Finish();
+                    FinishAffinity();
                 });
             builder.Create().Show();
             builder.Dispose();
         }
-        private void InitButtons()
-        {
-            var btnHistory = FindViewById(Resource.Id.buttonHistory);
-            var btnPlayMusic = FindViewById(Resource.Id.playMusic);
-            var btnStopMusic = FindViewById(Resource.Id.StopMusic);
-            var btnGroups = FindViewById(Resource.Id.groups);
 
-            btnHistory.Click += (sender, e) =>
+        private void MusicPlay()
+        {
+            if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
             {
-                StartActivity(new Intent(this, typeof(HistoryActivity)));
-            };
-            btnPlayMusic.Click += (sender, e) =>
-            {
-                if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
-                {
-                    int[] musicLabels = { Resource.Raw.Anger, Resource.Raw.Contempt, Resource.Raw.Disgust, Resource.Raw.Fear, Resource.Raw.Happiness, Resource.Raw.Neutral,
+                int[] musicLabels = { Resource.Raw.Anger, Resource.Raw.Contempt, Resource.Raw.Disgust, Resource.Raw.Fear, Resource.Raw.Happiness, Resource.Raw.Neutral,
                                 Resource.Raw.Sadness, Resource.Raw.Surprise };
-                    if (MenuViewModel.GetHighestEmotionIndex() != -1)
-                    {
-                        MusicPlayer.Play(musicLabels[MenuViewModel.GetHighestEmotionIndex()]);
-                    }
-                }
-                else if (MusicPlayer.IsPlaying())
+                if (MenuViewModel.GetHighestEmotionIndex() != -1)
                 {
-                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.info_music_is_playing, Snackbar.LengthShort).Show();
+                    MusicPlayer.Play(musicLabels[MenuViewModel.GetHighestEmotionIndex()]);
+                }
+            }
+            else if (MusicPlayer.IsPlaying())
+            {
+                Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.info_music_is_playing, Snackbar.LengthShort).Show();
+            }
+            else
+            {
+                Log.Debug(TAG, Resources.GetString(Resource.String.warning_playing_music));
+                Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_playing_music, Snackbar.LengthShort).Show();
+            }
+        }
+
+        public bool OnNavigationItemSelected(IMenuItem item)
+        {
+            int id = item.ItemId;
+
+            if (id == Resource.Id.nav_camera)
+            {
+                if (JustSignedIn)
+                {
+                    StartActivity(new Intent(this, typeof(CameraActivity)));
+                    Finish();
                 }
                 else
                 {
-                    Log.Debug(TAG, Resources.GetString(Resource.String.warning_playing_music));
-                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_playing_music, Snackbar.LengthShort).Show();
+                    OnBackPressed();
                 }
-
-            };
-            btnStopMusic.Click += (sender, e) =>
+            }
+            else if (id == Resource.Id.nav_groups)
+            {
+                StartActivity(new Intent(this, typeof(GroupActivity)));
+            }
+            else if (id == Resource.Id.nav_history)
+            {
+                StartActivity(new Intent(this, typeof(HistoryActivity)));
+            }
+            else if (id == Resource.Id.nav_music_play)
+            {
+                MusicPlay();
+            }
+            else if (id == Resource.Id.nav_music_stop)
             {
                 if (MusicPlayer != null)
                     MusicPlayer.Stop();
-            };
-            btnGroups.Click += (sender, e) =>
+                else
+                    Snackbar.Make(FindViewById(Resource.Id.menuActivity), Resource.String.warning_no_music_playing, Snackbar.LengthShort).Show();
+            }
+            else if (id == Resource.Id.nav_music_settings)
             {
-                StartActivity(new Intent(this, typeof(GroupActivity)));
-            };
+
+            }
+            else if (id == Resource.Id.nav_menu_logout)
+            {
+                LogoutWindowShow();
+            }
+
+            Log.Info(TAG, "Interraction with navigation window");
+            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            drawer.CloseDrawer(GravityCompat.Start);
+            return true;
         }
     }
 }

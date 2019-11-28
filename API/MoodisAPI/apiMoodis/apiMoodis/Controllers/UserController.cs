@@ -36,6 +36,7 @@ namespace apiMoodis.Controllers
                 }
             }
         }
+
         [Route("api/User/getbyname/{username}")]
         public HttpResponseMessage GetByUsername(string username)
         {

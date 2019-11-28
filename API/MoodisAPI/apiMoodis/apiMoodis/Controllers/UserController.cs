@@ -36,7 +36,7 @@ namespace apiMoodis.Controllers
                 }
             }
         }
-        [Route("api/User/getbyid/{username}")]
+        [Route("api/User/getbyname/{username}")]
         public HttpResponseMessage GetByUsername(string username)
         {
             using (DatabaseContext dbContext = new DatabaseContext())

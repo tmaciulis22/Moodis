@@ -155,7 +155,7 @@ namespace Moodis.Feature.SignIn
 
             if (SignInViewModel.Authenticate(username, password))
             {
-                DisplayFaceNewewWindow();
+                DisplayFaceUpdatewWindow();
                 SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
             }
@@ -166,7 +166,7 @@ namespace Moodis.Feature.SignIn
             }
         }
 
-        private void DisplayFaceNewewWindow()
+        private void DisplayFaceUpdatewWindow()
         {
             Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
                 .SetTitle(Resource.String.update_face)

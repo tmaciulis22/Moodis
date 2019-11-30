@@ -256,5 +256,25 @@ namespace Moodis.Network.Face
                 return false;
             }
         }
+
+        public async Task<bool> MovePerson(string personGroupId, Guid personId,string username, string newGroupId)
+        {
+            try
+            {
+                await faceClient.PersonGroupPerson.DeleteAsync(personGroupId,personId);
+                var newFaceApiPerson = await Face.Instance.CreateNewPerson(newGroupId, username);
+                return true;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return false;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return false;
+            }
+        }
     }
 }

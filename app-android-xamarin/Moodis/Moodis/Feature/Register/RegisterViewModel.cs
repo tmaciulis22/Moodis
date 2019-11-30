@@ -98,13 +98,10 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> AuthenticateFace(string imagePath)
         {
-            List<DetectedFace> detectedFaces = null;
-            void setFace(List<DetectedFace> face) => detectedFaces = face;
-            DetectedFace face;
             bool userExists;
             try
             {
-                userExists = await Face.Instance.MultipleAccounts(imagePath, setFace);
+                userExists = await Face.Instance.MultipleAccounts(imagePath, null);
             }
             catch (APIErrorException e)
             {

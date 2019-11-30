@@ -179,10 +179,13 @@ namespace Moodis.Feature.Register
                 }
                 else if (response == Response.RegistrationDone)
                 {
-                    if(!updating)
+                    if(updating){
+                         Finish();
+                    }else{
                         await CheckWhetherUserFaceAlreadyUsedAsync(e.ImagePath);
-                    SetResult(Result.FirstUser);
-                    Finish();
+                        SetResult(Result.FirstUser);
+                         Finish();
+                    }
                 }
                 else
                 {

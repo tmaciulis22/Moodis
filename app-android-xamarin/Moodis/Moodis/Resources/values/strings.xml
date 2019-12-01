@@ -41,7 +41,6 @@
   <string name="info_music_is_playing">Music is already playing</string>
   <string name="warning_no_music_playing">No music is currently playing</string>
   <string name="user_created_success">User was created successfully</string>
- 
 
   <string name="yes">Yes</string>
   <string name="no">No</string>
@@ -53,6 +52,22 @@
   <string name="history_today">Today</string>
 
   <string name="lorem_ipsum">Lorem ipsum</string>
+
+  <string name="join_group_success">You have joined a new group!</string>
+  <string name="join_group_fail">You are already in the group</string>
+  <string name="text_group_empty_error">No group name provided</string>
+  <string name="group_exists_error">Group already exists</string>
+  <string name="group_not_exists_error">Group does not exist</string>
+
+  <string name="groupName">Draugeliai</string>
+  <string name="create_a_group">Create a group</string>
+  <string name="see_my_groups">See my groups</string>
+  <string name="join_a_group">Join a Group</string>
+  <string name="hint_group_name">Group name</string>
+  <string name="group_entry_empty">Please enter group name </string>
+  <string name="no_groups">No groups. Join One!</string>
+  
+</resources>
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -43,9 +43,9 @@ namespace Moodis.History
             return dailyList[0].emotions[index].Name + " avg: " + (confidenceList[index] / dailyList.Count).ToString(FormatDouble);
         }
 
-        public IList<ImageInfo> FetchStats(string userId, DateTime? dateTime = null)
+        public IList<ImageInfo> FetchStats(List<string> userIds, DateTime? dateTime = null)
         {
-            return DatabaseModel.FetchUserStats(userId, dateTime);
+            return DatabaseModel.FetchUserStats(userIds, dateTime);
         }
     }
 }

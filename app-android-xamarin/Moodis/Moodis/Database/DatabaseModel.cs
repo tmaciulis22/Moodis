@@ -1,4 +1,5 @@
-﻿using Moodis.Feature.Login;
+﻿using Moodis.Feature.Group;
+using Moodis.Feature.Login;
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,21 @@ namespace Moodis.Database
 {
     class DatabaseModel
     {
-        private static SQLite.SQLiteConnection databaseConnection;
+        private static readonly SQLite.SQLiteConnection databaseConnection;
         static DatabaseModel()
         {
             string filename = "users_db.sqlite";
             string fileLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             databaseConnection = new SQLite.SQLiteConnection(Path.Combine(fileLocation, filename));
             //Use this for testing compatability with new users
-            //databaseConnection.DeleteAll<User>();
-            //databaseConnection.DeleteAll<ImageInfo>();
-            //databaseConnection.DeleteAll<Emotion>():
-            //databaseConnection.DropTable<ImageInfo>();
-            //databaseConnection.DropTable<Emotion>();
+            databaseConnection.DeleteAll<User>();
+            databaseConnection.DeleteAll<ImageInfo>();
+            databaseConnection.DeleteAll<Emotion>();
+            databaseConnection.DeleteAll<Group>();
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();
             databaseConnection.CreateTable<Emotion>();
+            databaseConnection.CreateTable<Group>();
         }
 
         public static List<User> FetchUsers()
@@ -32,11 +33,11 @@ namespace Moodis.Database
             return databaseConnection.Table<User>().ToList();
         }
 
-        public static List<ImageInfo> FetchUserStats(string userId, DateTime? dateTime = null)
+        public static List<ImageInfo> FetchUserStats(List<string> userIds, DateTime? dateTime = null)
         {
             var stats = databaseConnection.Table<ImageInfo>().ToList();
 
-            stats = stats.Where(stat => stat.UserId == userId).ToList();
+            stats = stats.Where(stat => userIds.Contains(stat.UserId)).ToList();
 
             stats.ForEach(stat => stat.ImageDate = DateTime.Parse(stat.DateAsString));
 
@@ -71,6 +72,30 @@ namespace Moodis.Database
             imageInfo.DateAsString = imageInfo.ImageDate.ToString();
             databaseConnection.Insert(imageInfo);
             imageInfo.emotions.ForEach(emotion => databaseConnection.Insert(emotion));
+        }
+
+        public static List<Group> FetchGroupFromDatabase()
+        {
+            var groups = databaseConnection.Table<Group>().ToList();
+            groups.ForEach(entry => entry.ConvertToList());
+            return groups;
+        }
+
+        public static void AddGroupToDatabase(Group group)
+        {
+            group.ConvertToString();
+            databaseConnection.Insert(group);
+        }
+
+        public static void UpdateGroupToDatabase(Group group)
+        {
+            group.ConvertToString();
+            databaseConnection.Update(group);
+        }
+
+        public static void DeleteGroupFromDatabase(Group group)
+        {
+            databaseConnection.Delete(group);
         }
 
         public static void CloseConnectionToDatabase()

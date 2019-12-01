@@ -56,8 +56,9 @@ namespace Moodis.Feature.Menu
 
                 JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
-            UpdateLabels();
-            MenuViewModel.DeleteImage();
+                UpdateLabels();
+                MenuViewModel.DeleteImage();
+            }
         }
 
         public void UpdateLabels()

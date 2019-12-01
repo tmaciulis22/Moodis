@@ -48,8 +48,6 @@
   <string name="user_created_success">User was created successfully</string>
  
 
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
   <string name="logout">Logout</string>
   <string name="logout_confirmation_message">Are you sure you want to sign out ?</string>
   
@@ -63,7 +61,6 @@
   <string name="delete_everything_message">Are you sure that you want to delete all users\' data in database and face API?</string>
   <string name="delete_everything_successful">All data cleared successfully</string>
   <string name="delete_everything_failed">Data could not be cleared</string>
-</resources>
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>

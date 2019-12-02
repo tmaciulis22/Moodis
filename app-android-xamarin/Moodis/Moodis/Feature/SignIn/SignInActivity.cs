@@ -6,6 +6,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Register;
 
@@ -18,6 +19,8 @@ namespace Moodis.Feature.SignIn
         public static int REQUEST_CODE_FACE = 2;
         public static int REQUEST_CODE_REGISTER_FACE = 3;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
+
+        View progressBar;
 
         public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
 
@@ -65,6 +68,8 @@ namespace Moodis.Feature.SignIn
             var signInButton = FindViewById(Resource.Id.signInButton);
             var signInWithFaceButton = FindViewById(Resource.Id.signInFaceButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
+            var deleteEverythingButton = FindViewById(Resource.Id.deleteEverythingButton);
+            progressBar = FindViewById(Resource.Id.progressBarSignIn);
 
             usernameInput.TextChanged += (sender, e) =>
             {
@@ -145,11 +150,38 @@ namespace Moodis.Feature.SignIn
             {
                 StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
+
+            deleteEverythingButton.Click += (sender, e) => {
+                var dialog = this.ConfirmationAlert(
+                    titleRes: Resource.String.delete_everything_title,
+                    messageRes: Resource.String.delete_everything_message,
+                    positiveButtonRes: Resource.String.yes,
+                    negativeButtonRes: Resource.String.no,
+                    positiveCallback: delegate { HandleDeletion(); });
+                dialog.Show();
+            };
+        }
+
+        private async void HandleDeletion()
+        {
+            progressBar.Visibility = ViewStates.Visible;
+            progressBar.BringToFront();
+
+            var response = await SignInViewModel.DeleteEverything();
+            if (response == Response.OK)
+            {
+                progressBar.Visibility = ViewStates.Gone;
+                Toast.MakeText(this, Resource.String.delete_everything_successful, ToastLength.Short).Show();
+            }
+            else
+            {
+                progressBar.Visibility = ViewStates.Gone;
+                Toast.MakeText(this, Resource.String.delete_everything_failed, ToastLength.Short).Show();
+            }
         }
 
         private void SignIn(string username, string password)
         {
-            var progressBar = FindViewById(Resource.Id.progressBarSignIn);
             progressBar.Visibility = ViewStates.Visible;
             progressBar.BringToFront();
 

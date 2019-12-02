@@ -51,44 +51,23 @@ namespace Moodis.Feature.Register
         public async Task<Response> DeleteUser()
         {
             DatabaseModel.DeleteUserFromDatabase(currentUser);
-            var wasSuccessful = await Face.Instance.DeletePerson(currentUser.PersonGroupId);
-            if (wasSuccessful)
-            {
-                return Response.OK;
-            }
-            else
-            {
-                return Response.ApiError;
-            }
+            return await Face.Instance.DeletePerson(currentUser.PersonGroupId);
         }
 
         public async Task<Response> AddFaceToPerson(string imagePath)
         {
-            bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.PersonGroupId, currentUser);
+            var response = await Face.Instance.AddFaceToPerson(imagePath, currentUser.PersonGroupId, currentUser);
 
-            if (wasSuccessful)
+            if (response == Response.OK)
             {
                 photosTaken++;
 
                 if (photosTaken == RequiredNumberOfPhotos)
                 {
-                    try
-                    {
-                        await Face.Instance.TrainPersonGroup(currentUser.PersonGroupId);
-                        return Response.RegistrationDone;
-                    }
-                    catch
-                    {
-                        return Response.ApiTrainingError;
-                    }
+                    return await Face.Instance.TrainPersonGroup(currentUser.PersonGroupId);
                 }
-
-                return Response.OK;
             }
-            else
-            {
-                return Response.ApiError;
-            }
+            return response;
         }
 
         public void UpdateLocalStorage()
@@ -116,6 +95,11 @@ namespace Moodis.Feature.Register
             }
 
             return Response.UserNotFound;
+        }
+
+        public static string GetIdByUsername(string username)
+        {
+           return userList.Find(user => user.Username == username).Id;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Moodis.Feature.SignIn
     [Activity(Label = "Sign In")]
     public class SignInFaceActivity : AppCompatActivity
     {
-        SignInViewModel SignInViewModel = new SignInViewModel();
+        readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
         Camera camera;
         private bool CameraReleased = false;
@@ -173,6 +173,10 @@ namespace Moodis.Feature.SignIn
                 if (response == Response.ApiError)
                 {
                     Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
+                }
+                else if (response == Response.FaceNotDetected)
+                {
+                    Toast.MakeText(this, Resource.String.warning_face_detection, ToastLength.Short).Show();
                 }
                 else if (response == Response.UserNotFound)
                 {

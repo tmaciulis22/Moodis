@@ -1,6 +1,7 @@
 ﻿using Android.Arch.Lifecycle;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
+using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network.Face;
@@ -34,7 +35,7 @@ namespace Moodis.Feature.SignIn
             FetchUserList();
 
             List<DetectedFace> detectedFaces = null;
-            void setFace(List<DetectedFace> face) => detectedFaces = face;
+            void setFace(List<DetectedFace> faces) => detectedFaces = faces;
             DetectedFace face;
 
             List<Person> identifiedPersons = null;
@@ -43,9 +44,16 @@ namespace Moodis.Feature.SignIn
                 imagePath.RotateImage();
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
-            catch (APIErrorException)
+            catch
             {
-                return Response.ApiError;
+                if (detectedFaces.IsNullOrEmpty())
+                {
+                    return Response.FaceNotDetected;
+                }
+                else
+                {
+                    return Response.ApiError;
+                }
             }
 
             if (identifiedPersons.IsNullOrEmpty())
@@ -62,6 +70,13 @@ namespace Moodis.Feature.SignIn
             }
             callback(face);
             return Response.OK;
+        }
+
+        //NOTE this method is used only for development and testing purposes, to clear everything in DB and in Face API
+        public async Task<Response> DeleteEverything()
+        {
+            DatabaseModel.DeleteEverything();
+            return await Face.Instance.DeleteEverything();
         }
 
         private void FetchUserList()

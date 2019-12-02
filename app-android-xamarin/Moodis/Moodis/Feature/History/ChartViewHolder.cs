@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
 using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
 using Microcharts;
 using Microcharts.Droid;
-using Moodis.History;
+using Moodis.Extensions;
 using Moodis.Ui;
 using SkiaSharp;
 
@@ -22,6 +13,7 @@ namespace Moodis.Feature.History
     class ChartViewHolder : RecyclerView.ViewHolder
     {
         ChartView ChartView;
+        private const string HEX_FORMAT = "#{0:X6}";
 
         public ChartViewHolder(View view) : base(view)
         {
@@ -35,7 +27,7 @@ namespace Moodis.Feature.History
             if (stats.Count == 0) return;
 
             var entries = new List<ChartEntry>();
-            var maxEmotions = new List<KeyValuePair<string, int>>();
+            var maxEmotions = new List<KeyValuePair<string, int>>(); //Pair of emotion name and how many times it was highest
 
             stats.ForEach(stat => {
                 var highestEmotion = stat.emotions.Max();
@@ -54,12 +46,11 @@ namespace Moodis.Feature.History
                 }
             });
 
-            var random = new Random();
-            maxEmotions.ForEach(emotion => {
-                var color = SKColor.Parse(GenerateRandomColor(random));
-                entries.Add(new ChartEntry(emotion.Value) { 
-                    Label = emotion.Key, 
-                    ValueLabel = emotion.Value.ToString(),
+            maxEmotions.ForEach(emotionPair => {
+                var color = SKColor.Parse(GetEmotionColorHex(emotionPair.Key));
+                entries.Add(new ChartEntry(emotionPair.Value) { 
+                    Label = emotionPair.Key, 
+                    ValueLabel = emotionPair.Value.ToString(),
                     Color = color,
                     TextColor = color
                 });
@@ -70,10 +61,9 @@ namespace Moodis.Feature.History
             ChartView.Chart = chart;
         }
 
-        //TODO Refactor out this piece of shit on optimization of OnBind
-        private string GenerateRandomColor(Random random)
+        private string GetEmotionColorHex(string emotionName)
         {
-            return string.Format("#{0:X6}", random.Next(0x1000000));
+            return string.Format(HEX_FORMAT, ChartView.Context.GetColor(emotionName.EmotionColor()));
         }
     }
 }

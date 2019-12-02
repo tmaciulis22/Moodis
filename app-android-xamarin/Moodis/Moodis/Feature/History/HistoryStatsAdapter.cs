@@ -2,7 +2,6 @@
 using Android.Views;
 using Microcharts;
 using Moodis.Feature.History;
-using Moodis.Feature.SignIn;
 using Moodis.Ui;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +11,7 @@ namespace Moodis.History
     public class HistoryStatsAdapter : RecyclerView.Adapter
     {
         public const int DAILY_CHART = 0;
-        // TODO Implement this chart later on, when BE is connected to app
-        //public const int MONTHLY_CHART = 1; 
-        private const int STAT = 2;
+        private const int STAT = 1;
 
         private List<object> _itemList;
 
@@ -34,10 +31,6 @@ namespace Moodis.History
             {
                 return DAILY_CHART;
             }
-            //else if (_itemList.ElementAt(position) is BarChart)
-            //{
-            //    return MONTHLY_CHART;
-            //}
             else
             {
                 return STAT;

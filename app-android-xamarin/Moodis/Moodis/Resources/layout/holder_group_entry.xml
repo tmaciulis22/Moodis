@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
     
             <TextView
-                
+                android:id="@+id/label_groupname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/regular_text"
@@ -26,17 +26,19 @@
                 android:layout_margin="@dimen/grid_unit_3x"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/lorem_ipsum"
-                android:id="@+id/label_groupname"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="@string/lorem_ipsum"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_margin="@dimen/grid_unit_5x"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/button_leave_group"
-                android:src="@android:drawable/ic_menu_delete"
-            />
+                android:src="@drawable/baseline_delete_forever_black_18dp" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

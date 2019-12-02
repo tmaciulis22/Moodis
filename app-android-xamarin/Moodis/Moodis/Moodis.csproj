@@ -332,6 +332,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_delete_forever_black_18dp.png" />
+  </ItemGroup>
+  <ItemGroup>
     <AndroidResource Include="Resources\layout\app_bar_main.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -31,17 +31,25 @@ namespace Moodis.Ui
 
         public async Task<Response> GetFaceEmotionsAsync()
         {
-            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.Username);
+            try
+            {
+                var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.Username);
+                if (face != null)
+                {
+                    currentImage.SetImageInfo(face);
+                    return Response.OK;
+                }
+                else
+                {
+                    return Response.FaceNotDetected;
+                }
+            }
+            catch
+            {
+                return Response.ApiError;
+            }
 
-            if (face != null)
-            {
-                currentImage.SetImageInfo(face);
-                return Response.OK;
-            }
-            else
-            {
-                return Response.FaceNotDetected;
-            }
+            
         }
 
         public void DeleteImage()

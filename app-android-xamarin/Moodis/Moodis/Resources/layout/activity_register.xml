@@ -39,12 +39,13 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <EditText
-        android:id="@+id/usernameInputToAdd"
+        android:id="@+id/usernameInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/grid_unit_8x"
         android:maxLines="1"
         android:inputType="textPersonName"
+        android:imeOptions="actionNext"
         app:layout_constraintTop_toBottomOf="@id/header"
         app:layout_constraintLeft_toRightOf="@id/usernameLabel"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -60,7 +61,7 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <EditText
-        android:id="@+id/passwordInputToAdd"
+        android:id="@+id/passwordInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/grid_unit_8x"
@@ -71,7 +72,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <Button
-        android:id="@+id/registerButtonToAdd"
+        android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/grid_unit_12x"

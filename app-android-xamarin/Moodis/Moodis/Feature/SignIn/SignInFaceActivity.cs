@@ -174,6 +174,10 @@ namespace Moodis.Feature.SignIn
                 {
                     Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
                 }
+                else if (response == Response.FaceNotDetected)
+                {
+                    Toast.MakeText(this, Resource.String.warning_face_detection, ToastLength.Short).Show();
+                }
                 else if (response == Response.UserNotFound)
                 {
                     Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();

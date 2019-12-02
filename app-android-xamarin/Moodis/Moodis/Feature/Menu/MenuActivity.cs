@@ -51,13 +51,15 @@ namespace Moodis.Feature.Menu
                 StartActivity(new Intent(this, typeof(CameraActivity)));
                 Finish();
             }
+            else
+            {
+                MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
 
-            MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
+                JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
-            JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
-
-            UpdateLabels();
-            MenuViewModel.DeleteImage();
+                UpdateLabels();
+                MenuViewModel.DeleteImage();
+            }
         }
 
         public void UpdateLabels()

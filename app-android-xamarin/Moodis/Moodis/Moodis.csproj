@@ -87,6 +87,7 @@
     <Compile Include="Feature\Group\GroupListActivity.cs" />
     <Compile Include="Feature\Group\GroupMembersActivity.cs" />
     <Compile Include="Feature\Group\GroupViewHolder.cs" />
+    <Compile Include="Feature\History\ChartViewHolder.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
     <Compile Include="Feature\MusicPlayer\MusicPlayer.cs" />
@@ -147,6 +148,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microcharts">
+      <Version>0.8.5-pre</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>2.5.0</Version>
     </PackageReference>
@@ -399,6 +403,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\holder_members_entry.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\holder_chart.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

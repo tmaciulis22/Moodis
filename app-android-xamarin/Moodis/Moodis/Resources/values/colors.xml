@@ -5,4 +5,13 @@
     <color name="colorAccent">#3498db</color>
 
     <color name="progress_bar_container_background">#ccfafafa</color>
+
+  <color name="color_anger">#c0392b</color>
+  <color name="color_disgust">#27ae60</color>
+  <color name="color_fear">#2c3e50</color>
+  <color name="color_sadness">#3498db</color>
+  <color name="color_contempt">#7f8c8d</color>
+  <color name="color_neutral">#95a5a6</color>
+  <color name="color_suprise">#f1c40f</color>
+  <color name="color_happiness">#f39c12</color>
 </resources>

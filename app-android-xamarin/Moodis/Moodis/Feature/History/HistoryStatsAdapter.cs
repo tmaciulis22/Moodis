@@ -12,7 +12,8 @@ namespace Moodis.History
     public class HistoryStatsAdapter : RecyclerView.Adapter
     {
         public const int DAILY_CHART = 0;
-        //public const int MONTHLY_CHART = 1; TODO Implement this chart later on, when BE is connected to app
+        // TODO Implement this chart later on, when BE is connected to app
+        //public const int MONTHLY_CHART = 1; 
         private const int STAT = 2;
 
         private List<object> _itemList;

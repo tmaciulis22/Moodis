@@ -15,8 +15,11 @@ namespace Moodis.History
             var listToReturn = new List<object>();
 
             listToReturn.AddRange(DatabaseModel.FetchUserStats(userIds, dateTime));
-            listToReturn.Insert(0, new DonutChart());
-            //listToReturn.Insert(1, new BarChart());
+            if (listToReturn.Count != 0)
+            {
+                listToReturn.Insert(0, new DonutChart());
+            }
+            //listToReturn.Insert(1, new BarChart()); Monthly chart
 
             return listToReturn;
         }

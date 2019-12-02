@@ -37,21 +37,26 @@ namespace Moodis.Feature.History
             var entries = new List<ChartEntry>();
             var maxEmotions = new List<KeyValuePair<string, int>>();
 
-            stats.First().emotions.ForEach(emotion => {
-                maxEmotions.Add(new KeyValuePair<string, int>(emotion.Name, 0));
-            });
-
             stats.ForEach(stat => {
-                var maxEmotion = stat.emotions.Max();
-                var oldPairIndex = maxEmotions.FindIndex(pair => pair.Key == maxEmotion.Name);
-                var oldPair = maxEmotions[oldPairIndex];
+                var highestEmotion = stat.emotions.Max();
 
-                maxEmotions.RemoveAt(oldPairIndex);
-                maxEmotions.Insert(oldPairIndex, new KeyValuePair<string, int>(oldPair.Key, oldPair.Value + 1));
+                var oldPairIndex = maxEmotions.FindIndex(pair => pair.Key == highestEmotion.Name);
+                if (oldPairIndex != -1)
+                {
+                    var oldPair = maxEmotions[oldPairIndex];
+
+                    maxEmotions.RemoveAt(oldPairIndex);
+                    maxEmotions.Insert(oldPairIndex, new KeyValuePair<string, int>(oldPair.Key, oldPair.Value + 1));
+                }
+                else
+                {
+                    maxEmotions.Add(new KeyValuePair<string, int>(highestEmotion.Name, 1));
+                }
             });
 
+            var random = new Random();
             maxEmotions.ForEach(emotion => {
-                var color = SKColor.Parse(GenerateRandomColor());
+                var color = SKColor.Parse(GenerateRandomColor(random));
                 entries.Add(new ChartEntry(emotion.Value) { 
                     Label = emotion.Key, 
                     ValueLabel = emotion.Value.ToString(),
@@ -60,16 +65,15 @@ namespace Moodis.Feature.History
                 });
             });
 
+            chart.LabelTextSize = ChartView.Context.Resources.GetDimension(Resource.Dimension.chart_label);
             chart.Entries = entries;
             ChartView.Chart = chart;
         }
 
-        //Refactor this piece of shit on optimization of OnBind
-        private string GenerateRandomColor()
+        //TODO Refactor out this piece of shit on optimization of OnBind
+        private string GenerateRandomColor(Random random)
         {
-            Random rnd = new Random();
-            var color = Color.Argb(255, rnd.Next(256), rnd.Next(256), rnd.Next(256));
-            return string.Format("#%02x%02x%02x", color.R, color.G, color.B);
+            return string.Format("#{0:X6}", random.Next(0x1000000));
         }
     }
 }

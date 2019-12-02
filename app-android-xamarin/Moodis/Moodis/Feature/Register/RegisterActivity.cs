@@ -17,7 +17,7 @@ namespace Moodis.Feature.Register
     [Activity(Label = "Register")]
     public class RegisterActivity : Activity
     {
-        RegisterViewModel registerViewModel = new RegisterViewModel();
+        readonly RegisterViewModel registerViewModel = new RegisterViewModel();
         private const int REQUEST_CODE_REGISTER_FACE = 1;
 
         View progressBar;

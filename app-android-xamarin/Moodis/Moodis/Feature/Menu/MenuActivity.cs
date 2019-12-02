@@ -10,6 +10,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Moodis.Feature.CameraFeature;
+using Moodis.Feature.Group;
 using Moodis.Feature.Music;
 using Moodis.Feature.SignIn;
 using Moodis.History;
@@ -159,7 +160,7 @@ namespace Moodis.Feature.Menu
             }
             else if (id == Resource.Id.nav_groups)
             {
-
+                StartActivity(new Intent(this, typeof(GroupActivity)));
             }
             else if (id == Resource.Id.nav_history)
             {

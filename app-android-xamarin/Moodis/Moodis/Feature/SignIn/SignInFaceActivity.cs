@@ -22,7 +22,7 @@ namespace Moodis.Feature.SignIn
     [Activity(Label = "Sign In")]
     public class SignInFaceActivity : AppCompatActivity
     {
-        SignInViewModel SignInViewModel = new SignInViewModel();
+        readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
         Camera camera;
         private bool CameraReleased = false;

@@ -20,7 +20,7 @@ namespace Moodis.Feature.Register
     [Activity(Label = "Register")]
     public class RegisterFaceActivity : AppCompatActivity
     {
-        RegisterViewModel registerViewModel = new RegisterViewModel();
+        readonly RegisterViewModel registerViewModel = new RegisterViewModel();
 
         Camera camera;
         private bool CameraReleased = false;

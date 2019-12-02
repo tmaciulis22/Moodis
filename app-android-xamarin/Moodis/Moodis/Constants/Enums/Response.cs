@@ -13,5 +13,7 @@
         UserNotFound,
         //Registration and singIn errors
         SerializationError,
+        GroupNotFound,
+        GroupExists
     }
 }

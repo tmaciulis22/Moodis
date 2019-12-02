@@ -19,7 +19,6 @@ namespace Moodis.History
             {
                 listToReturn.Insert(0, new DonutChart());
             }
-            //listToReturn.Insert(1, new BarChart()); Monthly chart
 
             return listToReturn;
         }

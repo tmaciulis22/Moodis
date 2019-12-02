@@ -15,7 +15,8 @@
             <Microcharts.Droid.ChartView
                 android:id="@+id/chartView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/grid_unit_100x" />
+                android:layout_height="@dimen/grid_unit_100x"
+                android:layout_margin="@dimen/grid_unit_5x"/>
 
     </android.support.v7.widget.CardView>
 </FrameLayout>

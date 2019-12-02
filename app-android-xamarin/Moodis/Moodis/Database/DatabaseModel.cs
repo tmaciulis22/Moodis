@@ -104,6 +104,7 @@ namespace Moodis.Database
             databaseConnection.DeleteAll<User>();
             databaseConnection.DeleteAll<ImageInfo>();
             databaseConnection.DeleteAll<Emotion>();
+            databaseConnection.DeleteAll<Group>();
         }
     }
 }

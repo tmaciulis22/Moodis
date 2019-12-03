@@ -179,7 +179,7 @@ namespace Moodis.Network.Face
             {
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
-                    Guid.Parse(user.personId), imageFileStream); ;
+                    Guid.Parse(user.personId), imageFileStream);
                 return Response.OK;
             }
             catch (APIErrorException apiException)

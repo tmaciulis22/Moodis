@@ -15,7 +15,7 @@ namespace Moodis.Database
         static DatabaseModel()
         {
             string filename = "users_db.sqlite";
-            string fileLocation = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             databaseConnection = new SQLite.SQLiteConnection(Path.Combine(fileLocation, filename));
             databaseConnection.CreateTable<User>();
             databaseConnection.CreateTable<ImageInfo>();

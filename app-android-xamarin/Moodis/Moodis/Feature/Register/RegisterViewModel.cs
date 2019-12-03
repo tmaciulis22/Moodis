@@ -1,8 +1,8 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
 using Moodis.Database;
-using Moodis.Extensions;
 using Moodis.Feature.Login;
+using Moodis.Feature.SignIn;
 using Moodis.Network.Face;
 using System;
 using System.Collections.Generic;
@@ -38,6 +38,7 @@ namespace Moodis.Feature.Register
                 if (newFaceApiPerson != null)
                 {
                     currentUser.FaceApiPerson = newFaceApiPerson;
+                    currentUser.personId = Convert.ToString(currentUser.FaceApiPerson.PersonId);
                 }
                 else
                 {
@@ -54,8 +55,14 @@ namespace Moodis.Feature.Register
             return await Face.Instance.DeletePerson(currentUser.PersonGroupId);
         }
 
+        //TODO MOVE THIS TO FACE CLASS
         public async Task<Response> AddFaceToPerson(string imagePath)
         {
+            if (currentUser == null)
+            {
+                currentUser = SignInViewModel.currentUser;
+            }
+
             var response = await Face.Instance.AddFaceToPerson(imagePath, currentUser.PersonGroupId, currentUser);
 
             if (response == Response.OK)

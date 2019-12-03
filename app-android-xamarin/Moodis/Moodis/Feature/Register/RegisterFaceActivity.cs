@@ -14,8 +14,8 @@ using Moodis.Constants.Enums;
 using Moodis.Events;
 using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
-using Moodis.Feature.SignIn;
 using System;
+using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
 {
@@ -29,6 +29,7 @@ namespace Moodis.Feature.Register
         private bool updating = false;
         static readonly int REQUEST_CAMERA = 0;
         private readonly string TAG = nameof(RegisterFaceActivity);
+        private const string EXTRA_UPDATE = "update";
 
         event EventHandler<TakenPictureArgs> AfterTakenPictures;
 
@@ -44,7 +45,7 @@ namespace Moodis.Feature.Register
 
             PhotosLeft = FindViewById<TextView>(Resource.Id.photosLeft);
             PhotosLeft.Text = GetString(Resource.String.register_face_photos_left, RegisterViewModel.RequiredNumberOfPhotos - registerViewModel.photosTaken);
-            updating = Intent.GetBooleanExtra("update", false);
+            updating = Intent.GetBooleanExtra(EXTRA_UPDATE, false);
 
             InitEventHandler();
 
@@ -184,9 +185,10 @@ namespace Moodis.Feature.Register
                 else if (response == Response.RegistrationDone)
                 {
                     if(updating){
-                         Finish();
+                        SetResult(Result.Ok);
+                        Finish();
                     }else{
-                        await CheckWhetherUserFaceAlreadyUsedAsync(e.ImagePath);
+                        await CheckIfUserFaceAlreadyUsedAsync(e.ImagePath);
                         SetResult(Result.FirstUser);
                          Finish();
                     }
@@ -200,7 +202,7 @@ namespace Moodis.Feature.Register
             };
         }
 
-        private async System.Threading.Tasks.Task CheckWhetherUserFaceAlreadyUsedAsync(string imagePath)
+        private async Task CheckIfUserFaceAlreadyUsedAsync(string imagePath)
         {
             var response = await registerViewModel.AuthenticateFace(imagePath);
             if (response == Response.ApiError)

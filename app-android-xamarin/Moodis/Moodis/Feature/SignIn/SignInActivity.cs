@@ -17,8 +17,9 @@ namespace Moodis.Feature.SignIn
     {
         public static int REQUEST_CODE_REGISTER = 1;
         public static int REQUEST_CODE_FACE = 2;
-        public static int REQUEST_CODE_REGISTER_FACE = 3;
+        public static int REQUEST_CODE_UPDATE_FACE = 3;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
+        private const string EXTRA_UPDATE = "update";
 
         View progressBar;
 
@@ -54,7 +55,7 @@ namespace Moodis.Feature.SignIn
                 SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
             }
-            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_REGISTER_FACE)
+            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_UPDATE_FACE)
             {
                 SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();
@@ -151,7 +152,8 @@ namespace Moodis.Feature.SignIn
                 StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
 
-            deleteEverythingButton.Click += (sender, e) => {
+            deleteEverythingButton.Click += (sender, e) =>
+            {
                 var dialog = this.ConfirmationAlert(
                     titleRes: Resource.String.delete_everything_title,
                     messageRes: Resource.String.delete_everything_message,
@@ -187,9 +189,7 @@ namespace Moodis.Feature.SignIn
 
             if (SignInViewModel.Authenticate(username, password))
             {
-                DisplayFaceUpdatewWindow();
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
-                Finish();
+                DisplayFaceUpdateWindow();
             }
             else
             {
@@ -198,17 +198,22 @@ namespace Moodis.Feature.SignIn
             }
         }
 
-        private void DisplayFaceUpdatewWindow()
+        private void DisplayFaceUpdateWindow()
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
-                .SetTitle(Resource.String.update_face)
-                .SetMessage(Resource.String.update_face_confirmation_message)
-                .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
-                .SetPositiveButton(Resource.String.yes, (senderAlert, args) => {
-                    StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)).PutExtra("update", true), REQUEST_CODE_REGISTER_FACE);
-                });
-            builder.Create().Show();
-            builder.Dispose();
+            var dialog = this.ConfirmationAlert(
+                    titleRes: Resource.String.update_face,
+                    messageRes: Resource.String.update_face_confirmation_message,
+                    positiveButtonRes: Resource.String.yes,
+                    negativeButtonRes: Resource.String.no,
+                    positiveCallback: delegate { StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)).PutExtra(EXTRA_UPDATE, true), REQUEST_CODE_UPDATE_FACE); },
+                    negativeCallback: delegate { handleNegative(); });
+            dialog.Show();
+            dialog.Dispose();
+        }
+        private void handleNegative()
+        {
+            SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+            Finish();
         }
     }
 }

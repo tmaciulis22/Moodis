@@ -37,7 +37,7 @@
   <string name="stronger_password">Password must be stronger</string>
   <string name="user_created">User created successfully</string>
   <string name="user_exists">User already exists</string>
-  <string name="user_face_exists">A user with such a face already exists try to sign in.</string>
+  <string name="user_face_exists">You already have an account registered in Moodis.</string>
 
   <string name="loading">loading</string>
 
@@ -49,10 +49,10 @@
   <string name="user_created_success">User was created successfully</string>
 
   <string name="logout">Logout</string>
-  <string name="logout_confirmation_message">Are you sure you want to sign out ?</string>
+  <string name="logout_confirmation_message">Are you sure you want to sign out?</string>
 
   <string name="update_face">Update Profile</string>
-  <string name="update_face_confirmation_message">Would you like to update your face profile ? (You will be able to sign in with face next time you log in.)</string>
+  <string name="update_face_confirmation_message">Would you like to update your face profile? (You will be able to sign in with face next time you log in.)</string>
   
   <string name="camera_error">Something wrong happened while taking picture :/</string>
   

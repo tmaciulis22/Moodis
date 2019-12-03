@@ -142,23 +142,10 @@ namespace Moodis.Network.Face
 
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
             var people = await IdentifyPersons(imageFilePath, callback);
-            var personGroups = await faceClient.PersonGroup.ListAsync();
 
-            if (faceIds.Count == 1)
+            if(people.Count >= 2)
             {
-                int counter = 0;
-
-                for (int x = 0; x < people.Count ; x++)
-                {
-                    var identifiedPerson = await faceClient.Face.VerifyFaceToPersonAsync(faceIds[0], people[x].PersonId, personGroups[x].PersonGroupId);
-                    if (identifiedPerson.Confidence > 0.5)
-                    {
-                        counter++;
-                    }
-                    if (counter > 1) {
-                        return true;
-                    }
-                }
+                return true;
             }
             return false;
         }
@@ -192,7 +179,7 @@ namespace Moodis.Network.Face
             {
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
-                    user.FaceApiPerson.PersonId, imageFileStream);
+                    Guid.Parse(user.personId), imageFileStream); ;
                 return Response.OK;
             }
             catch (APIErrorException apiException)

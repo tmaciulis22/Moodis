@@ -42,14 +42,17 @@ namespace Moodis.Feature.Group
 
         public bool IsMember(string username)
         {
-            return Members.Contains(username) ? true : false;
+            return Members.Contains(username);
         }
 
         public void ConvertToString()
         {
             using StringBuffer stringBuffer = new StringBuffer();
             Members.ForEach(entry => stringBuffer.Append(entry).Append(SEPARATOR));
-            stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
+            if(stringBuffer.Length() > 0)
+            {
+                stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
+            }
             MembersInString = stringBuffer.ToString();
         }
 

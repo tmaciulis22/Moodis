@@ -4344,7 +4344,8 @@ namespace Moodis
 			public const int decor_content_parent = 2131230805;
 			
 			// aapt resource value: 0x7F080056
-			public const int default_activity_button = 2131230806;
+
+			public const int deleteEverythingButton = 2131230806;
 			
 			// aapt resource value: 0x7F080057
 			public const int deleteEverythingButton = 2131230807;
@@ -4389,115 +4390,118 @@ namespace Moodis
 			public const int dragUp = 2131230820;
 			
 			// aapt resource value: 0x7F080065
-			public const int drawer_layout = 2131230821;
+			public const int easeInOut = 2131230821;
 			
 			// aapt resource value: 0x7F080066
-			public const int easeIn = 2131230822;
+			public const int easeOut = 2131230822;
 			
 			// aapt resource value: 0x7F080067
-			public const int easeInOut = 2131230823;
+			public const int edit_query = 2131230823;
 			
 			// aapt resource value: 0x7F080068
-			public const int easeOut = 2131230824;
+			public const int emotionLabel = 2131230824;
 			
 			// aapt resource value: 0x7F080069
-			public const int edit_query = 2131230825;
+			public const int end = 2131230825;
 			
 			// aapt resource value: 0x7F08006A
-			public const int emotionLabel = 2131230826;
+			public const int enterAlways = 2131230826;
 			
 			// aapt resource value: 0x7F08006B
-			public const int end = 2131230827;
+			public const int enterAlwaysCollapsed = 2131230827;
 			
 			// aapt resource value: 0x7F08006C
-			public const int enterAlways = 2131230828;
-			
-			// aapt resource value: 0x7F08006D
-			public const int enterAlwaysCollapsed = 2131230829;
+			public const int exitUntilCollapsed = 2131230828;
 			
 			// aapt resource value: 0x7F08006E
-			public const int exitUntilCollapsed = 2131230830;
+			public const int expanded_menu = 2131230830;
 			
-			// aapt resource value: 0x7F080070
-			public const int expanded_menu = 2131230832;
+			// aapt resource value: 0x7F08006D
+			public const int expand_activities_button = 2131230829;
 			
 			// aapt resource value: 0x7F08006F
-			public const int expand_activities_button = 2131230831;
-			
-			// aapt resource value: 0x7F080071
-			public const int fill = 2131230833;
-			
-			// aapt resource value: 0x7F080074
-			public const int filled = 2131230836;
+			public const int fill = 2131230831;
 			
 			// aapt resource value: 0x7F080072
-			public const int fill_horizontal = 2131230834;
+			public const int filled = 2131230834;
+			
+			// aapt resource value: 0x7F080070
+			public const int fill_horizontal = 2131230832;
+			
+			// aapt resource value: 0x7F080071
+			public const int fill_vertical = 2131230833;
 			
 			// aapt resource value: 0x7F080073
-			public const int fill_vertical = 2131230835;
+			public const int @fixed = 2131230835;
+			
+			// aapt resource value: 0x7F080074
+			public const int flip = 2131230836;
 			
 			// aapt resource value: 0x7F080075
-			public const int @fixed = 2131230837;
-			
-			// aapt resource value: 0x7F080076
-			public const int flip = 2131230838;
-			
-			// aapt resource value: 0x7F080077
-			public const int forever = 2131230839;
+			public const int forever = 2131230837;
 			
 			// aapt resource value: 0x7F080002
 			public const int FUNCTION = 2131230722;
 			
+			// aapt resource value: 0x7F080076
+			public const int ghost_view = 2131230838;
+			
+			// aapt resource value: 0x7F080077
+			public const int gone = 2131230839;
+			
 			// aapt resource value: 0x7F080078
-			public const int ghost_view = 2131230840;
+			public const int graph = 2131230840;
 			
 			// aapt resource value: 0x7F080079
-			public const int gone = 2131230841;
+			public const int graph_wrap = 2131230841;
 			
 			// aapt resource value: 0x7F08007A
-			public const int graph = 2131230842;
+			public const int groupActivity = 2131230842;
+			
+			// aapt resource value: 0x7F08007E
+			public const int groups = 2131230846;
 			
 			// aapt resource value: 0x7F08007B
-			public const int graph_wrap = 2131230843;
+			public const int group_details = 2131230843;
 			
 			// aapt resource value: 0x7F08007C
-			public const int groupActivity = 2131230844;
+			public const int group_divider = 2131230844;
 			
 			// aapt resource value: 0x7F080080
 			public const int groups = 2131230848;
 			
 			// aapt resource value: 0x7F08007D
-			public const int group_details = 2131230845;
-			
-			// aapt resource value: 0x7F08007E
-			public const int group_divider = 2131230846;
+			public const int group_list = 2131230845;
 			
 			// aapt resource value: 0x7F08007F
-			public const int group_list = 2131230847;
+			public const int header = 2131230847;
+			
+			// aapt resource value: 0x7F080080
+			public const int home = 2131230848;
 			
 			// aapt resource value: 0x7F080081
-			public const int header = 2131230849;
+			public const int homeAsUp = 2131230849;
 			
 			// aapt resource value: 0x7F080082
-			public const int home = 2131230850;
+			public const int icon = 2131230850;
 			
 			// aapt resource value: 0x7F080083
-			public const int homeAsUp = 2131230851;
+			public const int icon_group = 2131230851;
 			
 			// aapt resource value: 0x7F080084
-			public const int icon = 2131230852;
+			public const int ifRoom = 2131230852;
 			
 			// aapt resource value: 0x7F080085
-			public const int icon_group = 2131230853;
+			public const int ignore = 2131230853;
 			
 			// aapt resource value: 0x7F080086
-			public const int ifRoom = 2131230854;
+			public const int image = 2131230854;
 			
 			// aapt resource value: 0x7F080087
-			public const int ignore = 2131230855;
+			public const int imageForView = 2131230855;
 			
 			// aapt resource value: 0x7F080088
-			public const int image = 2131230856;
+			public const int imageView = 2131230856;
 			
 			// aapt resource value: 0x7F080089
 			public const int imageForView = 2131230857;
@@ -4600,6 +4604,9 @@ namespace Moodis
 			
 			// aapt resource value: 0x7F0800A9
 			public const int mtrl_child_content_container = 2131230889;
+			
+			// aapt resource value: 0x7F0800B3
+			public const int navigation_header_container = 2131230899;
 			
 			// aapt resource value: 0x7F0800AA
 			public const int mtrl_internal_children_alpha_tag = 2131230890;
@@ -6198,7 +6205,7 @@ namespace Moodis
 			
 			// aapt resource value: 0x7F10006C
 			public const int Base_V14_Theme_MaterialComponents_Dialog = 2131755116;
-			
+      
 			// aapt resource value: 0x7F10006D
 			public const int Base_V14_Theme_MaterialComponents_Light = 2131755117;
 			

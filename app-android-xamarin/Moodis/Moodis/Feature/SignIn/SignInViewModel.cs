@@ -81,7 +81,7 @@ namespace Moodis.Feature.SignIn
 
         private void FetchUserList()
         {
-            userList = Database.DatabaseModel.FetchUsers();
+            userList = DatabaseModel.FetchUsers();
         }
     }
 }

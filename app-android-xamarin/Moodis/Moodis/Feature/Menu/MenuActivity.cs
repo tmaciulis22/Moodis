@@ -100,8 +100,7 @@ namespace Moodis.Feature.Menu
             }
             else
             {
-                base.OnBackPressed();
-                Finish();
+                LogoutWindowShow();
             }
         }
 
@@ -113,7 +112,8 @@ namespace Moodis.Feature.Menu
                 .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
                 .SetPositiveButton(Resource.String.yes, (senderAlert, args) =>
                 {
-                    StartActivity(new Intent(this, typeof(SignInActivity)));
+                    MenuViewModel.currentImage = new ImageInfo();
+                    StartActivity(new Intent(this, typeof(MainActivity)));
                     FinishAffinity();
                 });
             builder.Create().Show();

@@ -66,6 +66,7 @@
   <string name="text_group_empty_error">No group name provided</string>
   <string name="group_exists_error">Group already exists</string>
   <string name="group_not_exists_error">Group does not exist</string>
+  <string name="add_to_group">Add person to your group</string>
 
   <string name="groupName">Draugeliai</string>
   <string name="create_a_group">Create a group</string>

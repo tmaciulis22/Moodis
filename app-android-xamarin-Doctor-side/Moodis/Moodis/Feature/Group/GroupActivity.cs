@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
+using Android.Views;
 using Android.Widget;
 using Moodis.Constants.Enums;
 
@@ -25,6 +26,7 @@ namespace Moodis.Feature.Group
             var JoinGroupButton = FindViewById(Resource.Id.button_join_group);
             var CreateGroupButton = FindViewById(Resource.Id.button_create_group);
             var SeeGroupsButton = FindViewById(Resource.Id.button_see_groups);
+            var AddPersonToGroup = FindViewById(Resource.Id.add_to_group);
 
             GroupNameTextField.TextChanged += (sender, e) =>
             {
@@ -85,6 +87,25 @@ namespace Moodis.Feature.Group
             SeeGroupsButton.Click += (sender, e) =>
             {
                 StartActivity(new Intent(this, typeof(GroupListActivity)));
+            };
+
+            AddPersonToGroup.Click += delegate {
+                LayoutInflater layoutInflater = LayoutInflater.From(this);
+                View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
+                Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
+                alertbuilder.SetView(view);
+                var userdata = view.FindViewById<EditText>(Resource.Id.editText);
+                alertbuilder.SetCancelable(false)
+                .SetPositiveButton("Submit", delegate
+                {
+                    Toast.MakeText(this, "Submit Input: " + userdata.Text, ToastLength.Short).Show();
+                })
+                .SetNegativeButton("Cancel", delegate
+                {
+                    alertbuilder.Dispose();
+                });
+                Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
+                dialog.Show();
             };
         }
     }

@@ -52,7 +52,8 @@ namespace Moodis.Feature.SignIn
             }
             else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_REGISTER)
             {
-                await DeleteUser();
+                if(SignInViewModel.currentUser != null)
+                    await DeleteUser();
             }
         }
 

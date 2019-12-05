@@ -28,7 +28,6 @@ namespace Moodis.Feature.Register
         public override void OnBackPressed()
         {
             base.OnBackPressed();
-            SetResult(Result.Canceled);
             Finish();
         }
 

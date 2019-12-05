@@ -23,7 +23,6 @@
         android:text="@string/register_text"
         android:layout_margin="@dimen/grid_unit_4x"
         android:textSize="@dimen/login_header"
-        android:textColor="@color/foreground_material_light"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

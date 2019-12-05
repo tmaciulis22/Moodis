@@ -5826,32 +5826,41 @@ namespace Moodis
 			// aapt resource value: 0x7F0F0069
 			public const int text_group_empty_error = 2131689577;
 			
-			// aapt resource value: 0x7F0F006E
-			public const int username_empty_error = 2131689582;
-			
 			// aapt resource value: 0x7F0F006A
-			public const int user_created = 2131689578;
+			public const int update_face = 2131689578;
 			
 			// aapt resource value: 0x7F0F006B
-			public const int user_created_success = 2131689579;
-			
-			// aapt resource value: 0x7F0F006C
-			public const int user_exists = 2131689580;
-			
-			// aapt resource value: 0x7F0F006D
-			public const int user_not_found_error = 2131689581;
-			
-			// aapt resource value: 0x7F0F006F
-			public const int warning_face_detection = 2131689583;
-			
-			// aapt resource value: 0x7F0F0070
-			public const int warning_no_music_playing = 2131689584;
+			public const int update_face_confirmation_message = 2131689579;
 			
 			// aapt resource value: 0x7F0F0071
-			public const int warning_playing_music = 2131689585;
+			public const int username_empty_error = 2131689585;
+			
+			// aapt resource value: 0x7F0F006C
+			public const int user_created = 2131689580;
+			
+			// aapt resource value: 0x7F0F006D
+			public const int user_created_success = 2131689581;
+			
+			// aapt resource value: 0x7F0F006E
+			public const int user_exists = 2131689582;
+			
+			// aapt resource value: 0x7F0F006F
+			public const int user_face_exists = 2131689583;
+			
+			// aapt resource value: 0x7F0F0070
+			public const int user_not_found_error = 2131689584;
 			
 			// aapt resource value: 0x7F0F0072
-			public const int yes = 2131689586;
+			public const int warning_face_detection = 2131689586;
+			
+			// aapt resource value: 0x7F0F0073
+			public const int warning_no_music_playing = 2131689587;
+			
+			// aapt resource value: 0x7F0F0074
+			public const int warning_playing_music = 2131689588;
+			
+			// aapt resource value: 0x7F0F0075
+			public const int yes = 2131689589;
 			
 			static String()
 			{

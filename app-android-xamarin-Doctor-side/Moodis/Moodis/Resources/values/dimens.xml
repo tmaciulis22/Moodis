@@ -87,6 +87,7 @@
   <!-- Font Sizes -->
   <dimen name="menu_buttons">10sp</dimen>
   <dimen name="login_header">64sp</dimen>
+  <dimen name="chart_label">12sp</dimen>
   <dimen name="regular_text">20sp</dimen>
   
   <!--Card View-->

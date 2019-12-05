@@ -36,6 +36,7 @@ namespace Moodis.Feature.Register
                 if (newFaceApiPerson != null)
                 {
                     currentUser.FaceApiPerson = newFaceApiPerson;
+                    currentUser.PersonId = Convert.ToString(currentUser.FaceApiPerson.PersonId);
                 }
                 else
                 {

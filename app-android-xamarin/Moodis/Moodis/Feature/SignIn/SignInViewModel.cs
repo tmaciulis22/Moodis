@@ -18,13 +18,9 @@ namespace Moodis.Feature.SignIn
         public static List<User> userList;
         public static User currentUser;
 
-        public bool Authenticate(string username, string password)
+        public async Task<bool> Authenticate(string username, string password)
         {
-            FetchUserList();
-
-            var user = API.UserEndpoint.GetUser(new LoginRequest(username, password));
-
-            currentUser = userList.Find(user => user.Username == username && user.Password == Crypto.CalculateMD5Hash(password));
+            currentUser = await API.UserEndpoint.GetUser(new LoginRequest(username, password));
 
             if (currentUser == null)
             {
@@ -33,11 +29,8 @@ namespace Moodis.Feature.SignIn
             return true;
         }
 
-        //TODO change this to multiple user recognition.
         public async Task<Response> AuthenticateWithFace(string imagePath, Action<DetectedFace> callback)
         {
-            FetchUserList();
-
             List<DetectedFace> detectedFaces = null;
             void setFace(List<DetectedFace> faces) => detectedFaces = faces;
             DetectedFace face;
@@ -64,6 +57,7 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
+
             currentUser = userList.Find(user => user.Username == identifiedPersons.ToArray()[0].Name);
             face = detectedFaces.ToArray()[0];
 
@@ -80,11 +74,6 @@ namespace Moodis.Feature.SignIn
         {
             DatabaseModel.DeleteEverything();
             return await Face.Instance.DeleteEverything();
-        }
-
-        private void FetchUserList()
-        {
-            userList = Database.DatabaseModel.FetchUsers();
         }
     }
 }

@@ -174,12 +174,14 @@ namespace Moodis.Feature.SignIn
             }
         }
 
-        private void SignIn(string username, string password)
+        private async void SignIn(string username, string password)
         {
             progressBar.Visibility = ViewStates.Visible;
             progressBar.BringToFront();
 
-            if (SignInViewModel.Authenticate(username, password))
+            var signInSuccessful = await SignInViewModel.Authenticate(username, password);
+
+            if (signInSuccessful)
             {
                 SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();

@@ -9,7 +9,6 @@
 
 namespace apiMoodis.Models
 {
-    using System;
     using System.Collections.Generic;
     
     public partial class User
@@ -25,7 +24,8 @@ namespace apiMoodis.Models
         public string Password { get; set; }
         public string GroupName { get; set; }
         public string PersonGroupId { get; set; }
-    
+        public string PersonId { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageInfo> ImageInfos { get; set; }
     }

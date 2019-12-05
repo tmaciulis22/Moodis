@@ -11,6 +11,7 @@ using apiMoodis.Requests;
 
 namespace apiMoodis.Controllers
 {
+    [Route("api/user")]
     public class UserController : ApiController
     {
         [HttpGet]
@@ -22,6 +23,7 @@ namespace apiMoodis.Controllers
                 return Ok(users);
             }
         }
+
         [HttpGet]
         public IHttpActionResult GetByIdUser(string id)
         {
@@ -32,14 +34,22 @@ namespace apiMoodis.Controllers
             }
         }
 
-        [Route("api/User/login")]
+        [Route("api/user/login")]
         public IHttpActionResult GetUser([FromBody] LoginRequest request)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.Include(item => item.ImageInfos)
-                    .Single(user => user.Username == request.Username && user.Password == Crypto.CalculateMD5Hash(request.Password));
-                return Ok(entity);
+                try
+                {
+                    var encryptedPass = Crypto.CalculateMD5Hash(request.Password);
+                    var entity = dbContext.Users.Include(item => item.ImageInfos)
+                        .Single(user => user.Username == request.Username && user.Password == encryptedPass);
+                    return Ok(entity);
+                }
+                catch
+                {
+                    return NotFound();
+                }
             }
         }
 
@@ -50,6 +60,8 @@ namespace apiMoodis.Controllers
             {
                 using (DatabaseContext dbContext = new DatabaseContext())
                 {
+                    user.Id = Guid.NewGuid().ToString();
+                    user.Password = Crypto.CalculateMD5Hash(user.Password);
                     dbContext.Users.Add(user);
                     dbContext.SaveChanges();
                     return Ok();
@@ -68,7 +80,7 @@ namespace apiMoodis.Controllers
             {
                 var entity = dbContext.Users.Single(e => e.Id == id);
                 entity.Username = user.Username;
-                entity.Password = user.Password;
+                entity.Password = Crypto.CalculateMD5Hash(user.Password);
                 entity.GroupName = user.GroupName;
                 entity.PersonGroupId = user.PersonGroupId;
                 dbContext.SaveChanges();

@@ -22,7 +22,7 @@ namespace Moodis.Feature.SignIn
 
             currentUser = userList.Find(user => user.Username == username && user.Password == Crypto.CalculateMD5Hash(password));
 
-            if (currentUser == null)
+            if (currentUser == null || !currentUser.IsDoctor)
             {
                 return false;
             }
@@ -39,6 +39,12 @@ namespace Moodis.Feature.SignIn
         private void FetchUserList()
         {
             userList = DatabaseModel.FetchUsers();
+        }
+
+        public async Task<Response> DeleteUser()
+        {
+            DatabaseModel.DeleteUserFromDatabase(SignInViewModel.currentUser);
+            return await Face.Instance.DeletePersonGroup(SignInViewModel.currentUser.PersonGroupId);
         }
     }
 }

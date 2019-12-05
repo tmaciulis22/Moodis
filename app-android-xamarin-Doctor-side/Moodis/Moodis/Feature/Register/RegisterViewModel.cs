@@ -29,26 +29,10 @@ namespace Moodis.Feature.Register
                 DatabaseModel.AddUserToDatabase(SignInViewModel.currentUser);
                 UpdateLocalStorage();
 
-                var newFaceApiPerson = await Face.Instance.CreateNewPerson(SignInViewModel.currentUser.PersonGroupId, username);
-
-                if (newFaceApiPerson != null)
-                {
-                    SignInViewModel.currentUser.FaceApiPerson = newFaceApiPerson;
-                    SignInViewModel.currentUser.PersonId = Convert.ToString(SignInViewModel.currentUser.FaceApiPerson.PersonId);
-                }
-                else
-                {
-                    return Response.ApiError;
-                }
+                await Face.Instance.CreateNewDoctor(SignInViewModel.currentUser.PersonGroupId, username);
 
                 return Response.OK;
             }
-        }
-
-        public async Task<Response> DeleteUser()
-        {
-            DatabaseModel.DeleteUserFromDatabase(SignInViewModel.currentUser);
-            return await Face.Instance.DeletePerson(SignInViewModel.currentUser.PersonGroupId);
         }
 
         public void UpdateLocalStorage()

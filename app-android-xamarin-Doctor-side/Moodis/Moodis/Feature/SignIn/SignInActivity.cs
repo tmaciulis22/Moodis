@@ -3,12 +3,15 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Register;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Moodis.Feature.SignIn
 {
@@ -16,8 +19,6 @@ namespace Moodis.Feature.SignIn
     public class SignInActivity : AppCompatActivity
     {
         public static int REQUEST_CODE_REGISTER = 1;
-        public static int REQUEST_CODE_FACE = 2;
-        public static int REQUEST_CODE_UPDATE_FACE = 3;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
 
         View progressBar;
@@ -41,7 +42,7 @@ namespace Moodis.Feature.SignIn
             Finish();
         }
 
-        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        protected override async void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             //As we implement new Activities there will be more if statements
             base.OnActivityResult(requestCode, resultCode, data);
@@ -49,15 +50,9 @@ namespace Moodis.Feature.SignIn
             {
                 Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
             }
-            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_REGISTER)
             {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
-                Finish();
-            }
-            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_UPDATE_FACE)
-            {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
-                Finish();
+                await DeleteUser();
             }
         }
 
@@ -190,6 +185,14 @@ namespace Moodis.Feature.SignIn
             {
                 progressBar.Visibility = ViewStates.Gone;
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+            }
+        }
+        private async Task DeleteUser()
+        {
+            var response = await SignInViewModel.DeleteUser();
+            if (response != Response.OK)
+            {
+                Log.Error(Class.Name, MethodBase.GetCurrentMethod().Name + ": " + response.ToString());
             }
         }
     }

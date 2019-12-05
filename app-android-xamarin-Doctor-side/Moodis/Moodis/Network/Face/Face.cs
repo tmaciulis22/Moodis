@@ -40,7 +40,6 @@ namespace Moodis.Network.Face
                 return instance;
             }
         }
-
         public async Task<Person> CreateNewPerson(string personGroupId, string username)
         {
             try
@@ -64,7 +63,26 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<Response> DeletePerson(string personGroupId)
+        public async Task<Response> CreateNewDoctor(string personGroupId, string username)
+        {
+            try
+            {
+                await faceClient.PersonGroup.CreateAsync(personGroupId, username);
+                return Response.OK;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return Response.ApiError;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return Response.ApiError;
+            }
+        }
+
+        public async Task<Response> DeletePersonGroup(string personGroupId)
         {
             try
             {

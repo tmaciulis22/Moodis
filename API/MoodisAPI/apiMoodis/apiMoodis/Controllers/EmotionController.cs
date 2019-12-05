@@ -28,6 +28,23 @@ namespace apiMoodis.Controllers
             }
         }
 
+        [Route("api/emotion/getbyImageId/{imageId}")]
+        public IHttpActionResult GetByUsernameUser(string imageId)
+        {
+            using (DatabaseContext dbContext = new DatabaseContext())
+            {
+                var emotions = dbContext.Emotions.Where(emotion => emotion.ImageId == imageId).ToList();
+                if (emotions.Count() == 0)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    return Ok(emotions);
+                }
+            }
+        }
+
         [HttpGet]
         public IHttpActionResult GetByIdEmotion(string id)
         {

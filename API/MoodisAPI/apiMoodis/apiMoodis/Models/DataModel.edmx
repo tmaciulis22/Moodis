@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Emotions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="ImageId" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Confidence" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="MembersInString" Type="nvarchar(max)" />
+          <Property Name="GroupName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ImageInfos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="UserId" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="ImagePath" Type="varchar" MaxLength="50" />
+          <Property Name="DateAsString" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="Username" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="GroupName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="PersonGroupId" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Emotions_ImageInfos">
+          <End Role="ImageInfos" Type="Self.ImageInfos" Multiplicity="1" />
+          <End Role="Emotions" Type="Self.Emotions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageInfos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emotions">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImageInfos_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ImageInfos" Type="Self.ImageInfos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ImageInfos">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="Emotions" EntityType="Self.Emotions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageInfos" EntityType="Self.ImageInfos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Emotions_ImageInfos" Association="Self.FK_Emotions_ImageInfos">
+            <End Role="ImageInfos" EntitySet="ImageInfos" />
+            <End Role="Emotions" EntitySet="Emotions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageInfos_Users" Association="Self.FK_ImageInfos_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ImageInfos" EntitySet="ImageInfos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Emotion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ImageId" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Confidence" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ImageInfo" Relationship="Self.FK_Emotions_ImageInfos" FromRole="Emotions" ToRole="ImageInfos" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MembersInString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GroupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ImageInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateAsString" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Emotions" Relationship="Self.FK_Emotions_ImageInfos" FromRole="ImageInfos" ToRole="Emotions" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ImageInfos_Users" FromRole="ImageInfos" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GroupName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PersonGroupId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ImageInfos" Relationship="Self.FK_ImageInfos_Users" FromRole="Users" ToRole="ImageInfos" />
+        </EntityType>
+        <Association Name="FK_Emotions_ImageInfos">
+          <End Role="ImageInfos" Type="Self.ImageInfo" Multiplicity="1" />
+          <End Role="Emotions" Type="Self.Emotion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageInfos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emotions">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImageInfos_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="ImageInfos" Type="Self.ImageInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ImageInfos">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Emotions" EntityType="Self.Emotion" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="ImageInfos" EntityType="Self.ImageInfo" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Emotions_ImageInfos" Association="Self.FK_Emotions_ImageInfos">
+            <End Role="ImageInfos" EntitySet="ImageInfos" />
+            <End Role="Emotions" EntitySet="Emotions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImageInfos_Users" Association="Self.FK_ImageInfos_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ImageInfos" EntitySet="ImageInfos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="DatabaseContext">
+          <EntitySetMapping Name="Emotions">
+            <EntityTypeMapping TypeName="Models.Emotion">
+              <MappingFragment StoreEntitySet="Emotions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Confidence" ColumnName="Confidence" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="Models.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MembersInString" ColumnName="MembersInString" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageInfos">
+            <EntityTypeMapping TypeName="Models.ImageInfo">
+              <MappingFragment StoreEntitySet="ImageInfos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="DateAsString" ColumnName="DateAsString" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Models.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="PersonGroupId" ColumnName="PersonGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

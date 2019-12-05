@@ -13,7 +13,7 @@ namespace Moodis.Feature.SignIn
 {
     public class SignInViewModel : ViewModel
     {
-        public static List<User> userList;
+        public static List<User> userList = DatabaseModel.FetchUsers();
         public static User currentUser;
 
         public bool Authenticate(string username, string password)

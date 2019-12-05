@@ -11,7 +11,7 @@ using Moodis.Feature.SignIn;
 
 namespace Moodis
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true, Icon = "@drawable/moodis_icon")]
     public class MainActivity : AppCompatActivity
     {
         public static int REQUEST_CODE_LOGIN = 1;

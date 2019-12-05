@@ -4,7 +4,9 @@ using Moodis.Constants.Enums;
 using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
+using Moodis.Network;
 using Moodis.Network.Face;
+using Moodis.Network.Requests;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,6 +21,8 @@ namespace Moodis.Feature.SignIn
         public bool Authenticate(string username, string password)
         {
             FetchUserList();
+
+            var user = API.UserEndpoint.GetUser(new LoginRequest(username, password));
 
             currentUser = userList.Find(user => user.Username == username && user.Password == Crypto.CalculateMD5Hash(password));
 

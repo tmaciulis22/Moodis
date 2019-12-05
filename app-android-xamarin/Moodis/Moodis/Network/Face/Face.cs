@@ -17,7 +17,7 @@ namespace Moodis.Network.Face
     {
         private Face() { }
 
-        private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
+        private static string SUBSCRIPTION_KEY = Secrets.FaceApiKey;
         private static string ENDPOINT = Secrets.FaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";

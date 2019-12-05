@@ -8,6 +8,10 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Moodis.Feature.Menu;
 using Moodis.Feature.SignIn;
+using Moodis.Helpers;
+using Moodis.Network;
+using Moodis.Network.Endpoints;
+using Refit;
 
 namespace Moodis
 {
@@ -20,6 +24,9 @@ namespace Moodis
         {
             AppCenter.Start("4493172f-d0e0-49d4-bb48-bc5a529ac6ee", typeof(Analytics), typeof(Crashes));
             base.OnCreate(savedInstanceState);
+
+            API.UserEndpoint = RestService.For<IUserEndpoint>(Secrets.WebServiceAPI);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 

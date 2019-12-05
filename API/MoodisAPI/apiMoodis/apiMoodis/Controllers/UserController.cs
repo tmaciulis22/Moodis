@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using apiMoodis.Encryption;
+using apiMoodis.Requests;
 
 namespace apiMoodis.Controllers
 {
@@ -30,12 +32,13 @@ namespace apiMoodis.Controllers
             }
         }
 
-        [Route("api/User/getbyname/{username}")]
-        public IHttpActionResult GetByUsernameUser(string username)
+        [Route("api/User/login")]
+        public IHttpActionResult GetUser([FromBody] LoginRequest request)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.Include(item => item.ImageInfos).Single(user => user.Username == username);
+                var entity = dbContext.Users.Include(item => item.ImageInfos)
+                    .Single(user => user.Username == request.Username && user.Password == Crypto.CalculateMD5Hash(request.Password));
                 return Ok(entity);
             }
         }

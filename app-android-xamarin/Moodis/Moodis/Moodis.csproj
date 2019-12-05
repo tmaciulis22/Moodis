@@ -104,6 +104,8 @@
     <Compile Include="Feature\History\StatViewHolder.cs" />
     <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Network\API.cs" />
+    <Compile Include="Network\Endpoints\IUserEndpoint.cs" />
     <Compile Include="Network\Face\Face.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -164,6 +166,9 @@
       <Version>1.4.0.638</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Refit">
+      <Version>5.0.23</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.6.292</Version>

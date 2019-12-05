@@ -17,5 +17,20 @@ namespace Moodis.Extensions
             stream.Close();
             bitmap.Dispose();
         }
+
+        public static int EmotionColor(this string emotionName)
+        {
+            return emotionName switch
+            {
+                "Anger" => Resource.Color.color_anger,
+                "Disgust" => Resource.Color.color_disgust,
+                "Fear" => Resource.Color.color_fear,
+                "Sadness" => Resource.Color.color_sadness,
+                "Contempt" => Resource.Color.color_contempt,
+                "Neutral" => Resource.Color.color_neutral,
+                "Surprise" => Resource.Color.color_suprise,
+                _ => Resource.Color.color_happiness //Happiness
+            };
+        }
     }
 }

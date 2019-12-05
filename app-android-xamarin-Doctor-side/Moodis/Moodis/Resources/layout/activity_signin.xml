@@ -27,6 +27,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+    <TextView
+        android:id="@+id/header_lower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name_lower"
+        android:layout_margin="@dimen/grid_unit_4x"
+        android:textSize="@dimen/abc_text_size_small_material"
+        android:textColor="@color/foreground_material_light"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
   
     <TextView
         android:id="@+id/usernameLabel"
@@ -35,7 +46,7 @@
         android:text="@string/signin_username_label"
         android:layout_margin="@dimen/grid_unit_8x"
         android:textSize="@dimen/regular_text"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/header_lower"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <EditText
@@ -46,7 +57,7 @@
         android:maxLines="1"
         android:inputType="textPersonName"
         android:imeOptions="actionNext"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/header_lower"
         app:layout_constraintLeft_toRightOf="@id/usernameLabel"
         app:layout_constraintRight_toRightOf="parent"/>
 
@@ -77,18 +88,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/grid_unit_4x"
         android:text="@string/signin_button_text"
-        android:minWidth="@dimen/grid_unit_82x"
-        android:minHeight="@dimen/grid_unit_24x"
-        app:layout_constraintBottom_toTopOf="@id/signInFaceButton"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
-    <Button
-        android:id="@+id/signInFaceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/grid_unit_4x"
-        android:text="@string/signin_face_button_text"
         android:minWidth="@dimen/grid_unit_82x"
         android:minHeight="@dimen/grid_unit_24x"
         app:layout_constraintBottom_toTopOf="@id/registerButton"

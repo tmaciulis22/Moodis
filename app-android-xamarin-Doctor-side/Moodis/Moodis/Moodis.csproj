@@ -74,10 +74,6 @@
     <Compile Include="Extensions\ContextExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Feature\CameraFeature\CameraActivity.cs" />
-    <Compile Include="Feature\CameraFeature\CameraPreview.cs" />
-    <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />
-    <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
     <Compile Include="Feature\Group\MembersGroupAdapter.cs" />
     <Compile Include="Feature\Group\MembersViewHolder.cs" />
     <Compile Include="Feature\Group\GroupListAdapter.cs" />
@@ -89,18 +85,16 @@
     <Compile Include="Feature\Group\GroupViewHolder.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
-    <Compile Include="Feature\MusicPlayer\MusicPlayer.cs" />
-    <Compile Include="Feature\Register\RegisterFaceActivity.cs" />
     <Compile Include="Feature\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Register\RegisterActivity.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
-    <Compile Include="Feature\SignIn\SignInFaceActivity.cs" />
     <Compile Include="Feature\SignIn\SignInViewModel.cs" />
     <Compile Include="Feature\MainActivity.cs" />
     <Compile Include="Feature\History\HistoryActivity.cs" />
     <Compile Include="Feature\History\HistoryStatsAdapter.cs" />
     <Compile Include="Feature\History\HistoryViewModel.cs" />
     <Compile Include="Feature\History\StatViewHolder.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\Face\Face.cs" />
@@ -265,12 +259,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\baseline_error_black_48.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_camera.xml">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\fragment_camera.xml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
@@ -278,33 +266,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_menu.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Anger.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\sample.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Contempt.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Disgust.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Fear.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Happiness.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Neutral.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Sadness.mp3" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\raw\Surprise.mp3" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_history.xml">
@@ -318,16 +279,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\circular_progress_bar.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_register_face.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_signin_face.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

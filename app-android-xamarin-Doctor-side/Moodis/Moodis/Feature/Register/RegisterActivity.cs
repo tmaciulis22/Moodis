@@ -18,9 +18,7 @@ namespace Moodis.Feature.Register
     public class RegisterActivity : Activity
     {
         readonly RegisterViewModel registerViewModel = new RegisterViewModel();
-        private const int REQUEST_CODE_REGISTER_FACE = 1;
 
-        View progressBar;
         Button registerButton;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -35,22 +33,6 @@ namespace Moodis.Feature.Register
             base.OnBackPressed();
             SetResult(Result.Canceled);
             Finish();
-        }
-
-        protected override async void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
-            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER_FACE)
-            {
-                SetResult(Result.FirstUser);
-                Finish();
-            }
-            else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_REGISTER_FACE)
-            {
-                await DeleteUser();
-                SetResult(Result.Canceled);
-                Finish();
-            }
         }
 
         private void InitButtonsAndInputs()
@@ -146,7 +128,8 @@ namespace Moodis.Feature.Register
 
                 if (response == Response.OK)
                 {
-                    StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
+                    SetResult(Result.FirstUser);
+                    Finish();
                 }
                 else if (response == Response.UserExists)
                 {

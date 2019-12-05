@@ -19,7 +19,6 @@ namespace Moodis.Feature.SignIn
         public static int REQUEST_CODE_FACE = 2;
         public static int REQUEST_CODE_UPDATE_FACE = 3;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
-        private const string EXTRA_UPDATE = "update";
 
         View progressBar;
 
@@ -67,7 +66,6 @@ namespace Moodis.Feature.SignIn
             var usernameInput = FindViewById<EditText>(Resource.Id.usernameInput);
             var passwordInput = FindViewById<EditText>(Resource.Id.passwordInput);
             var signInButton = FindViewById(Resource.Id.signInButton);
-            var signInWithFaceButton = FindViewById(Resource.Id.signInFaceButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
             var deleteEverythingButton = FindViewById(Resource.Id.deleteEverythingButton);
             progressBar = FindViewById(Resource.Id.progressBarSignIn);
@@ -143,10 +141,6 @@ namespace Moodis.Feature.SignIn
                     SignIn(usernameInput.Text, passwordInput.Text);
                 }
             };
-            signInWithFaceButton.Click += (sender, e) =>
-            {
-                StartActivityForResult(new Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
-            };
             registerButton.Click += (sender, e) =>
             {
                 StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
@@ -189,31 +183,14 @@ namespace Moodis.Feature.SignIn
 
             if (SignInViewModel.Authenticate(username, password))
             {
-                DisplayFaceUpdateWindow();
+                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                Finish();
             }
             else
             {
                 progressBar.Visibility = ViewStates.Gone;
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
             }
-        }
-
-        private void DisplayFaceUpdateWindow()
-        {
-            var dialog = this.ConfirmationAlert(
-                    titleRes: Resource.String.update_face,
-                    messageRes: Resource.String.update_face_confirmation_message,
-                    positiveButtonRes: Resource.String.yes,
-                    negativeButtonRes: Resource.String.no,
-                    positiveCallback: delegate { StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)).PutExtra(EXTRA_UPDATE, true), REQUEST_CODE_UPDATE_FACE); },
-                    negativeCallback: delegate { handleNegative(); });
-            dialog.Show();
-            dialog.Dispose();
-        }
-        private void handleNegative()
-        {
-            SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
-            Finish();
         }
     }
 }

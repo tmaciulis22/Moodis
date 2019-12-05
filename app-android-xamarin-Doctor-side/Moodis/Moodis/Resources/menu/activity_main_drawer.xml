@@ -5,10 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Camera" />
-        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_menu_history"
             android:title="History" />
@@ -21,23 +17,6 @@
             android:icon="@drawable/ic_menu_settings"
             android:title="Settings" />
     </group>
-
-    <item android:title="Music features">
-        <menu>
-            <item
-                android:id="@+id/nav_music_play"
-                android:icon="@drawable/ic_menu_start"
-                android:title="Play" />
-            <item
-                android:id="@+id/nav_music_stop"
-                android:icon="@drawable/ic_menu_stop"
-                android:title="Stop" />
-          <item
-                android:id="@+id/nav_music_settings"
-                android:icon="@drawable/ic_menu_settings"
-                android:title="Setup your music" />
-        </menu>
-    </item>
   <item android:title="Additional features">
     <menu>
       <item

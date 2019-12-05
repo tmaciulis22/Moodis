@@ -1,7 +1,7 @@
 <resources>
   <string name="app_name">Moodis</string>
   <string name="action_settings">Settings</string>
-  <string name="app_name_lower">For doctors</string>
+  <string name="app_name_lower">For doctors (obviously)</string>
 
   <string name="ok">Ok</string>
   <string name="cancel">Cancel</string>

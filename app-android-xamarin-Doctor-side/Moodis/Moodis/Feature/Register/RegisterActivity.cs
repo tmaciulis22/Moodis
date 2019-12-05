@@ -20,6 +20,7 @@ namespace Moodis.Feature.Register
         readonly RegisterViewModel registerViewModel = new RegisterViewModel();
 
         Button registerButton;
+        View progressBar;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

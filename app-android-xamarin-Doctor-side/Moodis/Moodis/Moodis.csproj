@@ -11,7 +11,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Moodis</RootNamespace>
-    <AssemblyName>Moodis</AssemblyName>
+    <AssemblyName>MoodisDoctors</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -69,7 +69,6 @@
     <Compile Include="Constants\Enums\Response.cs" />
     <Compile Include="Database\DatabaseModel.cs" />
     <Compile Include="Encryption\Crypto.cs" />
-    <Compile Include="Events\TakenPicture.cs" />
     <Compile Include="Extensions\AppCompatActivityExtensions.cs" />
     <Compile Include="Extensions\ContextExtensions.cs" />
     <Compile Include="Extensions\IListExtensions.cs" />
@@ -77,7 +76,6 @@
     <Compile Include="Feature\Group\MembersGroupAdapter.cs" />
     <Compile Include="Feature\Group\MembersViewHolder.cs" />
     <Compile Include="Feature\Group\GroupListAdapter.cs" />
-    <Compile Include="Feature\Group\Group.cs" />
     <Compile Include="Feature\Group\GroupActivityModel.cs" />
     <Compile Include="Feature\Group\GroupActivity.cs" />
     <Compile Include="Feature\Group\GroupListActivity.cs" />
@@ -296,9 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\side_nav_bar.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_menu_camera.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_menu_history.xml" />

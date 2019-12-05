@@ -1,6 +1,5 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
@@ -8,12 +7,10 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
 using Moodis.Feature.Group;
 using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
-using System.Collections.Generic;
 
 namespace Moodis.Feature.Menu
 {
@@ -23,7 +20,6 @@ namespace Moodis.Feature.Menu
         private readonly string TAG = nameof(MenuActivity);
         private MenuViewModel MenuViewModel;
         private const string FormatDouble = "N3";
-        private bool JustSignedIn = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -84,10 +80,6 @@ namespace Moodis.Feature.Menu
             else if (id == Resource.Id.nav_history)
             {
                 StartActivity(new Intent(this, typeof(HistoryActivity)));
-            }
-            else if (id == Resource.Id.nav_music_settings)
-            {
-
             }
             else if (id == Resource.Id.nav_menu_logout)
             {

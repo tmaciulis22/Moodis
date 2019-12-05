@@ -13,7 +13,6 @@ namespace Moodis.Feature.Register
     {
         public const int RequiredNumberOfPhotos = 3;
 
-        internal int photosTaken = 0;
 
         public async Task<Response> AddUser(string username, string password)
         {
@@ -35,7 +34,7 @@ namespace Moodis.Feature.Register
                 if (newFaceApiPerson != null)
                 {
                     SignInViewModel.currentUser.FaceApiPerson = newFaceApiPerson;
-                    SignInViewModel.currentUser.personId = Convert.ToString(SignInViewModel.currentUser.FaceApiPerson.PersonId);
+                    SignInViewModel.currentUser.PersonId = Convert.ToString(SignInViewModel.currentUser.FaceApiPerson.PersonId);
                 }
                 else
                 {
@@ -52,49 +51,9 @@ namespace Moodis.Feature.Register
             return await Face.Instance.DeletePerson(SignInViewModel.currentUser.PersonGroupId);
         }
 
-        //TODO MOVE THIS TO FACE CLASS
-        public async Task<Response> AddFaceToPerson(string imagePath)
-        {
-
-            var response = await Face.Instance.AddFaceToPerson(imagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser);
-
-            if (response == Response.OK)
-            {
-                photosTaken++;
-
-                if (photosTaken == RequiredNumberOfPhotos)
-                {
-                    return await Face.Instance.TrainPersonGroup(SignInViewModel.currentUser.PersonGroupId);
-                }
-            }
-            return response;
-        }
-
         public void UpdateLocalStorage()
         {
             SignInViewModel.userList = DatabaseModel.FetchUsers();
-        }
-
-        public async Task<Response> AuthenticateFace(string imagePath)
-        {
-            bool userExists;
-            try
-            {
-                userExists = await Face.Instance.MultipleAccounts(imagePath, null);
-            }
-            catch (APIErrorException e)
-            {
-                userExists = false;
-                Console.WriteLine(e.StackTrace);
-                return Response.ApiError;
-            }
-
-            if (userExists)
-            {
-                return Response.UserExists;
-            }
-
-            return Response.UserNotFound;
         }
 
         public static string GetIdByUsername(string username)

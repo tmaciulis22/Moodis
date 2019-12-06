@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -7,12 +7,12 @@
       android:id="@+id/dialogTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/lorem_ipsum"
+      android:text="@string/group_select_dialog_title"
       android:textAppearance="?android:attr/textAppearanceLarge" />
   <Spinner
       android:id="@+id/spinnerGroupName"
       android:layout_width="match_parent"
-      android:layout_height="@dimen/grid_unit_34x"
+      android:layout_height="@dimen/grid_unit_32x"
       android:background="#5000"
       android:textSize="@dimen/login_header"
       android:spinnerMode="dropdown" />

@@ -5628,31 +5628,31 @@ namespace Moodis
 			public const int delete_everything_title = 2131623992;
 			
 			// aapt resource value: 0x7F0E0039
-			public const int dialogTitle = 2131623993;
+			public const int fab_transformation_scrim_behavior = 2131623993;
 			
 			// aapt resource value: 0x7F0E003A
-			public const int fab_transformation_scrim_behavior = 2131623994;
+			public const int fab_transformation_sheet_behavior = 2131623994;
 			
 			// aapt resource value: 0x7F0E003B
-			public const int fab_transformation_sheet_behavior = 2131623995;
-			
-			// aapt resource value: 0x7F0E003C
-			public const int groupName = 2131623996;
+			public const int groupName = 2131623995;
 			
 			// aapt resource value: 0x7F0E0041
 			public const int groups_button = 2131624001;
 			
+			// aapt resource value: 0x7F0E003C
+			public const int group_emotion_history_menu = 2131623996;
+			
 			// aapt resource value: 0x7F0E003D
-			public const int group_emotion_history_menu = 2131623997;
+			public const int group_entry_empty = 2131623997;
 			
 			// aapt resource value: 0x7F0E003E
-			public const int group_entry_empty = 2131623998;
+			public const int group_exists_error = 2131623998;
 			
 			// aapt resource value: 0x7F0E003F
-			public const int group_exists_error = 2131623999;
+			public const int group_not_exists_error = 2131623999;
 			
 			// aapt resource value: 0x7F0E0040
-			public const int group_not_exists_error = 2131624000;
+			public const int group_select_dialog_title = 2131624000;
 			
 			// aapt resource value: 0x7F0E0042
 			public const int hide_bottom_view_on_scroll_behavior = 2131624002;

@@ -11,10 +11,12 @@ using Android.Views;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.Group;
+using Moodis.Feature.Login;
 using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Moodis.Feature.Menu
@@ -27,6 +29,8 @@ namespace Moodis.Feature.Menu
         private MenuViewModel MenuViewModel;
         private int spinnerPosition;
         private const string FormatDouble = "N3";
+        private UserListAdapter adapterUserList;
+        private const string USERS_WITHOUT_GROUP = "USERS_WITHOUT_GROUP";
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -50,11 +54,11 @@ namespace Moodis.Feature.Menu
             recyclerView.SetLayoutManager(new LinearLayoutManager(this));
 
             /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            TODO THIS SHOULD LATER CHECK IF USER ALREADY HAS A GROUP AS A USER CAN ONLY HAVE 1 GROUP BECAUSE OF THE FACE API STUFF 
+            TODO THIS SHOULD LATER CHECK IF USER ALREADY HAS A GROUP AS A USER CAN ONLY HAVE 1 GROUP BECAUSE OF THE FACE API STUFF
             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-
-            var userList = SignInViewModel.userList.Where(user => !user.IsDoctor).ToList();
-            recyclerView.SetAdapter(new UserListAdapter(userList));
+            var userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
+            adapterUserList = new UserListAdapter(userList);
+            recyclerView.SetAdapter(adapterUserList);
 
             InitialiseInputs();
 
@@ -121,6 +125,7 @@ namespace Moodis.Feature.Menu
             var AddUserToGroup = FindViewById(Resource.Id.AddToGroup);
             var CheckGroupHistory = FindViewById(Resource.Id.CheckGroupHistory);
             var CheckUserHistory = FindViewById(Resource.Id.CheckPersonHistory);
+            var DisplayUsers = FindViewById(Resource.Id.DisplayYourGroupMembersButton);
 
             AddUserToGroup.Click += delegate {
                 LayoutInflater layoutInflater = LayoutInflater.From(this);
@@ -150,6 +155,7 @@ namespace Moodis.Feature.Menu
                                                 if(group.Groupname == choice)
                                                 {
                                                     group.AddMember(user.Username);
+                                                    user.GroupName = group.Groupname;
                                                     //MenuViewModel.Instance.MovePersonGroupAsync(user.PersonGroupId, user.PersonId, user.Username, group.groupId);
                                                 }
                                             }
@@ -204,6 +210,45 @@ namespace Moodis.Feature.Menu
                 }
             };
 
+            DisplayUsers.Click += delegate {
+                LayoutInflater layoutInflater = LayoutInflater.From(this);
+                View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
+
+                var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
+                .Select(group => group.Groupname).ToList();
+                groupsList.Add("USERS_WITHOUT_GROUP");
+
+                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
+                spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
+                var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
+                adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                spinner.Adapter = adapter;
+
+                Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
+                alertbuilder.SetView(view);
+                alertbuilder.SetCancelable(false)
+                                .SetPositiveButton("Confirm", delegate
+                                {
+                                    string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
+                                    List<User> userList = null;
+                                    if (choice == USERS_WITHOUT_GROUP) {
+                                        userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
+                                    }
+                                    else 
+                                    {
+                                        userList = SignInViewModel.userList.Where(user => user.GroupName == choice && !user.IsDoctor).ToList();
+                                    }
+                                    adapterUserList.userList = userList;
+                                    adapterUserList.NotifyDataSetChanged();
+                                    
+                                })
+                                .SetNegativeButton("Cancel", delegate
+                                {
+                                    alertbuilder.Dispose();
+                                });
+                Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
+                dialog.Show();
+            };
         }
         private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {

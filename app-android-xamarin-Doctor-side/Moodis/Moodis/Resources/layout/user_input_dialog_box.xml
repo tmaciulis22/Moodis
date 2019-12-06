@@ -12,7 +12,7 @@
   <Spinner
       android:id="@+id/spinnerGroupName"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="@dimen/grid_unit_34x"
       android:background="#5000"
       android:textSize="@dimen/login_header"
       android:spinnerMode="dropdown" />

@@ -5,8 +5,11 @@ using Android.Support.V7.Widget;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.Group;
+using Moodis.Feature.Register;
+using Moodis.Feature.SignIn;
 using Moodis.Widget;
 using System;
+using System.Collections.Generic;
 
 namespace Moodis.History
 {
@@ -15,12 +18,16 @@ namespace Moodis.History
     {
         private readonly HistoryViewModel historyViewModel = new HistoryViewModel();
         private RecyclerView recyclerView;
+        public static int EXTRA_REASON = 0; // 0 your own, 1 - group, 2 - person;
+        public static string EXTRA_NAME = "EXTRA_NAME";
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_history);
+            EXTRA_NAME = Intent.GetStringExtra("name");
+            EXTRA_REASON = Intent.GetIntExtra("reason",0);
             InitView();
             InitAdapter();
         }
@@ -39,7 +46,23 @@ namespace Moodis.History
                 DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
                 {
                     dateInput.Text = time.ToLongDateString();
-                    (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(GroupActivityModel.GetRelatedIds(), time));
+
+                    var ids = new List<string>();
+                    switch (EXTRA_REASON)
+                    {
+                        case 0:
+                            ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            break;
+                        case 1:
+                            ids = GroupActivityModel.GetGroupUserIds(EXTRA_NAME);
+                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            break;
+                        case 2:
+                            ids.Add(RegisterViewModel.GetIdByUsername(EXTRA_NAME));
+                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            break;
+                    }
                 });
                 frag.Show(SupportFragmentManager, DatePickerFragment.TAG);
             };
@@ -51,8 +74,28 @@ namespace Moodis.History
 
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
+            HistoryStatsAdapter adapter;
+            var ids = new List<string>();
 
-            var adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(GroupActivityModel.GetRelatedIds(), DateTime.Now));
+            switch (EXTRA_REASON)
+            {
+                case 0:
+                    ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    break;
+                case 1:
+                    ids = GroupActivityModel.GetGroupUserIds(EXTRA_NAME);
+                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    break;
+                case 2:
+                    ids.Add(RegisterViewModel.GetIdByUsername(EXTRA_NAME));
+                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    break;
+                default:
+                    ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    break;
+            }
             recyclerView.SetAdapter(adapter);
         }
     }

@@ -9,12 +9,13 @@ using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Moodis.Extensions;
 using Moodis.Feature.Group;
 using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Moodis.Feature.Menu
 {
@@ -24,6 +25,7 @@ namespace Moodis.Feature.Menu
         private readonly string TAG = nameof(MenuActivity);
         RecyclerView recyclerView;
         private MenuViewModel MenuViewModel;
+        private int spinnerPosition;
         private const string FormatDouble = "N3";
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -46,7 +48,12 @@ namespace Moodis.Feature.Menu
 
             recyclerView = FindViewById<RecyclerView>(Resource.Id.userRecyclerView);
             recyclerView.SetLayoutManager(new LinearLayoutManager(this));
-            recyclerView.SetAdapter(new UserListAdapter(SignInViewModel.userList));
+
+            //TODO EDIT THIS AS TOU SEE FIT
+            var userList = SignInViewModel.userList.Where(user => !user.IsDoctor).ToList();
+            recyclerView.SetAdapter(new UserListAdapter(userList));
+
+            InitialiseInputs();
         }
 
         public override void OnBackPressed()
@@ -65,17 +72,20 @@ namespace Moodis.Feature.Menu
 
         private void LogoutWindowShow()
         {
-            Android.Support.V7.App.AlertDialog.Builder builder = new Android.Support.V7.App.AlertDialog.Builder(this)
-                .SetTitle(Resource.String.logout)
-                .SetMessage(Resource.String.logout_confirmation_message)
-                .SetNegativeButton(Resource.String.no, (senderAlert, args) => { })
-                .SetPositiveButton(Resource.String.yes, (senderAlert, args) =>
-                {
-                    StartActivity(new Intent(this, typeof(SignInActivity)));
-                    FinishAffinity();
-                });
-            builder.Create().Show();
-            builder.Dispose();
+            var dialog = this.ConfirmationAlert(
+                    titleRes: Resource.String.logout,
+                    messageRes: Resource.String.logout_confirmation_message,
+                    positiveButtonRes: Resource.String.yes,
+                    negativeButtonRes: Resource.String.no,
+                    positiveCallback: delegate { HandleLogout(); });
+            dialog.Show();
+            dialog.Dispose();
+        }
+
+        private void HandleLogout()
+        {
+            StartActivity(new Intent(this, typeof(SignInActivity)));
+            FinishAffinity();
         }
 
         public bool OnNavigationItemSelected(IMenuItem item)
@@ -104,38 +114,40 @@ namespace Moodis.Feature.Menu
         private void InitialiseInputs()
         {
             var AddUserToGroup = FindViewById(Resource.Id.AddToGroup);
-            var CheckUserHistory = FindViewById(Resource.Id.CheckPersonHistory);
             var CheckGroupHistory = FindViewById(Resource.Id.CheckGroupHistory);
+            var CheckUserHistory = FindViewById(Resource.Id.CheckPersonHistory);
 
             AddUserToGroup.Click += delegate {
                 LayoutInflater layoutInflater = LayoutInflater.From(this);
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
-                Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
-                alertbuilder.SetView(view);
+
+                var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
+                .Select(group => group.Groupname).ToList();
 
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
-                var groupsList = new List<string>();
-                foreach(var group in GroupActivityModel.groups)
-                {
-                    if (group.IsMember(SignInViewModel.currentUser.Username))
-                    {
-                        groupsList.Add(group.Groupname);
-                    }
-                }
-
-                spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs> (spinner_ItemSelected);
-                var strings = groupsList.ToArray();
-
-                var adapter = new ArrayAdapter<string>(
-                this, Android.Resource.Layout.SimpleSpinnerItem, strings);
-
-                adapter.SetDropDownViewResource (Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
+                var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
+                adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
                 spinner.Adapter = adapter;
 
+                var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected).ToList();
+                string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
+
+                Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
+                alertbuilder.SetView(view);
                 alertbuilder.SetCancelable(false)
                                 .SetPositiveButton("Confirm", delegate
                                 {
-                                    
+                                    foreach(var user in selectedUsers)
+                                    {
+                                            foreach(var group in GroupActivityModel.groups)
+                                            {
+                                                if(group.Groupname == choice)
+                                                {
+                                                    group.AddMember(user.Username);
+                                                }
+                                            }
+                                    }
                                 })
                                 .SetNegativeButton("Cancel", delegate
                                 {
@@ -144,34 +156,52 @@ namespace Moodis.Feature.Menu
                 Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
                 dialog.Show();
             };
+
+            CheckGroupHistory.Click += delegate {
+                LayoutInflater layoutInflater = LayoutInflater.From(this);
+                View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
+
+                var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
+                .Select(group => group.Groupname).ToList();
+
+                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
+                spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
+                var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
+                adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                spinner.Adapter = adapter;
+
+                Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
+                alertbuilder.SetView(view);
+                alertbuilder.SetCancelable(false)
+                                .SetPositiveButton("Confirm", delegate
+                                {
+                                    string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
+                                    StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("group", choice).PutExtra("reason",1));
+                                })
+                                .SetNegativeButton("Cancel", delegate
+                                {
+                                    alertbuilder.Dispose();
+                                });
+                Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
+                dialog.Show();
+            };
+
+            CheckUserHistory.Click += delegate {
+                var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected).ToList();
+                if(selectedUsers.Count == 1)
+                {
+                    StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("reason", 2));
+                }
+                else
+                {
+                    Toast.MakeText(this, Resource.String.select_only_one, ToastLength.Short).Show();
+                }
+            };
+
         }
         private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
-            Spinner spinner = (Spinner)sender;
-            string toast = string.Format("selected", spinner.GetItemAtPosition(e.Position));
-            Toast.MakeText(this, toast, ToastLength.Long).Show();
+            spinnerPosition = e.Position;
         }
     }
 }
-
-
-/*
-AddPersonToGroup.Click += delegate {
-                LayoutInflater layoutInflater = LayoutInflater.From(this);
-View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
-Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
-alertbuilder.SetView(view);
-                var userdata = view.FindViewById<EditText>(Resource.Id.editText);
-alertbuilder.SetCancelable(false)
-                .SetPositiveButton("Submit", delegate
-                {
-                    Toast.MakeText(this, "Submit Input: " + userdata.Text, ToastLength.Short).Show();
-})
-                .SetNegativeButton("Cancel", delegate
-                {
-                    alertbuilder.Dispose();
-                });
-                Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
-dialog.Show();
-            };
-*/

@@ -53,9 +53,9 @@ namespace Moodis.Feature.Group
             }
         }
 
-        public static List<string> GetRelatedIds()
+        public static List<string> GetGroupUserIds(string groupName)
         {
-            var whereUserIs = groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username)).ToList();
+            var whereUserIs = groups.Where(group => group.Groupname == groupName).ToList();
             List<string> FriendUsernames = new List<string>();
             whereUserIs.ForEach(group => group.Members.ForEach(username => FriendUsernames.Add(username)));
             List<string> UserIds = new List<string>();

@@ -1,7 +1,9 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Constraints;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
@@ -33,6 +35,15 @@ namespace Moodis.Feature.SignIn
             InitButtonsAndInputs();
             //TODO when Android.Arch.Lifecycle lib gets updated use this provider, so various lifecycle and configuration changes won't affect data stored in viewmodel
             //SignInViewModel = ViewModelProviders.Of(this).Get(Java.Lang.Class.FromType(typeof(SignInViewModel))) as SignInViewModel;
+
+            AnimationDrawable animationDrawable;
+
+
+            var constraintLayout = (ConstraintLayout)FindViewById(Resource.Id.constraintSignIn);
+            animationDrawable = (AnimationDrawable)constraintLayout.Background;
+            animationDrawable.SetEnterFadeDuration(10);
+            animationDrawable.SetExitFadeDuration(5000);
+            animationDrawable.Start();
         }
 
         public override void OnBackPressed()

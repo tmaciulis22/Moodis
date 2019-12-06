@@ -83,4 +83,9 @@
 
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
+
+  <string name="select_only_one">Please select only one user.</string>
+  <string name="add_to_group_menu">Add selected people \n to your group."</string>
+  <string name="group_emotion_history_menu">Check group\n emotion history"</string>
+  <string name="check_person_history">Check person \n emotion history"</string>
 </resources>

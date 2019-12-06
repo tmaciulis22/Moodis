@@ -82,8 +82,10 @@
     <Compile Include="Feature\Group\GroupMembersActivity.cs" />
     <Compile Include="Feature\Group\GroupViewHolder.cs" />
     <Compile Include="Feature\History\ChartViewHolder.cs" />
+    <Compile Include="Feature\Menu\UserListAdapter.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
+    <Compile Include="Feature\Menu\UserViewHolder.cs" />
     <Compile Include="Feature\Register\RegisterViewModel.cs" />
     <Compile Include="Feature\Register\RegisterActivity.cs" />
     <Compile Include="Feature\SignIn\SignInActivity.cs" />
@@ -354,6 +356,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\user_input_dialog_box.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\holder_users.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

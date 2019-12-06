@@ -1,10 +1,8 @@
 ﻿using AndroidX.Lifecycle;
 using Microcharts;
 using Moodis.Database;
-using Moodis.Ui;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Moodis.History
 {

@@ -5,12 +5,14 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Moodis.Feature.Group;
 using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
+using System;
 
 namespace Moodis.Feature.Menu
 {
@@ -18,6 +20,7 @@ namespace Moodis.Feature.Menu
     public class MenuActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private readonly string TAG = nameof(MenuActivity);
+        RecyclerView recyclerView;
         private MenuViewModel MenuViewModel;
         private const string FormatDouble = "N3";
 
@@ -28,7 +31,7 @@ namespace Moodis.Feature.Menu
             MenuViewModel = MenuViewModel.Instance;
             SetContentView(Resource.Layout.activity_menu);
 
-            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            Toolbar toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
@@ -38,6 +41,10 @@ namespace Moodis.Feature.Menu
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
 
+
+            recyclerView = FindViewById<RecyclerView>(Resource.Id.userRecyclerView);
+            recyclerView.SetLayoutManager(new LinearLayoutManager(this));
+            recyclerView.SetAdapter(new UserListAdapter(SignInViewModel.userList));
         }
 
         public override void OnBackPressed()

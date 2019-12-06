@@ -18,6 +18,7 @@ namespace Moodis.Feature.Login
 
         [Ignore]
         public Person FaceApiPerson { get; set; }
+        public bool IsSelected { get; set; }
 
         public User()
         {

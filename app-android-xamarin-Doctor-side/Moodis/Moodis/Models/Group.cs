@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Java.Lang;
+using Moodis.Feature.Login;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace Moodis.Feature.Group
 {
@@ -26,7 +28,7 @@ namespace Moodis.Feature.Group
 
         public Group(string name, string firstUser) : this()
         {
-            this.Groupname = name;
+            Groupname = name;
             Members.Add(firstUser);
         }
 

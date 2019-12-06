@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
         
         <Button
-        android:id="@+id/button3"
+        android:id="@+id/AddToGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -25,13 +25,13 @@
         android:layout_marginTop="105dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:text="Button"
+        android:text="Add to group"
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/CheckGroupHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -39,13 +39,13 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:text="Button"
+        android:text="Check group\n emotion history"
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/AddToGroup" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/CheckPersonHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -53,10 +53,10 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:text="Button"
+        android:text="Check person \n emotion history"
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/CheckGroupHistory" />
 
     <Button
         android:id="@+id/button6"
@@ -67,9 +67,10 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:text="Button"
+        android:text="@string/lorem_ipsum"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/CheckPersonHistory" />
 </android.support.constraint.ConstraintLayout>

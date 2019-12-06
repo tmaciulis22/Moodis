@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
+﻿using System.Collections.Generic;
 using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
 using Moodis.Feature.Login;
 
 namespace Moodis.Feature.Menu
@@ -36,7 +27,7 @@ namespace Moodis.Feature.Menu
 
             (holder as UserViewHolder).ItemView.SetOnClickListener(this);
             (holder as UserViewHolder).ItemView.Tag = position;
-            (holder as UserViewHolder).UsernameLabel.SetTextColor(userList[position].IsSelected ? Android.Graphics.Color.White : Android.Graphics.Color.Green);
+            (holder as UserViewHolder).UsernameLabel.SetTextColor(userList[position].IsSelected ? Android.Graphics.Color.Green : Android.Graphics.Color.White);
 
         }
 

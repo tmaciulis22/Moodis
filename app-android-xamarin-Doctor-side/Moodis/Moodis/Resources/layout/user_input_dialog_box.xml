@@ -7,11 +7,12 @@
       android:id="@+id/dialogTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Dialog Title"
+      android:text="@string/lorem_ipsum"
       android:textAppearance="?android:attr/textAppearanceLarge" />
-  <EditText
-      android:id="@+id/editText"
+  <Spinner
+      android:id="@+id/spinnerGroupName"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="Enter Something" />
+      android:background="#5000"
+      android:spinnerMode="dropdown" />
 </LinearLayout>

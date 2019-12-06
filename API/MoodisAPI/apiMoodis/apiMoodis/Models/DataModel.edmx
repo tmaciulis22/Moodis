@@ -9,25 +9,25 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
-          <Property Name="ImageId" Type="nchar" MaxLength="32" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="ImageId" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="Confidence" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Groups">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
-          <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="MemberIds" Type="nvarchar(max)" />
+          <Property Name="Id" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="MemberIds" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="ImageInfos">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
-          <Property Name="UserId" Type="nchar" MaxLength="32" Nullable="false" />
+          <Property Name="Id" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="UserId" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="DateAsString" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ImagePath" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -35,13 +35,13 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="nchar" MaxLength="32" Nullable="false" />
-          <Property Name="Username" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Password" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Id" Type="nchar" MaxLength="36" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="IsDoctor" Type="bit" Nullable="false" />
-          <Property Name="GroupName" Type="nvarchar(max)" />
-          <Property Name="PersonGroupId" Type="nchar" MaxLength="36" />
-          <Property Name="PersonId" Type="varchar" MaxLength="36" />
+          <Property Name="GroupName" Type="varchar" MaxLength="32" />
+          <Property Name="PersonGroupId" Type="nvarchar" MaxLength="36" />
+          <Property Name="PersonId" Type="nvarchar" MaxLength="36" />
         </EntityType>
         <Association Name="FK_Emotions_ImageInfos">
           <End Role="ImageInfos" Type="Self.ImageInfos" Multiplicity="1">
@@ -107,9 +107,9 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
-          <Property Name="ImageId" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="ImageId" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Confidence" Type="Double" Nullable="false" />
           <NavigationProperty Name="ImageInfo" Relationship="Models.FK_Emotions_ImageInfos" FromRole="Emotion" ToRole="ImageInfo" />
         </EntityType>
@@ -117,16 +117,16 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
-          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MemberIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="MemberIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ImageInfo">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="DateAsString" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Emotions" Relationship="Models.FK_Emotions_ImageInfos" FromRole="ImageInfo" ToRole="Emotion" />
@@ -136,13 +136,13 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="true" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="IsDoctor" Type="Boolean" Nullable="false" />
-          <Property Name="GroupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PersonGroupId" Type="String" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="PersonId" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="GroupName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PersonGroupId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
+          <Property Name="PersonId" Type="String" MaxLength="36" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ImageInfos" Relationship="Models.FK_ImageInfos_Users" FromRole="User" ToRole="ImageInfo" />
         </EntityType>
         <Association Name="FK_Emotions_ImageInfos">

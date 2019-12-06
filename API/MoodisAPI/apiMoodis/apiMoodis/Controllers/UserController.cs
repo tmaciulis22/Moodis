@@ -8,6 +8,8 @@ using System.Web.Http;
 using System.Data.Entity;
 using apiMoodis.Encryption;
 using apiMoodis.Requests;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace apiMoodis.Controllers
 {
@@ -20,7 +22,14 @@ namespace apiMoodis.Controllers
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var users = dbContext.Users.Include(item => item.ImageInfos).ToList();
-                return Ok(users);
+                if (users.Count != 0)
+                {
+                    return Ok(users);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
         }
 
@@ -67,7 +76,22 @@ namespace apiMoodis.Controllers
                     return Ok();
                 }
             }
-            catch (Exception ex)
+            catch (DbEntityValidationException ex)
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                foreach (var entityError in ex.EntityValidationErrors)
+                {
+                    var generalMessage = "Entity of type \"" + entityError.Entry.Entity.GetType().Name + "\" in state \"" + entityError.Entry.State + "\" has the following validation errors:";
+                    stringBuilder.AppendLine(generalMessage);
+                    foreach (var validationError in entityError.ValidationErrors)
+                    {
+                        var propertyErrors = "- Property: \"" + validationError.PropertyName + "\", Value: \"" + entityError.Entry.CurrentValues.GetValue<object>(validationError.PropertyName) + "\", Error: \"" + validationError.ErrorMessage + "\"";
+                        stringBuilder.AppendLine(propertyErrors);
+                    }
+                }
+                return BadRequest(stringBuilder.ToString());
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.ToString());
             }

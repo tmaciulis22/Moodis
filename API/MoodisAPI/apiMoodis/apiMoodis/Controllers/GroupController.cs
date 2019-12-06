@@ -18,7 +18,7 @@ namespace apiMoodis.Controllers
                 var groups = dbContext.Groups.ToList();
                 if(groups.Count() == 0)
                 {
-                    return BadRequest("There are no groups");
+                    return NotFound();
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace apiMoodis.Controllers
             {
                 var entity = dbContext.Groups.Single(e => e.Id == id);
                 entity.GroupName = group.GroupName;
-                entity.MembersInString = group.MembersInString;
+                entity.MemberIds = group.MemberIds;
                 dbContext.SaveChanges();
                 return Ok(entity);
             }

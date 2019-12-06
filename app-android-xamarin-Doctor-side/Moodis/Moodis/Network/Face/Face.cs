@@ -123,11 +123,11 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<bool> MovePerson(string personGroupId, Guid personId,string username, string newGroupId)
+        public async Task<bool> MovePerson(string personGroupId, string personId,string username, string newGroupId)
         {
             try
             {
-                await faceClient.PersonGroupPerson.DeleteAsync(personGroupId,personId);
+                await faceClient.PersonGroupPerson.DeleteAsync(personGroupId,Guid.Parse(personId));
                 var newFaceApiPerson = await Face.Instance.CreateNewPerson(newGroupId, username);
                 return true;
             }

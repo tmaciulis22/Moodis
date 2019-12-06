@@ -1,5 +1,7 @@
 ﻿using Android.App;
+using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Support.Constraints;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Widget;
@@ -30,6 +32,8 @@ namespace Moodis.History
             EXTRA_REASON = Intent.GetIntExtra("reason",0);
             InitView();
             InitAdapter();
+
+            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.constraintLayoutHistory));
         }
 
         public override bool OnSupportNavigateUp()

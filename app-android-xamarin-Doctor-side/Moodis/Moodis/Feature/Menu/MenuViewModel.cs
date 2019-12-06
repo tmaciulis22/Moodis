@@ -25,5 +25,9 @@ namespace Moodis.Ui
                 return obj.Value;
             }
         }
+        public async void MovePersonGroupAsync(string personGroupId,string personId,string username, string newGroupId)
+        {
+           await Face.Instance.MovePerson(personGroupId, personId, username, newGroupId);
+        }
     }
 }

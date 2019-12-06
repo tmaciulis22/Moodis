@@ -5,8 +5,11 @@ using Android.Support.V7.Widget;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.Group;
+using Moodis.Feature.Register;
+using Moodis.Feature.SignIn;
 using Moodis.Widget;
 using System;
+using System.Collections.Generic;
 
 namespace Moodis.History
 {
@@ -39,7 +42,9 @@ namespace Moodis.History
                 DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
                 {
                     dateInput.Text = time.ToLongDateString();
-                    (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(GroupActivityModel.GetRelatedIds(), time));
+                    var ids = new List<string>();
+                    ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+                    (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
                 });
                 frag.Show(SupportFragmentManager, DatePickerFragment.TAG);
             };
@@ -52,7 +57,9 @@ namespace Moodis.History
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
 
-            var adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(GroupActivityModel.GetRelatedIds(), DateTime.Now));
+            var ids = new List<string>();
+            ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+            var adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
             recyclerView.SetAdapter(adapter);
         }
     }

@@ -36,14 +36,7 @@ namespace Moodis.Feature.SignIn
             //TODO when Android.Arch.Lifecycle lib gets updated use this provider, so various lifecycle and configuration changes won't affect data stored in viewmodel
             //SignInViewModel = ViewModelProviders.Of(this).Get(Java.Lang.Class.FromType(typeof(SignInViewModel))) as SignInViewModel;
 
-            AnimationDrawable animationDrawable;
-
-
-            var constraintLayout = (ConstraintLayout)FindViewById(Resource.Id.constraintSignIn);
-            animationDrawable = (AnimationDrawable)constraintLayout.Background;
-            animationDrawable.SetEnterFadeDuration(10);
-            animationDrawable.SetExitFadeDuration(5000);
-            animationDrawable.Start();
+            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.constraintLayoutSingIn));
         }
 
         public override void OnBackPressed()

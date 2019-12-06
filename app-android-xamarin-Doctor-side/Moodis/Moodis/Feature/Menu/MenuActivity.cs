@@ -49,11 +49,16 @@ namespace Moodis.Feature.Menu
             recyclerView = FindViewById<RecyclerView>(Resource.Id.userRecyclerView);
             recyclerView.SetLayoutManager(new LinearLayoutManager(this));
 
-            //TODO EDIT THIS AS TOU SEE FIT
+            /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            TODO THIS SHOULD LATER CHECK IF USER ALREADY HAS A GROUP AS A USER CAN ONLY HAVE 1 GROUP BECAUSE OF THE FACE API STUFF 
+            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
             var userList = SignInViewModel.userList.Where(user => !user.IsDoctor).ToList();
             recyclerView.SetAdapter(new UserListAdapter(userList));
 
             InitialiseInputs();
+
+            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.menuActivity));
         }
 
         public override void OnBackPressed()
@@ -145,6 +150,7 @@ namespace Moodis.Feature.Menu
                                                 if(group.Groupname == choice)
                                                 {
                                                     group.AddMember(user.Username);
+                                                    //MenuViewModel.Instance.MovePersonGroupAsync(user.PersonGroupId, user.PersonId, user.Username, group.groupId);
                                                 }
                                             }
                                     }

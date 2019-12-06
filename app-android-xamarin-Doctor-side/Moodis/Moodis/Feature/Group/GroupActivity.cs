@@ -1,10 +1,13 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Support.Constraints;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using Moodis.Constants.Enums;
+using Moodis.Extensions;
 
 namespace Moodis.Feature.Group
 {
@@ -18,6 +21,8 @@ namespace Moodis.Feature.Group
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_group);
             InitialiseInputs();
+
+            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.groupActivity));
         }
 
         private void InitialiseInputs()

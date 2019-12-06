@@ -13,7 +13,7 @@ namespace Moodis.Feature.Login
         public string Password { get; set; }
         public string PersonGroupId { get; set; }
         public string GroupName { get; set; }
-        public string personId { get; set; }
+        public string PersonId { get; set; }
         public bool IsDoctor { get; set; }
 
         [Ignore]

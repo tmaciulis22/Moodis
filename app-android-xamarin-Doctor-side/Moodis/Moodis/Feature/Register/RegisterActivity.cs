@@ -1,5 +1,7 @@
 ﻿using Android.App;
+using Android.Graphics.Drawables;
 using Android.OS;
+using Android.Support.Constraints;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
@@ -23,6 +25,13 @@ namespace Moodis.Feature.Register
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_register);
             InitButtonsAndInputs();
+
+            AnimationDrawable animationDrawable;
+            var constraintLayout = (ConstraintLayout)FindViewById(Resource.Id.constraintlayoutRegister);
+            animationDrawable = (AnimationDrawable)constraintLayout.Background;
+            animationDrawable.SetEnterFadeDuration(10);
+            animationDrawable.SetExitFadeDuration(5000);
+            animationDrawable.Start();
         }
 
         public override void OnBackPressed()

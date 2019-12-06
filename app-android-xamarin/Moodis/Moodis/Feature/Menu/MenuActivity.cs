@@ -158,10 +158,6 @@ namespace Moodis.Feature.Menu
                     OnBackPressed();
                 }
             }
-            else if (id == Resource.Id.nav_groups)
-            {
-                StartActivity(new Intent(this, typeof(GroupActivity)));
-            }
             else if (id == Resource.Id.nav_history)
             {
                 StartActivity(new Intent(this, typeof(HistoryActivity)));

@@ -35,8 +35,6 @@ namespace Moodis.Ui
         public List<Emotion> emotions;
         public DateTime ImageDate { get; set; }
         public string DateAsString { get; set; }
-        private double? Age;
-        private Gender? Gender;
 
         public ImageInfo()
         {
@@ -46,8 +44,6 @@ namespace Moodis.Ui
         public void SetImageInfo(DetectedFace face)
         {
             UserId = SignInViewModel.currentUser.Id;
-            Age = face.FaceAttributes.Age;
-            Gender = face.FaceAttributes.Gender;
             ImageDate = DateTime.Now;
             AddEmotions(face.FaceAttributes.Emotion);
         }

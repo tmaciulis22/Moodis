@@ -15,7 +15,7 @@ namespace apiMoodis.Models
     public partial class Group
     {
         public string Id { get; set; }
-        public string MembersInString { get; set; }
         public string GroupName { get; set; }
+        public string MemberIds { get; set; }
     }
 }

@@ -34,8 +34,7 @@ namespace Moodis.Feature.Register
 
                 if (newFaceApiPerson != null)
                 {
-                    SignInViewModel.currentUser.FaceApiPerson = newFaceApiPerson;
-                    SignInViewModel.currentUser.personId = Convert.ToString(SignInViewModel.currentUser.FaceApiPerson.PersonId);
+                    SignInViewModel.currentUser.PersonId = Convert.ToString(newFaceApiPerson.PersonId);
                 }
                 else
                 {
@@ -55,8 +54,7 @@ namespace Moodis.Feature.Register
         //TODO MOVE THIS TO FACE CLASS
         public async Task<Response> AddFaceToPerson(string imagePath)
         {
-
-            var response = await Face.Instance.AddFaceToPerson(imagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser);
+            var response = await Face.Instance.AddFaceToPerson(imagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.PersonId);
 
             if (response == Response.OK)
             {

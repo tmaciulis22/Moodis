@@ -7,13 +7,10 @@ using System.Linq;
 
 namespace Moodis.Ui
 {
-    [Serializable]
     public class ImageInfo
     {
-        [Serializable]
         public struct Emotion : IComparable
         {
-            [PrimaryKey]
             public string Id { get; set; }
             public string ImageId { get; set; }
             public string Name { get; set; }
@@ -28,18 +25,12 @@ namespace Moodis.Ui
             }
         }
 
-        [PrimaryKey]
         public string Id { get; set; }
         public string UserId { get; set; }
-        public string ImagePath { get; set; }
-        public List<Emotion> emotions;
         public DateTime ImageDate { get; set; }
         public string DateAsString { get; set; }
-
-        public ImageInfo()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
+        public List<Emotion> emotions;
+        public string ImagePath { get; set; }
 
         public void SetImageInfo(DetectedFace face)
         {

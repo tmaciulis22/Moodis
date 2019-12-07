@@ -129,6 +129,21 @@ namespace apiMoodis.Controllers
                 {
                     return NotFound();
                 }
+                catch (DbEntityValidationException ex)
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    foreach (var entityError in ex.EntityValidationErrors)
+                    {
+                        var generalMessage = "Entity of type \"" + entityError.Entry.Entity.GetType().Name + "\" in state \"" + entityError.Entry.State + "\" has the following validation errors:";
+                        stringBuilder.AppendLine(generalMessage);
+                        foreach (var validationError in entityError.ValidationErrors)
+                        {
+                            var propertyErrors = "- Property: \"" + validationError.PropertyName + "\", Value: \"" + entityError.Entry.CurrentValues.GetValue<object>(validationError.PropertyName) + "\", Error: \"" + validationError.ErrorMessage + "\"";
+                            stringBuilder.AppendLine(propertyErrors);
+                        }
+                    }
+                    return BadRequest(stringBuilder.ToString());
+                }
                 catch (Exception e)
                 {
                     return InternalServerError(e);

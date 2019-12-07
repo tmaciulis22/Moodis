@@ -173,13 +173,13 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<Response> AddFaceToPerson(string imageFilePath, string personGroupId, User user)
+        public async Task<Response> AddFaceToPerson(string imageFilePath, string personGroupId, string personId)
         {
             try
             {
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
-                    Guid.Parse(user.personId), imageFileStream);
+                    Guid.Parse(personId), imageFileStream);
                 return Response.OK;
             }
             catch (APIErrorException apiException)

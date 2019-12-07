@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Text;
 
 namespace apiMoodis.Controllers
 {
@@ -17,13 +19,13 @@ namespace apiMoodis.Controllers
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 var imageInfos = dbContext.ImageInfos.Include(e => e.Emotions).ToList();
-                if (imageInfos.Count() == 0)
+                if (imageInfos.Count != 0)
                 {
-                    return BadRequest("There are no ImageInfos");
+                    return Ok(imageInfos);
                 }
                 else
                 {
-                    return Ok(imageInfos);
+                    return NotFound();
                 }
             }
         }
@@ -33,8 +35,19 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.ImageInfos.Single(ImageInfo => ImageInfo.Id == id);
-                return Ok(entity);
+                try
+                {
+                    var entity = dbContext.ImageInfos.Single(ImageInfo => ImageInfo.Id == id);
+                    return Ok(entity);
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
 
@@ -45,14 +58,30 @@ namespace apiMoodis.Controllers
             {
                 using (DatabaseContext dbContext = new DatabaseContext())
                 {
+                    imageInfo.Id = Guid.NewGuid().ToString();
                     dbContext.ImageInfos.Add(imageInfo);
                     dbContext.SaveChanges();
                     return Ok();
                 }
             }
-            catch (Exception ex)
+            catch (DbEntityValidationException ex)
             {
-                return BadRequest(ex.ToString());
+                StringBuilder stringBuilder = new StringBuilder();
+                foreach (var entityError in ex.EntityValidationErrors)
+                {
+                    var generalMessage = "Entity of type \"" + entityError.Entry.Entity.GetType().Name + "\" in state \"" + entityError.Entry.State + "\" has the following validation errors:";
+                    stringBuilder.AppendLine(generalMessage);
+                    foreach (var validationError in entityError.ValidationErrors)
+                    {
+                        var propertyErrors = "- Property: \"" + validationError.PropertyName + "\", Value: \"" + entityError.Entry.CurrentValues.GetValue<object>(validationError.PropertyName) + "\", Error: \"" + validationError.ErrorMessage + "\"";
+                        stringBuilder.AppendLine(propertyErrors);
+                    }
+                }
+                return BadRequest(stringBuilder.ToString());
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
             }
         }
 
@@ -61,12 +90,37 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.ImageInfos.Single(e => e.Id == id);
-                entity.DateAsString = imageInfo.DateAsString;
-                entity.UserId = imageInfo.UserId;
-                entity.ImagePath = imageInfo.ImagePath;
-                dbContext.SaveChanges();
-                return Ok(entity);
+                try
+                {
+                    var entity = dbContext.ImageInfos.Single(e => e.Id == id);
+                    entity.DateAsString = imageInfo.DateAsString;
+                    entity.UserId = imageInfo.UserId;
+                    dbContext.SaveChanges();
+                    return Ok(entity);
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    foreach (var entityError in ex.EntityValidationErrors)
+                    {
+                        var generalMessage = "Entity of type \"" + entityError.Entry.Entity.GetType().Name + "\" in state \"" + entityError.Entry.State + "\" has the following validation errors:";
+                        stringBuilder.AppendLine(generalMessage);
+                        foreach (var validationError in entityError.ValidationErrors)
+                        {
+                            var propertyErrors = "- Property: \"" + validationError.PropertyName + "\", Value: \"" + entityError.Entry.CurrentValues.GetValue<object>(validationError.PropertyName) + "\", Error: \"" + validationError.ErrorMessage + "\"";
+                            stringBuilder.AppendLine(propertyErrors);
+                        }
+                    }
+                    return BadRequest(stringBuilder.ToString());
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
 

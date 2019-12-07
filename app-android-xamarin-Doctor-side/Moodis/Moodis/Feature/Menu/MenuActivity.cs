@@ -157,6 +157,7 @@ namespace Moodis.Feature.Menu
                                                     group.AddMember(user.Username);
                                                     user.GroupName = group.Groupname;
                                                     //MenuViewModel.Instance.MovePersonGroupAsync(user.PersonGroupId, user.PersonId, user.Username, group.groupId);
+                                                    user.IsSelected = false;
                                                 }
                                             }
                                     }
@@ -203,6 +204,7 @@ namespace Moodis.Feature.Menu
                 if(selectedUsers.Count == 1)
                 {
                     StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("reason", 2));
+                    selectedUsers.ForEach(user => user.IsSelected = false);
                 }
                 else
                 {
@@ -239,6 +241,7 @@ namespace Moodis.Feature.Menu
                                         userList = SignInViewModel.userList.Where(user => user.GroupName == choice && !user.IsDoctor).ToList();
                                     }
                                     adapterUserList.userList = userList;
+                                    userList.ForEach(user => user.IsSelected = false);
                                     adapterUserList.NotifyDataSetChanged();
                                     
                                 })

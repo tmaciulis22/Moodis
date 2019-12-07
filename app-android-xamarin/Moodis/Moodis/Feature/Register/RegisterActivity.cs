@@ -97,7 +97,7 @@ namespace Moodis.Feature.Register
 
             passwordInput.KeyPress += async (sender, e) =>
             {
-                if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
+                if (e.KeyCode == Keycode.Enter && e.Event.Action == KeyEventActions.Down)
                 {
                     e.Handled = true;
                     if (string.IsNullOrEmpty((sender as EditText).Text))

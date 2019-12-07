@@ -15,7 +15,7 @@ namespace Moodis.Feature.SignIn
 {
     public class SignInViewModel : ViewModel
     {
-        public static List<User> userList;
+        public static List<User> userList = DatabaseModel.FetchUsers();
         public static User currentUser;
 
         public async Task<bool> Authenticate(string username, string password)
@@ -38,6 +38,7 @@ namespace Moodis.Feature.SignIn
             List<Person> identifiedPersons = null;
             try
             {
+                imagePath.RotateImage();
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
             catch
@@ -74,6 +75,11 @@ namespace Moodis.Feature.SignIn
         {
             DatabaseModel.DeleteEverything();
             return await Face.Instance.DeleteEverything();
+        }
+
+        private void FetchUserList()
+        {
+            userList = Database.DatabaseModel.FetchUsers();
         }
     }
 }

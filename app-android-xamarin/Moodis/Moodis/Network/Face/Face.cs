@@ -48,7 +48,6 @@ namespace Moodis.Network.Face
 
         private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
-            imageFilePath.RotateImage();
 
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
@@ -106,9 +105,8 @@ namespace Moodis.Network.Face
 
         public async Task<IList<Person>> IdentifyPersons(string imageFilePath, Action<List<DetectedFace>> callback)
         {
-
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
-            callback(detectedFaces.ToList());
+            callback?.Invoke(detectedFaces.ToList<DetectedFace>());
 
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
 
@@ -118,7 +116,6 @@ namespace Moodis.Network.Face
             foreach (var group in personGroups)
             {
                 var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, group.PersonGroupId);
-
                 if (identifiedPersons.IsNullOrEmpty())
                 {
                     continue;
@@ -135,10 +132,24 @@ namespace Moodis.Network.Face
                     }
                 }
             }
-
             return personsList;
         }
 
+        //returns true if one or more users have accounts false otherwise.
+        public async Task<Boolean> MultipleAccounts(string imageFilePath, Action<List<DetectedFace>> callback)
+        {
+            var detectedFaces = await DetectFaceEmotions(imageFilePath);
+
+            var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
+            var people = await IdentifyPersons(imageFilePath, callback);
+
+            if(people.Count >= 2)
+            {
+                return true;
+            }
+            return false;
+        }
+        
         public async Task<Person> CreateNewPerson(string personGroupId, string username)
         {
             try
@@ -166,11 +177,9 @@ namespace Moodis.Network.Face
         {
             try
             {
-                imageFilePath.RotateImage();
-
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
-                    user.FaceApiPerson.PersonId, imageFileStream);
+                    Guid.Parse(user.personId), imageFileStream);
                 return Response.OK;
             }
             catch (APIErrorException apiException)
@@ -268,6 +277,26 @@ namespace Moodis.Network.Face
             {
                 Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
                 return Response.GeneralError;
+            }
+        }
+
+        public async Task<bool> MovePerson(string personGroupId, Guid personId,string username, string newGroupId)
+        {
+            try
+            {
+                await faceClient.PersonGroupPerson.DeleteAsync(personGroupId,personId);
+                var newFaceApiPerson = await Face.Instance.CreateNewPerson(newGroupId, username);
+                return true;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return false;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return false;
             }
         }
     }

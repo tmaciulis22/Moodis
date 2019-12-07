@@ -12,8 +12,10 @@ using Android.Views;
 using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Events;
+using Moodis.Extensions;
 using Moodis.Feature.CameraFeature;
 using System;
+using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
 {
@@ -24,8 +26,10 @@ namespace Moodis.Feature.Register
 
         Camera camera;
         private bool CameraReleased = false;
+        private bool updating = false;
         static readonly int REQUEST_CAMERA = 0;
         private readonly string TAG = nameof(RegisterFaceActivity);
+        private const string EXTRA_UPDATE = "update";
 
         event EventHandler<TakenPictureArgs> AfterTakenPictures;
 
@@ -41,6 +45,7 @@ namespace Moodis.Feature.Register
 
             PhotosLeft = FindViewById<TextView>(Resource.Id.photosLeft);
             PhotosLeft.Text = GetString(Resource.String.register_face_photos_left, RegisterViewModel.RequiredNumberOfPhotos - registerViewModel.photosTaken);
+            updating = Intent.GetBooleanExtra(EXTRA_UPDATE, false);
 
             InitEventHandler();
 
@@ -167,6 +172,7 @@ namespace Moodis.Feature.Register
         {
             AfterTakenPictures = async (sender, e) =>
             {
+                e.ImagePath.RotateImage();
                 var response = await registerViewModel.AddFaceToPerson(e.ImagePath);
                 if (response == Response.ApiError || response == Response.GeneralError)
                 {
@@ -178,8 +184,14 @@ namespace Moodis.Feature.Register
                 }
                 else if (response == Response.RegistrationDone)
                 {
-                    SetResult(Result.FirstUser);
-                    Finish();
+                    if(updating){
+                        SetResult(Result.Ok);
+                        Finish();
+                    }else{
+                        await CheckIfUserFaceAlreadyUsedAsync(e.ImagePath);
+                        SetResult(Result.FirstUser);
+                         Finish();
+                    }
                 }
                 else
                 {
@@ -188,6 +200,21 @@ namespace Moodis.Feature.Register
                 progressBar.Visibility = ViewStates.Gone;
                 snapButton.Enabled = true;
             };
+        }
+
+        private async Task CheckIfUserFaceAlreadyUsedAsync(string imagePath)
+        {
+            var response = await registerViewModel.AuthenticateFace(imagePath);
+            if (response == Response.ApiError)
+            {
+                Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
+            }
+            else if (response == Response.UserExists)
+            {
+                Toast.MakeText(this, Resource.String.user_face_exists, ToastLength.Short).Show();
+                SetResult(Result.Canceled);
+                Finish();
+            }
         }
 
         private void SetCameraPreview()

@@ -76,7 +76,6 @@
     <Compile Include="Feature\CameraFeature\CameraPreview.cs" />
     <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
-    <Compile Include="Models\Group.cs" />
     <Compile Include="Feature\History\ChartViewHolder.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />

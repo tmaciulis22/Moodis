@@ -18,7 +18,7 @@ namespace apiMoodis.Controllers
                 {
                     Id = image.Id,
                     UserId = image.UserId,
-                    DateAsString = image.DateAsString,
+                    Date = image.Date,
                     HighestEmotion = image.HighestEmotion
                 }).ToList();
                 if (imageInfos.Count != 0)
@@ -40,7 +40,7 @@ namespace apiMoodis.Controllers
                 try
                 {
                     var entity = dbContext.ImageInfos.Single(ImageInfo => ImageInfo.Id == id);
-                    var image = new ImageInfoFE() { Id = entity.Id, UserId = entity.UserId, DateAsString = entity.DateAsString, HighestEmotion = entity.HighestEmotion};
+                    var image = new ImageInfoFE() { Id = entity.Id, UserId = entity.UserId, Date = entity.Date, HighestEmotion = entity.HighestEmotion};
                     return Ok(image);
                 }
                 catch (InvalidOperationException)
@@ -55,7 +55,7 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetUserImageInfos(string userId, string date = null)
+        public IHttpActionResult GetUserImageInfos(string userId, DateTime? date = null)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
@@ -65,13 +65,13 @@ namespace apiMoodis.Controllers
                     {
                         Id = image.Id,
                         UserId = image.UserId,
-                        DateAsString = image.DateAsString,
+                        Date = image.Date,
                         HighestEmotion = image.HighestEmotion
                     }).ToList();
 
                     if (date != null)
                     {
-                        imageInfos = imageInfos.TakeWhile(image => image.DateAsString == date).ToList();
+                        imageInfos = imageInfos.TakeWhile(image => image.Date.Date == date?.Date).ToList();
                     }
 
                     return Ok(imageInfos);
@@ -125,7 +125,7 @@ namespace apiMoodis.Controllers
                 try
                 {
                     var entity = dbContext.ImageInfos.Single(e => e.Id == id);
-                    entity.DateAsString = imageInfo.DateAsString;
+                    entity.Date = imageInfo.Date;
                     entity.UserId = imageInfo.UserId;
                     entity.HighestEmotion = imageInfo.HighestEmotion;
                     dbContext.SaveChanges();

@@ -11,19 +11,16 @@ namespace Moodis.Ui
     {
         public string Id { get; set; }
         public string UserId { get; set; }
-        public string DateAsString { get; set; }
         public string HighestEmotion { get; set; }
+        public DateTime Date { get; set; }
 
-        [Ignore]
-        public DateTime ImageDate { get; set; }
         [Ignore]
         public string ImagePath { get; set; }
 
         public void SetImageInfo(DetectedFace face)
         {
             UserId = SignInViewModel.currentUser.Id;
-            ImageDate = DateTime.Now;
-            DateAsString = ImageDate.ToString();
+            Date = DateTime.Now;
             FindHighestEmotion(face.FaceAttributes.Emotion);
         }
 

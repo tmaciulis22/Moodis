@@ -1,11 +1,9 @@
 ﻿using AndroidX.Lifecycle;
 using Microcharts;
-using Moodis.Database;
 using Moodis.Network;
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Moodis.History
@@ -16,7 +14,7 @@ namespace Moodis.History
         {
             var listToReturn = new List<object>();
 
-            listToReturn.AddRange(await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime.ToString()));//TODO Possible bug here
+            listToReturn.AddRange(await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime));
 
             if (listToReturn.Count != 0)
             {

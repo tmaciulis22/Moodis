@@ -26,7 +26,7 @@ namespace Moodis.History
             var context = EmotionLabel.Context;
             var emotionName = stat.HighestEmotion;
 
-            TimeLabel.Text = stat.ImageDate.Hour.ToString() + ":" + stat.ImageDate.Minute.ToString();
+            TimeLabel.Text = stat.Date.Hour.ToString() + ":" + stat.Date.Minute.ToString();
             EmotionLabel.Text = emotionName;
             EmotionLabel.SetTextColor(new Color(ContextCompat.GetColor(context, emotionName.EmotionColor())));
         }

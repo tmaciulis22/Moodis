@@ -16,7 +16,7 @@ namespace apiMoodis.Models
     {
         public string Id { get; set; }
         public string UserId { get; set; }
-        public string DateAsString { get; set; }
+        public System.DateTime Date { get; set; }
         public string HighestEmotion { get; set; }
     
         public virtual User User { get; set; }

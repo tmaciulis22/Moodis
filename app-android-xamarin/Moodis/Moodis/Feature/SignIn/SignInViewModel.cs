@@ -6,8 +6,10 @@ using Moodis.Feature.Login;
 using Moodis.Network;
 using Moodis.Network.Face;
 using Moodis.Network.Requests;
+using Refit;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.SignIn
@@ -16,15 +18,22 @@ namespace Moodis.Feature.SignIn
     {
         public static User currentUser;
 
-        public async Task<bool> Authenticate(string username, string password)
+        public async Task<Response> Authenticate(string username, string password)
         {
-            currentUser = await API.UserEndpoint.LoginUser(new LoginRequest(username, password));
-
-            if (currentUser == null)
+            try
             {
-                return false;
+                currentUser = await API.UserEndpoint.LoginUser(new LoginRequest(username, password));
+                return Response.OK;
             }
-            return true;
+            catch (ApiException ex)
+            {
+                var statusCode = ex.StatusCode;
+                return statusCode switch
+                {
+                    HttpStatusCode.NotFound => Response.UserNotFound,
+                    _ => Response.ApiError
+                };
+            }
         }
 
         public async Task<Response> AuthenticateWithFace(string imagePath, Action<DetectedFace> callback)
@@ -56,11 +65,17 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
-            currentUser = await API.UserEndpoint.GetUser(identifiedPersons.ToArray()[0].Name);
-
-            if (currentUser == null)
+            try
             {
-                return Response.UserNotFound;
+                currentUser = await API.UserEndpoint.GetUser(identifiedPersons.ToArray()[0].Name);
+            }
+            catch (ApiException ex)
+            {
+                var statusCode = ex.StatusCode;
+                return statusCode switch {
+                    HttpStatusCode.NotFound => Response.UserNotFound,
+                    _ => Response.ApiError
+                };
             }
 
             face = detectedFaces.ToArray()[0];

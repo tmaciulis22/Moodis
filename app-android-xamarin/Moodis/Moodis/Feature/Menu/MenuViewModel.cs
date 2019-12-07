@@ -8,6 +8,9 @@ using System.IO;
 using System.Linq;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Network;
+using Refit;
+using System.Net;
+using Android.Util;
 
 namespace Moodis.Ui
 {
@@ -61,7 +64,14 @@ namespace Moodis.Ui
 
         public async void AddImage()
         {
-            await API.ImageInfoEndpoint.AddImageInfo(currentImage);
+            try
+            {
+                await API.ImageInfoEndpoint.AddImageInfo(currentImage);
+            }
+            catch (ApiException ex)
+            {
+                Log.Error(GetType().Name, ex.Message);
+            }
         }
 
         public int GetHighestEmotionIndex()

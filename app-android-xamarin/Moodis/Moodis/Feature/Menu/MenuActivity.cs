@@ -10,12 +10,10 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Moodis.Feature.CameraFeature;
-using Moodis.Feature.Group;
 using Moodis.Feature.Music;
 using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Ui;
-using System.Collections.Generic;
 
 namespace Moodis.Feature.Menu
 {

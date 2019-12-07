@@ -2,6 +2,7 @@
 using Microcharts;
 using Moodis.Network;
 using Moodis.Ui;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,8 +14,17 @@ namespace Moodis.History
         public async Task<IList<object>> FetchItemList(string userId, DateTime? dateTime = null)
         {
             var listToReturn = new List<object>();
+            IEnumerable<ImageInfo> imageInfos;
+            try
+            {
+                imageInfos = await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime);
+            }
+            catch
+            {
+                return null;
+            }
 
-            listToReturn.AddRange(await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime));
+            listToReturn.AddRange(imageInfos);
 
             if (listToReturn.Count != 0)
             {

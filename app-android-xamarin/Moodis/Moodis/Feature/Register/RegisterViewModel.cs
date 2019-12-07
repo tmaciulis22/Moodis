@@ -4,7 +4,9 @@ using Moodis.Feature.Login;
 using Moodis.Feature.SignIn;
 using Moodis.Network;
 using Moodis.Network.Face;
+using Refit;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
@@ -17,33 +19,49 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> AddUser(string username, string password)
         {
-            SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(new User(username, password));
-
-            if (SignInViewModel.currentUser == null)
+            try
             {
-                return Response.UserExists;
+                SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(new User(username, password));
             }
-            else
+            catch (ApiException ex)
             {
-                var newFaceApiPerson = await Face.Instance.CreateNewPerson(SignInViewModel.currentUser.PersonGroupId, username);
+                return ex.StatusCode switch {
+                    HttpStatusCode.BadRequest => Response.UserExists,
+                    _ => Response.ApiError
+                };
+            }
+                
+            var newFaceApiPerson = await Face.Instance.CreateNewPerson(SignInViewModel.currentUser.PersonGroupId, username);
 
-                if (newFaceApiPerson != null)
+            if (newFaceApiPerson != null)
+            {
+                SignInViewModel.currentUser.PersonId = Convert.ToString(newFaceApiPerson.PersonId);
+                try
                 {
-                    SignInViewModel.currentUser.PersonId = Convert.ToString(newFaceApiPerson.PersonId);
                     await API.UserEndpoint.UpdateUser(SignInViewModel.currentUser);
                 }
-                else
+                catch 
                 {
                     return Response.ApiError;
                 }
-
-                return Response.OK;
             }
+            else
+            {
+                return Response.ApiError;
+            }
+            return Response.OK;
         }
 
         public async Task<Response> DeleteUser()
         {
-            await API.UserEndpoint.DeleteUser(SignInViewModel.currentUser.Id);
+            try
+            {
+                await API.UserEndpoint.DeleteUser(SignInViewModel.currentUser.Id);
+            }
+            catch
+            {
+                return Response.ApiError;
+            }
             return await Face.Instance.DeletePerson(SignInViewModel.currentUser.PersonGroupId);
         }
 

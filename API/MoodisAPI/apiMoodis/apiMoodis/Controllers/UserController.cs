@@ -70,7 +70,7 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetByUsernameUser(string username)
+        public IHttpActionResult GetUserByUsername(string username)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {

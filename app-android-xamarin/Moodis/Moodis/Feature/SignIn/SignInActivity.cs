@@ -156,16 +156,22 @@ namespace Moodis.Feature.SignIn
             progressBar.Visibility = ViewStates.Visible;
             progressBar.BringToFront();
 
-            var signInSuccessful = await SignInViewModel.Authenticate(username, password);
+            var response = await SignInViewModel.Authenticate(username, password);
 
-            if (signInSuccessful)
+            if (response == Response.OK)
             {
+                progressBar.Visibility = ViewStates.Gone;
                 DisplayFaceUpdateWindow();
             }
-            else
+            else if (response == Response.UserNotFound)
             {
                 progressBar.Visibility = ViewStates.Gone;
                 Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+            }
+            else if (response == Response.ApiError)
+            {
+                progressBar.Visibility = ViewStates.Gone;
+                Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
             }
         }
 

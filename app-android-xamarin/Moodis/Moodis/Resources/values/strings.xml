@@ -57,6 +57,7 @@
   <string name="camera_error">Something wrong happened while taking picture :/</string>
   
   <string name="history_today">Today</string>
+  <string name="history_no_data">No emotion data found for this day</string>
 
   <string name="lorem_ipsum">Lorem ipsum</string>
 
@@ -77,7 +78,7 @@
   <string name="delete_everything_message">Are you sure that you want to delete all users\' data in database and face API?</string>
   <string name="delete_everything_successful">All data cleared successfully</string>
   <string name="delete_everything_failed">Data could not be cleared</string>
-
+  
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

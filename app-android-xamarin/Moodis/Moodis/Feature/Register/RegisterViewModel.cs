@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
-using Moodis.Database;
 using Moodis.Feature.Login;
 using Moodis.Feature.SignIn;
 using Moodis.Network;

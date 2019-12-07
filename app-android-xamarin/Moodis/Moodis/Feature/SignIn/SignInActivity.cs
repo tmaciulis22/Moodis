@@ -45,11 +45,7 @@ namespace Moodis.Feature.SignIn
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
-            {
-                Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
-            }
-            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
             {
                 SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
                 Finish();

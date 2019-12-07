@@ -7,6 +7,7 @@ using System.Text;
 
 namespace apiMoodis.Controllers
 {
+    [Route("api/imageinfo")]
     public class ImageInfoController : ApiController
     {
         [HttpGet]
@@ -82,6 +83,13 @@ namespace apiMoodis.Controllers
                 }
             }
         }
+
+        //[HttpGet]
+        //[Route("api/imageinfo/dailychart")]
+        //public IHttpActionResult GetDailyChartData(string userId)
+        //{
+
+        //}
 
         [HttpPost]
         public IHttpActionResult PostImageInfo([FromBody] ImageInfo imageInfo)

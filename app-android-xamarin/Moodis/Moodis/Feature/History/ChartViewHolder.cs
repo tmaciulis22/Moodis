@@ -19,7 +19,6 @@ namespace Moodis.Feature.History
             ChartView = view.FindViewById<ChartView>(Resource.Id.chartView);
         }
 
-        //TODO optimize this when connected to BE
         public void OnBind(List<ImageInfo> stats, Chart chart)
         {
             if (stats.Count == 0) return;

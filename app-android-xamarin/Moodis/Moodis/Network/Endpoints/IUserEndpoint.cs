@@ -10,13 +10,13 @@ namespace Moodis.Network.Endpoints
         [Get("/user/login")]
         public Task<User> LoginUser([Body] LoginRequest request);
 
-        [Get("/user/{username}")]
-        public Task<User> GetUser(string username);
+        [Get("/user?personId={personId}")]
+        public Task<User> GetUser(string personId);
 
         [Post("/user/register")]
         public Task<User> RegisterUser([Body] User user);
 
-        [Delete("/user/{id}")]
+        [Delete("/user?id={id}")]
         public Task DeleteUser(string id);
 
         [Put("/user")]

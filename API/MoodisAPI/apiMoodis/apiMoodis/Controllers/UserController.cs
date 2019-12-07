@@ -70,13 +70,13 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetUserByUsername(string username)
+        public IHttpActionResult GetUserByPersonId(string personId)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 try
                 {
-                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(u => u.Username == username);
+                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(u => u.PersonId == personId);
                     var user = new UserFE()
                     {
                         Id = entity.Id,

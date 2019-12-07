@@ -11,7 +11,7 @@ namespace Moodis.Network.Endpoints
         [Post("/imageinfo")]
         public Task AddImageInfo([Body] ImageInfo imageInfo);
 
-        [Get("/imageinfo/{userId}")]
+        [Get("/imageinfo?userId={userId}")]
         public Task<IEnumerable<ImageInfo>> GetImageInfos(string userId, [Body] DateTime? date = null);
     }
 }

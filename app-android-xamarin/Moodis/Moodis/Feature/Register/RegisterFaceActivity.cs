@@ -192,6 +192,7 @@ namespace Moodis.Feature.Register
                     else
                     {
                         await CheckIfUserFaceAlreadyUsedAsync(e.ImagePath);
+                        Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
                         SetResult(Result.FirstUser);
                         Finish();
                     }

@@ -67,12 +67,11 @@ namespace Moodis.Feature.SignIn
 
             try
             {
-                currentUser = await API.UserEndpoint.GetUser(identifiedPersons.ToArray()[0].Name);
+                currentUser = await API.UserEndpoint.GetUser(identifiedPersons.ToArray()[0].PersonId.ToString());
             }
             catch (ApiException ex)
             {
-                var statusCode = ex.StatusCode;
-                return statusCode switch {
+                return ex.StatusCode switch {
                     HttpStatusCode.NotFound => Response.UserNotFound,
                     _ => Response.ApiError
                 };

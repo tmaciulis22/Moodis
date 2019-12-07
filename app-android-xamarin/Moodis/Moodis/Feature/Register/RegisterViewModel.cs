@@ -40,7 +40,7 @@ namespace Moodis.Feature.Register
                 {
                     await API.UserEndpoint.UpdateUser(SignInViewModel.currentUser);
                 }
-                catch 
+                catch
                 {
                     return Response.ApiError;
                 }

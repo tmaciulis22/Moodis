@@ -4,15 +4,14 @@ using System;
 
 namespace Moodis.Feature.Login
 {
-    [Serializable]
     public class User
     {
-        [PrimaryKey]
         public string Id { get; set; }
+        public string GroupId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public bool IsDoctor { get; set; }
         public string PersonGroupId { get; set; }
-        public string GroupName { get; set; }
         public string PersonId { get; set; }
 
         [Ignore]
@@ -20,9 +19,9 @@ namespace Moodis.Feature.Login
 
         public User()
         {
-            Id = Guid.NewGuid().ToString();
-            GroupName = "";
+            IsDoctor = false;
         }
+
         public User(string username, string password) : this()
         {
             Username = username;

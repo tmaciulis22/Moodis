@@ -1,9 +1,6 @@
 ﻿using apiMoodis.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
 using apiMoodis.Encryption;
@@ -38,8 +35,19 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.Include(item => item.ImageInfos).Single(user => user.Id == id);
-                return Ok(entity);
+                try
+                {
+                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(user => user.Id == id);
+                    return Ok(entity);
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
 
@@ -55,9 +63,13 @@ namespace apiMoodis.Controllers
                         .Single(user => user.Username == request.Username && user.Password == encryptedPass);
                     return Ok(entity);
                 }
-                catch
+                catch (InvalidOperationException)
                 {
                     return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
                 }
             }
         }
@@ -91,25 +103,36 @@ namespace apiMoodis.Controllers
                 }
                 return BadRequest(stringBuilder.ToString());
             }
-            catch(Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.ToString());
+                return InternalServerError(e);
             }
         }
 
         [HttpPut]
-        public IHttpActionResult PutUser(string id, [FromBody]User user)
+        public IHttpActionResult PutUser(string id, [FromBody] User user)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.Single(e => e.Id == id);
-                entity.Username = user.Username;
-                entity.Password = Crypto.CalculateMD5Hash(user.Password);
-                entity.GroupName = user.GroupName;
-                entity.PersonGroupId = user.PersonGroupId;
-                dbContext.SaveChanges();
-                return Ok();
-
+                try
+                {
+                    var entity = dbContext.Users.Single(e => e.Id == id);
+                    entity.Username = user.Username;
+                    entity.Password = Crypto.CalculateMD5Hash(user.Password);
+                    entity.GroupId = user.GroupId;
+                    entity.PersonId = user.PersonId;
+                    entity.PersonGroupId = user.PersonGroupId;
+                    dbContext.SaveChanges();
+                    return Ok();
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
 
@@ -118,10 +141,21 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Users.Single(e => e.Id == id);
-                dbContext.Users.Remove(entity);
-                dbContext.SaveChanges();
-                return Ok();
+                try
+                {
+                    var entity = dbContext.Users.Single(e => e.Id == id);
+                    dbContext.Users.Remove(entity);
+                    dbContext.SaveChanges();
+                    return Ok();
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
     }

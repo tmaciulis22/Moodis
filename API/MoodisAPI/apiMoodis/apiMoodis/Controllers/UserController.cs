@@ -178,13 +178,13 @@ namespace apiMoodis.Controllers
         }
 
         [HttpPut]
-        public IHttpActionResult PutUser(string id, [FromBody] User user)
+        public IHttpActionResult PutUser([FromBody] User user)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 try
                 {
-                    var entity = dbContext.Users.Single(e => e.Id == id);
+                    var entity = dbContext.Users.Single(e => e.Id == user.Id);
                     entity.Username = user.Username;
                     entity.Password = Crypto.CalculateMD5Hash(user.Password);
                     entity.GroupId = user.GroupId;

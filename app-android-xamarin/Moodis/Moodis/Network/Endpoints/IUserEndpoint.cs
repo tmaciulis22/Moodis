@@ -13,7 +13,7 @@ namespace Moodis.Network.Endpoints
         [Get("/user/{username}")]
         public Task<User> GetUser(string username);
 
-        [Post("/user")]
+        [Post("/user/register")]
         public Task<User> RegisterUser([Body] User user);
 
         [Delete("/user/{id}")]

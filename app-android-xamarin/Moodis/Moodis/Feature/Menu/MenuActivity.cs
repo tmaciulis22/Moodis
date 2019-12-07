@@ -113,7 +113,7 @@ namespace Moodis.Feature.Menu
                 .SetPositiveButton(Resource.String.yes, (senderAlert, args) =>
                 {
                     MenuViewModel.currentImage = new ImageInfo();
-                    StartActivity(new Intent(this, typeof(MainActivity)));
+                    StartActivity(new Intent(this, typeof(SignInActivity)));
                     FinishAffinity();
                 });
             builder.Create().Show();

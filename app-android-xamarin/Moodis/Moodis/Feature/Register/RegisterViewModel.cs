@@ -21,7 +21,8 @@ namespace Moodis.Feature.Register
         {
             try
             {
-                SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(new User(username, password));
+                var user = new User(username, password);
+                SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(user);
             }
             catch (ApiException ex)
             {

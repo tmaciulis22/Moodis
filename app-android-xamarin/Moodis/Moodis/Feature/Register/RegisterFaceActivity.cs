@@ -43,6 +43,8 @@ namespace Moodis.Feature.Register
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_register_face);
 
+            this.SetSupportActionBar();
+
             PhotosLeft = FindViewById<TextView>(Resource.Id.photosLeft);
             PhotosLeft.Text = GetString(Resource.String.register_face_photos_left, RegisterViewModel.RequiredNumberOfPhotos - registerViewModel.photosTaken);
             updating = Intent.GetBooleanExtra(EXTRA_UPDATE, false);
@@ -65,6 +67,12 @@ namespace Moodis.Feature.Register
             base.OnBackPressed();
             SetResult(Result.Canceled);
             Finish();
+        }
+
+        public override bool OnSupportNavigateUp()
+        {
+            OnBackPressed();
+            return true;
         }
 
         private void RequestCameraPermission()

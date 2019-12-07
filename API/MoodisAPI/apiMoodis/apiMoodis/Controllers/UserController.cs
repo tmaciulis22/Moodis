@@ -108,20 +108,27 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var encryptedPass = Crypto.CalculateMD5Hash(request.Password);
                     var entity = dbContext.Users.Include(item => item.ImageInfos)
-                        .Single(u => u.Username == request.Username && u.Password == encryptedPass);
-                    var user = new UserFE()
+                        .Single(u => u.Username == request.Username);
+                    if (Crypto.ComparePasswords(entity.Password, request.Password))
                     {
-                        Id = entity.Id,
-                        GroupId = entity.GroupId,
-                        Username = entity.Username,
-                        Password = entity.Password,
-                        IsDoctor = entity.IsDoctor,
-                        PersonGroupId = entity.PersonGroupId,
-                        PersonId = entity.PersonId
-                    };
-                    return Ok(user);
+                        var user = new UserFE()
+                        {
+                            Id = entity.Id,
+                            GroupId = entity.GroupId,
+                            Username = entity.Username,
+                            Password = entity.Password,
+                            IsDoctor = entity.IsDoctor,
+                            PersonGroupId = entity.PersonGroupId,
+                            PersonId = entity.PersonId
+                        };
+                        return Ok(user);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                    
                 }
                 catch (InvalidOperationException)
                 {
@@ -150,7 +157,7 @@ namespace apiMoodis.Controllers
 
                     user.Id = Guid.NewGuid().ToString();
                     user.PersonGroupId = Guid.NewGuid().ToString();
-                    user.Password = Crypto.CalculateMD5Hash(user.Password);
+                    user.Password = Crypto.EncryptPassword(user.Password);
                     dbContext.Users.Add(user);
                     dbContext.SaveChanges();
                     return Ok(user);
@@ -186,7 +193,7 @@ namespace apiMoodis.Controllers
                 {
                     var entity = dbContext.Users.Single(e => e.Id == user.Id);
                     entity.Username = user.Username;
-                    entity.Password = Crypto.CalculateMD5Hash(user.Password);
+                    entity.Password = Crypto.EncryptPassword(user.Password);
                     entity.GroupId = user.GroupId;
                     entity.PersonId = user.PersonId;
                     entity.PersonGroupId = user.PersonGroupId;

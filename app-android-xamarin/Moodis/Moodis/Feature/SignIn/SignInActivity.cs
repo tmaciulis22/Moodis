@@ -159,10 +159,10 @@ namespace Moodis.Feature.SignIn
                 progressBar.Visibility = ViewStates.Gone;
                 DisplayFaceUpdateWindow();
             }
-            else if (response == Response.UserNotFound)
+            else if (response == Response.BadCredentials)
             {
                 progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+                Toast.MakeText(this, Resource.String.login_fail, ToastLength.Short).Show();
             }
             else if (response == Response.ApiError)
             {

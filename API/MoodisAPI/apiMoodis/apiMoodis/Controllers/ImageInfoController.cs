@@ -84,13 +84,6 @@ namespace apiMoodis.Controllers
             }
         }
 
-        //[HttpGet]
-        //[Route("api/imageinfo/dailychart")]
-        //public IHttpActionResult GetDailyChartData(string userId)
-        //{
-
-        //}
-
         [HttpPost]
         public IHttpActionResult PostImageInfo([FromBody] ImageInfo imageInfo)
         {

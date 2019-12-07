@@ -11,5 +11,6 @@
         RegistrationDone,
         //SignIn Errors
         UserNotFound,
+        BadCredentials
     }
 }

@@ -55,6 +55,12 @@ namespace Moodis.Feature.Register
             }
         }
 
+        public override bool OnSupportNavigateUp()
+        {
+            OnBackPressed();
+            return true;
+        }
+
         private void InitButtonsAndInputs()
         {
             var usernameInput = FindViewById<EditText>(Resource.Id.usernameInput);
@@ -141,7 +147,7 @@ namespace Moodis.Feature.Register
             progressBar.BringToFront();
             registerButton.Enabled = false;
 
-            var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
+            var regex = new Regex(@"^(?=.*\d)(?=.*[A-Z])(.+)$");
             if (regex.IsMatch(password))
             {
                 var response = await RegisterViewModel.AddUser(username, password);

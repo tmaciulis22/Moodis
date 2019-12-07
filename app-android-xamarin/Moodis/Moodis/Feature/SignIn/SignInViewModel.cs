@@ -30,7 +30,8 @@ namespace Moodis.Feature.SignIn
                 var statusCode = ex.StatusCode;
                 return statusCode switch
                 {
-                    HttpStatusCode.NotFound => Response.UserNotFound,
+                    HttpStatusCode.NotFound => Response.BadCredentials,
+                    HttpStatusCode.BadRequest => Response.BadCredentials,
                     _ => Response.ApiError
                 };
             }

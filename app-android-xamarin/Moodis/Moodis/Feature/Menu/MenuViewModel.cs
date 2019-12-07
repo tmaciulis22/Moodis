@@ -9,7 +9,6 @@ using System.Linq;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Network;
 using Refit;
-using System.Net;
 using Android.Util;
 
 namespace Moodis.Ui

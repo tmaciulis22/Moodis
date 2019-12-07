@@ -69,7 +69,7 @@ namespace Moodis.Feature.Menu
 
             if (MenuViewModel.currentImage.HighestEmotion != null)
             {
-                emotionLabel.Text = MenuViewModel.currentImage.HighestEmotion;//TODO change to more meaningful text here
+                emotionLabel.Text = GetString(Resource.String.menu_emotion_text, MenuViewModel.currentImage.HighestEmotion);
                 MenuViewModel.AddImage();
             }
             else

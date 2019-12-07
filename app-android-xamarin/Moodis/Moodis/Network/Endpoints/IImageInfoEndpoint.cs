@@ -1,5 +1,4 @@
-﻿
-using Moodis.Ui;
+﻿using Moodis.Ui;
 using Refit;
 using System;
 using System.Collections.Generic;

@@ -6,7 +6,6 @@ using Android.Views;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.SignIn;
-using Moodis.Ui;
 using Moodis.Widget;
 using System;
 using System.Collections.Generic;

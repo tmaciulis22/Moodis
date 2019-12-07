@@ -74,10 +74,13 @@
   <string name="hint_group_name">Group name</string>
   <string name="group_entry_empty">Please enter group name </string>
   <string name="no_groups">No groups. Join One!</string> 
+  
   <string name="delete_everything_title">Delete everything</string>
   <string name="delete_everything_message">Are you sure that you want to delete all users\' data in database and face API?</string>
   <string name="delete_everything_successful">All data cleared successfully</string>
   <string name="delete_everything_failed">Data could not be cleared</string>
+
+  <string name="menu_emotion_text">Your detected emotion is %1$s</string>
   
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>

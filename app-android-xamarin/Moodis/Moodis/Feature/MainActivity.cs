@@ -25,10 +25,9 @@ namespace Moodis
             AppCenter.Start("4493172f-d0e0-49d4-bb48-bc5a529ac6ee", typeof(Analytics), typeof(Crashes));
             base.OnCreate(savedInstanceState);
 
-            API.UserEndpoint = RestService.For<IUserEndpoint>(Secrets.WebServiceAPI);
-            API.ImageInfoEndpoint = RestService.For<IImageInfoEndpoint>(Secrets.WebServiceAPI);
-
+            InitWebServices();
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
             SetContentView(Resource.Layout.activity_main);
 
             StartActivityForResult(new Intent(this, typeof(SignInActivity)), REQUEST_CODE_LOGIN);
@@ -54,6 +53,12 @@ namespace Moodis
             {
                 Finish();
             }
+        }
+
+        private void InitWebServices()
+        {
+            API.UserEndpoint = RestService.For<IUserEndpoint>(Secrets.WebServiceAPI);
+            API.ImageInfoEndpoint = RestService.For<IImageInfoEndpoint>(Secrets.WebServiceAPI);
         }
     }
 }

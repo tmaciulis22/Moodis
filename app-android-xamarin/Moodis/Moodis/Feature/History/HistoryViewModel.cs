@@ -2,7 +2,6 @@
 using Microcharts;
 using Moodis.Network;
 using Moodis.Ui;
-using Refit;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

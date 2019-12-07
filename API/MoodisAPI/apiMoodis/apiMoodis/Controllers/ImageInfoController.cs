@@ -55,7 +55,7 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetUserImageInfos(string userId, DateTime? date = null)
+        public IHttpActionResult GetUserImageInfos(string userId, [FromBody] DateTime? date = null)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {

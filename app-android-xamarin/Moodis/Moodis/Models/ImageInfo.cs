@@ -9,7 +9,7 @@ namespace Moodis.Ui
 {
     public class ImageInfo
     {
-        public struct Emotion : IComparable
+        public struct Emotion : IComparable //TODO refactor this out
         {
             public string Id { get; set; }
             public string ImageId { get; set; }
@@ -28,9 +28,11 @@ namespace Moodis.Ui
         public string Id { get; set; }
         public string UserId { get; set; }
         [Ignore]
-        public DateTime ImageDate { get; set; }
+        public DateTime ImageDate { get; set; }//TODO refactor this out
         public string DateAsString { get; set; }
-        public List<Emotion> emotions;
+        public string HighestEmotion { get; set; }
+
+        public List<Emotion> emotions;//TODO refactor this out
         [Ignore]
         public string ImagePath { get; set; }
 
@@ -56,6 +58,7 @@ namespace Moodis.Ui
                     ImageId = Id
                 });
             });
+            HighestEmotion = emotions.Max().Name;
         }
     }
 }

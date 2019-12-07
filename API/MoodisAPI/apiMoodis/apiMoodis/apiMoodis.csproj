@@ -205,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\EmotionController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\ImageInfoController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -228,10 +227,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Emotion.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EmotionFE.cs" />
     <Compile Include="Models\Group.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

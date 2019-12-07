@@ -1,8 +1,4 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
-using SQLite;
-using System;
-
-namespace Moodis.Feature.Login
+﻿namespace Moodis.Feature.Login
 {
     public class User
     {

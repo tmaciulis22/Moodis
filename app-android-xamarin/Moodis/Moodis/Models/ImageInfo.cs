@@ -19,7 +19,7 @@ namespace Moodis.Ui
         public void SetImageInfo(DetectedFace face)
         {
             UserId = SignInViewModel.currentUser.Id;
-            Date = DateTime.Now;
+            Date = DateTime.UtcNow;
             FindHighestEmotion(face.FaceAttributes.Emotion);
         }
 

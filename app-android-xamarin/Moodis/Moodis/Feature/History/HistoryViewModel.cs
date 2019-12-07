@@ -19,7 +19,7 @@ namespace Moodis.History
             {
                 imageInfos = await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime);
             }
-            catch (ApiException ex)
+            catch
             {
                 return null;
             }

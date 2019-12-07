@@ -73,8 +73,11 @@ namespace apiMoodis.Controllers
 
                     if (date != null)
                     {
-                        imageInfos = imageInfos.TakeWhile(image => image.Date.Date == date?.Date).ToList();
+                        imageInfos = imageInfos.TakeWhile(image => image.Date.Year == date?.Year 
+                            && image.Date.Month == date?.Month && image.Date.Day == date?.Day).ToList();
                     }
+
+                    imageInfos.Sort();
 
                     return Ok(imageInfos);
                 }

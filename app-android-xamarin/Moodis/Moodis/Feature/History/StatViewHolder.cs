@@ -15,6 +15,8 @@ namespace Moodis.History
         public TextView TimeLabel { get; set; }
         public TextView EmotionLabel { get; set; }
 
+        private const string TIME_FORMAT = "HH:mm";
+
         public StatViewHolder(View view) : base(view)
         {
             TimeLabel = view.FindViewById<TextView>(Resource.Id.timeLabel);
@@ -26,7 +28,7 @@ namespace Moodis.History
             var context = EmotionLabel.Context;
             var emotionName = stat.HighestEmotion;
 
-            TimeLabel.Text = stat.Date.Hour.ToString() + ":" + stat.Date.Minute.ToString();
+            TimeLabel.Text = stat.Date.ToLocalTime().ToString(TIME_FORMAT);
             EmotionLabel.Text = emotionName;
             EmotionLabel.SetTextColor(new Color(ContextCompat.GetColor(context, emotionName.EmotionColor())));
         }

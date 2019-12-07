@@ -10,6 +10,7 @@ using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Network;
 using Refit;
 using Android.Util;
+using Moodis.Extensions;
 
 namespace Moodis.Ui
 {
@@ -36,6 +37,7 @@ namespace Moodis.Ui
         {
             try
             {
+                currentImage.ImagePath.RotateImage();
                 var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.Username);
                 if (face != null)
                 {

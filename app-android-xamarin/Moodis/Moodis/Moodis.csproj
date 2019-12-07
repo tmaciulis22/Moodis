@@ -98,6 +98,7 @@
     <Compile Include="Network\Endpoints\IUserEndpoint.cs" />
     <Compile Include="Network\Face\Face.cs" />
     <Compile Include="Network\Requests\LoginRequest.cs" />
+    <Compile Include="Network\Requests\RegisterRequest.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Widget\DatePickerFragment.cs" />

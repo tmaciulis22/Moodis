@@ -60,6 +60,7 @@ namespace Moodis.Feature.CameraFeature
                 {
                     ImagePath = e.ImagePath
                 };
+
                 var response = await MenuViewModel.Instance.GetFaceEmotionsAsync();
                 if (response == Response.ApiError)
                 {

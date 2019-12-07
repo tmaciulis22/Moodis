@@ -143,21 +143,31 @@ namespace apiMoodis.Controllers
 
         [HttpPost]
         [Route("api/user/register")]
-        public IHttpActionResult PostUser([FromBody] User user)
+        public IHttpActionResult PostUser([FromBody] RegisterRequest request)
         {
             try
             {
                 using (DatabaseContext dbContext = new DatabaseContext())
                 {
-                    var isAlreadyRegistered = dbContext.Users.Any(u => u.Username == user.Username);
+                    var isAlreadyRegistered = dbContext.Users.Any(u => u.Username == request.Username);
                     if (isAlreadyRegistered)
                     {
                         return BadRequest("User already exists");
                     }
 
-                    user.Id = Guid.NewGuid().ToString();
-                    user.PersonGroupId = Guid.NewGuid().ToString();
-                    user.Password = Crypto.EncryptPassword(user.Password);
+                    var user = new User()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Username = request.Username,
+                        Password = Crypto.EncryptPassword(request.Password),
+                        IsDoctor = request.IsDoctor
+                    };
+
+                    if (!request.IsDoctor)
+                    {
+                        user.PersonGroupId = Guid.NewGuid().ToString();
+                    }
+
                     dbContext.Users.Add(user);
                     dbContext.SaveChanges();
                     return Ok(user);

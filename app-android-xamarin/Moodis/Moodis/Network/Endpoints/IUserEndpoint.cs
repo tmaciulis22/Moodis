@@ -14,7 +14,7 @@ namespace Moodis.Network.Endpoints
         public Task<User> GetUser(string personId);
 
         [Post("/user/register")]
-        public Task<User> RegisterUser([Body] User user);
+        public Task<User> RegisterUser([Body] RegisterRequest request);
 
         [Delete("/user?id={id}")]
         public Task DeleteUser(string id);

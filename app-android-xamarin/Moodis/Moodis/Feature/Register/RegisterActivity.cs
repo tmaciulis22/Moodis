@@ -63,8 +63,8 @@ namespace Moodis.Feature.Register
 
         private void InitButtonsAndInputs()
         {
-            var usernameInput = FindViewById<EditText>(Resource.Id.usernameInput);
-            var passwordInput = FindViewById<EditText>(Resource.Id.passwordInput);
+            var usernameInput = FindViewById<EditText>(Resource.Id.usernameInputRegister);
+            var passwordInput = FindViewById<EditText>(Resource.Id.passwordInputRegister);
             progressBar = FindViewById(Resource.Id.progressBarRegister);
             registerButton = FindViewById<Button>(Resource.Id.registerButton);
 

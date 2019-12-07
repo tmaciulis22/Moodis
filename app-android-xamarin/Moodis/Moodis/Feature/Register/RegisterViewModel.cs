@@ -4,6 +4,7 @@ using Moodis.Feature.Login;
 using Moodis.Feature.SignIn;
 using Moodis.Network;
 using Moodis.Network.Face;
+using Moodis.Network.Requests;
 using Refit;
 using System;
 using System.Net;
@@ -21,8 +22,7 @@ namespace Moodis.Feature.Register
         {
             try
             {
-                var user = new User(username, password);
-                SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(user);
+                SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(new RegisterRequest(username, password));
             }
             catch (ApiException ex)
             {

@@ -1,7 +1,6 @@
 ﻿using Android.Arch.Lifecycle;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
-using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network;
@@ -15,7 +14,6 @@ namespace Moodis.Feature.SignIn
 {
     public class SignInViewModel : ViewModel
     {
-        public static List<User> userList = DatabaseModel.FetchUsers();
         public static User currentUser;
 
         public async Task<bool> Authenticate(string username, string password)
@@ -58,28 +56,16 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
-
-            currentUser = userList.Find(user => user.Username == identifiedPersons.ToArray()[0].Name);
-            face = detectedFaces.ToArray()[0];
+            currentUser = await API.UserEndpoint.GetUser(identifiedPersons.ToArray()[0].Name);
 
             if (currentUser == null)
             {
                 return Response.UserNotFound;
             }
+
+            face = detectedFaces.ToArray()[0];
             callback(face);
             return Response.OK;
-        }
-
-        //NOTE this method is used only for development and testing purposes, to clear everything in DB and in Face API
-        public async Task<Response> DeleteEverything()
-        {
-            DatabaseModel.DeleteEverything();
-            return await Face.Instance.DeleteEverything();
-        }
-
-        private void FetchUserList()
-        {
-            userList = Database.DatabaseModel.FetchUsers();
         }
     }
 }

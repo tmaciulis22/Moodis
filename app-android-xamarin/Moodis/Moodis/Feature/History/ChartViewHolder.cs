@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Microcharts;
@@ -29,9 +28,9 @@ namespace Moodis.Feature.History
             var maxEmotions = new List<KeyValuePair<string, int>>(); //Pair of emotion name and how many times it was highest
 
             stats.ForEach(stat => {
-                var highestEmotion = stat.emotions.Max();
+                var highestEmotion = stat.HighestEmotion;
 
-                var oldPairIndex = maxEmotions.FindIndex(pair => pair.Key == highestEmotion.Name);
+                var oldPairIndex = maxEmotions.FindIndex(pair => pair.Key == highestEmotion);
                 if (oldPairIndex != -1)
                 {
                     var oldPair = maxEmotions[oldPairIndex];
@@ -41,7 +40,7 @@ namespace Moodis.Feature.History
                 }
                 else
                 {
-                    maxEmotions.Add(new KeyValuePair<string, int>(highestEmotion.Name, 1));
+                    maxEmotions.Add(new KeyValuePair<string, int>(highestEmotion, 1));
                 }
             });
 

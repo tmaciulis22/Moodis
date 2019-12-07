@@ -70,6 +70,37 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
+        public IHttpActionResult GetByUsernameUser(string username)
+        {
+            using (DatabaseContext dbContext = new DatabaseContext())
+            {
+                try
+                {
+                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(u => u.Username == username);
+                    var user = new UserFE()
+                    {
+                        Id = entity.Id,
+                        GroupId = entity.GroupId,
+                        Username = entity.Username,
+                        Password = entity.Password,
+                        IsDoctor = entity.IsDoctor,
+                        PersonGroupId = entity.PersonGroupId,
+                        PersonId = entity.PersonId
+                    };
+                    return Ok(user);
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
+            }
+        }
+
+        [HttpGet]
         [Route("api/user/login")]
         public IHttpActionResult LoginUser([FromBody] LoginRequest request)
         {
@@ -118,10 +149,11 @@ namespace apiMoodis.Controllers
                     }
 
                     user.Id = Guid.NewGuid().ToString();
+                    user.PersonGroupId = Guid.NewGuid().ToString();
                     user.Password = Crypto.CalculateMD5Hash(user.Password);
                     dbContext.Users.Add(user);
                     dbContext.SaveChanges();
-                    return Ok();
+                    return Ok(user);
                 }
             }
             catch (DbEntityValidationException ex)

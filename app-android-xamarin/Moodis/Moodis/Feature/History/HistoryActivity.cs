@@ -4,7 +4,7 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Widget;
 using Moodis.Extensions;
-using Moodis.Feature.Group;
+using Moodis.Feature.SignIn;
 using Moodis.Widget;
 using System;
 
@@ -36,23 +36,23 @@ namespace Moodis.History
             var dateInput = FindViewById<EditText>(Resource.Id.datePicker);
             dateInput.Click += (sender, e) =>
             {
-                DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+                DatePickerFragment frag = DatePickerFragment.NewInstance(async delegate (DateTime time)
                 {
                     dateInput.Text = time.ToLongDateString();
-                    (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(GroupActivityModel.GetRelatedIds(), time));
+                    (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(await historyViewModel.FetchItemList(SignInViewModel.currentUser.Id, time));
                 });
                 frag.Show(SupportFragmentManager, DatePickerFragment.TAG);
             };
         }
 
-        private void InitAdapter()
+        private async void InitAdapter()
         {
             recyclerView = FindViewById<RecyclerView>(Resource.Id.statsList);
 
             var layoutManager = new LinearLayoutManager(this);
             recyclerView.SetLayoutManager(layoutManager);
 
-            var adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(GroupActivityModel.GetRelatedIds(), DateTime.Now));
+            var adapter = new HistoryStatsAdapter(await historyViewModel.FetchItemList(SignInViewModel.currentUser.Id, DateTime.Now));
             recyclerView.SetAdapter(adapter);
         }
     }

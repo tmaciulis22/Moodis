@@ -26,6 +26,7 @@ namespace Moodis
             base.OnCreate(savedInstanceState);
 
             API.UserEndpoint = RestService.For<IUserEndpoint>(Secrets.WebServiceAPI);
+            API.ImageInfoEndpoint = RestService.For<IImageInfoEndpoint>(Secrets.WebServiceAPI);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);

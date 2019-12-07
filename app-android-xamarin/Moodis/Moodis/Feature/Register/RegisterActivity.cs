@@ -17,7 +17,7 @@ namespace Moodis.Feature.Register
     [Activity(Label = "Register")]
     public class RegisterActivity : Activity
     {
-        readonly RegisterViewModel registerViewModel = new RegisterViewModel();
+        readonly RegisterViewModel RegisterViewModel = new RegisterViewModel();
         private const int REQUEST_CODE_REGISTER_FACE = 1;
 
         View progressBar;
@@ -142,7 +142,7 @@ namespace Moodis.Feature.Register
             var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
             if (regex.IsMatch(password))
             {
-                var response = await registerViewModel.AddUser(username, password);
+                var response = await RegisterViewModel.AddUser(username, password);
 
                 if (response == Response.OK)
                 {
@@ -167,7 +167,7 @@ namespace Moodis.Feature.Register
             progressBar.BringToFront();
             registerButton.Enabled = false;
 
-            var response = await registerViewModel.DeleteUser();
+            var response = await RegisterViewModel.DeleteUser();
             if (response != Response.OK)
             { 
                 Log.Error(Class.Name, MethodBase.GetCurrentMethod().Name + ": " + response.ToString());

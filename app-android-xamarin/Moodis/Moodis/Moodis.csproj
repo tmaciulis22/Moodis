@@ -77,15 +77,7 @@
     <Compile Include="Feature\CameraFeature\CameraPreview.cs" />
     <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
-    <Compile Include="Feature\Group\MembersGroupAdapter.cs" />
-    <Compile Include="Feature\Group\MembersViewHolder.cs" />
-    <Compile Include="Feature\Group\GroupListAdapter.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Feature\Group\GroupActivityModel.cs" />
-    <Compile Include="Feature\Group\GroupActivity.cs" />
-    <Compile Include="Feature\Group\GroupListActivity.cs" />
-    <Compile Include="Feature\Group\GroupMembersActivity.cs" />
-    <Compile Include="Feature\Group\GroupViewHolder.cs" />
     <Compile Include="Feature\History\ChartViewHolder.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
@@ -387,30 +379,7 @@
     <AndroidResource Include="Resources\layout\app_bar_content_main.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_group.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_group_list.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\holder_group_entry.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\logo_delete.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_group_details.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\holder_members_entry.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\holder_chart.xml">

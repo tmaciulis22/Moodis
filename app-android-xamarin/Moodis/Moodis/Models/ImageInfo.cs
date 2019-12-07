@@ -9,30 +9,13 @@ namespace Moodis.Ui
 {
     public class ImageInfo
     {
-        public struct Emotion : IComparable //TODO refactor this out
-        {
-            public string Id { get; set; }
-            public string ImageId { get; set; }
-            public string Name { get; set; }
-            public double Confidence { get; set; }
-
-            public int CompareTo(object obj)
-            {
-                if (obj == null) return 1;
-
-                var otherEmotion = (Emotion)obj;
-                return Confidence.CompareTo(otherEmotion.Confidence);
-            }
-        }
-
         public string Id { get; set; }
         public string UserId { get; set; }
-        [Ignore]
-        public DateTime ImageDate { get; set; }//TODO refactor this out
         public string DateAsString { get; set; }
         public string HighestEmotion { get; set; }
 
-        public List<Emotion> emotions;//TODO refactor this out
+        [Ignore]
+        public DateTime ImageDate { get; set; }
         [Ignore]
         public string ImagePath { get; set; }
 
@@ -40,25 +23,25 @@ namespace Moodis.Ui
         {
             UserId = SignInViewModel.currentUser.Id;
             ImageDate = DateTime.Now;
-            AddEmotions(face.FaceAttributes.Emotion);
+            DateAsString = ImageDate.ToString();
+            FindHighestEmotion(face.FaceAttributes.Emotion);
         }
 
-        private void AddEmotions(Microsoft.Azure.CognitiveServices.Vision.Face.Models.Emotion detectedEmotions)
+        private void FindHighestEmotion(Emotion detectedEmotions)
         {
-            emotions = new List<Emotion>(8);
-
             var properties = detectedEmotions.GetType().GetProperties().ToList();
+            double highestEmotionConfidence = 0;
+            double confidence;
+
             properties.ForEach(property =>
             {
-                var index = properties.IndexOf(property);
-                emotions.Add(new Emotion {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = property.Name,
-                    Confidence = (double)property.GetValue(detectedEmotions, null),
-                    ImageId = Id
-                });
+                confidence = (double)property.GetValue(detectedEmotions, null);
+                if (confidence > highestEmotionConfidence)
+                {
+                    highestEmotionConfidence = confidence;
+                    HighestEmotion = property.Name;
+                }
             });
-            HighestEmotion = emotions.Max().Name;
         }
     }
 }

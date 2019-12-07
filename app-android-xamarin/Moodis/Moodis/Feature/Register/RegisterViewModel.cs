@@ -18,26 +18,20 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> AddUser(string username, string password)
         {
-            await API.UserEndpoint.RegisterUser(new User(username, password));
+            SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(new User(username, password));
 
-            if (SignInViewModel.userList.Exists(userFromList => userFromList.Username == username))
+            if (SignInViewModel.currentUser == null)
             {
                 return Response.UserExists;
             }
             else
             {
-                SignInViewModel.currentUser = new User(username, password)
-                {
-                    PersonGroupId = Guid.NewGuid().ToString()
-                };
-                DatabaseModel.AddUserToDatabase(SignInViewModel.currentUser);
-                UpdateLocalStorage();
-
                 var newFaceApiPerson = await Face.Instance.CreateNewPerson(SignInViewModel.currentUser.PersonGroupId, username);
 
                 if (newFaceApiPerson != null)
                 {
                     SignInViewModel.currentUser.PersonId = Convert.ToString(newFaceApiPerson.PersonId);
+                    await API.UserEndpoint.UpdateUser(SignInViewModel.currentUser);
                 }
                 else
                 {
@@ -50,7 +44,7 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> DeleteUser()
         {
-            DatabaseModel.DeleteUserFromDatabase(SignInViewModel.currentUser);
+            await API.UserEndpoint.DeleteUser(SignInViewModel.currentUser.Id);
             return await Face.Instance.DeletePerson(SignInViewModel.currentUser.PersonGroupId);
         }
 
@@ -69,11 +63,6 @@ namespace Moodis.Feature.Register
                 }
             }
             return response;
-        }
-
-        public void UpdateLocalStorage()
-        {
-            SignInViewModel.userList = DatabaseModel.FetchUsers();
         }
 
         public async Task<Response> AuthenticateFace(string imagePath)
@@ -96,11 +85,6 @@ namespace Moodis.Feature.Register
             }
 
             return Response.UserNotFound;
-        }
-
-        public static string GetIdByUsername(string username)
-        {
-           return SignInViewModel.userList.Find(user => user.Username == username).Id;
         }
     }
 }

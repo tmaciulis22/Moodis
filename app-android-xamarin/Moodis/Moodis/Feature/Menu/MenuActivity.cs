@@ -57,38 +57,26 @@ namespace Moodis.Feature.Menu
 
                 JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
 
-                UpdateLabels();
+                InitViews();
                 MenuViewModel.DeleteImage();
             }
         }
 
-        public void UpdateLabels()
+        public void InitViews()
         {
             var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
-            var emotionLabels = new List<TextView> { FindViewById<TextView>(Resource.Id.lblAnger), FindViewById<TextView>(Resource.Id.lblContempt), FindViewById<TextView>(Resource.Id.lblDisgust),
-                FindViewById<TextView>(Resource.Id.lblFear), FindViewById<TextView>(Resource.Id.lblHappiness), FindViewById<TextView>(Resource.Id.lblNeutral), FindViewById<TextView>(Resource.Id.lblSadness),
-                FindViewById<TextView>(Resource.Id.lblSurprise) };
+            var emotionLabel = FindViewById<TextView>(Resource.Id.highestEmotionLabel);
 
             imageBox.SetImageBitmap(MenuViewModel.image);
-            foreach (var label in emotionLabels)
-            {
-                label.Text = GetString(Resource.String.loading);
-            }
 
-            if (MenuViewModel.currentImage.emotions != null)
+            if (MenuViewModel.currentImage.HighestEmotion != null)
             {
-                var counter = 0;
-                foreach (var label in emotionLabels)
-                {
-                    label.Text = MenuViewModel.currentImage.emotions[counter].Name + " : "
-                        + MenuViewModel.currentImage.emotions[counter].Confidence.ToString(FormatDouble);
-                    counter++;
-                }
+                emotionLabel.Text = MenuViewModel.currentImage.HighestEmotion;//TODO change to more meaningful text here
                 MenuViewModel.AddImage();
             }
             else
             {
-                Toast.MakeText(this, GetString(Resource.String.warning_face_detection), ToastLength.Short).Show();
+                emotionLabel.Text = GetString(Resource.String.warning_face_detection);
             }
         }
         public override void OnBackPressed()
@@ -122,13 +110,14 @@ namespace Moodis.Feature.Menu
 
         private void MusicPlay()
         {
-            if (MenuViewModel.currentImage.emotions != null && !MusicPlayer.IsPlaying())
+            if (MenuViewModel.currentImage.HighestEmotion != null && !MusicPlayer.IsPlaying())
             {
                 int[] musicLabels = { Resource.Raw.Anger, Resource.Raw.Contempt, Resource.Raw.Disgust, Resource.Raw.Fear, Resource.Raw.Happiness, Resource.Raw.Neutral,
                                 Resource.Raw.Sadness, Resource.Raw.Surprise };
-                if (MenuViewModel.GetHighestEmotionIndex() != -1)
+                var index = MenuViewModel.GetHighestEmotionIndex();
+                if (index != -1)
                 {
-                    MusicPlayer.Play(musicLabels[MenuViewModel.GetHighestEmotionIndex()]);
+                    MusicPlayer.Play(musicLabels[index]);
                 }
             }
             else if (MusicPlayer.IsPlaying())
@@ -157,10 +146,6 @@ namespace Moodis.Feature.Menu
                 {
                     OnBackPressed();
                 }
-            }
-            else if (id == Resource.Id.nav_groups)
-            {
-                StartActivity(new Intent(this, typeof(GroupActivity)));
             }
             else if (id == Resource.Id.nav_history)
             {

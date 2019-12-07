@@ -1,12 +1,13 @@
 ﻿using Android.Graphics;
 using Moodis.Constants.Enums;
-using Moodis.Database;
 using Moodis.Feature.SignIn;
 using Moodis.Network.Face;
 using System;
 using System.Threading.Tasks;
 using System.IO;
 using System.Linq;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Network;
 
 namespace Moodis.Ui
 {
@@ -48,8 +49,6 @@ namespace Moodis.Ui
             {
                 return Response.ApiError;
             }
-
-            
         }
 
         public void DeleteImage()
@@ -60,15 +59,18 @@ namespace Moodis.Ui
             }
         }
 
-        public void AddImage()
+        public async void AddImage()
         {
-            DatabaseModel.AddImageInfoToDatabase(currentImage);
+            await API.ImageInfoEndpoint.AddImageInfo(currentImage);
         }
 
         public int GetHighestEmotionIndex()
         {
-            var highestConfidence = currentImage.emotions.Max();
-            return currentImage.emotions.ToList().IndexOf(highestConfidence);
+            var properties = typeof(Emotion).GetProperties().ToList();
+
+            return properties.FindIndex(property => {
+                return property.Name == currentImage.HighestEmotion;
+            });
         }
     }
 }

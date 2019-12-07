@@ -17,7 +17,10 @@ namespace Moodis.Network.Endpoints
 {
     interface IUserEndpoint
     {
-        [Get("/user/{username}")]
-        public Task<User> GetUser([Body] LoginRequest request);
+        [Get("/user/login")]
+        public Task<User> LoginUser([Body] LoginRequest request);
+
+        [Post("/user")]
+        public Task RegisterUser([Body] User user);
     }
 }

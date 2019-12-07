@@ -231,15 +231,19 @@
     <Compile Include="Models\Emotion.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmotionFE.cs" />
     <Compile Include="Models\Group.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GroupFE.cs" />
     <Compile Include="Models\ImageInfo.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImageInfoFE.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserFE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\LoginRequest.cs" />
   </ItemGroup>

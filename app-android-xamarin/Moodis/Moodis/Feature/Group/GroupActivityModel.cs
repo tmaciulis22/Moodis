@@ -16,7 +16,7 @@ namespace Moodis.Feature.Group
             if(groups != null)
             {
                 var username = SignInViewModel.currentUser.Username;
-                var group = groups.Find(groupTemp => groupTemp.Groupname == groupName);
+                var group = groups.Find(groupTemp => groupTemp.GroupName == groupName);
                 if(group == null)
                 {
                     return Response.GroupNotFound;
@@ -40,7 +40,7 @@ namespace Moodis.Feature.Group
 
         public Response CreateGroup(string groupName)
         {
-            if(!groups.Exists(group => group.Groupname == groupName))
+            if(!groups.Exists(group => group.GroupName == groupName))
             {
                 var newGroup = new Group(groupName, SignInViewModel.currentUser.Username);
                 groups.Add(newGroup);
@@ -65,7 +65,7 @@ namespace Moodis.Feature.Group
 
         public static void LeaveGroup(string groupname)
         {
-            var group = groups.Find(group => group.Groupname == groupname);
+            var group = groups.Find(group => group.GroupName == groupname);
             group.Members.Remove(SignInViewModel.currentUser.Username);
             DatabaseModel.UpdateGroupToDatabase(group);
         }

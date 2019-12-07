@@ -18,7 +18,12 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var imageInfos = dbContext.ImageInfos.Include(e => e.Emotions).ToList();
+                var imageInfos = dbContext.ImageInfos.Include(e => e.Emotions).Select(image => new ImageInfoFE()
+                {
+                    Id = image.Id,
+                    UserId = image.UserId,
+                    DateAsString = image.DateAsString
+                }).ToList();
                 if (imageInfos.Count != 0)
                 {
                     return Ok(imageInfos);
@@ -38,11 +43,33 @@ namespace apiMoodis.Controllers
                 try
                 {
                     var entity = dbContext.ImageInfos.Single(ImageInfo => ImageInfo.Id == id);
-                    return Ok(entity);
+                    var image = new ImageInfoFE() { Id = entity.Id, UserId = entity.UserId, DateAsString = entity.DateAsString};
+                    return Ok(image);
                 }
                 catch (InvalidOperationException)
                 {
                     return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
+            }
+        }
+
+        public IHttpActionResult GetUserImageInfos(string userId)
+        {
+            using (DatabaseContext dbContext = new DatabaseContext())
+            {
+                try
+                {
+                    var imageInfos = dbContext.ImageInfos.SkipWhile(e => e.UserId != userId).Select(image => new ImageInfoFE()
+                    {
+                        Id = image.Id,
+                        UserId = image.UserId,
+                        DateAsString = image.DateAsString
+                    }).ToList();
+                    return Ok(imageInfos);
                 }
                 catch (Exception e)
                 {
@@ -96,7 +123,7 @@ namespace apiMoodis.Controllers
                     entity.DateAsString = imageInfo.DateAsString;
                     entity.UserId = imageInfo.UserId;
                     dbContext.SaveChanges();
-                    return Ok(entity);
+                    return Ok();
                 }
                 catch (InvalidOperationException)
                 {
@@ -129,10 +156,21 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var entity = dbContext.Groups.Single(e => e.Id == id);
-                dbContext.Groups.Remove(entity);
-                dbContext.SaveChanges();
-                return Ok();
+                try
+                {
+                    var entity = dbContext.Groups.Single(e => e.Id == id);
+                    dbContext.Groups.Remove(entity);
+                    dbContext.SaveChanges();
+                    return Ok();
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
             }
         }
     }

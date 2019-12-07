@@ -68,7 +68,6 @@
   <ItemGroup>
     <Compile Include="Constants\Enums\Response.cs" />
     <Compile Include="Database\DatabaseModel.cs" />
-    <Compile Include="Encryption\Crypto.cs" />
     <Compile Include="Events\TakenPicture.cs" />
     <Compile Include="Extensions\AppCompatActivityExtensions.cs" />
     <Compile Include="Extensions\ContextExtensions.cs" />

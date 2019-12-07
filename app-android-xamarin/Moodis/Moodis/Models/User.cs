@@ -14,9 +14,6 @@ namespace Moodis.Feature.Login
         public string PersonGroupId { get; set; }
         public string PersonId { get; set; }
 
-        [Ignore]
-        public Person FaceApiPerson { get; set; }
-
         public User()
         {
             IsDoctor = false;

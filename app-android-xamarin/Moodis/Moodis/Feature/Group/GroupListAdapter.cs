@@ -34,7 +34,7 @@ namespace Moodis.Feature.Group
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var viewHolder = holder as GroupViewHolder;
-            viewHolder.GroupNameLabel.Text = groups[position].Groupname;
+            viewHolder.GroupNameLabel.Text = groups[position].GroupName;
             viewHolder.GroupNameLabel.Click += (sender, e) =>
             {
                 var MyIntent = new Intent(context, typeof(GroupMembersActivity));
@@ -44,7 +44,7 @@ namespace Moodis.Feature.Group
 
             viewHolder.GroupLeaveButton.Click += (sender, e) =>
             {
-                GroupActivityModel.LeaveGroup(groups[position].Groupname);
+                GroupActivityModel.LeaveGroup(groups[position].GroupName);
                 groups.RemoveAt(position);
                 NotifyItemRemoved(position);
                 if(groups.Count == 0)

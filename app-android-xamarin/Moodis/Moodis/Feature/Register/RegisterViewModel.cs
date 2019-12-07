@@ -3,6 +3,7 @@ using Moodis.Constants.Enums;
 using Moodis.Database;
 using Moodis.Feature.Login;
 using Moodis.Feature.SignIn;
+using Moodis.Network;
 using Moodis.Network.Face;
 using System;
 using System.Threading.Tasks;
@@ -17,13 +18,15 @@ namespace Moodis.Feature.Register
 
         public async Task<Response> AddUser(string username, string password)
         {
-            if(SignInViewModel.userList.Exists(userFromList => userFromList.Username == username))
+            await API.UserEndpoint.RegisterUser(new User(username, password));
+
+            if (SignInViewModel.userList.Exists(userFromList => userFromList.Username == username))
             {
                 return Response.UserExists;
             }
             else
             {
-                SignInViewModel.currentUser = new User(username, Crypto.CalculateMD5Hash(password))
+                SignInViewModel.currentUser = new User(username, password)
                 {
                     PersonGroupId = Guid.NewGuid().ToString()
                 };

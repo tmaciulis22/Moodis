@@ -44,7 +44,6 @@ namespace Moodis.Feature.SignIn
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
-            //As we implement new Activities there will be more if statements
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
             {

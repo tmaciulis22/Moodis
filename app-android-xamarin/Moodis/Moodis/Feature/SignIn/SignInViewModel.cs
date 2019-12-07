@@ -20,7 +20,7 @@ namespace Moodis.Feature.SignIn
 
         public async Task<bool> Authenticate(string username, string password)
         {
-            currentUser = await API.UserEndpoint.GetUser(new LoginRequest(username, password));
+            currentUser = await API.UserEndpoint.LoginUser(new LoginRequest(username, password));
 
             if (currentUser == null)
             {

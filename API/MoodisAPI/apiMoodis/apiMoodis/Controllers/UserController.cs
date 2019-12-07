@@ -18,7 +18,15 @@ namespace apiMoodis.Controllers
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
-                var users = dbContext.Users.Include(item => item.ImageInfos).ToList();
+                var users = dbContext.Users.Include(item => item.ImageInfos).Select(user => new UserFE() { 
+                    Id = user.Id,
+                    GroupId = user.GroupId,
+                    Username = user.Username,
+                    Password = user.Password,
+                    IsDoctor = user.IsDoctor,
+                    PersonGroupId = user.PersonGroupId,
+                    PersonId = user.PersonId
+                }).ToList();
                 if (users.Count != 0)
                 {
                     return Ok(users);
@@ -37,8 +45,18 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(user => user.Id == id);
-                    return Ok(entity);
+                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(u => u.Id == id);
+                    var user = new UserFE()
+                    {
+                        Id = entity.Id,
+                        GroupId = entity.GroupId,
+                        Username = entity.Username,
+                        Password = entity.Password,
+                        IsDoctor = entity.IsDoctor,
+                        PersonGroupId = entity.PersonGroupId,
+                        PersonId = entity.PersonId
+                    };
+                    return Ok(user);
                 }
                 catch (InvalidOperationException)
                 {
@@ -51,8 +69,9 @@ namespace apiMoodis.Controllers
             }
         }
 
+        [HttpGet]
         [Route("api/user/login")]
-        public IHttpActionResult GetUser([FromBody] LoginRequest request)
+        public IHttpActionResult LoginUser([FromBody] LoginRequest request)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
@@ -60,8 +79,18 @@ namespace apiMoodis.Controllers
                 {
                     var encryptedPass = Crypto.CalculateMD5Hash(request.Password);
                     var entity = dbContext.Users.Include(item => item.ImageInfos)
-                        .Single(user => user.Username == request.Username && user.Password == encryptedPass);
-                    return Ok(entity);
+                        .Single(u => u.Username == request.Username && u.Password == encryptedPass);
+                    var user = new UserFE()
+                    {
+                        Id = entity.Id,
+                        GroupId = entity.GroupId,
+                        Username = entity.Username,
+                        Password = entity.Password,
+                        IsDoctor = entity.IsDoctor,
+                        PersonGroupId = entity.PersonGroupId,
+                        PersonId = entity.PersonId
+                    };
+                    return Ok(user);
                 }
                 catch (InvalidOperationException)
                 {
@@ -75,6 +104,7 @@ namespace apiMoodis.Controllers
         }
 
         [HttpPost]
+        [Route("api/user/register")]
         public IHttpActionResult PostUser([FromBody] User user)
         {
             try

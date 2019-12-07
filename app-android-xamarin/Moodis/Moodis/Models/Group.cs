@@ -8,7 +8,6 @@ namespace Moodis.Feature.Group
 {
     class Group
     {
-        private const string SEPARATOR = "__,__";
         [PrimaryKey]
         public string Id { get; set; }
 
@@ -16,17 +15,16 @@ namespace Moodis.Feature.Group
         public List<string> Members { get; set; }
         public string MembersInString { get; set; }
 
-        public string Groupname { get; set; }
+        public string GroupName { get; set; }
 
         public Group()
         {
-            Id = Guid.NewGuid().ToString();
             Members = new List<string>();
         }
 
         public Group(string name, string firstUser) : this()
         {
-            this.Groupname = name;
+            GroupName = name;
             Members.Add(firstUser);
         }
 
@@ -48,17 +46,17 @@ namespace Moodis.Feature.Group
         public void ConvertToString()
         {
             using StringBuffer stringBuffer = new StringBuffer();
-            Members.ForEach(entry => stringBuffer.Append(entry).Append(SEPARATOR));
+            Members.ForEach(entry => stringBuffer.Append(entry).Append(","));
             if(stringBuffer.Length() > 0)
             {
-                stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
+                stringBuffer.SetLength(stringBuffer.Length() - ",".Length);
             }
             MembersInString = stringBuffer.ToString();
         }
 
         public void ConvertToList()
         {
-            Members = MembersInString.Split(SEPARATOR).ToList();
+            Members = MembersInString.Split(",").ToList();
         }
     }
 }

@@ -27,9 +27,11 @@ namespace Moodis.Ui
 
         public string Id { get; set; }
         public string UserId { get; set; }
+        [Ignore]
         public DateTime ImageDate { get; set; }
         public string DateAsString { get; set; }
         public List<Emotion> emotions;
+        [Ignore]
         public string ImagePath { get; set; }
 
         public void SetImageInfo(DetectedFace face)

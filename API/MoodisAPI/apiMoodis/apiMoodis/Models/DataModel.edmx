@@ -5,15 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Emotions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nchar" MaxLength="36" Nullable="false" />
-          <Property Name="ImageId" Type="nchar" MaxLength="36" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="Confidence" Type="float" Nullable="false" />
-        </EntityType>
         <EntityType Name="Groups">
           <Key>
             <PropertyRef Name="Id" />
@@ -29,6 +20,7 @@
           <Property Name="Id" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="UserId" Type="nchar" MaxLength="36" Nullable="false" />
           <Property Name="DateAsString" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HighestEmotion" Type="varchar" MaxLength="24" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -42,20 +34,6 @@
           <Property Name="PersonGroupId" Type="nvarchar" MaxLength="36" />
           <Property Name="PersonId" Type="nvarchar" MaxLength="36" />
         </EntityType>
-        <Association Name="FK_Emotions_ImageInfos">
-          <End Role="ImageInfos" Type="Self.ImageInfos" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Emotions" Type="Self.Emotions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImageInfos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Emotions">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Groups_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
@@ -95,14 +73,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ModelsStoreContainer">
-          <EntitySet Name="Emotions" EntityType="Self.Emotions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImageInfos" EntityType="Self.ImageInfos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Emotions_ImageInfos" Association="Self.FK_Emotions_ImageInfos">
-            <End Role="ImageInfos" EntitySet="ImageInfos" />
-            <End Role="Emotions" EntitySet="Emotions" />
-          </AssociationSet>
           <AssociationSet Name="FK_Groups_Users" Association="Self.FK_Groups_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Groups" EntitySet="Groups" />
@@ -121,14 +94,9 @@
     <edmx:ConceptualModels>
       <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DatabaseContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Emotions" EntityType="Models.Emotion" />
           <EntitySet Name="Groups" EntityType="Models.Group" />
           <EntitySet Name="ImageInfos" EntityType="Models.ImageInfo" />
           <EntitySet Name="Users" EntityType="Models.User" />
-          <AssociationSet Name="FK_Emotions_ImageInfos" Association="Models.FK_Emotions_ImageInfos">
-            <End Role="ImageInfo" EntitySet="ImageInfos" />
-            <End Role="Emotion" EntitySet="Emotions" />
-          </AssociationSet>
           <AssociationSet Name="FK_Groups_Users" Association="Models.FK_Groups_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Group" EntitySet="Groups" />
@@ -142,16 +110,6 @@
             <End Role="ImageInfo" EntitySet="ImageInfos" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Emotion">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="ImageId" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="Confidence" Type="Double" Nullable="false" />
-          <NavigationProperty Name="ImageInfo" Relationship="Models.FK_Emotions_ImageInfos" FromRole="Emotion" ToRole="ImageInfo" />
-        </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="Id" />
@@ -169,7 +127,7 @@
           <Property Name="Id" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="36" FixedLength="true" Unicode="true" />
           <Property Name="DateAsString" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Emotions" Relationship="Models.FK_Emotions_ImageInfos" FromRole="ImageInfo" ToRole="Emotion" />
+          <Property Name="HighestEmotion" Type="String" Nullable="false" MaxLength="24" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="User" Relationship="Models.FK_ImageInfos_Users" FromRole="ImageInfo" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
@@ -187,20 +145,6 @@
           <NavigationProperty Name="Group" Relationship="Models.FK_Users_Groups" FromRole="User" ToRole="Group" />
           <NavigationProperty Name="ImageInfos" Relationship="Models.FK_ImageInfos_Users" FromRole="User" ToRole="ImageInfo" />
         </EntityType>
-        <Association Name="FK_Emotions_ImageInfos">
-          <End Type="Models.ImageInfo" Role="ImageInfo" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Models.Emotion" Role="Emotion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImageInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Emotion">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Groups_Users">
           <End Type="Models.User" Role="User" Multiplicity="1" />
           <End Type="Models.Group" Role="Group" Multiplicity="*" />
@@ -245,16 +189,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="DatabaseContext">
-          <EntitySetMapping Name="Emotions">
-            <EntityTypeMapping TypeName="Models.Emotion">
-              <MappingFragment StoreEntitySet="Emotions">
-                <ScalarProperty Name="Confidence" ColumnName="Confidence" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Groups">
             <EntityTypeMapping TypeName="Models.Group">
               <MappingFragment StoreEntitySet="Groups">
@@ -267,6 +201,7 @@
           <EntitySetMapping Name="ImageInfos">
             <EntityTypeMapping TypeName="Models.ImageInfo">
               <MappingFragment StoreEntitySet="ImageInfos">
+                <ScalarProperty Name="HighestEmotion" ColumnName="HighestEmotion" />
                 <ScalarProperty Name="DateAsString" ColumnName="DateAsString" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

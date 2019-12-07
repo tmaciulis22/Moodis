@@ -25,7 +25,6 @@ namespace apiMoodis.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Emotion> Emotions { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<ImageInfo> ImageInfos { get; set; }
         public virtual DbSet<User> Users { get; set; }

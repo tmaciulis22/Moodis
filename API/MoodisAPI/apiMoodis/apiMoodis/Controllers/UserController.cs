@@ -111,6 +111,12 @@ namespace apiMoodis.Controllers
             {
                 using (DatabaseContext dbContext = new DatabaseContext())
                 {
+                    var isAlreadyRegistered = dbContext.Users.Any(u => u.Username == user.Username);
+                    if (isAlreadyRegistered)
+                    {
+                        return BadRequest("User already exists");
+                    }
+
                     user.Id = Guid.NewGuid().ToString();
                     user.Password = Crypto.CalculateMD5Hash(user.Password);
                     dbContext.Users.Add(user);

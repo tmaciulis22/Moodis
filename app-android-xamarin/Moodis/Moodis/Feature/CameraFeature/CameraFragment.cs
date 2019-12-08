@@ -54,7 +54,7 @@ namespace Moodis.Feature.CameraFeature
                 progressBar = view.FindViewById(Resource.Id.progressBarCamera);
                 progressBar.Visibility = ViewStates.Visible;
                 progressBar.BringToFront();
-                snapButton.Enabled = false;
+                snapButton.Enabled = false;  
 
                 MenuViewModel.Instance.currentImage = new ImageInfo
                 {

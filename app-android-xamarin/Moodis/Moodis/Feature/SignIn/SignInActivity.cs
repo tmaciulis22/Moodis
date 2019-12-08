@@ -23,8 +23,6 @@ namespace Moodis.Feature.SignIn
 
         View progressBar;
 
-        public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -47,12 +45,12 @@ namespace Moodis.Feature.SignIn
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
             {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                SetResult(Result.Ok);
                 Finish();
             }
             else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_UPDATE_FACE)
             {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                SetResult(Result.Ok);
                 Finish();
             }
         }
@@ -191,7 +189,7 @@ namespace Moodis.Feature.SignIn
 
         private void HandleUpdateNegative()
         {
-            SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+            SetResult(Result.Ok);
             Finish();
         }
     }

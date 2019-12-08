@@ -82,6 +82,7 @@
   <string name="delete_everything_failed">Data could not be cleared</string>
 
   <string name="menu_emotion_text">Your detected emotion is %1$s</string>
+  <string name="menu_camera_canceled_text">Open camera to take a photo of your face and detect emotions</string>
   
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>

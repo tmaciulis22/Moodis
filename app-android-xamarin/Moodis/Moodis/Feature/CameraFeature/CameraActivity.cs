@@ -1,5 +1,6 @@
 ﻿using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.Design.Widget;
@@ -7,6 +8,8 @@ using Android.Support.V4.App;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
+using Moodis.Extensions;
+using Moodis.Feature.Menu;
 using System;
 
 namespace Moodis.Feature.CameraFeature
@@ -25,6 +28,8 @@ namespace Moodis.Feature.CameraFeature
             SetContentView(Resource.Layout.activity_camera);
             layout = FindViewById(Resource.Id.content_frame);
 
+            this.SetSupportActionBar();
+
             if (ActivityCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != (int)Permission.Granted)
             {
                 RequestCameraPermission();
@@ -34,11 +39,18 @@ namespace Moodis.Feature.CameraFeature
                 StartCamera();
             }
         }
+
         public override void OnBackPressed()
         {
             base.OnBackPressed();
+            SetResult(Result.Canceled);
             Finish();
-            //TODO Exit application
+        }
+
+        public override bool OnSupportNavigateUp()
+        {
+            OnBackPressed();
+            return true;
         }
 
         protected override void OnResume()

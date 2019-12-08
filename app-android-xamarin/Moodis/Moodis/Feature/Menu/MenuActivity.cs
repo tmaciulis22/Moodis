@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
@@ -21,10 +22,16 @@ namespace Moodis.Feature.Menu
     public class MenuActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private readonly string TAG = nameof(MenuActivity);
+
         private MenuViewModel MenuViewModel;
         private MusicPlayer MusicPlayer;
+
         private const string FormatDouble = "N3";
-        private bool JustSignedIn = false;
+
+        private const int REQUEST_CODE_CAMERA = 1;
+
+        private ImageView ImageBox;
+        private TextView EmotionLabel;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -44,39 +51,20 @@ namespace Moodis.Feature.Menu
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
             navigationView.SetNavigationItemSelectedListener(this);
 
+            InitViews();
+
             if (MenuViewModel.currentImage.ImagePath == null)
             {
-                StartActivity(new Intent(this, typeof(CameraActivity)));
-                Finish();
+                StartActivityForResult(new Intent(this, typeof(CameraActivity)), REQUEST_CODE_CAMERA);
             }
             else
             {
                 MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
-
-                JustSignedIn = Intent.GetBooleanExtra(SignInActivity.EXTRA_SIGNED_IN, false);
-
-                InitViews();
+                ShowInformation();
                 MenuViewModel.DeleteImage();
             }
         }
 
-        public void InitViews()
-        {
-            var imageBox = FindViewById<ImageView>(Resource.Id.imageForView);
-            var emotionLabel = FindViewById<TextView>(Resource.Id.highestEmotionLabel);
-
-            imageBox.SetImageBitmap(MenuViewModel.image);
-
-            if (MenuViewModel.currentImage.HighestEmotion != null)
-            {
-                emotionLabel.Text = GetString(Resource.String.menu_emotion_text, MenuViewModel.currentImage.HighestEmotion);
-                MenuViewModel.AddImage();
-            }
-            else
-            {
-                emotionLabel.Text = GetString(Resource.String.warning_face_detection);
-            }
-        }
         public override void OnBackPressed()
         {
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
@@ -87,6 +75,58 @@ namespace Moodis.Feature.Menu
             else
             {
                 LogoutWindowShow();
+            }
+        }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (requestCode == REQUEST_CODE_CAMERA && resultCode == Result.Ok)
+            {
+                if (MenuViewModel.currentImage.ImagePath == null)
+                {
+                    StartActivityForResult(new Intent(this, typeof(CameraActivity)), REQUEST_CODE_CAMERA);
+                }
+                else
+                {
+                    MenuViewModel.image = BitmapFactory.DecodeFile(MenuViewModel.currentImage.ImagePath);
+
+                    ShowInformation();
+                    MenuViewModel.DeleteImage();
+                }
+            }
+            else if (requestCode == REQUEST_CODE_CAMERA && resultCode == Result.Canceled)
+            {
+                ShowInformation(true);
+            }
+        }
+
+        public void InitViews()
+        {
+            ImageBox = FindViewById<ImageView>(Resource.Id.imageForView);
+            EmotionLabel = FindViewById<TextView>(Resource.Id.highestEmotionLabel);
+        }
+
+        private void ShowInformation(bool wasCanceled = false)
+        {
+            if (wasCanceled)
+            {
+                EmotionLabel.Text = GetString(Resource.String.menu_camera_canceled_text);
+                ImageBox.Visibility = ViewStates.Gone;
+                return;
+            }
+
+            ImageBox.Visibility = ViewStates.Visible;
+            ImageBox.SetImageBitmap(MenuViewModel.image);
+
+            if (MenuViewModel.currentImage.HighestEmotion != null)
+            {
+                EmotionLabel.Text = GetString(Resource.String.menu_emotion_text, MenuViewModel.currentImage.HighestEmotion);
+                MenuViewModel.AddImage();
+            }
+            else
+            {
+                EmotionLabel.Text = GetString(Resource.String.warning_face_detection);
             }
         }
 
@@ -135,15 +175,7 @@ namespace Moodis.Feature.Menu
 
             if (id == Resource.Id.nav_camera)
             {
-                if (JustSignedIn)
-                {
-                    StartActivity(new Intent(this, typeof(CameraActivity)));
-                    Finish();
-                }
-                else
-                {
-                    OnBackPressed();
-                }
+                StartActivityForResult(new Intent(this, typeof(CameraActivity)), REQUEST_CODE_CAMERA);
             }
             else if (id == Resource.Id.nav_history)
             {

@@ -28,7 +28,7 @@ namespace Moodis.History
             base.OnCreate(savedInstanceState);
             this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_history);
-            EXTRA_NAME = Intent.GetStringExtra("EXTRA_NAME");
+            EXTRA_NAME = Intent.GetStringExtra(EXTRA_NAME);
             EXTRA_REASON = Intent.GetIntExtra("EXTRA_REASON", 0);
             InitView();
             InitAdapter();

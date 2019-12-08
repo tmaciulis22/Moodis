@@ -78,7 +78,7 @@ namespace Moodis.History
             var layoutManager = new LinearLayoutManager(this);
             RecyclerView.SetLayoutManager(layoutManager);
 
-            var itemList = await historyViewModel.FetchItemList(SignInViewModel.currentUser.Id, DateTime.Now);
+            var itemList = await historyViewModel.FetchItemList(SignInViewModel.currentUser.Id, DateTime.UtcNow);
             HistoryStatsAdapter adapter;
 
             if (itemList.IsNullOrEmpty())

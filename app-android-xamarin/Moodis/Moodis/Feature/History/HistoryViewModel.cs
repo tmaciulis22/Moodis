@@ -11,7 +11,7 @@ namespace Moodis.History
 {
     class HistoryViewModel : ViewModel
     {
-        public async Task<IList<object>> FetchItemList(string userId, DateTime? dateTime = null)
+        public async Task<IList<object>> FetchItemList(string userId, DateTime dateTime)
         {
             var listToReturn = new List<object>();
             IEnumerable<ImageInfo> imageInfos;

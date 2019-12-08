@@ -57,33 +57,33 @@ namespace apiMoodis.Controllers
 
         [HttpGet]
         [Route("api/imageinfo/user")]
-        public IHttpActionResult GetUserImageInfos(string userId, [FromBody] DateTime? date = null)
+        public IHttpActionResult GetUserImageInfos(string userId, [FromBody] DateTime date)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
             {
                 try
                 {
-                    var imageInfos = dbContext.ImageInfos.SkipWhile(e => e.UserId != userId).Select(image => new ImageInfoFE()
-                    {
-                        Id = image.Id,
-                        UserId = image.UserId,
-                        Date = image.Date,
-                        HighestEmotion = image.HighestEmotion
-                    }).ToList();
+                    var entities = dbContext.ImageInfos.AsEnumerable().SkipWhile(e => e.UserId != userId);
+                    var imageInfos = entities.Select(image => new ImageInfoFE()
+                     {
+                         Id = image.Id,
+                         UserId = image.UserId,
+                         Date = image.Date,
+                         HighestEmotion = image.HighestEmotion
+                     }).ToList();
 
                     if (date != null)
                     {
-                        imageInfos = imageInfos.TakeWhile(image => image.Date.Year == date?.Year 
-                            && image.Date.Month == date?.Month && image.Date.Day == date?.Day).ToList();
+                        imageInfos = imageInfos.TakeWhile(image => image.Date.Date == date.Date).ToList();
                     }
 
-                    imageInfos.Sort();
+                    imageInfos.OrderByDescending(image => image.Date.Hour);
 
                     return Ok(imageInfos);
                 }
-                catch (Exception e)
+                catch(Exception ex)
                 {
-                    return InternalServerError(e);
+                    return InternalServerError(ex);
                 }
             }
         }

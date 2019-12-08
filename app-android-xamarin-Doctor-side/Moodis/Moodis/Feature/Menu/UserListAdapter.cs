@@ -27,7 +27,6 @@ namespace Moodis.Feature.Menu
             (holder as UserViewHolder).ItemView.SetOnClickListener(this);
             (holder as UserViewHolder).ItemView.Tag = position;
             (holder as UserViewHolder).UsernameLabel.SetTextColor(userList[position].IsSelected ? Android.Graphics.Color.Green : Android.Graphics.Color.White);
-
         }
 
         public void OnClick(View v)

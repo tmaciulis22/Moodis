@@ -28,8 +28,8 @@ namespace Moodis.History
             base.OnCreate(savedInstanceState);
             this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_history);
-            EXTRA_NAME = Intent.GetStringExtra("name");
-            EXTRA_REASON = Intent.GetIntExtra("reason",0);
+            EXTRA_NAME = Intent.GetStringExtra("EXTRA_NAME");
+            EXTRA_REASON = Intent.GetIntExtra("EXTRA_REASON", 0);
             InitView();
             InitAdapter();
 
@@ -64,6 +64,10 @@ namespace Moodis.History
                             break;
                         case 2:
                             ids.Add(RegisterViewModel.GetIdByUsername(EXTRA_NAME));
+                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            break;
+                    default:
+                            ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
                             (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
                             break;
                     }

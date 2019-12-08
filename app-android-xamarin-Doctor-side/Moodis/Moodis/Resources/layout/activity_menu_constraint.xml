@@ -12,6 +12,7 @@
      <android.support.v7.widget.RecyclerView
         android:id="@+id/userRecyclerView"
         android:layout_width="@dimen/grid_unit_0x"
+        android:layout_marginTop="@dimen/grid_unit_30x"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

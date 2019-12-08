@@ -56,7 +56,7 @@ namespace Moodis.Feature.Menu
             /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             TODO THIS SHOULD LATER CHECK IF USER ALREADY HAS A GROUP AS A USER CAN ONLY HAVE 1 GROUP BECAUSE OF THE FACE API STUFF
             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-            var userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "")).ToList();
+            var userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
             adapterUserList = new UserListAdapter(userList);
             recyclerView.SetAdapter(adapterUserList);
 
@@ -132,6 +132,7 @@ namespace Moodis.Feature.Menu
             AddUserToGroup.Click += delegate {
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
+
                 var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
                 .Select(group => group.Groupname).ToList();
 
@@ -146,7 +147,7 @@ namespace Moodis.Feature.Menu
                     adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
                     spinner.Adapter = adapter;
 
-                    var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected).ToList();
+                    var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected && !user.IsDoctor).ToList();
                     string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
 
                     Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
@@ -183,6 +184,7 @@ namespace Moodis.Feature.Menu
             CheckGroupHistory.Click += delegate {
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
+
                 var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
                 .Select(group => group.Groupname).ToList();
                 if (groupsList.Count <= 0)
@@ -202,7 +204,7 @@ namespace Moodis.Feature.Menu
                                     .SetPositiveButton("Confirm", delegate
                                     {
                                         string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
-                                        StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("group", choice).PutExtra("reason", 1));
+                                        StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("EXTRA_NAME", choice).PutExtra("EXTRA_REASON", 1));
                                         alertbuilder.Dispose();
                                     })
                                     .SetNegativeButton("Cancel", delegate
@@ -218,7 +220,7 @@ namespace Moodis.Feature.Menu
                 var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected).ToList();
                 if(selectedUsers.Count == 1)
                 {
-                    StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("reason", 2));
+                    StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("EXTRA_REASON", 2).PutExtra("EXTRA_NAME",selectedUsers[0].Username));
                     selectedUsers.ForEach(user => user.IsSelected = false);
                 }
                 else
@@ -248,12 +250,11 @@ namespace Moodis.Feature.Menu
                                     string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
                                     List<User> userList = null;
                                     if (choice == USERS_WITHOUT_GROUP) {
-                                        userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "")).ToList();
+                                        userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
                                     }
                                     else 
                                     {
-                                        userList = SignInViewModel.userList.Where(user => user.GroupName == choice).ToList();
-                                        Console.WriteLine(userList.Count);
+                                        userList = SignInViewModel.userList.Where(user => user.GroupName == choice && !user.IsDoctor).ToList();
                                     }
                                     adapterUserList.userList = userList;
                                     userList.ForEach(user => user.IsSelected = false);

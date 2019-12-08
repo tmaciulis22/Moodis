@@ -1,0 +1,103 @@
+﻿<resources>
+  <!-- Main Grid Units -->
+  <dimen name="grid_unit_0x">0dp</dimen>
+  <dimen name="grid_unit_half">1dp</dimen>
+  <dimen name="grid_unit_1x">2dp</dimen>
+  <dimen name="grid_unit_2x">4dp</dimen>
+  <dimen name="grid_unit_3x">6dp</dimen>
+  <dimen name="grid_unit_4x">8dp</dimen>
+  <dimen name="grid_unit_5x">10dp</dimen>
+  <dimen name="grid_unit_6x">12dp</dimen>
+  <dimen name="grid_unit_7x">14dp</dimen>
+  <dimen name="grid_unit_8x">16dp</dimen>
+  <dimen name="grid_unit_9x">18dp</dimen>
+  <dimen name="grid_unit_10x">20dp</dimen>
+  <dimen name="grid_unit_10x_half">21dp</dimen>
+  <dimen name="grid_unit_11x">22dp</dimen>
+  <dimen name="grid_unit_12x">24dp</dimen>
+  <dimen name="grid_unit_13x">26dp</dimen>
+  <dimen name="grid_unit_14x">28dp</dimen>
+  <dimen name="grid_unit_15x">30dp</dimen>
+  <dimen name="grid_unit_16x">32dp</dimen>
+  <dimen name="grid_unit_17x">34dp</dimen>
+  <dimen name="grid_unit_18x">36dp</dimen>
+  <dimen name="grid_unit_19x">38dp</dimen>
+  <dimen name="grid_unit_20x">40dp</dimen>
+  <dimen name="grid_unit_21x">42dp</dimen>
+  <dimen name="grid_unit_22x">44dp</dimen>
+  <dimen name="grid_unit_23x">46dp</dimen>
+  <dimen name="grid_unit_24x">48dp</dimen>
+  <dimen name="grid_unit_25x">50dp</dimen>
+  <dimen name="grid_unit_26x">52dp</dimen>
+  <dimen name="grid_unit_28x">56dp</dimen>
+  <dimen name="grid_unit_30x">60dp</dimen>
+  <dimen name="grid_unit_32x">64dp</dimen>
+  <dimen name="grid_unit_33x">66dp</dimen>
+  <dimen name="grid_unit_35x">70dp</dimen>
+  <dimen name="grid_unit_36x">72dp</dimen>
+  <dimen name="grid_unit_38x">76dp</dimen>
+  <dimen name="grid_unit_40x">80dp</dimen>
+  <dimen name="grid_unit_41x">82dp</dimen>
+  <dimen name="grid_unit_42x">84dp</dimen>
+  <dimen name="grid_unit_44x">88dp</dimen>
+  <dimen name="grid_unit_45x">90dp</dimen>
+  <dimen name="grid_unit_48x">96dp</dimen>
+  <dimen name="grid_unit_50x">100dp</dimen>
+  <dimen name="grid_unit_52x">104dp</dimen>
+  <dimen name="grid_unit_54x">108dp</dimen>
+  <dimen name="grid_unit_55x">110dp</dimen>
+  <dimen name="grid_unit_56x">112dp</dimen>
+  <dimen name="grid_unit_58x">116dp</dimen>
+  <dimen name="grid_unit_60x">120dp</dimen>
+  <dimen name="grid_unit_62x">124dp</dimen>
+  <dimen name="grid_unit_64x">128dp</dimen>
+  <dimen name="grid_unit_68x">136dp</dimen>
+  <dimen name="grid_unit_72x">144dp</dimen>
+  <dimen name="grid_unit_75x">150dp</dimen>
+  <dimen name="grid_unit_76x">152dp</dimen>
+  <dimen name="grid_unit_80x">160dp</dimen>
+  <dimen name="grid_unit_82x">164dp</dimen>
+  <dimen name="grid_unit_88x">176dp</dimen>
+  <dimen name="grid_unit_96x">192dp</dimen>
+  <dimen name="grid_unit_100x">200dp</dimen>
+  <dimen name="grid_unit_104x">208dp</dimen>
+  <dimen name="grid_unit_110x">220dp</dimen>
+  <dimen name="grid_unit_114x">228dp</dimen>
+  <dimen name="grid_unit_116x">232dp</dimen>
+  <dimen name="grid_unit_120x">240dp</dimen>
+  <dimen name="grid_unit_128x">256dp</dimen>
+  <dimen name="grid_unit_132x">264dp</dimen>
+  <dimen name="grid_unit_134x">268dp</dimen>
+  <dimen name="grid_unit_136x">272dp</dimen>
+  <dimen name="grid_unit_144x">288dp</dimen>
+  <dimen name="grid_unit_168x">336dp</dimen>
+  <dimen name="grid_unit_180x">360dp</dimen>
+  <dimen name="grid_unit_190x">380dp</dimen>
+  <dimen name="grid_unit_278x">556dp</dimen>
+
+  <!-- Negative Grid Units -->
+  <dimen name="negative_grid_unit_4x">-8dp</dimen>
+  <dimen name="negative_grid_unit_12x">-24dp</dimen>
+
+  <!-- Gravity Units -->
+  <dimen name="gravity_unit_100x">1</dimen>
+  <dimen name="gravity_unit_50x">0.5</dimen>
+  <dimen name="gravity_unit_0x">0</dimen>
+  
+  <!-- Font Sizes -->
+  <dimen name="menu_buttons">10sp</dimen>
+  <dimen name="login_header">64sp</dimen>
+  <dimen name="chart_label">12sp</dimen>
+  <dimen name="regular_text">20sp</dimen>
+  
+  <!--Card View-->
+  <dimen name="cardElevation">4dp</dimen>
+  <dimen name="cardCornerRadius">5dp</dimen>
+  
+  <!--Drawer View-->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+  <dimen name="nav_header_vertical_spacing">8dp</dimen>
+  <dimen name="nav_header_height">100dp</dimen>
+  <dimen name="icon_view_port">24</dimen>
+</resources>

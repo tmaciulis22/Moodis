@@ -26,7 +26,7 @@ namespace Moodis.Feature.Group
 
         public Group(string name, string firstUser) : this()
         {
-            this.Groupname = name;
+            Groupname = name;
             Members.Add(firstUser);
         }
 
@@ -49,10 +49,7 @@ namespace Moodis.Feature.Group
         {
             using StringBuffer stringBuffer = new StringBuffer();
             Members.ForEach(entry => stringBuffer.Append(entry).Append(SEPARATOR));
-            if(stringBuffer.Length() > 0)
-            {
-                stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
-            }
+            stringBuffer.SetLength(stringBuffer.Length() - SEPARATOR.Length);
             MembersInString = stringBuffer.ToString();
         }
 

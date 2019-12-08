@@ -78,15 +78,7 @@
     <Compile Include="Feature\CameraFeature\CameraPreview.cs" />
     <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
-    <Compile Include="Feature\Group\MembersGroupAdapter.cs" />
-    <Compile Include="Feature\Group\MembersViewHolder.cs" />
-    <Compile Include="Feature\Group\GroupListAdapter.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Feature\Group\GroupActivityModel.cs" />
-    <Compile Include="Feature\Group\GroupActivity.cs" />
-    <Compile Include="Feature\Group\GroupListActivity.cs" />
-    <Compile Include="Feature\Group\GroupMembersActivity.cs" />
-    <Compile Include="Feature\Group\GroupViewHolder.cs" />
     <Compile Include="Feature\History\ChartViewHolder.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />

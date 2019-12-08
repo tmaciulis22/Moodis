@@ -1,0 +1,86 @@
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_animation"
+    android:id="@+id/constraintlayoutRegister">
+
+    <include
+        layout="@layout/circular_progress_bar"
+        android:id="@+id/progressBarRegister"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_text"
+        android:layout_margin="@dimen/grid_unit_4x"
+        android:textSize="@dimen/login_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/usernameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signin_username_label"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:textSize="@dimen/regular_text"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/grid_unit_20x"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:maxLines="1"
+        android:inputType="textPersonName"
+        android:imeOptions="actionNext"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintLeft_toRightOf="@id/usernameLabel"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signin_password_label"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:textSize="@dimen/regular_text"
+        app:layout_constraintTop_toBottomOf="@id/usernameLabel"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/grid_unit_20x"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:maxLines="1"
+        android:inputType="textWebPassword"
+        app:layout_constraintTop_toBottomOf="@id/usernameLabel"
+        app:layout_constraintLeft_toRightOf="@id/passwordLabel"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_unit_12x"
+        android:text="@string/signin_register_button_text"
+        android:minWidth="@dimen/grid_unit_82x"
+        android:minHeight="@dimen/grid_unit_24x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+</android.support.constraint.ConstraintLayout>

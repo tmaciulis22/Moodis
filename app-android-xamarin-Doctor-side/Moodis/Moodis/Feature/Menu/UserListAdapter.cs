@@ -24,7 +24,6 @@ namespace Moodis.Feature.Menu
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             (holder as UserViewHolder).OnBind(userList[position]);
-
             (holder as UserViewHolder).ItemView.SetOnClickListener(this);
             (holder as UserViewHolder).ItemView.Tag = position;
             (holder as UserViewHolder).UsernameLabel.SetTextColor(userList[position].IsSelected ? Android.Graphics.Color.Green : Android.Graphics.Color.White);

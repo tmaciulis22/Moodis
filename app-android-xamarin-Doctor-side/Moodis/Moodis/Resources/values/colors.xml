@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#2c3e50</color>
+  <color name="colorPrimary">#e67e22</color>
   <color name="colorPrimaryDark">#e67e22</color>
   <color name="colorAccent">#27ae60</color>
   <color name="colorText">#FFFFFF</color>
@@ -9,6 +9,7 @@
   <color name="progress_bar_container_background">#ccfafafa</color>
   <color name="white">#FFFFFF</color>
   <color name="black">#000000</color>
+  <color name="transparent">#00FFFFFF</color>
 
   <color name="colorGradientStart">#f64f59</color>
   <color name="colorGradientCenter">#c471ed</color>

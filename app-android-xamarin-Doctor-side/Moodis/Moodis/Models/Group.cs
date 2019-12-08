@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Java.Lang;
-using Moodis.Feature.Login;
 using SQLite;
-using SQLiteNetExtensions.Attributes;
 
 namespace Moodis.Feature.Group
 {
@@ -44,7 +42,7 @@ namespace Moodis.Feature.Group
 
         public bool IsMember(string username)
         {
-            return Members.Contains(username) ? true : false;
+            return Members.Contains(username);
         }
 
         public void ConvertToString()

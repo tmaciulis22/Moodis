@@ -88,7 +88,8 @@
   <string name="add_to_group_menu">Add selected people \nto your group.</string>
   <string name="group_emotion_history_menu">Check group\nemotion history</string>
   <string name="check_person_history">Check person \nemotion history</string>
-  <string name="your_group_users">switch user list \ndisplay"</string>
+  <string name="your_group_users">Switch user list \ndisplay</string>
+  <string name="you_dont_have_group">You do not have any groups</string>
 
   <string name="group_select_dialog_title">Select group</string>
 </resources>

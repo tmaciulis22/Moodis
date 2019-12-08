@@ -42,7 +42,7 @@
     <EditText
         android:id="@+id/usernameInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/grid_unit_20x"
         android:layout_margin="@dimen/grid_unit_8x"
         android:maxLines="1"
         android:inputType="textPersonName"
@@ -64,7 +64,7 @@
     <EditText
         android:id="@+id/passwordInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/grid_unit_20x"
         android:layout_margin="@dimen/grid_unit_8x"
         android:maxLines="1"
         android:inputType="textWebPassword"

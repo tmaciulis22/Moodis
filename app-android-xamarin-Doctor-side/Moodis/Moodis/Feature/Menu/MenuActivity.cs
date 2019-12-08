@@ -56,7 +56,7 @@ namespace Moodis.Feature.Menu
             /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             TODO THIS SHOULD LATER CHECK IF USER ALREADY HAS A GROUP AS A USER CAN ONLY HAVE 1 GROUP BECAUSE OF THE FACE API STUFF
             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-            var userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
+            var userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "")).ToList();
             adapterUserList = new UserListAdapter(userList);
             recyclerView.SetAdapter(adapterUserList);
 
@@ -127,76 +127,91 @@ namespace Moodis.Feature.Menu
             var CheckUserHistory = FindViewById(Resource.Id.CheckPersonHistory);
             var DisplayUsers = FindViewById(Resource.Id.DisplayYourGroupMembersButton);
 
-            AddUserToGroup.Click += delegate {
-                LayoutInflater layoutInflater = LayoutInflater.From(this);
-                View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
+            LayoutInflater layoutInflater = LayoutInflater.From(this);
 
+            AddUserToGroup.Click += delegate {
+                View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
+                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
                 var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
                 .Select(group => group.Groupname).ToList();
 
-                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
-                spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
-                var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
-                adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                spinner.Adapter = adapter;
+                if (groupsList.Count <= 0)
+                {
+                    Toast.MakeText(this, Resource.String.you_dont_have_group, ToastLength.Short).Show();
+                }
+                else
+                {
+                    spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
+                    var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
+                    adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                    spinner.Adapter = adapter;
 
-                var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected).ToList();
-                string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
+                    var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected).ToList();
+                    string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
 
-                Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
-                alertbuilder.SetView(view);
-                alertbuilder.SetCancelable(false)
-                                .SetPositiveButton("Confirm", delegate
-                                {
-                                    foreach(var user in selectedUsers)
+                    Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
+                    alertbuilder.SetView(view);
+                    alertbuilder.SetCancelable(false)
+                                    .SetPositiveButton("Confirm", delegate
                                     {
-                                            foreach(var group in GroupActivityModel.groups)
+                                        foreach (var user in selectedUsers)
+                                        {
+                                            foreach (var group in GroupActivityModel.groups)
                                             {
-                                                if(group.Groupname == choice)
+                                                if (group.Groupname == choice)
                                                 {
                                                     group.AddMember(user.Username);
                                                     user.GroupName = group.Groupname;
-                                                    //MenuViewModel.Instance.MovePersonGroupAsync(user.PersonGroupId, user.PersonId, user.Username, group.groupId);
-                                                    user.IsSelected = false;
+                                                //MenuViewModel.Instance.MovePersonGroupAsync(user.PersonGroupId, user.PersonId, user.Username, group.groupId);
                                                 }
                                             }
-                                    }
-                                })
-                                .SetNegativeButton("Cancel", delegate
-                                {
-                                    alertbuilder.Dispose();
-                                });
-                Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
-                dialog.Show();
+                                        }
+                                        adapterUserList.userList = SignInViewModel.userList.Where(user => !user.IsSelected).ToList();
+                                        selectedUsers.ForEach(user => user.IsSelected = false);
+                                        adapterUserList.NotifyDataSetChanged();
+                                        alertbuilder.Dispose();
+                                    })
+                                    .SetNegativeButton("Cancel", delegate
+                                    {
+                                        alertbuilder.Dispose();
+                                    });
+                    alertbuilder.Create();
+                    alertbuilder.Show();
+                }
             };
 
             CheckGroupHistory.Click += delegate {
-                LayoutInflater layoutInflater = LayoutInflater.From(this);
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
-
+                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
                 var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
                 .Select(group => group.Groupname).ToList();
+                if (groupsList.Count <= 0)
+                {
+                    Toast.MakeText(this, Resource.String.you_dont_have_group, ToastLength.Short).Show();
+                }
+                else
+                {
+                    spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
+                    var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
+                    adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                    spinner.Adapter = adapter;
 
-                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
-                spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
-                var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
-                adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                spinner.Adapter = adapter;
-
-                Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
-                alertbuilder.SetView(view);
-                alertbuilder.SetCancelable(false)
-                                .SetPositiveButton("Confirm", delegate
-                                {
-                                    string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
-                                    StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("group", choice).PutExtra("reason",1));
-                                })
-                                .SetNegativeButton("Cancel", delegate
-                                {
-                                    alertbuilder.Dispose();
-                                });
-                Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
-                dialog.Show();
+                    Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
+                    alertbuilder.SetView(view);
+                    alertbuilder.SetCancelable(false)
+                                    .SetPositiveButton("Confirm", delegate
+                                    {
+                                        string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
+                                        StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("group", choice).PutExtra("reason", 1));
+                                        alertbuilder.Dispose();
+                                    })
+                                    .SetNegativeButton("Cancel", delegate
+                                    {
+                                        alertbuilder.Dispose();
+                                    });
+                    alertbuilder.Create();
+                    alertbuilder.Show();
+                }
             };
 
             CheckUserHistory.Click += delegate {
@@ -213,14 +228,13 @@ namespace Moodis.Feature.Menu
             };
 
             DisplayUsers.Click += delegate {
-                LayoutInflater layoutInflater = LayoutInflater.From(this);
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
+                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
 
                 var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
                 .Select(group => group.Groupname).ToList();
                 groupsList.Add("USERS_WITHOUT_GROUP");
 
-                var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
                 spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
                 var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, groupsList);
                 adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
@@ -234,25 +248,27 @@ namespace Moodis.Feature.Menu
                                     string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
                                     List<User> userList = null;
                                     if (choice == USERS_WITHOUT_GROUP) {
-                                        userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
+                                        userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "")).ToList();
                                     }
                                     else 
                                     {
-                                        userList = SignInViewModel.userList.Where(user => user.GroupName == choice && !user.IsDoctor).ToList();
+                                        userList = SignInViewModel.userList.Where(user => user.GroupName == choice).ToList();
+                                        Console.WriteLine(userList.Count);
                                     }
                                     adapterUserList.userList = userList;
                                     userList.ForEach(user => user.IsSelected = false);
                                     adapterUserList.NotifyDataSetChanged();
-                                    
+                                    alertbuilder.Dispose();
                                 })
                                 .SetNegativeButton("Cancel", delegate
                                 {
                                     alertbuilder.Dispose();
                                 });
-                Android.Support.V7.App.AlertDialog dialog = alertbuilder.Create();
-                dialog.Show();
+                alertbuilder.Create();
+                alertbuilder.Show();
             };
         }
+
         private void spinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             spinnerPosition = e.Position;

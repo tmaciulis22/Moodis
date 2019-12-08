@@ -11,8 +11,6 @@ namespace Moodis.Feature.Register
 {
     public class RegisterViewModel
     {
-        public const int RequiredNumberOfPhotos = 3;
-
 
         public async Task<Response> AddUser(string username, string password)
         {

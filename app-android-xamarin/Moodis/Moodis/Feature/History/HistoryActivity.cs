@@ -18,6 +18,7 @@ namespace Moodis.History
         private readonly HistoryViewModel historyViewModel = new HistoryViewModel();
         private RecyclerView RecyclerView;
         private TextView StatusLabel;
+        private View ProgressBar;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -37,12 +38,17 @@ namespace Moodis.History
         private void InitView()
         {
             StatusLabel = FindViewById<TextView>(Resource.Id.statusLabel);
+            ProgressBar = FindViewById(Resource.Id.progressBarHistory);
             var dateInput = FindViewById<EditText>(Resource.Id.datePicker);
+
             dateInput.Click += (sender, e) =>
             {
                 DatePickerFragment frag = DatePickerFragment.NewInstance(async delegate (DateTime time)
                 {
                     dateInput.Text = time.ToLongDateString();
+
+                    ProgressBar.Visibility = ViewStates.Visible;
+                    ProgressBar.BringToFront();
 
                     var itemList = await historyViewModel.FetchItemList(SignInViewModel.currentUser.Id, time);
 
@@ -66,6 +72,8 @@ namespace Moodis.History
                         StatusLabel.Visibility = ViewStates.Gone;
                         (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                     }
+
+                    ProgressBar.Visibility = ViewStates.Gone;
                 });
                 frag.Show(SupportFragmentManager, DatePickerFragment.TAG);
             };
@@ -77,6 +85,9 @@ namespace Moodis.History
 
             var layoutManager = new LinearLayoutManager(this);
             RecyclerView.SetLayoutManager(layoutManager);
+
+            ProgressBar.Visibility = ViewStates.Visible;
+            ProgressBar.BringToFront();
 
             var itemList = await historyViewModel.FetchItemList(SignInViewModel.currentUser.Id, DateTime.UtcNow);
             HistoryStatsAdapter adapter;
@@ -101,6 +112,8 @@ namespace Moodis.History
             }
 
             RecyclerView.SetAdapter(adapter);
+
+            ProgressBar.Visibility = ViewStates.Gone;
         }
     }
 }

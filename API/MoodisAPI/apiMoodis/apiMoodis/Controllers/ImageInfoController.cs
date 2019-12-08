@@ -77,7 +77,7 @@ namespace apiMoodis.Controllers
                         imageInfos = imageInfos.TakeWhile(image => image.Date.Date == date.Date).ToList();
                     }
 
-                    imageInfos.OrderByDescending(image => image.Date.Hour);
+                    imageInfos.OrderByDescending(image => image.Date);
 
                     return Ok(imageInfos);
                 }

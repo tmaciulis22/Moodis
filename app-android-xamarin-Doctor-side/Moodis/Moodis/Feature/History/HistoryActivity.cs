@@ -20,16 +20,22 @@ namespace Moodis.History
     {
         private readonly HistoryViewModel historyViewModel = new HistoryViewModel();
         private RecyclerView recyclerView;
-        public static int EXTRA_REASON = 0; // 0 your own, 1 - group, 2 - person;
-        public static string EXTRA_NAME = "EXTRA_NAME";
+
+        private const string EXTRA_REASON = "EXTRA_REASON";
+        private const string EXTRA_NAME = "EXTRA_NAME";
+
+        public static int extraReason; // 0 your own, 1 - group, 2 - person;
+        public static string extraName;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             this.SetSupportActionBar();
             SetContentView(Resource.Layout.activity_history);
-            EXTRA_NAME = Intent.GetStringExtra(EXTRA_NAME);
-            EXTRA_REASON = Intent.GetIntExtra("EXTRA_REASON", 0);
+
+            extraName = Intent.GetStringExtra(EXTRA_NAME);
+            extraReason = Intent.GetIntExtra(EXTRA_REASON, 0);
+
             InitView();
             InitAdapter();
 
@@ -52,18 +58,18 @@ namespace Moodis.History
                     dateInput.Text = time.ToLongDateString();
 
                     var ids = new List<string>();
-                    switch (EXTRA_REASON)
+                    switch (extraReason)
                     {
                         case 0:
                             ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
                             (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
                             break;
                         case 1:
-                            ids = GroupActivityModel.GetGroupUserIds(EXTRA_NAME);
+                            ids = GroupActivityModel.GetGroupUserIds(extraName);
                             (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
                             break;
                         case 2:
-                            ids.Add(RegisterViewModel.GetIdByUsername(EXTRA_NAME));
+                            ids.Add(RegisterViewModel.GetIdByUsername(extraName));
                             (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
                             break;
                     default:
@@ -85,18 +91,18 @@ namespace Moodis.History
             HistoryStatsAdapter adapter;
             var ids = new List<string>();
 
-            switch (EXTRA_REASON)
+            switch (extraReason)
             {
                 case 0:
                     ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
                     adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
                     break;
                 case 1:
-                    ids = GroupActivityModel.GetGroupUserIds(EXTRA_NAME);
+                    ids = GroupActivityModel.GetGroupUserIds(extraName);
                     adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
                     break;
                 case 2:
-                    ids.Add(RegisterViewModel.GetIdByUsername(EXTRA_NAME));
+                    ids.Add(RegisterViewModel.GetIdByUsername(extraName));
                     adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
                     break;
                 default:

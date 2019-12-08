@@ -38,7 +38,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Groups.Single(g => g.Id == id);
+                    var entity = dbContext.Groups.Single(groupEntity => groupEntity.Id == id);
                     var group = new GroupFE() { Id = entity.Id, DoctorId = entity.DoctorId, GroupName = entity.GroupName};
                     return Ok(group);
                 }
@@ -60,11 +60,11 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var groups = dbContext.Groups.TakeWhile(e => e.DoctorId == doctorId).Select(group => new GroupFE()
+                    var groups = dbContext.Groups.TakeWhile(entity => entity.DoctorId == doctorId).Select(entity => new GroupFE()
                     {
-                        Id = group.Id,
-                        DoctorId = group.DoctorId,
-                        GroupName = group.GroupName
+                        Id = entity.Id,
+                        DoctorId = entity.DoctorId,
+                        GroupName = entity.GroupName
                     }).ToList();
                     return Ok(groups);
                 }
@@ -116,7 +116,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Groups.Single(e => e.Id == id);
+                    var entity = dbContext.Groups.Single(item => item.Id == id);
                     entity.GroupName = group.GroupName;
                     entity.DoctorId = group.DoctorId;
                     dbContext.SaveChanges();
@@ -155,7 +155,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Groups.Single(e => e.Id == id);
+                    var entity = dbContext.Groups.Single(group => group.Id == id);
                     dbContext.Groups.Remove(entity);
                     dbContext.SaveChanges();
                     return Ok();

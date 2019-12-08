@@ -45,7 +45,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(u => u.Id == id);
+                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(item => item.Id == id);
                     var user = new UserFE()
                     {
                         Id = entity.Id,
@@ -76,7 +76,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(u => u.PersonId == personId);
+                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(item => item.PersonId == personId);
                     var user = new UserFE()
                     {
                         Id = entity.Id,
@@ -149,7 +149,7 @@ namespace apiMoodis.Controllers
             {
                 using (DatabaseContext dbContext = new DatabaseContext())
                 {
-                    var isAlreadyRegistered = dbContext.Users.Any(u => u.Username == request.Username);
+                    var isAlreadyRegistered = dbContext.Users.Any(entity => entity.Username == request.Username);
                     if (isAlreadyRegistered)
                     {
                         return BadRequest("User already exists");
@@ -201,7 +201,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Users.Single(e => e.Id == user.Id);
+                    var entity = dbContext.Users.Single(item => item.Id == user.Id);
                     entity.Username = user.Username;
                     entity.Password = Crypto.EncryptPassword(user.Password);
                     entity.GroupId = user.GroupId;
@@ -243,7 +243,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Users.Single(e => e.Id == id);
+                    var entity = dbContext.Users.Single(item => item.Id == id);
                     dbContext.Users.Remove(entity);
                     dbContext.SaveChanges();
                     return Ok();

@@ -63,7 +63,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entities = dbContext.ImageInfos.AsEnumerable().SkipWhile(e => e.UserId != userId);
+                    var entities = dbContext.ImageInfos.AsEnumerable().SkipWhile(entity => entity.UserId != userId);
                     var imageInfos = entities.Select(image => new ImageInfoFE()
                      {
                          Id = image.Id,
@@ -129,7 +129,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.ImageInfos.Single(e => e.Id == id);
+                    var entity = dbContext.ImageInfos.Single(item => item.Id == id);
                     entity.Date = imageInfo.Date;
                     entity.UserId = imageInfo.UserId;
                     entity.HighestEmotion = imageInfo.HighestEmotion;
@@ -169,7 +169,7 @@ namespace apiMoodis.Controllers
             {
                 try
                 {
-                    var entity = dbContext.Groups.Single(e => e.Id == id);
+                    var entity = dbContext.Groups.Single(item => item.Id == id);
                     dbContext.Groups.Remove(entity);
                     dbContext.SaveChanges();
                     return Ok();

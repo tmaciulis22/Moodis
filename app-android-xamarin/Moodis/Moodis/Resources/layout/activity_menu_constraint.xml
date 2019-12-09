@@ -6,7 +6,8 @@
         android:id="@+id/menuActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/background">
     
     <ImageView
         android:id="@+id/imageForView"
@@ -27,6 +28,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="placeholder" />
+        tools:text="placeholder" 
+        android:fontFamily="@drawable/BRLNSDB"
+        android:textColor="#ffffff"/>
 
     </android.support.constraint.ConstraintLayout>

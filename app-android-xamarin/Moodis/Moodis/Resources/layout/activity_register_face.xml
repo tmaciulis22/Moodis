@@ -1,10 +1,10 @@
-
 <android.support.constraint.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
     <include
         layout="@layout/circular_progress_bar"
@@ -26,7 +26,10 @@
         android:layout_margin="@dimen/grid_unit_8x"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        android:fontFamily="@drawable/BRLNSDB"
+        android:textColor="#ffffff"/>
 
     <FrameLayout
         android:id="@+id/photoContainerRegister"
@@ -34,8 +37,10 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/photosLeft"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/buttonTakePicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/grid_unit_10x"
+    />
 
     <Button
         android:id="@+id/buttonTakePicture"
@@ -45,6 +50,10 @@
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" 
+        android:layout_margin="@dimen/grid_unit_10x"
+        android:background="@drawable/button_round"
+        android:textSize="14dp"
+        android:textColor="#ff3f95"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -29,13 +29,6 @@ namespace Moodis.Feature.SignIn
             return true;
         }
 
-        //NOTE this method is used only for development and testing purposes, to clear everything in DB and in Face API
-        public async Task<Response> DeleteEverything()
-        {
-            DatabaseModel.DeleteEverything();
-            return await Face.Instance.DeleteEverything();
-        }
-
         private void FetchUserList()
         {
             userList = DatabaseModel.FetchUsers();

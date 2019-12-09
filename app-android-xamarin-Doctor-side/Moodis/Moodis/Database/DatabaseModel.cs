@@ -97,14 +97,5 @@ namespace Moodis.Database
         {
             databaseConnection.Dispose();
         }
-
-        //NOTE this method is used only for development and testing purposes, to clear everything in DB
-        public static void DeleteEverything()
-        {
-            databaseConnection.DeleteAll<User>();
-            databaseConnection.DeleteAll<ImageInfo>();
-            databaseConnection.DeleteAll<Emotion>();
-            databaseConnection.DeleteAll<Group>();
-        }
     }
 }

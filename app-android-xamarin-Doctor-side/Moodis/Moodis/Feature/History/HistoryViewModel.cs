@@ -1,18 +1,30 @@
 ﻿using AndroidX.Lifecycle;
 using Microcharts;
-using Moodis.Database;
+using Moodis.Network;
+using Moodis.Ui;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Moodis.History
 {
     class HistoryViewModel : ViewModel
     {
-        public IList<object> FetchItemList(List<string> userIds, DateTime? dateTime = null)
+        public async Task<IList<object>> FetchItemList(string userId, DateTime dateTime)
         {
             var listToReturn = new List<object>();
+            IEnumerable<ImageInfo> imageInfos;
+            try
+            {
+                imageInfos = await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime);
+            }
+            catch
+            {
+                return null;
+            }
 
-            listToReturn.AddRange(DatabaseModel.FetchUserStats(userIds, dateTime));
+            listToReturn.AddRange(imageInfos);
+
             if (listToReturn.Count != 0)
             {
                 listToReturn.Insert(0, new DonutChart());

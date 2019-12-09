@@ -13,7 +13,7 @@ namespace Moodis.Network.Face
     {
         private Face() { }
 
-        private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
+        private static string SUBSCRIPTION_KEY = Secrets.FaceApiKey;
         private static string ENDPOINT = Secrets.FaceEndpoint;
         private string API_ERROR = "API Error";
         private string GENERAL_ERROR = "General Error";

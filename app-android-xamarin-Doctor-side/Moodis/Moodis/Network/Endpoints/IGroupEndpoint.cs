@@ -8,10 +8,10 @@ namespace Moodis.Network.Endpoints
 {
     interface IGroupEndpoint
     {
-        [Get("/group?Id={id}")]
+        [Get("/group/byid?Id={id}")]
         public Task<Group> GetByIdGroup(string id);
 
-        [Get("/group?doctorId={doctorid}")]
+        [Get("/group/byDoctor?doctorId={doctorid}")]
         public Task<List<Group>> GetDoctorGroups(string doctorid);
 
         [Get("/group")]

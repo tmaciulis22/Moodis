@@ -57,8 +57,8 @@ namespace Moodis.Feature.Menu
             /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             TODO THIS SHOULD LATER CHECK IF USER ALREADY HAS A GROUP AS A USER CAN ONLY HAVE 1 GROUP BECAUSE OF THE FACE API STUFF
             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-            var userList = await API.UserEndpoint.GetAllUsersByGroup("null");
             SignInViewModel.userList = await API.UserEndpoint.GetALLUsers();
+            var userList = SignInViewModel.userList.Where(user => !user.IsDoctor).Where(user => user.GroupId == null).ToList();
             adapterUserList = new UserListAdapter(userList);
             recyclerView.SetAdapter(adapterUserList);
 
@@ -251,7 +251,8 @@ namespace Moodis.Feature.Menu
                                     string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
                                     List<User> userList = null;
                                     if (choice == USERS_WITHOUT_GROUP) {
-                                        userList = await API.UserEndpoint.GetAllUsersByGroup("null");
+                                        SignInViewModel.userList = await API.UserEndpoint.GetALLUsers();
+                                        var userList = SignInViewModel.userList.Where(user => !user.IsDoctor).Where(user => user.GroupId == null).ToList();
                                     }
                                     else 
                                     {

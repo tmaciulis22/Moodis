@@ -67,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Enums\Response.cs" />
-    <Compile Include="Database\DatabaseModel.cs" />
     <Compile Include="Encryption\Crypto.cs" />
     <Compile Include="Extensions\AppCompatActivityExtensions.cs" />
     <Compile Include="Extensions\AnimationExtension.cs" />
@@ -100,6 +99,7 @@
     <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Network\API.cs" />
+    <Compile Include="Network\Endpoints\IGroupEndpoint.cs" />
     <Compile Include="Network\Endpoints\IImageInfoEndpoint.cs" />
     <Compile Include="Network\Endpoints\IUserEndpoint.cs" />
     <Compile Include="Network\Face\Face.cs" />

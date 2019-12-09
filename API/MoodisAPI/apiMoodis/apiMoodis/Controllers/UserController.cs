@@ -14,7 +14,6 @@ namespace apiMoodis.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
-        [Route("api/users")]
         public IHttpActionResult GetAllUsers()
         {
             using (DatabaseContext dbContext = new DatabaseContext())
@@ -103,7 +102,6 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
-        [Route("api/user/bygroupid/{groupId}")]
         public IHttpActionResult GetUserByPersonId(string personId)
         {
             using (DatabaseContext dbContext = new DatabaseContext())

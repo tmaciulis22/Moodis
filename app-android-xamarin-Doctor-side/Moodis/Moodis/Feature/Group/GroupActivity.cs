@@ -44,7 +44,7 @@ namespace Moodis.Feature.Group
             {
                 if(!string.IsNullOrEmpty(GroupNameTextField.Text))
                 {
-                    var response = groupActivityModel.AddUserToGroup(GroupNameTextField.Text);
+                    var response = groupActivityModel.AddUserToGroupAsync(GroupNameTextField.Text);
                     if(response == Response.OK)
                     {
                         Toast.MakeText(this, Resource.String.join_group_success, ToastLength.Short).Show();
@@ -72,7 +72,7 @@ namespace Moodis.Feature.Group
             {
                 if(!string.IsNullOrWhiteSpace(GroupNameTextField.Text))
                 {
-                    var respone = groupActivityModel.CreateGroup(GroupNameTextField.Text);
+                    var respone = groupActivityModel.CreateGroupAsync(GroupNameTextField.Text);
                     if(respone == Response.OK)
                     {
                         Toast.MakeText(this, Resource.String.join_group_success, ToastLength.Short).Show();

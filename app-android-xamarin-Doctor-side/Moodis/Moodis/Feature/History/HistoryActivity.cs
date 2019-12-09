@@ -1,9 +1,12 @@
-﻿using Android.App;
+﻿using System;
+
+using Android.App;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Support.Constraints;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
+using Android.Views;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.Group;
@@ -12,6 +15,7 @@ using Moodis.Feature.SignIn;
 using Moodis.Widget;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Moodis.History
 {
@@ -19,7 +23,7 @@ namespace Moodis.History
     public class HistoryActivity : AppCompatActivity
     {
         private readonly HistoryViewModel historyViewModel = new HistoryViewModel();
-        private RecyclerView recyclerView;
+        private RecyclerView RecyclerView;
 
         private const string EXTRA_REASON = "EXTRA_REASON";
         private const string EXTRA_NAME = "EXTRA_NAME";
@@ -36,10 +40,10 @@ namespace Moodis.History
             extraName = Intent.GetStringExtra(EXTRA_NAME);
             extraReason = Intent.GetIntExtra(EXTRA_REASON, 0);
 
-            InitView();
-            InitAdapter();
-
             AnimationExtension.AnimateBackground(FindViewById(Resource.Id.constraintLayoutHistory));
+            InitView();
+            InitAdapterAsync();
+
         }
 
         public override bool OnSupportNavigateUp()
@@ -53,7 +57,7 @@ namespace Moodis.History
             var dateInput = FindViewById<EditText>(Resource.Id.datePicker);
             dateInput.Click += (sender, e) =>
             {
-                DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+                DatePickerFragment frag = DatePickerFragment.NewInstance(async delegate (DateTime time)
                 {
                     dateInput.Text = time.ToLongDateString();
 
@@ -62,19 +66,23 @@ namespace Moodis.History
                     {
                         case 0:
                             ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
-                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            var itemList = await historyViewModel.FetchItemList(ids, time);
+                            (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
                         case 1:
-                            ids = GroupActivityModel.GetGroupUserIds(extraName);
-                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            ids = GroupActivityModel.GetGroupUserIdsAsync(extraName);
+                            itemList = await historyViewModel.FetchItemList(ids, time);
+                            (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
                         case 2:
                             ids.Add(RegisterViewModel.GetIdByUsername(extraName));
-                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            itemList = await historyViewModel.FetchItemList(ids, time);
+                            (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
                     default:
                             ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
-                            (recyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(historyViewModel.FetchItemList(ids, time));
+                            itemList = await historyViewModel.FetchItemList(ids, time);
+                            (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
                     }
                 });
@@ -82,35 +90,39 @@ namespace Moodis.History
             };
         }
 
-        private void InitAdapter()
+        private async void InitAdapterAsync()
         {
-            recyclerView = FindViewById<RecyclerView>(Resource.Id.statsList);
+            RecyclerView = FindViewById<RecyclerView>(Resource.Id.statsList);
 
             var layoutManager = new LinearLayoutManager(this);
-            recyclerView.SetLayoutManager(layoutManager);
+            RecyclerView.SetLayoutManager(layoutManager);
             HistoryStatsAdapter adapter;
             var ids = new List<string>();
 
             switch (extraReason)
             {
                 case 0:
+                    var itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
                     ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
-                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    adapter = new HistoryStatsAdapter(itemList);
                     break;
                 case 1:
-                    ids = GroupActivityModel.GetGroupUserIds(extraName);
-                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    ids = GroupActivityModel.GetGroupUserIdsAsync(extraName);
+                    itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
+                    adapter = new HistoryStatsAdapter(itemList);
                     break;
                 case 2:
                     ids.Add(RegisterViewModel.GetIdByUsername(extraName));
-                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
+                    adapter = new HistoryStatsAdapter(itemList);
                     break;
                 default:
                     ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
-                    adapter = new HistoryStatsAdapter(historyViewModel.FetchItemList(ids, DateTime.Now));
+                    itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
+                    adapter = new HistoryStatsAdapter(itemList);
                     break;
             }
-            recyclerView.SetAdapter(adapter);
+            RecyclerView.SetAdapter(adapter);
         }
     }
 }

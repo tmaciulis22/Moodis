@@ -1,50 +1,40 @@
 ﻿using Android.Arch.Lifecycle;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
-using Moodis.Database;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
+using Moodis.Network;
 using Moodis.Network.Face;
+using Moodis.Network.Requests;
+using Refit;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.SignIn
 {
     public class SignInViewModel : ViewModel
     {
-        public static List<User> userList = DatabaseModel.FetchUsers();
         public static User currentUser;
 
-        public bool Authenticate(string username, string password)
+        public async Task<Response> Authenticate(string username, string password)
         {
-            FetchUserList();
-
-            currentUser = userList.Find(user => user.Username == username && user.Password == Crypto.CalculateMD5Hash(password));
-
-            if (currentUser == null || !currentUser.IsDoctor)
+            try
             {
-                return false;
+                currentUser = await API.UserEndpoint.LoginUser(new LoginRequest(username, password));
+                return Response.OK;
             }
-            return true;
-        }
-
-        //NOTE this method is used only for development and testing purposes, to clear everything in DB and in Face API
-        public async Task<Response> DeleteEverything()
-        {
-            DatabaseModel.DeleteEverything();
-            return await Face.Instance.DeleteEverything();
-        }
-
-        private void FetchUserList()
-        {
-            userList = DatabaseModel.FetchUsers();
-        }
-
-        public async Task<Response> DeleteUser()
-        {
-            DatabaseModel.DeleteUserFromDatabase(SignInViewModel.currentUser);
-            return await Face.Instance.DeletePersonGroup(SignInViewModel.currentUser.PersonGroupId);
+            catch (ApiException ex)
+            {
+                var statusCode = ex.StatusCode;
+                return statusCode switch
+                {
+                    HttpStatusCode.NotFound => Response.BadCredentials,
+                    HttpStatusCode.BadRequest => Response.BadCredentials,
+                    _ => Response.ApiError
+                };
+            }
         }
     }
 }

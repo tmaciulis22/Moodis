@@ -1,29 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Moodis.Constants.Enums;
+using Moodis.Feature.Login;
 using Moodis.Feature.Register;
 using Moodis.Feature.SignIn;
+using Moodis.Network;
 
 namespace Moodis.Feature.Group
 {
     class GroupActivityModel
     {
-        public static List<Group> groups = DatabaseModel.FetchGroupFromDatabase();
-
-        public Response AddUserToGroup(string groupName)
+        public async Task<Response> AddUserToGroupAsync(User user, string groupid)
         {
+            var groups = await API.GroupEndpoint.GetAllGroups();
             if(groups != null)
             {
                 var username = SignInViewModel.currentUser.Username;
-                var group = groups.Find(groupTemp => groupTemp.Groupname == groupName);
+                var group = groups.Find(groupTemp => groupTemp.Id == groupid);
                 if(group == null)
                 {
                     return Response.GroupNotFound;
                 }
-                if(!group.IsMember(username))
+                //if(!group.IsMember(username))
+                if(user.GroupId != group.Id)
                 {
-                    group.AddMember(username);
-                    DatabaseModel.UpdateGroupToDatabase(group);
+                    user.GroupId = group.Id;
+                    await API.UserEndpoint.UpdateUser(user);
                     return Response.OK;
                 }
                 else
@@ -37,13 +40,14 @@ namespace Moodis.Feature.Group
             }
         }
 
-        public Response CreateGroup(string groupName)
+        public async Task<Response> CreateGroupAsync(string groupName)
         {
-            if(!groups.Exists(group => group.Groupname == groupName))
+            var groups = await API.GroupEndpoint.GetAllGroups();
+            if (!groups.Exists(group => group.Groupname == groupName))
             {
                 var newGroup = new Group(groupName, SignInViewModel.currentUser.Username);
                 groups.Add(newGroup);
-                DatabaseModel.AddGroupToDatabase(newGroup);
+                await API.GroupEndpoint.CreateGroup(newGroup);
                 return Response.OK;
             }
             else
@@ -52,12 +56,11 @@ namespace Moodis.Feature.Group
             }
         }
 
-        public static List<string> GetGroupUserIds(string groupName)
+        public static async Task<List<string>> GetGroupUserIdsAsync(string groupId)
         {
-            var whereUserIs = groups.Where(group => group.Groupname == groupName).ToList();
-            List<string> FriendUsernames = new List<string>();
-            whereUserIs.ForEach(group => group.Members.ForEach(username => FriendUsernames.Add(username)));
+            var groups = await API.GroupEndpoint.GetByIdGroup(groupId);
             List<string> UserIds = new List<string>();
+            var users = await API.UserEndpoint.
             FriendUsernames.ForEach(username => UserIds.Add(RegisterViewModel.GetIdByUsername(username)));
             return UserIds;
         }

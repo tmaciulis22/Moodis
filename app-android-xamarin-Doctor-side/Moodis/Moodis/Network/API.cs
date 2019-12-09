@@ -6,5 +6,6 @@ namespace Moodis.Network
     {
         public static IUserEndpoint UserEndpoint { get; set; }
         public static IImageInfoEndpoint ImageInfoEndpoint { get; set; }
+        public static IGroupEndpoint GroupEndpoint { get; set; }
     }
 }

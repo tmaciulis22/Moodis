@@ -56,6 +56,7 @@ namespace Moodis
         {
             API.UserEndpoint = RestService.For<IUserEndpoint>(Secrets.WebServiceAPI);
             API.ImageInfoEndpoint = RestService.For<IImageInfoEndpoint>(Secrets.WebServiceAPI);
+            API.GroupEndpoint = RestService.For<IGroupEndpoint>(Secrets.WebServiceAPI);
         }
     }
 }

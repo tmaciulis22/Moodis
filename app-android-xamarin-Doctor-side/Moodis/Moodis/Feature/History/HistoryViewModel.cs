@@ -10,20 +10,23 @@ namespace Moodis.History
 {
     class HistoryViewModel : ViewModel
     {
-        public async Task<IList<object>> FetchItemList(string userId, DateTime dateTime)
+        public async Task<IList<object>> FetchItemList(List<string> userIds, DateTime dateTime)
         {
             var listToReturn = new List<object>();
             IEnumerable<ImageInfo> imageInfos;
             try
             {
-                imageInfos = await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime);
+                foreach (var userId in userIds)
+                {
+                    imageInfos = await API.ImageInfoEndpoint.GetImageInfos(userId, dateTime);
+                    listToReturn.AddRange(imageInfos);
+                }
             }
             catch
             {
                 return null;
             }
 
-            listToReturn.AddRange(imageInfos);
 
             if (listToReturn.Count != 0)
             {

@@ -16,6 +16,7 @@ namespace Moodis.Feature.Group
     public class GroupActivity : AppCompatActivity
     {
         readonly GroupActivityModel groupActivityModel = new GroupActivityModel(); 
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

@@ -12,13 +12,12 @@ namespace Moodis.Extensions
 
         public static void AnimateBackground(View view)
         {
-            /*
             AnimationDrawable animationDrawable;
-            var constraintLayout = (ConstraintLayout) view;
+            var constraintLayout = (ConstraintLayout)view;
             animationDrawable = (AnimationDrawable)constraintLayout.Background;
             animationDrawable.SetEnterFadeDuration(ENTER_FADE_DURATION);
             animationDrawable.SetExitFadeDuration(EXIT_FADE_DURATION);
-            animationDrawable.Start();*/
+            animationDrawable.Start();
         }
 
     }

@@ -1,3 +1,4 @@
+
 <android.support.constraint.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,10 +38,8 @@
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/photosLeft"
-        app:layout_constraintBottom_toTopOf="@id/buttonTakePicture"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="@dimen/grid_unit_10x"
-    />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/buttonTakePicture"
@@ -50,9 +49,7 @@
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" 
-        android:layout_margin="@dimen/grid_unit_10x"
-        android:background="@drawable/button_round"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textSize="14dp"
         android:textColor="#ff3f95"/>
 

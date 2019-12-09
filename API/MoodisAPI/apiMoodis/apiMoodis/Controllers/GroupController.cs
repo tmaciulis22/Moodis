@@ -33,7 +33,7 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
-        [Route("api/group/byid/{byId}")]
+        [Route("api/group/byid/")]
         public IHttpActionResult GetByIdGroup(string id)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
@@ -56,7 +56,7 @@ namespace apiMoodis.Controllers
         }
 
         [HttpGet]
-        [Route("api/group/byDoctor/{doctorId}")]
+        [Route("api/group/byDoctor/")]
         public IHttpActionResult GetDoctorGroups(string doctorId)
         {
             using (DatabaseContext dbContext = new DatabaseContext())

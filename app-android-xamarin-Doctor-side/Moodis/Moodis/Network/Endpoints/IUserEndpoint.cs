@@ -17,7 +17,7 @@ namespace Moodis.Network.Endpoints
         [Get("/user")]
         public Task<List<User>> GetALLUsers();
 
-        [Get("/user/byusername/")]
+        [Get("/user/byusername?username={username}")]
         public Task<User> GetUserByUsername(string username);
 
         [Post("/user/register")]
@@ -26,7 +26,7 @@ namespace Moodis.Network.Endpoints
         [Delete("/user?id={id}")]
         public Task DeleteUser(string id);
 
-        [Get("/user/bygroupid/{groupId}")]
+        [Get("/user?groupId={groupId}")]
         public Task<List<User>> GetAllUsersByGroup(string groupId);
 
         [Put("/user")]

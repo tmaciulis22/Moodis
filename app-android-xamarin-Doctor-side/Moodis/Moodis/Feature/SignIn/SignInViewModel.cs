@@ -1,10 +1,7 @@
 ﻿using Android.Arch.Lifecycle;
-using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
-using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Network;
-using Moodis.Network.Face;
 using Moodis.Network.Requests;
 using Refit;
 using System;
@@ -22,9 +19,16 @@ namespace Moodis.Feature.SignIn
         public async Task<Response> Authenticate(string username, string password)
         {
             try
-            {
+            { 
                 currentUser = await API.UserEndpoint.LoginUser(new LoginRequest(username, password));
-                return Response.OK;
+                if (currentUser.IsDoctor)
+                {
+                    return Response.OK;
+                }
+                else
+                {
+                    return Response.BadCredentials;
+                }
             }
             catch (ApiException ex)
             {

@@ -132,7 +132,7 @@ namespace apiMoodis.Controllers
             }
         }
         [HttpGet]
-        [Route("api/user/bygroupid/{groupId}")]
+        [Route("api/user/bygroupid/")]
         public IHttpActionResult GetAllUsersByGroup(string groupId)
         {
             using (DatabaseContext dbContext = new DatabaseContext())

@@ -157,7 +157,8 @@ namespace Moodis.Feature.SignIn
 
             if (response == Response.OK)
             {
-                progressBar.Visibility = ViewStates.Gone;
+                SetResult(Result.Ok);
+                Finish();
             }
             else if (response == Response.BadCredentials)
             {

@@ -12,6 +12,7 @@ using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Register;
+using Moodis.Network;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -145,60 +146,33 @@ namespace Moodis.Feature.SignIn
             {
                 StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
-
-            deleteEverythingButton.Click += (sender, e) =>
-            {
-                var dialog = this.ConfirmationAlert(
-                    titleRes: Resource.String.delete_everything_title,
-                    messageRes: Resource.String.delete_everything_message,
-                    positiveButtonRes: Resource.String.yes,
-                    negativeButtonRes: Resource.String.no,
-                    positiveCallback: delegate { HandleDeletion(); });
-                dialog.Show();
-            };
         }
 
-        private async void HandleDeletion()
+        private async void SignIn(string username, string password)
         {
             progressBar.Visibility = ViewStates.Visible;
             progressBar.BringToFront();
 
-            var response = await SignInViewModel.DeleteEverything();
+            var response = await SignInViewModel.Authenticate(username, password);
+
             if (response == Response.OK)
             {
                 progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.delete_everything_successful, ToastLength.Short).Show();
             }
-            else
+            else if (response == Response.BadCredentials)
             {
                 progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.delete_everything_failed, ToastLength.Short).Show();
+                Toast.MakeText(this, Resource.String.login_fail, ToastLength.Short).Show();
             }
-        }
-
-        private void SignIn(string username, string password)
-        {
-            progressBar.Visibility = ViewStates.Visible;
-            progressBar.BringToFront();
-
-            if (SignInViewModel.Authenticate(username, password))
-            {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
-                Finish();
-            }
-            else
+            else if (response == Response.ApiError)
             {
                 progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+                Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
             }
         }
         private async Task DeleteUser()
         {
-            var response = await SignInViewModel.DeleteUser();
-            if (response != Response.OK)
-            {
-                Log.Error(Class.Name, MethodBase.GetCurrentMethod().Name + ": " + response.ToString());
-            }
+           await API.UserEndpoint.DeleteUser(SignInViewModel.currentUser.Id);
         }
     }
 }

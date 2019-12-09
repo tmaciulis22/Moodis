@@ -40,40 +40,12 @@ namespace Moodis.Feature.Group
                 }
             };
 
-            JoinGroupButton.Click += (sender, e) =>
-            {
-                if(!string.IsNullOrEmpty(GroupNameTextField.Text))
-                {
-                    var response = groupActivityModel.AddUserToGroupAsync(GroupNameTextField.Text);
-                    if(response == Response.OK)
-                    {
-                        Toast.MakeText(this, Resource.String.join_group_success, ToastLength.Short).Show();
-                    }
-                    else if(response == Response.GroupNotFound)
-                    {
-                        Toast.MakeText(this, Resource.String.group_not_exists_error, ToastLength.Short).Show();
-                    }
-                    else if(response == Response.GroupExists)
-                    {
-                        Toast.MakeText(this, Resource.String.join_group_fail, ToastLength.Short).Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
-                    }
-                }
-                else
-                {
-                    Toast.MakeText(this, Resource.String.text_group_empty_error, ToastLength.Short).Show();
-                }
-            };
-
-            CreateGroupButton.Click += (sender, e) =>
+            CreateGroupButton.Click += async (sender, e) =>
             {
                 if(!string.IsNullOrWhiteSpace(GroupNameTextField.Text))
                 {
-                    var respone = groupActivityModel.CreateGroupAsync(GroupNameTextField.Text);
-                    if(respone == Response.OK)
+                    var response = await groupActivityModel.CreateGroupAsync(GroupNameTextField.Text);
+                    if(response == Response.OK)
                     {
                         Toast.MakeText(this, Resource.String.join_group_success, ToastLength.Short).Show();
                     }

@@ -17,6 +17,7 @@ namespace Moodis.Feature.SignIn
     public class SignInViewModel : ViewModel
     {
         public static User currentUser;
+        public static List<User> userList;
 
         public async Task<Response> Authenticate(string username, string password)
         {

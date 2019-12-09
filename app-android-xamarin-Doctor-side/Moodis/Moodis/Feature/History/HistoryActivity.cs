@@ -1,21 +1,16 @@
 ﻿using System;
 
 using Android.App;
-using Android.Graphics.Drawables;
 using Android.OS;
-using Android.Support.Constraints;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
-using Android.Views;
 using Android.Widget;
 using Moodis.Extensions;
 using Moodis.Feature.Group;
-using Moodis.Feature.Register;
 using Moodis.Feature.SignIn;
 using Moodis.Widget;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Moodis.Network;
 
 namespace Moodis.History
 {
@@ -65,22 +60,23 @@ namespace Moodis.History
                     switch (extraReason)
                     {
                         case 0:
-                            ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+                            ids.Add(SignInViewModel.currentUser.Id);
                             var itemList = await historyViewModel.FetchItemList(ids, time);
                             (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
                         case 1:
-                            ids = GroupActivityModel.GetGroupUserIdsAsync(extraName);
+                            ids = await GroupActivityModel.GetGroupUserIdsAsync(extraName);
                             itemList = await historyViewModel.FetchItemList(ids, time);
                             (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
                         case 2:
-                            ids.Add(RegisterViewModel.GetIdByUsername(extraName));
+                            var user = await API.UserEndpoint.GetUserByUsername(extraName);
+                            ids.Add(user.Id);
                             itemList = await historyViewModel.FetchItemList(ids, time);
                             (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
                     default:
-                            ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+                            ids.Add(SignInViewModel.currentUser.Id);
                             itemList = await historyViewModel.FetchItemList(ids, time);
                             (RecyclerView.GetAdapter() as HistoryStatsAdapter).UpdateList(itemList);
                             break;
@@ -103,22 +99,23 @@ namespace Moodis.History
             {
                 case 0:
                     var itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
-                    ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
+                    ids.Add(SignInViewModel.currentUser.Id);
                     adapter = new HistoryStatsAdapter(itemList);
                     break;
                 case 1:
-                    ids = GroupActivityModel.GetGroupUserIdsAsync(extraName);
+                    ids = await GroupActivityModel.GetGroupUserIdsAsync(extraName);
                     itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
                     adapter = new HistoryStatsAdapter(itemList);
                     break;
                 case 2:
-                    ids.Add(RegisterViewModel.GetIdByUsername(extraName));
+                    var user = await API.UserEndpoint.GetUserByUsername(extraName);
+                    ids.Add(user.Id);
                     itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
                     adapter = new HistoryStatsAdapter(itemList);
                     break;
                 default:
-                    ids.Add(RegisterViewModel.GetIdByUsername(SignInViewModel.currentUser.Username));
                     itemList = await historyViewModel.FetchItemList(ids, DateTime.UtcNow);
+                    ids.Add(SignInViewModel.currentUser.Id);
                     adapter = new HistoryStatsAdapter(itemList);
                     break;
             }

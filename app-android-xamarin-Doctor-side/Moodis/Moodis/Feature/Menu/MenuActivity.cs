@@ -14,6 +14,7 @@ using Moodis.Feature.Group;
 using Moodis.Feature.Login;
 using Moodis.Feature.SignIn;
 using Moodis.History;
+using Moodis.Network;
 using Moodis.Ui;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Moodis.Feature.Menu
         private UserListAdapter adapterUserList;
         private const string USERS_WITHOUT_GROUP = "USERS_WITHOUT_GROUP";
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -56,7 +57,8 @@ namespace Moodis.Feature.Menu
             /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             TODO THIS SHOULD LATER CHECK IF USER ALREADY HAS A GROUP AS A USER CAN ONLY HAVE 1 GROUP BECAUSE OF THE FACE API STUFF
             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-            var userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
+            var userList = await API.UserEndpoint.GetAllUsersByGroup("null");
+            SignInViewModel.userList = await API.UserEndpoint.GetALLUsers();
             adapterUserList = new UserListAdapter(userList);
             recyclerView.SetAdapter(adapterUserList);
 
@@ -129,12 +131,12 @@ namespace Moodis.Feature.Menu
 
             LayoutInflater layoutInflater = LayoutInflater.From(this);
 
-            AddUserToGroup.Click += delegate {
+            AddUserToGroup.Click += async delegate {
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
 
-                var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
-                .Select(group => group.Groupname).ToList();
+                var groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                var groupsList = groups.Select(group => group.Groupname).ToList();
 
                 if (groupsList.Count <= 0)
                 {
@@ -161,9 +163,8 @@ namespace Moodis.Feature.Menu
                                             {
                                                 if (group.Groupname == choice)
                                                 {
-                                                    group.AddMember(user.Username);
-                                                    user.GroupName = group.Groupname;
-                                                //MenuViewModel.Instance.MovePersonGroupAsync(user.PersonGroupId, user.PersonId, user.Username, group.groupId);
+                                                    user.GroupId = group.Id;
+                                                    API.UserEndpoint.UpdateUser(user);
                                                 }
                                             }
                                         }
@@ -181,12 +182,12 @@ namespace Moodis.Feature.Menu
                 }
             };
 
-            CheckGroupHistory.Click += delegate {
+            CheckGroupHistory.Click += async delegate {
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
 
-                var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
-                .Select(group => group.Groupname).ToList();
+                var groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                var groupsList = groups.Select(group => group.Groupname).ToList();
                 if (groupsList.Count <= 0)
                 {
                     Toast.MakeText(this, Resource.String.you_dont_have_group, ToastLength.Short).Show();
@@ -229,12 +230,12 @@ namespace Moodis.Feature.Menu
                 }
             };
 
-            DisplayUsers.Click += delegate {
+            DisplayUsers.Click += async delegate {
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
 
-                var groupsList = GroupActivityModel.groups.Where(group => group.IsMember(SignInViewModel.currentUser.Username))
-                .Select(group => group.Groupname).ToList();
+                var groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                var groupsList = groups.Select(group => group.Groupname).ToList();
                 groupsList.Add("USERS_WITHOUT_GROUP");
 
                 spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);
@@ -245,16 +246,17 @@ namespace Moodis.Feature.Menu
                 Android.Support.V7.App.AlertDialog.Builder alertbuilder = new Android.Support.V7.App.AlertDialog.Builder(this);
                 alertbuilder.SetView(view);
                 alertbuilder.SetCancelable(false)
-                                .SetPositiveButton("Confirm", delegate
+                                .SetPositiveButton("Confirm", async delegate
                                 {
                                     string choice = spinner.GetItemAtPosition(spinnerPosition).ToString();
                                     List<User> userList = null;
                                     if (choice == USERS_WITHOUT_GROUP) {
-                                        userList = SignInViewModel.userList.Where(user => (user.GroupName == null || user.GroupName == "") && !user.IsDoctor).ToList();
+                                        userList = await API.UserEndpoint.GetAllUsersByGroup("null");
                                     }
                                     else 
                                     {
-                                        userList = SignInViewModel.userList.Where(user => user.GroupName == choice && !user.IsDoctor).ToList();
+                                        var selection = groups.Where(group => group.Groupname == choice).Select(group => group.Id).ToString();
+                                        userList = await API.UserEndpoint.GetAllUsersByGroup(selection);
                                     }
                                     adapterUserList.userList = userList;
                                     userList.ForEach(user => user.IsSelected = false);

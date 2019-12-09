@@ -14,6 +14,7 @@ namespace apiMoodis.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
+        [Route("api/users")]
         public IHttpActionResult GetAllUsers()
         {
             using (DatabaseContext dbContext = new DatabaseContext())
@@ -69,7 +70,40 @@ namespace apiMoodis.Controllers
             }
         }
 
+        [Route("api/user/byusername/")]
         [HttpGet]
+        public IHttpActionResult GetByUserUsername(string username)
+        {
+            using (DatabaseContext dbContext = new DatabaseContext())
+            {
+                try
+                {
+                    var entity = dbContext.Users.Include(item => item.ImageInfos).Single(item => item.Username == username);
+                    var user = new UserFE()
+                    {
+                        Id = entity.Id,
+                        GroupId = entity.GroupId,
+                        Username = entity.Username,
+                        Password = entity.Password,
+                        IsDoctor = entity.IsDoctor,
+                        PersonGroupId = entity.PersonGroupId,
+                        PersonId = entity.PersonId
+                    };
+                    return Ok(user);
+                }
+                catch (InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("api/user/bygroupid/{groupId}")]
         public IHttpActionResult GetUserByPersonId(string personId)
         {
             using (DatabaseContext dbContext = new DatabaseContext())
@@ -99,8 +133,8 @@ namespace apiMoodis.Controllers
                 }
             }
         }
-        [Route("api/user/bygroupid/{groupId}")]
         [HttpGet]
+        [Route("api/user/bygroupid/{groupId}")]
         public IHttpActionResult GetAllUsersByGroup(string groupId)
         {
             using (DatabaseContext dbContext = new DatabaseContext())

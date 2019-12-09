@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Moodis.Feature.Login;
 using Moodis.Network.Requests;
 using Refit;
@@ -13,11 +14,20 @@ namespace Moodis.Network.Endpoints
         [Get("/user?personId={personId}")]
         public Task<User> GetUser(string personId);
 
+        [Get("/users")]
+        public Task<List<User>> GetALLUsers();
+
+        [Get("/user/byusername/")]
+        public Task<User> GetUserByUsername(string username);
+
         [Post("/user/register")]
         public Task<User> RegisterUser([Body] RegisterRequest request);
 
         [Delete("/user?id={id}")]
         public Task DeleteUser(string id);
+
+        [Get("/user/bygroupid/{groupId}")]
+        public Task<List<User>> GetAllUsersByGroup(string groupId);
 
         [Put("/user")]
         public Task UpdateUser([Body] User user);

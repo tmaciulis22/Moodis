@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Moodis.Constants.Enums;
@@ -11,38 +12,20 @@ namespace Moodis.Feature.Group
 {
     class GroupActivityModel
     {
-        public async Task<Response> AddUserToGroupAsync(User user, string groupid)
+        public static List<Group> groups;
+
+        public GroupActivityModel()
         {
-            var groups = await API.GroupEndpoint.GetAllGroups();
-            if(groups != null)
-            {
-                var username = SignInViewModel.currentUser.Username;
-                var group = groups.Find(groupTemp => groupTemp.Id == groupid);
-                if(group == null)
-                {
-                    return Response.GroupNotFound;
-                }
-                //if(!group.IsMember(username))
-                if(user.GroupId != group.Id)
-                {
-                    user.GroupId = group.Id;
-                    await API.UserEndpoint.UpdateUser(user);
-                    return Response.OK;
-                }
-                else
-                {
-                    return Response.GroupExists;
-                }
-            }
-            else
-            {
-                return Response.GeneralError;
-            }
+            oncreate();
+        }
+
+        private async void oncreate()
+        {
+            groups = await API.GroupEndpoint.GetAllGroups();
         }
 
         public async Task<Response> CreateGroupAsync(string groupName)
         {
-            var groups = await API.GroupEndpoint.GetAllGroups();
             if (!groups.Exists(group => group.Groupname == groupName))
             {
                 var newGroup = new Group(groupName, SignInViewModel.currentUser.Username);
@@ -58,18 +41,19 @@ namespace Moodis.Feature.Group
 
         public static async Task<List<string>> GetGroupUserIdsAsync(string groupId)
         {
-            var groups = await API.GroupEndpoint.GetByIdGroup(groupId);
             List<string> UserIds = new List<string>();
-            var users = await API.UserEndpoint.
-            FriendUsernames.ForEach(username => UserIds.Add(RegisterViewModel.GetIdByUsername(username)));
+            var users = await API.UserEndpoint.GetAllUsersByGroup(groupId);
+            users.ForEach(user => UserIds.Add(user.Id));
             return UserIds;
         }
 
-        public static void LeaveGroup(string groupname)
+        public static async Task DeleteGroupAsync(string groupId)
         {
-            var group = groups.Find(group => group.Groupname == groupname);
-            group.Members.Remove(SignInViewModel.currentUser.Username);
-            DatabaseModel.UpdateGroupToDatabase(group);
+            var group = await API.GroupEndpoint.GetByIdGroup(groupId);
+            var users = await API.UserEndpoint.GetAllUsersByGroup(groupId);
+            users.ForEach(user => user.GroupId = null);
+            users.ForEach(async user => await API.UserEndpoint.UpdateUser(user));
+            await API.GroupEndpoint.DeleteGroup(groupId);
         }
     }
 }

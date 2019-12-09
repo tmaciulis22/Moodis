@@ -15,15 +15,11 @@ namespace Moodis.Feature.Group
 
         public string Groupname { get; set; }
 
-        public Group()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
-
-        public Group(string name, string firstUser) : this()
+        public Group(string name, string doctorId)
         {
             Groupname = name;
-            DoctorId = firstUser;
+            DoctorId = doctorId;
+            Id = Guid.NewGuid().ToString();
         }
     }
 }

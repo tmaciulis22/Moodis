@@ -30,24 +30,7 @@ namespace Moodis.Feature.Register
                 };
             }
 
-            var newFaceApiPerson = await Face.Instance.CreateNewPerson(SignInViewModel.currentUser.PersonGroupId, username);
-
-            if (newFaceApiPerson != null)
-            {
-                SignInViewModel.currentUser.PersonId = Convert.ToString(newFaceApiPerson.PersonId);
-                try
-                {
-                    await API.UserEndpoint.UpdateUser(SignInViewModel.currentUser);
-                }
-                catch
-                {
-                    return Response.ApiError;
-                }
-            }
-            else
-            {
-                return Response.ApiError;
-            }
+            var newGroup = await Face.Instance.CreateNewDoctor(SignInViewModel.currentUser.PersonGroupId, username);
             return Response.OK;
         }
 

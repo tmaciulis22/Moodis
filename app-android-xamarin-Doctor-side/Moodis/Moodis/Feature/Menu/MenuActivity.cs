@@ -16,6 +16,7 @@ using Moodis.Feature.SignIn;
 using Moodis.History;
 using Moodis.Network;
 using Moodis.Ui;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -134,8 +135,16 @@ namespace Moodis.Feature.Menu
             AddUserToGroup.Click += async delegate {
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
-
-                var groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                List<Group.Group> groups;
+                try
+                {
+                    groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                }
+                catch (ApiException ex)
+                {
+                    groups = new List<Group.Group>();
+                    Log.Error(TAG, "Error reading doctors groups " + ex.StackTrace);
+                }
                 var groupsList = groups.Select(group => group.Groupname).ToList();
 
                 if (groupsList.Count <= 0)
@@ -186,7 +195,16 @@ namespace Moodis.Feature.Menu
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
 
-                var groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                List<Group.Group> groups;
+                try
+                {
+                    groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                }
+                catch (ApiException ex)
+                {
+                    groups = new List<Group.Group>();
+                    Log.Error(TAG, "Error reading doctors groups " + ex.StackTrace);
+                }
                 var groupsList = groups.Select(group => group.Groupname).ToList();
                 if (groupsList.Count <= 0)
                 {
@@ -234,8 +252,20 @@ namespace Moodis.Feature.Menu
                 View view = layoutInflater.Inflate(Resource.Layout.user_input_dialog_box, null);
                 var spinner = view.FindViewById<Spinner>(Resource.Id.spinnerGroupName);
 
-                var groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                List<Group.Group> groups;
+                try
+                {
+                    groups = await API.GroupEndpoint.GetDoctorGroups(SignInViewModel.currentUser.Id);
+                }
+                catch (ApiException ex)
+                {
+                    groups = new List<Group.Group>();
+                    Log.Error(TAG, "Error reading doctors groups " + ex.StackTrace);
+                }
                 var groupsList = groups.Select(group => group.Groupname).ToList();
+
+
+
                 groupsList.Add("USERS_WITHOUT_GROUP");
 
                 spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(spinner_ItemSelected);

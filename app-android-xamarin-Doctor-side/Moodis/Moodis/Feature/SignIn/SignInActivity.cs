@@ -54,11 +54,15 @@ namespace Moodis.Feature.SignIn
             if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
             {
                 Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
+                SetResult(Result.Ok);
+                Finish();
             }
             else if (resultCode == Result.Canceled && requestCode == REQUEST_CODE_REGISTER)
             {
                 if(SignInViewModel.currentUser != null)
                     await DeleteUser();
+                SetResult(Result.Ok);
+                Finish();
             }
         }
 

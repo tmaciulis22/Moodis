@@ -99,6 +99,32 @@ namespace apiMoodis.Controllers
                 }
             }
         }
+        [Route("api/user/bygroupid/{groupId}")]
+        [HttpGet]
+        public IHttpActionResult GetAllUsersByGroup(string groupId)
+        {
+            using (DatabaseContext dbContext = new DatabaseContext())
+            {
+                var users = dbContext.Users.Where(user => user.GroupId == groupId).Include(item => item.ImageInfos).Select(user => new UserFE()
+                {
+                    Id = user.Id,
+                    GroupId = user.GroupId,
+                    Username = user.Username,
+                    Password = user.Password,
+                    IsDoctor = user.IsDoctor,
+                    PersonGroupId = user.PersonGroupId,
+                    PersonId = user.PersonId
+                }).ToList();
+                if (users.Count != 0)
+                {
+                    return Ok(users);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
 
         [HttpGet]
         [Route("api/user/login")]

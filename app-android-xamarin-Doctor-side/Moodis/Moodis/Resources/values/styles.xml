@@ -21,16 +21,12 @@
 
   <style name="TextView" parent="@android:style/Widget.TextView">
     <item name="android:drawablePadding">@dimen/grid_unit_3x</item>
-    <item name="android:fontFamily">@drawable/BRLNSDB</item>
     <item name="android:textColor">@color/white</item>
   </style>
 
   <style name="EditText" parent="@android:style/Widget.EditText">
     <item name="android:background">@drawable/input</item>
     <item name="android:drawablePadding">@dimen/grid_unit_3x</item>
-    <item name="android:fontFamily">@drawable/BRLNSDB</item>
-    <item name="android:textColorHint">@color/colorGradientStart</item>
-    <item name="android:textColor">@color/colorGradientStart</item>
   </style>
 
   <style name="AppTheme.NoActionBar">

@@ -1,9 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.Constraints;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
@@ -67,7 +65,6 @@ namespace Moodis.Feature.SignIn
             var passwordInput = FindViewById<EditText>(Resource.Id.passwordInput);
             var signInButton = FindViewById(Resource.Id.signInButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
-            var deleteEverythingButton = FindViewById(Resource.Id.deleteEverythingButton);
             progressBar = FindViewById(Resource.Id.progressBarSignIn);
 
             usernameInput.TextChanged += (sender, e) =>
@@ -145,35 +142,6 @@ namespace Moodis.Feature.SignIn
             {
                 StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
-
-            deleteEverythingButton.Click += (sender, e) =>
-            {
-                var dialog = this.ConfirmationAlert(
-                    titleRes: Resource.String.delete_everything_title,
-                    messageRes: Resource.String.delete_everything_message,
-                    positiveButtonRes: Resource.String.yes,
-                    negativeButtonRes: Resource.String.no,
-                    positiveCallback: delegate { HandleDeletion(); });
-                dialog.Show();
-            };
-        }
-
-        private async void HandleDeletion()
-        {
-            progressBar.Visibility = ViewStates.Visible;
-            progressBar.BringToFront();
-
-            var response = await SignInViewModel.DeleteEverything();
-            if (response == Response.OK)
-            {
-                progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.delete_everything_successful, ToastLength.Short).Show();
-            }
-            else
-            {
-                progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.delete_everything_failed, ToastLength.Short).Show();
-            }
         }
 
         private void SignIn(string username, string password)

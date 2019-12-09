@@ -14,7 +14,7 @@ namespace Moodis.Network.Endpoints
         [Get("/user?personId={personId}")]
         public Task<User> GetUser(string personId);
 
-        [Get("/users")]
+        [Get("/user")]
         public Task<List<User>> GetALLUsers();
 
         [Get("/user/byusername/")]

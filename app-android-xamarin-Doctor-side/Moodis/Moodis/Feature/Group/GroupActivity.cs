@@ -23,7 +23,7 @@ namespace Moodis.Feature.Group
             SetContentView(Resource.Layout.activity_group);
             InitialiseInputs();
 
-            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.groupActivity));
+            //AnimationExtension.AnimateBackground(FindViewById(Resource.Id.groupActivity));
         }
 
         private void InitialiseInputs()

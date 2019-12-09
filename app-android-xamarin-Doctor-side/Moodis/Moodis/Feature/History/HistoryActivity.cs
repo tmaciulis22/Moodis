@@ -39,7 +39,7 @@ namespace Moodis.History
             InitView();
             InitAdapter();
 
-            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.constraintLayoutHistory));
+            //AnimationExtension.AnimateBackground(FindViewById(Resource.Id.constraintLayoutHistory));
         }
 
         public override bool OnSupportNavigateUp()

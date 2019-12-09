@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿ 
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,112 +8,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     
-        <ImageView
+    <ImageView
         android:id="@+id/imageForView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/grid_unit_0x"
         android:layout_marginTop="@dimen/grid_unit_23x"
+        android:layout_marginBottom="@dimen/grid_unit_8x"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/lblDisgust"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-    </ImageView>
+        app:layout_constraintBottom_toTopOf="@id/highestEmotionLabel"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/lblAnger"
+        android:id="@+id/highestEmotionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_unit_5x"
-        android:layout_marginLeft="@dimen/grid_unit_5x"
-        android:layout_marginEnd="@dimen/grid_unit_56x"
-        android:layout_marginRight="@dimen/grid_unit_56x"
-        app:layout_constraintBottom_toTopOf="@+id/lblFear"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="placeholder" />
-
-    <TextView
-        android:id="@+id/lblContempt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_unit_5x"
-        android:layout_marginLeft="@dimen/grid_unit_5x"
-        android:layout_marginEnd="@dimen/grid_unit_56x"
-        android:layout_marginRight="@dimen/grid_unit_56x"
-        app:layout_constraintBottom_toTopOf="@id/lblSurprise"
-        app:layout_constraintEnd_toStartOf="@id/lblNeutral"
-        app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="placeholder" />
-
-    <TextView
-        android:id="@+id/lblDisgust"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/grid_unit_8x"
-        android:layout_marginRight="@dimen/grid_unit_8x"
-        tools:text="placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/lblSadness" />
-
-    <TextView
-        android:id="@+id/lblFear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_unit_5x"
-        android:layout_marginLeft="@dimen/grid_unit_5x"
-        android:layout_marginEnd="@dimen/grid_unit_56x"
-        android:layout_marginRight="@dimen/grid_unit_56x"
-        app:layout_constraintBottom_toTopOf="@id/lblContempt"
-        app:layout_constraintEnd_toStartOf="@id/lblDisgust"
-        app:layout_constraintHorizontal_bias="@dimen/gravity_unit_0x"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="placeholder" />
-
-    <TextView
-        android:id="@+id/lblHappiness"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_unit_3x"
-        android:layout_marginEnd="@dimen/grid_unit_8x"
-        android:layout_marginRight="@dimen/grid_unit_8x"
-        tools:text="placeholder"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:textSize="@dimen/regular_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/lblNeutral"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_unit_9x"
-        android:layout_marginEnd="@dimen/grid_unit_8x"
-        android:layout_marginRight="@dimen/grid_unit_8x"
-        tools:text="placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/lblHappiness" />
-
-    <TextView
-        android:id="@+id/lblSadness"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_unit_3x"
-        android:layout_marginEnd="@dimen/grid_unit_8x"
-        android:layout_marginRight="@dimen/grid_unit_8x"
-        tools:text="placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/lblNeutral" />
-
-    <TextView
-        android:id="@+id/lblSurprise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_unit_5x"
-        android:layout_marginLeft="@dimen/grid_unit_5x"
-        android:layout_marginEnd="@dimen/grid_unit_56x"
-        android:layout_marginRight="@dimen/grid_unit_56x"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/lblContempt"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="placeholder" />
 
     </android.support.constraint.ConstraintLayout>

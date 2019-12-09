@@ -34,7 +34,7 @@
                 android:title="Setup your music" />
         </menu>
     </item>
-  <item android:title="Additional features">
+  <item android:title="Other">
     <menu>
       <item
           android:id="@+id/nav_menu_logout"

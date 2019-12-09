@@ -14,8 +14,18 @@ namespace apiMoodis.Models
     
     public partial class Group
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Group()
+        {
+            this.Users = new HashSet<User>();
+        }
+    
         public string Id { get; set; }
-        public string MembersInString { get; set; }
+        public string DoctorId { get; set; }
         public string GroupName { get; set; }
+    
+        public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

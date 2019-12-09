@@ -603,3 +603,5 @@ MigrationBackup/
 
 #ignore json
 *.json
+
+app-android-xamarin/Moodis/Moodis/Resources/Resource.designer.cs

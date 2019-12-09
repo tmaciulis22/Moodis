@@ -17,15 +17,21 @@ namespace apiMoodis.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.Groups = new HashSet<Group>();
             this.ImageInfos = new HashSet<ImageInfo>();
         }
     
         public string Id { get; set; }
+        public string GroupId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string GroupName { get; set; }
+        public bool IsDoctor { get; set; }
         public string PersonGroupId { get; set; }
+        public string PersonId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Group> Groups { get; set; }
+        public virtual Group Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImageInfo> ImageInfos { get; set; }
     }

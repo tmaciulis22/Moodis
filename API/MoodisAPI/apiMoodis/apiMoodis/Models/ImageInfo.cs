@@ -14,19 +14,11 @@ namespace apiMoodis.Models
     
     public partial class ImageInfo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ImageInfo()
-        {
-            this.Emotions = new HashSet<Emotion>();
-        }
-    
         public string Id { get; set; }
         public string UserId { get; set; }
-        public string ImagePath { get; set; }
-        public string DateAsString { get; set; }
+        public System.DateTime Date { get; set; }
+        public string HighestEmotion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Emotion> Emotions { get; set; }
         public virtual User User { get; set; }
     }
 }

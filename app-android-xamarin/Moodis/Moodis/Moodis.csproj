@@ -67,8 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\Enums\Response.cs" />
-    <Compile Include="Database\DatabaseModel.cs" />
-    <Compile Include="Encryption\Crypto.cs" />
     <Compile Include="Events\TakenPicture.cs" />
     <Compile Include="Extensions\AppCompatActivityExtensions.cs" />
     <Compile Include="Extensions\ContextExtensions.cs" />
@@ -78,7 +76,6 @@
     <Compile Include="Feature\CameraFeature\CameraPreview.cs" />
     <Compile Include="Feature\CameraFeature\CameraPictureCallBack.cs" />
     <Compile Include="Feature\CameraFeature\CameraFragment.cs" />
-    <Compile Include="Models\Group.cs" />
     <Compile Include="Feature\History\ChartViewHolder.cs" />
     <Compile Include="Feature\Menu\MenuActivity.cs" />
     <Compile Include="Feature\Menu\MenuViewModel.cs" />
@@ -96,7 +93,12 @@
     <Compile Include="Feature\History\StatViewHolder.cs" />
     <Compile Include="Models\ImageInfo.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Network\API.cs" />
+    <Compile Include="Network\Endpoints\IImageInfoEndpoint.cs" />
+    <Compile Include="Network\Endpoints\IUserEndpoint.cs" />
     <Compile Include="Network\Face\Face.cs" />
+    <Compile Include="Network\Requests\LoginRequest.cs" />
+    <Compile Include="Network\Requests\RegisterRequest.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Widget\DatePickerFragment.cs" />
@@ -156,6 +158,9 @@
       <Version>1.4.0.638</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Refit">
+      <Version>5.0.23</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.6.292</Version>
@@ -373,30 +378,7 @@
     <AndroidResource Include="Resources\layout\app_bar_content_main.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_group.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_group_list.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\holder_group_entry.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\logo_delete.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_group_details.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\holder_members_entry.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\holder_chart.xml">

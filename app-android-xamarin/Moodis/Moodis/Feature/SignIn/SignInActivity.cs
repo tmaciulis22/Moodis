@@ -23,8 +23,6 @@ namespace Moodis.Feature.SignIn
 
         View progressBar;
 
-        public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -44,20 +42,15 @@ namespace Moodis.Feature.SignIn
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
-            //As we implement new Activities there will be more if statements
             base.OnActivityResult(requestCode, resultCode, data);
-            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
+            if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
             {
-                Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
-            }
-            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
-            {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                SetResult(Result.Ok);
                 Finish();
             }
             else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_UPDATE_FACE)
             {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                SetResult(Result.Ok);
                 Finish();
             }
         }
@@ -69,7 +62,6 @@ namespace Moodis.Feature.SignIn
             var signInButton = FindViewById(Resource.Id.signInButton);
             var signInWithFaceButton = FindViewById(Resource.Id.signInFaceButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
-            var deleteEverythingButton = FindViewById(Resource.Id.deleteEverythingButton);
             progressBar = FindViewById(Resource.Id.progressBarSignIn);
 
             usernameInput.TextChanged += (sender, e) =>
@@ -151,50 +143,29 @@ namespace Moodis.Feature.SignIn
             {
                 StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
-
-            deleteEverythingButton.Click += (sender, e) =>
-            {
-                var dialog = this.ConfirmationAlert(
-                    titleRes: Resource.String.delete_everything_title,
-                    messageRes: Resource.String.delete_everything_message,
-                    positiveButtonRes: Resource.String.yes,
-                    negativeButtonRes: Resource.String.no,
-                    positiveCallback: delegate { HandleDeletion(); });
-                dialog.Show();
-            };
         }
 
-        private async void HandleDeletion()
+        private async void SignIn(string username, string password)
         {
             progressBar.Visibility = ViewStates.Visible;
             progressBar.BringToFront();
 
-            var response = await SignInViewModel.DeleteEverything();
+            var response = await SignInViewModel.Authenticate(username, password);
+
             if (response == Response.OK)
             {
                 progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.delete_everything_successful, ToastLength.Short).Show();
-            }
-            else
-            {
-                progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.delete_everything_failed, ToastLength.Short).Show();
-            }
-        }
-
-        private void SignIn(string username, string password)
-        {
-            progressBar.Visibility = ViewStates.Visible;
-            progressBar.BringToFront();
-
-            if (SignInViewModel.Authenticate(username, password))
-            {
                 DisplayFaceUpdateWindow();
             }
-            else
+            else if (response == Response.BadCredentials)
             {
                 progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+                Toast.MakeText(this, Resource.String.login_fail, ToastLength.Short).Show();
+            }
+            else if (response == Response.ApiError)
+            {
+                progressBar.Visibility = ViewStates.Gone;
+                Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
             }
         }
 
@@ -205,14 +176,20 @@ namespace Moodis.Feature.SignIn
                     messageRes: Resource.String.update_face_confirmation_message,
                     positiveButtonRes: Resource.String.yes,
                     negativeButtonRes: Resource.String.no,
-                    positiveCallback: delegate { StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)).PutExtra(EXTRA_UPDATE, true), REQUEST_CODE_UPDATE_FACE); },
-                    negativeCallback: delegate { handleNegative(); });
+                    positiveCallback: delegate { HandleUpdatePositive(); },
+                    negativeCallback: delegate { HandleUpdateNegative(); });
             dialog.Show();
             dialog.Dispose();
         }
-        private void handleNegative()
+
+        private void HandleUpdatePositive()
         {
-            SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+            StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)).PutExtra(EXTRA_UPDATE, true), REQUEST_CODE_UPDATE_FACE);
+        }
+
+        private void HandleUpdateNegative()
+        {
+            SetResult(Result.Ok);
             Finish();
         }
     }

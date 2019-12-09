@@ -17,7 +17,7 @@ namespace Moodis.Network.Face
     {
         private Face() { }
 
-        private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
+        private static string SUBSCRIPTION_KEY = Secrets.FaceApiKey;
         private static string ENDPOINT = Secrets.FaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";
@@ -173,13 +173,13 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<Response> AddFaceToPerson(string imageFilePath, string personGroupId, User user)
+        public async Task<Response> AddFaceToPerson(string imageFilePath, string personGroupId, string personId)
         {
             try
             {
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
-                    Guid.Parse(user.PersonId), imageFileStream);
+                    Guid.Parse(personId), imageFileStream);
                 return Response.OK;
             }
             catch (APIErrorException apiException)

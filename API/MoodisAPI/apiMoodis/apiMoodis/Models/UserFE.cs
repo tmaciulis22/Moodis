@@ -1,6 +1,11 @@
-﻿namespace Moodis.Feature.Login
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace apiMoodis.Models
 {
-    public class User
+    public class UserFE
     {
         public string Id { get; set; }
         public string GroupId { get; set; }
@@ -9,16 +14,5 @@
         public bool IsDoctor { get; set; }
         public string PersonGroupId { get; set; }
         public string PersonId { get; set; }
-
-        public User()
-        {
-            IsDoctor = false;
-        }
-
-        public User(string username, string password) : this()
-        {
-            Username = username;
-            Password = password;
-        }
     }
 }

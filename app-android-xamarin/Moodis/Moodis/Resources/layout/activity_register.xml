@@ -39,7 +39,7 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <EditText
-        android:id="@+id/usernameInput"
+        android:id="@+id/usernameInputRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/grid_unit_8x"
@@ -61,7 +61,7 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <EditText
-        android:id="@+id/passwordInput"
+        android:id="@+id/passwordInputRegister"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/grid_unit_8x"

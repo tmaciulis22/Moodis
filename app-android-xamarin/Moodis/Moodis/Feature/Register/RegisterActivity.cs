@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
@@ -15,9 +16,9 @@ using System.Threading.Tasks;
 namespace Moodis.Feature.Register
 {
     [Activity(Label = "Register")]
-    public class RegisterActivity : Activity
+    public class RegisterActivity : AppCompatActivity
     {
-        readonly RegisterViewModel registerViewModel = new RegisterViewModel();
+        readonly RegisterViewModel RegisterViewModel = new RegisterViewModel();
         private const int REQUEST_CODE_REGISTER_FACE = 1;
 
         View progressBar;
@@ -27,6 +28,7 @@ namespace Moodis.Feature.Register
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_register);
+            this.SetSupportActionBar();
             InitButtonsAndInputs();
         }
 
@@ -53,10 +55,16 @@ namespace Moodis.Feature.Register
             }
         }
 
+        public override bool OnSupportNavigateUp()
+        {
+            OnBackPressed();
+            return true;
+        }
+
         private void InitButtonsAndInputs()
         {
-            var usernameInput = FindViewById<EditText>(Resource.Id.usernameInput);
-            var passwordInput = FindViewById<EditText>(Resource.Id.passwordInput);
+            var usernameInput = FindViewById<EditText>(Resource.Id.usernameInputRegister);
+            var passwordInput = FindViewById<EditText>(Resource.Id.passwordInputRegister);
             progressBar = FindViewById(Resource.Id.progressBarRegister);
             registerButton = FindViewById<Button>(Resource.Id.registerButton);
 
@@ -139,10 +147,10 @@ namespace Moodis.Feature.Register
             progressBar.BringToFront();
             registerButton.Enabled = false;
 
-            var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
+            var regex = new Regex(@"^(?=.*\d)(?=.*[A-Z])(.+)$");
             if (regex.IsMatch(password))
             {
-                var response = await registerViewModel.AddUser(username, password);
+                var response = await RegisterViewModel.AddUser(username, password);
 
                 if (response == Response.OK)
                 {
@@ -167,7 +175,7 @@ namespace Moodis.Feature.Register
             progressBar.BringToFront();
             registerButton.Enabled = false;
 
-            var response = await registerViewModel.DeleteUser();
+            var response = await RegisterViewModel.DeleteUser();
             if (response != Response.OK)
             { 
                 Log.Error(Class.Name, MethodBase.GetCurrentMethod().Name + ": " + response.ToString());

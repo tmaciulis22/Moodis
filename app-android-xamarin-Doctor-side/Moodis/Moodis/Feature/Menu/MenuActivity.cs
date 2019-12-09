@@ -252,7 +252,7 @@ namespace Moodis.Feature.Menu
                                     List<User> userList = null;
                                     if (choice == USERS_WITHOUT_GROUP) {
                                         SignInViewModel.userList = await API.UserEndpoint.GetALLUsers();
-                                        var userList = SignInViewModel.userList.Where(user => !user.IsDoctor).Where(user => user.GroupId == null).ToList();
+                                        userList = SignInViewModel.userList.Where(user => !user.IsDoctor).Where(user => user.GroupId == null).ToList();
                                     }
                                     else 
                                     {

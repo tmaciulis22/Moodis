@@ -42,6 +42,9 @@ namespace Moodis.Feature.Group
                 groups.Add(newGroup);
                 try
                 {
+                    Console.WriteLine(newGroup.DoctorId);
+                    Console.WriteLine(newGroup.Groupname);
+                    Console.WriteLine(newGroup.Id);
                     await API.GroupEndpoint.CreateGroup(newGroup);
                 }catch(ApiException ex)
                 {

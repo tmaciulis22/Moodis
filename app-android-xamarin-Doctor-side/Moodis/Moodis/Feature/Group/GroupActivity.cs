@@ -29,7 +29,6 @@ namespace Moodis.Feature.Group
         private void InitialiseInputs()
         {
             var GroupNameTextField = FindViewById<EditText>(Resource.Id.text_groupName);
-            var JoinGroupButton = FindViewById(Resource.Id.button_join_group);
             var CreateGroupButton = FindViewById(Resource.Id.button_create_group);
             var SeeGroupsButton = FindViewById(Resource.Id.button_see_groups);
 

@@ -177,7 +177,7 @@ namespace Moodis.Feature.Menu
                                                 }
                                             }
                                         }
-                                        adapterUserList.userList = SignInViewModel.userList.Where(user => !user.IsSelected).ToList();
+                                        adapterUserList.userList = SignInViewModel.userList.Where(user => !user.IsSelected).Where(user => !user.IsDoctor).ToList();
                                         selectedUsers.ForEach(user => user.IsSelected = false);
                                         adapterUserList.NotifyDataSetChanged();
                                         alertbuilder.Dispose();
@@ -236,11 +236,11 @@ namespace Moodis.Feature.Menu
             };
 
             CheckUserHistory.Click += delegate {
-                var selectedUsers = SignInViewModel.userList.Where(user => user.IsSelected).ToList();
-                if(selectedUsers.Count == 1)
+                var selectedUsers = adapterUserList.userList.Where(user => user.IsSelected).ToList();
+                if (selectedUsers.Count == 1)
                 {
+                    adapterUserList.userList.ForEach(user => user.IsSelected = false);
                     StartActivity(new Intent(this, typeof(HistoryActivity)).PutExtra("EXTRA_REASON", 2).PutExtra("EXTRA_NAME",selectedUsers[0].Username));
-                    selectedUsers.ForEach(user => user.IsSelected = false);
                 }
                 else
                 {
@@ -286,7 +286,7 @@ namespace Moodis.Feature.Menu
                                     }
                                     else 
                                     {
-                                        var selection = groups.Where(group => group.Groupname == choice).Select(group => group.Id).ToString();
+                                        var selection = groups.Where(group => group.Groupname == choice).Select(group => group.Id).First();
                                         userList = await API.UserEndpoint.GetAllUsersByGroup(selection);
                                     }
                                     adapterUserList.userList = userList;

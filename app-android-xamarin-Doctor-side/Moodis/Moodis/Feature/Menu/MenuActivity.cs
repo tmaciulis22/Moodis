@@ -65,7 +65,7 @@ namespace Moodis.Feature.Menu
 
             InitialiseInputs();
 
-            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.menuActivity));
+            //AnimationExtension.AnimateBackground(FindViewById(Resource.Id.menuActivity));
         }
 
         public override void OnBackPressed()

@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/menuActivity"
-        android:background="@drawable/gradient_animation"
+        android:background="@drawable/background_gradient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -29,7 +29,10 @@
         android:text="@string/add_to_group_menu"
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:minHeight="@dimen/grid_unit_24x"/>
 
     <Button
         android:id="@+id/CheckGroupHistory"
@@ -43,7 +46,10 @@
         android:text="@string/group_emotion_history_menu"
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddToGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/AddToGroup"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:minHeight="@dimen/grid_unit_24x"/>
 
     <Button
         android:id="@+id/CheckPersonHistory"
@@ -57,7 +63,10 @@
         android:text="@string/check_person_history"
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CheckGroupHistory" />
+        app:layout_constraintTop_toBottomOf="@+id/CheckGroupHistory" 
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:minHeight="@dimen/grid_unit_24x"/>
 
     <Button
         android:id="@+id/DisplayYourGroupMembersButton"
@@ -72,5 +81,8 @@
         app:layout_constraintEnd_toStartOf="@+id/userRecyclerView"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CheckPersonHistory" />
+        app:layout_constraintTop_toBottomOf="@+id/CheckPersonHistory"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:minHeight="@dimen/grid_unit_24x"/>
 </android.support.constraint.ConstraintLayout>

@@ -1,9 +1,9 @@
-
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient">
 
     <include
         layout="@layout/circular_progress_bar"
@@ -20,56 +20,67 @@
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register_text"
-        android:layout_margin="@dimen/grid_unit_4x"
+        android:text="@string/app_name"
+        android:layout_margin="@dimen/grid_unit_12x"
         android:textSize="@dimen/login_header"
-        android:textColor="@color/foreground_material_light"
+        android:textColor="#ffffff"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:fontFamily="@drawable/BRLNSDB"
+    />
 
     <TextView
-        android:id="@+id/usernameLabel"
+        android:id="@+id/header2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/signin_username_label"
-        android:layout_margin="@dimen/grid_unit_8x"
-        android:textSize="@dimen/regular_text"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:text="@string/register_text"
+        android:layout_margin="@dimen/grid_unit_40x"
+        android:textSize="18dp"
+        android:textColor="#ffffff"
+        app:layout_constraintTop_toTopOf="@id/header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textStyle="bold"
+        android:fontFamily="@drawable/BRLNSDB"/>
 
     <EditText
         android:id="@+id/usernameInputRegister"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/grid_unit_20x"
         android:layout_margin="@dimen/grid_unit_8x"
         android:maxLines="1"
         android:inputType="textPersonName"
         android:imeOptions="actionNext"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintLeft_toRightOf="@id/usernameLabel"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/header2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="Username"
+        android:textColorHint="#ffa23e"
+        android:textColor="#ffa23e"
+        android:background="@drawable/input"
+        android:drawableLeft="@drawable/username_icon"
+        android:drawablePadding="5dp"
+        android:paddingLeft="10dp"/>
 
-    <TextView
-        android:id="@+id/passwordLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/signin_password_label"
-        android:layout_margin="@dimen/grid_unit_8x"
-        android:textSize="@dimen/regular_text"
-        app:layout_constraintTop_toBottomOf="@id/usernameLabel"
-        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <EditText
         android:id="@+id/passwordInputRegister"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/grid_unit_20x"
         android:layout_margin="@dimen/grid_unit_8x"
         android:maxLines="1"
         android:inputType="textWebPassword"
-        app:layout_constraintTop_toBottomOf="@id/usernameLabel"
-        app:layout_constraintLeft_toRightOf="@id/passwordLabel"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/usernameInputRegister"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="Password"
+        android:textColorHint="#ffa23e"
+        android:textColor="#ffa23e"
+        android:background="@drawable/input"
+        android:drawableLeft="@drawable/password_icon"
+        android:drawablePadding="5dp"
+        android:paddingLeft="10dp"/>
 
     <Button
         android:id="@+id/registerButton"
@@ -78,8 +89,11 @@
         android:layout_marginBottom="@dimen/grid_unit_12x"
         android:text="@string/signin_register_button_text"
         android:minWidth="@dimen/grid_unit_82x"
-        android:minHeight="@dimen/grid_unit_24x"
+        android:minHeight="@dimen/grid_unit_20x"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/button_round"
+        android:textSize="14dp"
+        android:textColor="#ff3f95"/>
 </android.support.constraint.ConstraintLayout>

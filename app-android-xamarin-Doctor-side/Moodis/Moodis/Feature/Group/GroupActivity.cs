@@ -16,13 +16,14 @@ namespace Moodis.Feature.Group
     public class GroupActivity : AppCompatActivity
     {
         readonly GroupActivityModel groupActivityModel = new GroupActivityModel(); 
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_group);
             InitialiseInputs();
 
-            AnimationExtension.AnimateBackground(FindViewById(Resource.Id.groupActivity));
+            //AnimationExtension.AnimateBackground(FindViewById(Resource.Id.groupActivity));
         }
 
         private void InitialiseInputs()

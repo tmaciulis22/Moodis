@@ -605,3 +605,5 @@ MigrationBackup/
 *.json
 
 app-android-xamarin/Moodis/Moodis/Resources/Resource.designer.cs
+
+app-android-xamarin-Doctor-side/Moodis/Moodis/Resources/Resource.designer.cs

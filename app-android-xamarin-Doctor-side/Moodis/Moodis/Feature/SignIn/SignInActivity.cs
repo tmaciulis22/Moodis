@@ -1,11 +1,8 @@
 ﻿using Android.App;
 using Android.Content;
-using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.Constraints;
 using Android.Support.V7.App;
-using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
@@ -13,7 +10,6 @@ using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Register;
 using Moodis.Network;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.SignIn
@@ -72,7 +68,6 @@ namespace Moodis.Feature.SignIn
             var passwordInput = FindViewById<EditText>(Resource.Id.passwordInput);
             var signInButton = FindViewById(Resource.Id.signInButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
-            var deleteEverythingButton = FindViewById(Resource.Id.deleteEverythingButton);
             progressBar = FindViewById(Resource.Id.progressBarSignIn);
 
             usernameInput.TextChanged += (sender, e) =>

@@ -1,6 +1,7 @@
 ﻿using Android.Util;
 using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
 using Moodis.Helpers;
@@ -16,7 +17,7 @@ namespace Moodis.Network.Face
     {
         private Face() { }
 
-        private static string SUBSCRIPTION_KEY = Secrets.ApiKey;
+        private static string SUBSCRIPTION_KEY = Secrets.FaceApiKey;
         private static string ENDPOINT = Secrets.FaceEndpoint;
         private int TRAIN_WAIT_TIME_DELAY = 1000;
         private string API_ERROR = "API Error";
@@ -47,7 +48,6 @@ namespace Moodis.Network.Face
 
         private async Task<IList<DetectedFace>> DetectFaceEmotions(string imageFilePath)
         {
-            imageFilePath.RotateImage();
 
             IList<FaceAttributeType> faceAttributes = new FaceAttributeType[]
             {
@@ -56,35 +56,28 @@ namespace Moodis.Network.Face
                 FaceAttributeType.Emotion
             };
 
-            try
-            {
-                using Stream imageFileStream = File.OpenRead(imageFilePath);
-                var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
+            using Stream imageFileStream = File.OpenRead(imageFilePath);
+            var detectedFaces = await faceClient.Face.DetectWithStreamAsync(imageFileStream, true, false, faceAttributes);
 
-                if (detectedFaces.IsNullOrEmpty())
-                {
-                    return null;
-                }
-                else
-                {
-                    return detectedFaces;
-                }
-            }
-            catch (APIErrorException apiException)
+            if (detectedFaces.IsNullOrEmpty())
             {
-                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
                 return null;
             }
-            catch (Exception exception)
+            else
             {
-                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
-                return null;
+                return detectedFaces;
             }
         }
 
         public async Task<DetectedFace> DetectUserEmotions(string imageFilePath, string personGroupId, string username)
         {
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
+
+            if (detectedFaces.IsNullOrEmpty())
+            {
+                return null;
+            }
+
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
             var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, personGroupId);
 
@@ -113,7 +106,7 @@ namespace Moodis.Network.Face
         public async Task<IList<Person>> IdentifyPersons(string imageFilePath, Action<List<DetectedFace>> callback)
         {
             var detectedFaces = await DetectFaceEmotions(imageFilePath);
-            callback(detectedFaces.ToList<DetectedFace>());
+            callback?.Invoke(detectedFaces.ToList<DetectedFace>());
 
             var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
 
@@ -123,7 +116,6 @@ namespace Moodis.Network.Face
             foreach (var group in personGroups)
             {
                 var identifiedPersons = await faceClient.Face.IdentifyAsync(faceIds, group.PersonGroupId);
-
                 if (identifiedPersons.IsNullOrEmpty())
                 {
                     continue;
@@ -140,10 +132,24 @@ namespace Moodis.Network.Face
                     }
                 }
             }
-
             return personsList;
         }
 
+        //returns true if one or more users have accounts false otherwise.
+        public async Task<Boolean> MultipleAccounts(string imageFilePath, Action<List<DetectedFace>> callback)
+        {
+            var detectedFaces = await DetectFaceEmotions(imageFilePath);
+
+            var faceIds = detectedFaces.Select(face => face.FaceId.Value).ToList();
+            var people = await IdentifyPersons(imageFilePath, callback);
+
+            if(people.Count >= 2)
+            {
+                return true;
+            }
+            return false;
+        }
+        
         public async Task<Person> CreateNewPerson(string personGroupId, string username)
         {
             try
@@ -167,60 +173,119 @@ namespace Moodis.Network.Face
             }
         }
 
-        public async Task<bool> AddFaceToPerson(string imageFilePath, string personGroupId, User user)
+        public async Task<Response> AddFaceToPerson(string imageFilePath, string personGroupId, string personId)
         {
             try
             {
-                imageFilePath.RotateImage();
-
                 using Stream imageFileStream = File.OpenRead(imageFilePath);
                 await faceClient.PersonGroupPerson.AddFaceFromStreamAsync(personGroupId,
-                    user.FaceApiPerson.PersonId, imageFileStream);
-                return true;
+                    Guid.Parse(personId), imageFileStream);
+                return Response.OK;
             }
             catch (APIErrorException apiException)
             {
                 Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
-                return false;
+                return Response.FaceNotDetected;
             }
             catch (Exception exception)
             {
                 Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
-                return false;
+                return Response.GeneralError;
             }
         }
 
-        public async Task<bool> TrainPersonGroup(string personGroupId)
+        public async Task<Response> TrainPersonGroup(string personGroupId)
         {
             try
             {
                 await faceClient.PersonGroup.TrainAsync(personGroupId);
             }
-            catch (Exception ex)
+            catch (APIErrorException apiException)
             {
-                Log.Error(TAG, ex.StackTrace);
-                return false;
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return Response.ApiError;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return Response.GeneralError;
             }
 
-            TrainingStatus trainingStatus = null;
+            TrainingStatus trainingStatus;
             while (true)
             {
-                trainingStatus = await faceClient.PersonGroup.GetTrainingStatusAsync(personGroupId);
-
-                if (trainingStatus.Status != TrainingStatusType.Running)
+                try
                 {
-                    return true;
-                }
+                    trainingStatus = await faceClient.PersonGroup.GetTrainingStatusAsync(personGroupId);
 
-                await Task.Delay(TRAIN_WAIT_TIME_DELAY);
+                    if (trainingStatus.Status == TrainingStatusType.Succeeded)
+                    {
+                        return Response.RegistrationDone;
+                    }
+
+                    await Task.Delay(TRAIN_WAIT_TIME_DELAY);
+                }
+                catch (APIErrorException apiException)
+                {
+                    Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                    return Response.ApiError;
+                }
+                catch (Exception exception)
+                {
+                    Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                    return Response.GeneralError;
+                }
             }
         }
 
-        public async Task<bool> DeletePerson(string personGroupId)
+        //TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
+        public async Task<Response> DeletePerson(string personGroupId)
         {
             try
             {
-                await faceClient.PersonGroup.DeleteAsync(personGroupId);//TODO Change to deleting only one person from group and move deletion of group to other method, when that group is empty and no longer used
+                await faceClient.PersonGroup.DeleteAsync(personGroupId);
+                return Response.OK;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return Response.ApiError;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return Response.GeneralError;
+            }
+        }
+
+        public async Task<Response> DeleteEverything()
+        {
+            try
+            {
+                var listOfPersonGroups = await faceClient.PersonGroup.ListAsync();
+                listOfPersonGroups.ToList().ForEach(async group => {
+                    await faceClient.PersonGroup.DeleteAsync(group.PersonGroupId);
+                });
+                return Response.OK;
+            }
+            catch (APIErrorException apiException)
+            {
+                Log.Error(TAG, API_ERROR + " " + apiException.StackTrace);
+                return Response.ApiError;
+            }
+            catch (Exception exception)
+            {
+                Log.Error(TAG, GENERAL_ERROR + " " + exception.StackTrace);
+                return Response.GeneralError;
+            }
+        }
+
+        public async Task<bool> MovePerson(string personGroupId, Guid personId,string username, string newGroupId)
+        {
+            try
+            {
+                await faceClient.PersonGroupPerson.DeleteAsync(personGroupId,personId);
+                var newFaceApiPerson = await Face.Instance.CreateNewPerson(newGroupId, username);
                 return true;
             }
             catch (APIErrorException apiException)

@@ -1,12 +1,16 @@
 ﻿using Android.Graphics;
 using Moodis.Constants.Enums;
-using Moodis.Database;
 using Moodis.Feature.SignIn;
 using Moodis.Network.Face;
 using System;
 using System.Threading.Tasks;
 using System.IO;
 using System.Linq;
+using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Network;
+using Refit;
+using Android.Util;
+using Moodis.Extensions;
 
 namespace Moodis.Ui
 {
@@ -31,16 +35,23 @@ namespace Moodis.Ui
 
         public async Task<Response> GetFaceEmotionsAsync()
         {
-            var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.Username);
-
-            if (face != null)
+            try
             {
-                currentImage.SetImageInfo(face);
-                return Response.OK;
+                currentImage.ImagePath.RotateImage();
+                var face = await Face.Instance.DetectUserEmotions(currentImage.ImagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.Username);
+                if (face != null)
+                {
+                    currentImage.SetImageInfo(face);
+                    return Response.OK;
+                }
+                else
+                {
+                    return Response.FaceNotDetected;
+                }
             }
-            else
+            catch
             {
-                return Response.FaceNotDetected;
+                return Response.ApiError;
             }
         }
 
@@ -52,15 +63,25 @@ namespace Moodis.Ui
             }
         }
 
-        public void AddImage()
+        public async void AddImage()
         {
-            DatabaseModel.AddImageInfoToDatabase(currentImage);
+            try
+            {
+                await API.ImageInfoEndpoint.AddImageInfo(currentImage);
+            }
+            catch (ApiException ex)
+            {
+                Log.Error(GetType().Name, ex.Message);
+            }
         }
 
         public int GetHighestEmotionIndex()
         {
-            var highestConfidence = currentImage.emotions.Max();
-            return currentImage.emotions.ToList().IndexOf(highestConfidence);
+            var properties = typeof(Emotion).GetProperties().ToList();
+
+            return properties.FindIndex(property => {
+                return property.Name == currentImage.HighestEmotion;
+            });
         }
     }
 }

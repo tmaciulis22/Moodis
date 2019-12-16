@@ -86,10 +86,18 @@
   
   <!-- Font Sizes -->
   <dimen name="menu_buttons">10sp</dimen>
+  <dimen name="chart_label">12sp</dimen>
   <dimen name="login_header">64sp</dimen>
   <dimen name="regular_text">20sp</dimen>
   
   <!--Card View-->
   <dimen name="cardElevation">4dp</dimen>
   <dimen name="cardCornerRadius">5dp</dimen>
+  
+  <!--Drawer View-->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+  <dimen name="nav_header_vertical_spacing">8dp</dimen>
+  <dimen name="nav_header_height">100dp</dimen>
+  <dimen name="icon_view_port">24</dimen>
 </resources>

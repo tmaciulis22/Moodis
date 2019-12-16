@@ -27,5 +27,6 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/grid_unit_36x"
       android:gravity="center"
+      android:background="@drawable/button_round"
       android:layout_alignParentBottom="true" />
 </RelativeLayout>

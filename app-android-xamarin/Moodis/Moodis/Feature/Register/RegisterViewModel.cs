@@ -1,9 +1,13 @@
-﻿using Moodis.Constants.Enums;
-using Moodis.Database;
+﻿using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
+using Moodis.Constants.Enums;
 using Moodis.Feature.Login;
+using Moodis.Feature.SignIn;
+using Moodis.Network;
 using Moodis.Network.Face;
+using Moodis.Network.Requests;
+using Refit;
 using System;
-using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
@@ -12,86 +16,93 @@ namespace Moodis.Feature.Register
     {
         public const int RequiredNumberOfPhotos = 3;
 
-        public static List<User> userList = DatabaseModel.FetchUsers();
-        public static User currentUser;
         internal int photosTaken = 0;
 
         public async Task<Response> AddUser(string username, string password)
         {
-            if(userList.Exists(userFromList => userFromList.Username == username))
+            try
             {
-                return Response.UserExists;
+                SignInViewModel.currentUser = await API.UserEndpoint.RegisterUser(new RegisterRequest(username, password));
             }
-            else
+            catch (ApiException ex)
             {
-                currentUser = new User(username, Crypto.CalculateMD5Hash(password))
-                {
-                    PersonGroupId = Guid.NewGuid().ToString()
+                return ex.StatusCode switch {
+                    HttpStatusCode.BadRequest => Response.UserExists,
+                    _ => Response.ApiError
                 };
-                DatabaseModel.AddUserToDatabase(currentUser);
-                UpdateLocalStorage();
+            }
+                
+            var newFaceApiPerson = await Face.Instance.CreateNewPerson(SignInViewModel.currentUser.PersonGroupId, username);
 
-                var newFaceApiPerson = await Face.Instance.CreateNewPerson(currentUser.PersonGroupId, username);
-
-                if (newFaceApiPerson != null)
+            if (newFaceApiPerson != null)
+            {
+                SignInViewModel.currentUser.PersonId = Convert.ToString(newFaceApiPerson.PersonId);
+                try
                 {
-                    currentUser.FaceApiPerson = newFaceApiPerson;
+                    await API.UserEndpoint.UpdateUser(SignInViewModel.currentUser);
                 }
-                else
+                catch
                 {
                     return Response.ApiError;
                 }
-
-                return Response.OK;
-            }
-        }
-
-        public async Task<Response> DeleteUser()
-        {
-            DatabaseModel.DeleteUserFromDatabase(currentUser);
-            var wasSuccessful = await Face.Instance.DeletePerson(currentUser.PersonGroupId);
-            if (wasSuccessful)
-            {
-                return Response.OK;
             }
             else
             {
                 return Response.ApiError;
             }
+            return Response.OK;
         }
 
+        public async Task<Response> DeleteUser()
+        {
+            try
+            {
+                await API.UserEndpoint.DeleteUser(SignInViewModel.currentUser.Id);
+            }
+            catch
+            {
+                return Response.ApiError;
+            }
+            return await Face.Instance.DeletePerson(SignInViewModel.currentUser.PersonGroupId);
+        }
+
+        //TODO MOVE THIS TO FACE CLASS
         public async Task<Response> AddFaceToPerson(string imagePath)
         {
-            bool wasSuccessful = await Face.Instance.AddFaceToPerson(imagePath, currentUser.PersonGroupId, currentUser);
+            var response = await Face.Instance.AddFaceToPerson(imagePath, SignInViewModel.currentUser.PersonGroupId, SignInViewModel.currentUser.PersonId);
 
-            if (wasSuccessful)
+            if (response == Response.OK)
             {
                 photosTaken++;
 
                 if (photosTaken == RequiredNumberOfPhotos)
                 {
-                    try
-                    {
-                        await Face.Instance.TrainPersonGroup(currentUser.PersonGroupId);
-                        return Response.RegistrationDone;
-                    }
-                    catch
-                    {
-                        return Response.ApiTrainingError;
-                    }
+                    return await Face.Instance.TrainPersonGroup(SignInViewModel.currentUser.PersonGroupId);
                 }
-
-                return Response.OK;
             }
-            else
-            {
-                return Response.ApiError;
-            }
+            return response;
         }
 
-        public void UpdateLocalStorage()
+        public async Task<Response> AuthenticateFace(string imagePath)
         {
-            userList = Database.DatabaseModel.FetchUsers();
+            bool userExists;
+            try
+            {
+                userExists = await Face.Instance.MultipleAccounts(imagePath, null);
+            }
+            catch (APIErrorException e)
+            {
+                userExists = false;
+                Console.WriteLine(e.StackTrace);
+                return Response.ApiError;
+            }
+
+            if (userExists)
+            {
+                return Response.UserExists;
+            }
+
+            return Response.UserNotFound;
         }
     }
 }

@@ -3,48 +3,62 @@ using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Login;
+using Moodis.Network;
 using Moodis.Network.Face;
+using Moodis.Network.Requests;
+using Refit;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.SignIn
 {
     public class SignInViewModel : ViewModel
     {
-        public static List<User> userList;
         public static User currentUser;
 
-        public bool Authenticate(string username, string password)
+        public async Task<Response> Authenticate(string username, string password)
         {
-            FetchUserList();
-
-            currentUser = userList.Find(user => user.Username == username && user.Password == Crypto.CalculateMD5Hash(password));
-
-            if (currentUser == null)
+            try
             {
-                return false;
+                currentUser = await API.UserEndpoint.LoginUser(new LoginRequest(username, password));
+                return Response.OK;
             }
-            return true;
+            catch (ApiException ex)
+            {
+                var statusCode = ex.StatusCode;
+                return statusCode switch
+                {
+                    HttpStatusCode.NotFound => Response.BadCredentials,
+                    HttpStatusCode.BadRequest => Response.BadCredentials,
+                    _ => Response.ApiError
+                };
+            }
         }
 
-        //TODO change this to multiple user recognition.
         public async Task<Response> AuthenticateWithFace(string imagePath, Action<DetectedFace> callback)
         {
-            FetchUserList();
-
             List<DetectedFace> detectedFaces = null;
-            void setFace(List<DetectedFace> face) => detectedFaces = face;
+            void setFace(List<DetectedFace> faces) => detectedFaces = faces;
             DetectedFace face;
 
             List<Person> identifiedPersons = null;
             try
             {
+                imagePath.RotateImage();
                 identifiedPersons = await Face.Instance.IdentifyPersons(imagePath, setFace) as List<Person>;
             }
-            catch (APIErrorException)
+            catch
             {
-                return Response.ApiError;
+                if (detectedFaces.IsNullOrEmpty())
+                {
+                    return Response.FaceNotDetected;
+                }
+                else
+                {
+                    return Response.ApiError;
+                }
             }
 
             if (identifiedPersons.IsNullOrEmpty())
@@ -52,20 +66,21 @@ namespace Moodis.Feature.SignIn
                 return Response.UserNotFound;
             }
 
-            currentUser = userList.Find(user => user.Username == identifiedPersons.ToArray()[0].Name);
-            face = detectedFaces.ToArray()[0];
-
-            if (currentUser == null)
+            try
             {
-                return Response.UserNotFound;
+                currentUser = await API.UserEndpoint.GetUser(identifiedPersons.ToArray()[0].PersonId.ToString());
             }
+            catch (ApiException ex)
+            {
+                return ex.StatusCode switch {
+                    HttpStatusCode.NotFound => Response.UserNotFound,
+                    _ => Response.ApiError
+                };
+            }
+
+            face = detectedFaces.ToArray()[0];
             callback(face);
             return Response.OK;
-        }
-
-        private void FetchUserList()
-        {
-            userList = Database.DatabaseModel.FetchUsers();
         }
     }
 }

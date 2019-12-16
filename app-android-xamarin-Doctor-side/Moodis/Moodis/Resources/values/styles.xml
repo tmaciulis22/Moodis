@@ -1,0 +1,42 @@
+<resources>
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorGradientCenter</item>
+    <item name="android:textColorPrimary">@color/black</item>
+    <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+    <item name="android:buttonStyle">@style/ButtonText</item>
+    <item name="android:editTextStyle">@style/EditText</item>
+    <item name="android:textColorHint">@color/colorPrimaryDark</item>
+    <item name="android:textViewStyle">@style/TextView</item>
+    <item name="android:windowBackground">@drawable/gradient_bg</item>
+  </style>
+
+  <style name="ButtonText" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/colorGradientEnd</item>
+    <item name="android:background">@drawable/button_round</item>
+  </style>
+
+  <style name="TextView" parent="@android:style/Widget.TextView">
+    <item name="android:drawablePadding">@dimen/grid_unit_3x</item>
+    <item name="android:textColor">@color/white</item>
+  </style>
+
+  <style name="EditText" parent="@android:style/Widget.EditText">
+    <item name="android:background">@drawable/input</item>
+    <item name="android:drawablePadding">@dimen/grid_unit_3x</item>
+  </style>
+
+  <style name="AppTheme.NoActionBar">
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+  </style>
+
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
+

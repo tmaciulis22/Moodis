@@ -54,12 +54,13 @@ namespace Moodis.Feature.CameraFeature
                 progressBar = view.FindViewById(Resource.Id.progressBarCamera);
                 progressBar.Visibility = ViewStates.Visible;
                 progressBar.BringToFront();
-                snapButton.Enabled = false;
+                snapButton.Enabled = false;  
 
                 MenuViewModel.Instance.currentImage = new ImageInfo
                 {
                     ImagePath = e.ImagePath
                 };
+
                 var response = await MenuViewModel.Instance.GetFaceEmotionsAsync();
                 if (response == Response.ApiError)
                 {
@@ -71,8 +72,8 @@ namespace Moodis.Feature.CameraFeature
                 }
                 else
                 {
-                    var intent = new Intent(Context, typeof(MenuActivity));
-                    StartActivity(intent);
+                    Activity.SetResult(Android.App.Result.Ok);
+                    Activity.Finish();
                 }
                 progressBar.Visibility = ViewStates.Gone;
                 snapButton.Enabled = true;

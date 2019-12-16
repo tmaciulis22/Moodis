@@ -6,6 +6,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+using Moodis.Constants.Enums;
 using Moodis.Extensions;
 using Moodis.Feature.Register;
 
@@ -16,9 +17,11 @@ namespace Moodis.Feature.SignIn
     {
         public static int REQUEST_CODE_REGISTER = 1;
         public static int REQUEST_CODE_FACE = 2;
+        public static int REQUEST_CODE_UPDATE_FACE = 3;
         private readonly SignInViewModel SignInViewModel = new SignInViewModel();
+        private const string EXTRA_UPDATE = "update";
 
-        public static string EXTRA_SIGNED_IN = "EXTRA_SIGNED_IN";
+        View progressBar;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,15 +42,15 @@ namespace Moodis.Feature.SignIn
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
-            //As we implement new Activities there will be more if statements
             base.OnActivityResult(requestCode, resultCode, data);
-            if (resultCode == Result.FirstUser && requestCode == REQUEST_CODE_REGISTER)
+            if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
             {
-                Toast.MakeText(this, Resource.String.user_created, ToastLength.Short);
+                SetResult(Result.Ok);
+                Finish();
             }
-            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_FACE)
+            else if (resultCode == Result.Ok && requestCode == REQUEST_CODE_UPDATE_FACE)
             {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
+                SetResult(Result.Ok);
                 Finish();
             }
         }
@@ -59,6 +62,7 @@ namespace Moodis.Feature.SignIn
             var signInButton = FindViewById(Resource.Id.signInButton);
             var signInWithFaceButton = FindViewById(Resource.Id.signInFaceButton);
             var registerButton = FindViewById(Resource.Id.registerButton);
+            progressBar = FindViewById(Resource.Id.progressBarSignIn);
 
             usernameInput.TextChanged += (sender, e) =>
             {
@@ -133,30 +137,60 @@ namespace Moodis.Feature.SignIn
             };
             signInWithFaceButton.Click += (sender, e) =>
             {
-                StartActivityForResult(new Android.Content.Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
+                StartActivityForResult(new Intent(this, typeof(SignInFaceActivity)), REQUEST_CODE_FACE);
             };
             registerButton.Click += (sender, e) =>
             {
-                StartActivityForResult(new Android.Content.Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
+                StartActivityForResult(new Intent(this, typeof(RegisterActivity)), REQUEST_CODE_REGISTER);
             };
         }
 
-        private void SignIn(string username, string password)
+        private async void SignIn(string username, string password)
         {
-            var progressBar = FindViewById(Resource.Id.progressBarSignIn);
             progressBar.Visibility = ViewStates.Visible;
             progressBar.BringToFront();
 
-            if (SignInViewModel.Authenticate(username, password))
-            {
-                SetResult(Result.Ok, new Intent().PutExtra(EXTRA_SIGNED_IN, true));
-                Finish();
-            }
-            else
+            var response = await SignInViewModel.Authenticate(username, password);
+
+            if (response == Response.OK)
             {
                 progressBar.Visibility = ViewStates.Gone;
-                Toast.MakeText(this, Resource.String.user_not_found_error, ToastLength.Short).Show();
+                DisplayFaceUpdateWindow();
             }
+            else if (response == Response.BadCredentials)
+            {
+                progressBar.Visibility = ViewStates.Gone;
+                Toast.MakeText(this, Resource.String.login_fail, ToastLength.Short).Show();
+            }
+            else if (response == Response.ApiError)
+            {
+                progressBar.Visibility = ViewStates.Gone;
+                Toast.MakeText(this, Resource.String.api_error, ToastLength.Short).Show();
+            }
+        }
+
+        private void DisplayFaceUpdateWindow()
+        {
+            var dialog = this.ConfirmationAlert(
+                    titleRes: Resource.String.update_face,
+                    messageRes: Resource.String.update_face_confirmation_message,
+                    positiveButtonRes: Resource.String.yes,
+                    negativeButtonRes: Resource.String.no,
+                    positiveCallback: delegate { HandleUpdatePositive(); },
+                    negativeCallback: delegate { HandleUpdateNegative(); });
+            dialog.Show();
+            dialog.Dispose();
+        }
+
+        private void HandleUpdatePositive()
+        {
+            StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)).PutExtra(EXTRA_UPDATE, true), REQUEST_CODE_UPDATE_FACE);
+        }
+
+        private void HandleUpdateNegative()
+        {
+            SetResult(Result.Ok);
+            Finish();
         }
     }
 }

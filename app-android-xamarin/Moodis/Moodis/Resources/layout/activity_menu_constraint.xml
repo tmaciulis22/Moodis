@@ -1,0 +1,35 @@
+﻿ 
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/menuActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background_gradient">
+    
+    <ImageView
+        android:id="@+id/imageForView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/grid_unit_0x"
+        android:layout_marginTop="@dimen/grid_unit_23x"
+        android:layout_marginBottom="@dimen/grid_unit_8x"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/highestEmotionLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/highestEmotionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:textSize="@dimen/regular_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="placeholder" 
+        android:fontFamily="@drawable/BRLNSDB"
+        android:textColor="#ffffff"/>
+
+    </android.support.constraint.ConstraintLayout>

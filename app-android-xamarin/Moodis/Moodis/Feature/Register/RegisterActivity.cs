@@ -2,19 +2,23 @@
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using Moodis.Constants.Enums;
 using Moodis.Extensions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Moodis.Feature.Register
 {
     [Activity(Label = "Register")]
-    public class RegisterActivity : Activity
+    public class RegisterActivity : AppCompatActivity
     {
-        RegisterViewModel registerViewModel = new RegisterViewModel();
+        readonly RegisterViewModel RegisterViewModel = new RegisterViewModel();
         private const int REQUEST_CODE_REGISTER_FACE = 1;
 
         View progressBar;
@@ -24,6 +28,7 @@ namespace Moodis.Feature.Register
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_register);
+            this.SetSupportActionBar();
             InitButtonsAndInputs();
         }
 
@@ -50,12 +55,18 @@ namespace Moodis.Feature.Register
             }
         }
 
+        public override bool OnSupportNavigateUp()
+        {
+            OnBackPressed();
+            return true;
+        }
+
         private void InitButtonsAndInputs()
         {
-            var usernameInput = FindViewById<EditText>(Resource.Id.usernameInputToAdd);
-            var passwordInput = FindViewById<EditText>(Resource.Id.passwordInputToAdd);
+            var usernameInput = FindViewById<EditText>(Resource.Id.usernameInputRegister);
+            var passwordInput = FindViewById<EditText>(Resource.Id.passwordInputRegister);
             progressBar = FindViewById(Resource.Id.progressBarRegister);
-            registerButton = FindViewById<Button>(Resource.Id.registerButtonToAdd);
+            registerButton = FindViewById<Button>(Resource.Id.registerButton);
 
             usernameInput.TextChanged += (sender, e) =>
             {
@@ -72,20 +83,18 @@ namespace Moodis.Feature.Register
                 }
             };
 
-            usernameInput.KeyPress += (sender, e) =>
+            usernameInput.EditorAction += (sender, e) =>
             {
-                if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
+                if (e.ActionId == ImeAction.Next)
                 {
-                    e.Handled = true;
-                    if (!string.IsNullOrEmpty((sender as EditText).Text))
+                    if (string.IsNullOrEmpty((sender as EditText).Text))
                     {
-                        this.HideKeyboard(usernameInput);
-                        passwordInput.RequestFocus();
-                        this.ShowKeyboard(passwordInput);
+                        usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
+                        e.Handled = true;
                     }
                     else
                     {
-                        usernameInput.SetError(GetString(Resource.String.username_empty_error), null);
+                        e.Handled = false;
                     }
                 }
                 else
@@ -93,9 +102,10 @@ namespace Moodis.Feature.Register
                     e.Handled = false;
                 }
             };
-            passwordInput.KeyPress += (sender, e) =>
+
+            passwordInput.KeyPress += async (sender, e) =>
             {
-                if (e.KeyCode == Android.Views.Keycode.Enter && e.Event.Action == Android.Views.KeyEventActions.Down)
+                if (e.KeyCode == Keycode.Enter && e.Event.Action == KeyEventActions.Down)
                 {
                     e.Handled = true;
                     if (string.IsNullOrEmpty((sender as EditText).Text))
@@ -105,6 +115,7 @@ namespace Moodis.Feature.Register
                     else
                     {
                         this.HideKeyboard(passwordInput);
+                        await Register(usernameInput.Text, passwordInput.Text);
                     }
                 }
                 else
@@ -125,32 +136,37 @@ namespace Moodis.Feature.Register
                 }
                 else
                 {
-                    progressBar.Visibility = ViewStates.Visible;
-                    progressBar.BringToFront();
-                    registerButton.Enabled = false;
-
-                    var regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,15}$");
-                    if (regex.IsMatch(passwordInput.Text))
-                    {
-                        var response = await registerViewModel.AddUser(usernameInput.Text, passwordInput.Text);
-
-                        if (response == Response.OK)
-                        {
-                            StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
-                        }
-                        else if (response == Response.UserExists)
-                        {
-                            Toast.MakeText(this, Resource.String.user_exists, ToastLength.Short).Show();
-                        }
-                    }
-                    else
-                    {
-                        Toast.MakeText(this, Resource.String.stronger_password, ToastLength.Short).Show();
-                    }
-                    progressBar.Visibility = ViewStates.Gone;
-                    registerButton.Enabled = true;
+                    await Register(usernameInput.Text, passwordInput.Text);
                 }
             };
+        }
+
+        private async Task Register(string username, string password)
+        {
+            progressBar.Visibility = ViewStates.Visible;
+            progressBar.BringToFront();
+            registerButton.Enabled = false;
+
+            var regex = new Regex(@"^(?=.*\d)(?=.*[A-Z])(.+)$");
+            if (regex.IsMatch(password))
+            {
+                var response = await RegisterViewModel.AddUser(username, password);
+
+                if (response == Response.OK)
+                {
+                    StartActivityForResult(new Intent(this, typeof(RegisterFaceActivity)), REQUEST_CODE_REGISTER_FACE);
+                }
+                else if (response == Response.UserExists)
+                {
+                    Toast.MakeText(this, Resource.String.user_exists, ToastLength.Short).Show();
+                }
+            }
+            else
+            {
+                Toast.MakeText(this, Resource.String.stronger_password, ToastLength.Short).Show();
+            }
+            progressBar.Visibility = ViewStates.Gone;
+            registerButton.Enabled = true;
         }
 
         private async Task DeleteUser()
@@ -159,12 +175,11 @@ namespace Moodis.Feature.Register
             progressBar.BringToFront();
             registerButton.Enabled = false;
 
-            var response = await registerViewModel.DeleteUser();
-            while (response != Response.OK)
-            {
-                response = await registerViewModel.DeleteUser();
+            var response = await RegisterViewModel.DeleteUser();
+            if (response != Response.OK)
+            { 
+                Log.Error(Class.Name, MethodBase.GetCurrentMethod().Name + ": " + response.ToString());
             }
-
             progressBar.Visibility = ViewStates.Gone;
             registerButton.Enabled = true;
         }

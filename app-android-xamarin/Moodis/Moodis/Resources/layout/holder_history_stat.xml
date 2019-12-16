@@ -27,6 +27,7 @@
                 android:layout_margin="@dimen/grid_unit_3x"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="@string/lorem_ipsum" />
 
             <TextView
@@ -38,6 +39,7 @@
                 app:layout_constraintStart_toEndOf="@id/timeLabel"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="@string/lorem_ipsum" />
 
         </android.support.constraint.ConstraintLayout>

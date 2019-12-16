@@ -1,0 +1,97 @@
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    android:id="@+id/constraintlayoutRegister">
+
+    <include
+        layout="@layout/circular_progress_bar"
+        android:id="@+id/progressBarRegister"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:layout_margin="@dimen/grid_unit_4x"
+        android:textSize="@dimen/login_header"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:fontFamily="@drawable/BRLNSDB"/>
+
+    <TextView
+        android:id="@+id/header_lower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:layout_margin="@dimen/grid_unit_4x"
+        android:textSize="@dimen/abc_text_size_small_material"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:fontFamily="@drawable/BRLNSDB"/>
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/grid_unit_20x"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:maxLines="1"
+        android:inputType="textPersonName"
+        android:imeOptions="actionNext"
+        app:layout_constraintTop_toBottomOf="@id/header_lower"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="Username"
+        android:paddingLeft="10dp"
+        android:textColorHint="#12c2e9"
+        android:textColor="#12c2e9"
+        android:background="@drawable/input"
+        android:drawableLeft="@drawable/username_icon"
+        android:drawablePadding="5dp"/>
+
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/grid_unit_20x"
+        android:layout_margin="@dimen/grid_unit_8x"
+        android:maxLines="1"
+        android:inputType="textWebPassword"
+        app:layout_constraintTop_toBottomOf="@id/usernameInput"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:hint="Password"
+        android:paddingLeft="10dp"
+        android:textColorHint="#12c2e9"
+        android:textColor="#12c2e9"
+        android:background="@drawable/input"
+        android:drawableLeft="@drawable/password_icon"
+        android:drawablePadding="5dp"/>
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_unit_12x"
+        android:text="@string/signin_register_button_text"
+        android:minWidth="@dimen/grid_unit_82x"
+        android:minHeight="@dimen/grid_unit_24x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="#ff3f95"/>
+</android.support.constraint.ConstraintLayout>

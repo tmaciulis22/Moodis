@@ -1,0 +1,93 @@
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/groupActivity"
+    android:background="@drawable/background_gradient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/text_groupName"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/grid_unit_20x"
+        android:layout_marginBottom="416dp"
+        android:width="300dp"
+        android:ems="10"
+        android:hint="@string/hint_group_name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        android:paddingLeft="10dp"
+        android:textColorHint="#12c2e9"
+        android:textColor="#12c2e9"
+        android:background="@drawable/input"
+        android:drawableLeft="@drawable/username_icon"
+        android:drawablePadding="5dp"/>
+
+    <Button
+        android:id="@+id/button_join_group"
+        android:layout_width="231dp"
+        android:layout_height="45dp"
+        android:text="@string/join_a_group"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_groupName"
+        app:layout_constraintVertical_bias="0.265"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="#ff3f95"
+    />
+
+    <Button
+        android:id="@+id/button_see_groups"
+        android:layout_width="231dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="132dp"
+        android:text="@string/see_my_groups"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" 
+    android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="#ff3f95"/>
+
+    <Button
+        android:id="@+id/button_create_group"
+        android:layout_width="231dp"
+        android:layout_height="45dp"
+        android:text="@string/create_a_group"
+        app:layout_constraintBottom_toTopOf="@+id/button_see_groups"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_join_group"
+        app:layout_constraintVertical_bias="0.553"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="#ff3f95"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/groupName"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_groupName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.576"/>
+
+</android.support.constraint.ConstraintLayout>
